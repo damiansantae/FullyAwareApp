@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CleanMvpLib/CleanMvpLib.iml" filepath="$PROJECT_DIR$/CleanMvpLib/CleanMvpLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FullyAware.iml" filepath="$PROJECT_DIR$/FullyAware.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" />
+    </modules>
+  </component>
+</project>
