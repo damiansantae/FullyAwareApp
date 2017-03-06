@@ -37,6 +37,12 @@ public interface ListToDo {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
+
+      void onListClick(int position);
+
+    void onLongListClick(int pos);
+
+    void onBinBtnClick();
   }
 
   /**
@@ -49,6 +55,14 @@ public interface ListToDo {
     void showText();
     void setText(String txt);
     void setLabel(String txt);
+
+    boolean isItemListChecked(int pos);
+
+    void setItemChecked(int pos, boolean checked);
+
+    void startSelection();
+
+    void setChoiceMode(int i);
   }
 
   /**
