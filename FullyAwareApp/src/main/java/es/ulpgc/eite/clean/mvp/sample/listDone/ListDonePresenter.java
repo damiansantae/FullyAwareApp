@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.dummy;
+package es.ulpgc.eite.clean.mvp.sample.listDone;
 
 
 import android.content.Context;
@@ -8,10 +8,12 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 
-public class DummyPresenter extends GenericPresenter
-    <Dummy.PresenterToView, Dummy.PresenterToModel, Dummy.ModelToPresenter, DummyModel>
-    implements Dummy.ViewToPresenter, Dummy.ModelToPresenter, Dummy.DummyTo, Dummy.ToDummy {
+
+public class ListDonePresenter extends GenericPresenter
+    <ListDone.PresenterToView, ListDone.PresenterToModel, ListDone.ModelToPresenter, ListDoneModel>
+    implements ListDone.ViewToPresenter, ListDone.ModelToPresenter, ListDone.ListDoneTo, ListDone.ToListDone {
 
 
   private boolean toolbarVisible;
@@ -27,14 +29,14 @@ public class DummyPresenter extends GenericPresenter
    * @param view The current VIEW instance
    */
   @Override
-  public void onCreate(Dummy.PresenterToView view) {
-    super.onCreate(DummyModel.class, this);
+  public void onCreate(ListDone.PresenterToView view) {
+    super.onCreate(ListDoneModel.class, this);
     setView(view);
     Log.d(TAG, "calling onCreate()");
 
-    Log.d(TAG, "calling startingDummyScreen()");
+    Log.d(TAG, "calling startingLisDoneScreen()");
     Mediator app = (Mediator) getView().getApplication();
-    app.startingDummyScreen(this);
+    app.startingListDoneScreen(this);
   }
 
   /**
@@ -45,7 +47,7 @@ public class DummyPresenter extends GenericPresenter
    * @param view The current VIEW instance
    */
   @Override
-  public void onResume(Dummy.PresenterToView view) {
+  public void onResume(ListDone.PresenterToView view) {
     setView(view);
     Log.d(TAG, "calling onResume()");
 
@@ -107,11 +109,11 @@ public class DummyPresenter extends GenericPresenter
   @Override
   public void onScreenStarted() {
     Log.d(TAG, "calling onScreenStarted()");
-    if(isViewRunning()) {
+    /*if(isViewRunning()) {
       getView().setLabel(getModel().getLabel());
     }
     checkToolbarVisibility();
-    checkTextVisibility();
+    checkTextVisibility();*/
   }
 
   @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
+import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 
@@ -13,6 +14,7 @@ public class App extends Application implements Mediator, Navigator {
 
   private DummyState toDummyState, dummyToState;
   private ListToDoState toListToDoState, listToDoToState;
+  private ListDoneState toListDoneState, listDoneToState;
 
   @Override
   public void onCreate() {
@@ -24,6 +26,10 @@ public class App extends Application implements Mediator, Navigator {
     toListToDoState = new ListToDoState();
     toListToDoState.toolbarVisibility = false;
     toListToDoState.textVisibility = false;
+
+    toListDoneState = new ListDoneState();
+    toListDoneState.toolbarVisibility = false;
+    toListDoneState.textVisibility = false;
 
 
   }
@@ -48,6 +54,16 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
+
+  @Override
+  public void startingListDoneScreen(ListDone.ToListDone presenter) {
+    if(toDummyState != null) {
+      presenter.setToolbarVisibility(toDummyState.toolbarVisibility);
+      presenter.setTextVisibility(toDummyState.textVisibility);
+    }
+    presenter.onScreenStarted();
+  }
+  
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
 
@@ -75,6 +91,11 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   private class ListToDoState {
+    boolean toolbarVisibility;
+    boolean textVisibility;
+  }
+
+  private class ListDoneState {
     boolean toolbarVisibility;
     boolean textVisibility;
   }

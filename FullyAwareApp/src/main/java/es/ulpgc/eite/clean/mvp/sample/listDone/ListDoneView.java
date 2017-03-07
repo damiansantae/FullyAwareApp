@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listDone;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,11 +23,9 @@ import java.util.ArrayList;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 
-import static android.app.ProgressDialog.show;
-
-public class ListToDoView
-        extends GenericActivity<ListToDo.PresenterToView, ListToDo.ViewToPresenter, ListToDoPresenter>
-        implements ListToDo.PresenterToView {
+public class ListDoneView
+        extends GenericActivity<ListDone.PresenterToView, ListDone.ViewToPresenter, ListDonePresenter>
+        implements ListDone.PresenterToView {
 
     private Toolbar toolbar;
     private Button button;
@@ -45,7 +43,7 @@ public class ListToDoView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listtodo);
+        setContentView(R.layout.activity_listdone);
 
    /* text = (TextView) findViewById(R.id.text);
 
@@ -145,14 +143,14 @@ public class ListToDoView
      */
     @Override
     protected void onResume() {
-        super.onResume(ListToDoPresenter.class, this);
+        super.onResume(ListDonePresenter.class, this);
     }
 
   /*
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_listToDo, menu);
+    getMenuInflater().inflate(R.menu.menu_listDone, menu);
     return true;
   }
 
