@@ -4,173 +4,289 @@ package es.ulpgc.eite.clean.mvp.sample.listToDo;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 public class ListToDoPresenter extends GenericPresenter
-    <ListToDo.PresenterToView, ListToDo.PresenterToModel, ListToDo.ModelToPresenter, ListToDoModel>
-    implements ListToDo.ViewToPresenter, ListToDo.ModelToPresenter, ListToDo.ListToDoTo, ListToDo.ToListToDo {
+        <ListToDo.PresenterToView, ListToDo.PresenterToModel, ListToDo.ModelToPresenter, ListToDoModel>
+        implements ListToDo.ViewToPresenter, ListToDo.ModelToPresenter, ListToDo.ListToDoTo, ListToDo.ToListToDo {
 
 
-  private boolean toolbarVisible;
-  private boolean buttonClicked;
-  private boolean textVisible;
+    private boolean toolbarVisible;
+    private boolean buttonClicked;
+    private boolean textVisible;
+    private boolean listClicked;
 
-  /**
-   * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
-   * Responsible to initialize MODEL.
-   * Always call {@link GenericPresenter#onCreate(Class, Object)} to initialize the object
-   * Always call  {@link GenericPresenter#setView(ContextView)} to save a PresenterToView reference
-   *
-   * @param view The current VIEW instance
-   */
-  @Override
-  public void onCreate(ListToDo.PresenterToView view) {
-    super.onCreate(ListToDoModel.class, this);
-    setView(view);
-    Log.d(TAG, "calling onCreate()");
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
+    private ArrayList<Integer> posSelected = new ArrayList<>();
+    private ArrayList<Integer> nOfTimesItemClicked = new ArrayList<>();
+    private Task_Adapter adapter;
 
-    Log.d(TAG, "calling startingLisToDoScreen()");
-    Mediator app = (Mediator) getView().getApplication();
-    app.startingListToDoScreen(this);
-  }
 
-  /**
-   * Operation called by VIEW after its reconstruction.
-   * Always call {@link GenericPresenter#setView(ContextView)}
-   * to save the new instance of PresenterToView
-   *
-   * @param view The current VIEW instance
-   */
-  @Override
-  public void onResume(ListToDo.PresenterToView view) {
-    setView(view);
-    Log.d(TAG, "calling onResume()");
+    /**
+     * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
+     * Responsible to initialize MODEL.
+     * Always call {@link GenericPresenter#onCreate(Class, Object)} to initialize the object
+     * Always call  {@link GenericPresenter#setView(ContextView)} to save a PresenterToView reference
+     *
+     * @param view The current VIEW instance
+     */
+    @Override
+    public void onCreate(ListToDo.PresenterToView view) {
+        super.onCreate(ListToDoModel.class, this);
+        setView(view);
+        Log.d(TAG, "calling onCreate()");
 
-    if(configurationChangeOccurred()) {
-      getView().setLabel(getModel().getLabel());
-
-      checkToolbarVisibility();
-      checkTextVisibility();
-
-      if (buttonClicked) {
-        getView().setText(getModel().getText());
-      }
+        Log.d(TAG, "calling startingLisToDoScreen()");
+        Mediator app = (Mediator) getView().getApplication();
+        adapter = new Task_Adapter((Context) view, R.layout.item_list, TaskRepository.getInstance().getTasks());
+        app.startingListToDoScreen(this);
     }
-  }
 
-  /**
-   * Helper method to inform Presenter that a onBackPressed event occurred
-   * Called by {@link GenericActivity}
-   */
-  @Override
-  public void onBackPressed() {
-    Log.d(TAG, "calling onBackPressed()");
-  }
+    /**
+     * Operation called by VIEW after its reconstruction.
+     * Always call {@link GenericPresenter#setView(ContextView)}
+     * to save the new instance of PresenterToView
+     *
+     * @param view The current VIEW instance
+     */
+    @Override
+    public void onResume(ListToDo.PresenterToView view) {
+        setView(view);
+        Log.d(TAG, "calling onResume()");
 
-  /**
-   * Hook method called when the VIEW is being destroyed or
-   * having its configuration changed.
-   * Responsible to maintain MVP synchronized with Activity lifecycle.
-   * Called by onDestroy methods of the VIEW layer, like: {@link GenericActivity#onDestroy()}
-   *
-   * @param isChangingConfiguration true: configuration changing & false: being destroyed
-   */
-  @Override
-  public void onDestroy(boolean isChangingConfiguration) {
-    super.onDestroy(isChangingConfiguration);
-    Log.d(TAG, "calling onDestroy()");
-  }
+        if (configurationChangeOccurred()) {
+            getView().setLabel(getModel().getLabel());
 
+            checkToolbarVisibility();
+            checkTextVisibility();
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // View To Presenter /////////////////////////////////////////////////////////////
-
-  @Override
-  public void onButtonClicked() {
-    Log.d(TAG, "calling onButtonClicked()");
-    if(isViewRunning()) {
-      getModel().onChangeMsgByBtnClicked();
-      getView().setText(getModel().getText());
-      textVisible = true;
-      buttonClicked = true;
+            if (buttonClicked) {
+                getView().setText(getModel().getText());
+            }
+        }
     }
-    checkTextVisibility();
-  }
+
+    /**
+     * Helper method to inform Presenter that a onBackPressed event occurred
+     * Called by {@link GenericActivity}
+     */
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "calling onBackPressed()");
+    }
+
+    /**
+     * Hook method called when the VIEW is being destroyed or
+     * having its configuration changed.
+     * Responsible to maintain MVP synchronized with Activity lifecycle.
+     * Called by onDestroy methods of the VIEW layer, like: {@link GenericActivity#onDestroy()}
+     *
+     * @param isChangingConfiguration true: configuration changing & false: being destroyed
+     */
+    @Override
+    public void onDestroy(boolean isChangingConfiguration) {
+        super.onDestroy(isChangingConfiguration);
+        Log.d(TAG, "calling onDestroy()");
+    }
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // To ListDone //////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    // View To Presenter /////////////////////////////////////////////////////////////
 
-  @Override
-  public void onScreenStarted() {
-    Log.d(TAG, "calling onScreenStarted()");
+    @Override
+    public void onButtonClicked() {
+        Log.d(TAG, "calling onButtonClicked()");
+        if (isViewRunning()) {
+            getModel().onChangeMsgByBtnClicked();
+            getView().setText(getModel().getText());
+            textVisible = true;
+            buttonClicked = true;
+        }
+        checkTextVisibility();
+    }
+
+    @Override
+    public void onListClick(int position) {
+        Task currentTask = adapter.getItem(position);
+        if (listClicked) {                                //Esta seleccionado algo?
+            if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
+                setItemChecked(position, false);         //Se deselecciona
+                tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
+                posSelected.remove(position);                  //Se elimina del array de posiciones seleccionadas
+
+                checkSelection();                       //Comprobamos si sigue alguno seleccionado
+            } else {                                      //Si no estaba seleccionado
+                setItemChecked(position, true);          //Lo seleccionamos
+                tasksSelected.add(currentTask);           //Se añade al array de seleccionados
+                posSelected.add(position);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
+
+            }
+
+        } else {                                          //Si no estaba ningun elemento seleccionado
+            //Codigo DETALLE
+        }
+
+    }
+
+    @Override
+    public void onLongListClick(int pos) {
+        getView().startSelection();           //iniciamos modo seleccion multiple
+
+        Log.v("long click", "pos: " + pos);
+        Task currentTask = adapter.getItem(pos);
+
+
+
+        if (isItemListChecked(pos)) {                //Si el elemento ya estaba seleccionado
+            setItemChecked(pos, false);          //Se deselecciona
+            Log.v("Se deselecciona", "pos: " + pos);
+
+            tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
+            posSelected.remove(pos);                  //Se elimina del array de posiciones seleccionadas
+            checkSelection();                        //miramos si hay algun seleccionado
+        } else {                                      //Si no estaba seleccionado
+            setListClicked(true);                   //actualizamos estado a algo seleccionado
+            setItemChecked(pos, true);           //Se selecciona
+            Log.v("Se selecciona", "pos: " + pos);
+            tasksSelected.add(currentTask);           //Se añade al array de seleccionados
+            posSelected.add(pos);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
+;
+        }
+
+
+    }
+
+    @Override
+    public void onBinBtnClick() {
+        int size = tasksSelected.size();
+        if (size != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
+            for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
+                Task task = tasksSelected.get(i);
+                adapter.remove(task);                   //Se elimina la tarea
+
+
+            }
+            adapter.notifyDataSetChanged();
+            //deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
+            //checkSelection();
+
+        }
+    }
+
+    private void deselectAll() {
+        for (int k = 0; k < posSelected.size(); k++) {
+            setItemChecked(posSelected.get(k), false);
+        }
+        posSelected.clear();
+        tasksSelected.clear();
+
+
+    }
+
+    private void checkSelection() {
+        if (posSelected.size() == 0) {                   //Si no hay nada seleccionado
+            setListClicked(false);                      //Cambiamos estado a nada seleccionado
+            getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+        } else {                                          //Si hay algo seleccionado
+            getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
+        }
+    }
+
+    private void setItemChecked(int pos, boolean checked) {
+        getView().setItemChecked(pos, checked);
+    }
+
+    private boolean isItemListChecked(int pos) {
+        boolean result=false;
+        if(posSelected.size()>0 && posSelected.contains(pos)) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
+                result = true;                                              //Entonces si estaba seleccionado
+        }
+        return result;
+        }
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // To ListToDo //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void onScreenStarted() {
+        Log.d(TAG, "calling onScreenStarted()");
     /*if(isViewRunning()) {
       getView().setLabel(getModel().getLabel());
     }
     checkToolbarVisibility();
     checkTextVisibility();*/
-  }
-
-  @Override
-  public void setToolbarVisibility(boolean visible) {
-    toolbarVisible = visible;
-  }
-
-  @Override
-  public void setTextVisibility(boolean visible) {
-    textVisible = visible;
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  // ListDone To //////////////////////////////////////////////////////////////////////
-
-
-  @Override
-  public Context getManagedContext(){
-    return getActivityContext();
-  }
-
-  @Override
-  public void destroyView(){
-    if(isViewRunning()) {
-      getView().finishScreen();
     }
-  }
-  @Override
-  public boolean isToolbarVisible() {
-    return toolbarVisible;
-  }
 
-  @Override
-  public boolean isTextVisible() {
-    return textVisible;
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////
-
-  private void checkToolbarVisibility(){
-    Log.d(TAG, "calling checkToolbarVisibility()");
-    if(isViewRunning()) {
-      if (!toolbarVisible) {
-        getView().hideToolbar();
-      }
+    @Override
+    public void setToolbarVisibility(boolean visible) {
+        toolbarVisible = visible;
     }
-  }
 
-  private void checkTextVisibility(){
-    Log.d(TAG, "calling checkTextVisibility()");
-    if(isViewRunning()) {
-      if(!textVisible) {
-        getView().hideText();
-      } else {
-        getView().showText();
-      }
+    @Override
+    public void setTextVisibility(boolean visible) {
+        textVisible = visible;
     }
-  }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // ListToDo To //////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public Context getManagedContext() {
+        return getActivityContext();
+    }
+
+    @Override
+    public void destroyView() {
+        if (isViewRunning()) {
+            getView().finishScreen();
+        }
+    }
+
+    @Override
+    public boolean isToolbarVisible() {
+        return toolbarVisible;
+    }
+
+    @Override
+    public boolean isTextVisible() {
+        return textVisible;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    private void checkToolbarVisibility() {
+        Log.d(TAG, "calling checkToolbarVisibility()");
+        if (isViewRunning()) {
+            if (!toolbarVisible) {
+                getView().hideToolbar();
+            }
+        }
+    }
+
+    private void checkTextVisibility() {
+        Log.d(TAG, "calling checkTextVisibility()");
+        if (isViewRunning()) {
+            if (!textVisible) {
+                getView().hideText();
+            } else {
+                getView().showText();
+            }
+        }
+    }
+
+    public void setListClicked(boolean listClicked) {
+        this.listClicked = listClicked;
+    }
 }
