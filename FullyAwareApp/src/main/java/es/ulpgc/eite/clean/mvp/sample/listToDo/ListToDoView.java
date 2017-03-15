@@ -32,6 +32,7 @@ public class ListToDoView
     private TextView text;
     private ListView list;
     private FloatingActionButton bin;
+    private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -63,14 +64,14 @@ public class ListToDoView
         bin = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
 
-        final Task_Adapter adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
+        adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                getPresenter().onListClick(position);
+                getPresenter().onListClick(position, adapter);
 
                /* Task currentTask = adapter.getItem(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTitle(), Toast.LENGTH_SHORT);
@@ -86,7 +87,7 @@ public class ListToDoView
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
-                getPresenter().onLongListClick(pos);
+                getPresenter().onLongListClick(pos,adapter);
                 return true;
                    }
         });
@@ -94,11 +95,7 @@ public class ListToDoView
         bin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPresenter().onBinBtnClick();
-
-
-
-
+                getPresenter().onBinBtnClick(adapter);
                 }
 
             }
@@ -206,6 +203,7 @@ public class ListToDoView
 Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }
     }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

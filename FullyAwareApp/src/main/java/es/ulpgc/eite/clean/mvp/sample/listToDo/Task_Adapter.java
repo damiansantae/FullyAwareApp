@@ -66,7 +66,6 @@ public class Task_Adapter extends ArrayAdapter<Task> {
         // Lead actual.
         Task task = getItem(position);
 
-
         // Setup.
         tag.setImageResource(task.getTagId());
         title.setText(task.getTitle());
@@ -75,4 +74,5 @@ public class Task_Adapter extends ArrayAdapter<Task> {
 
         return convertView;
     }
+
 }

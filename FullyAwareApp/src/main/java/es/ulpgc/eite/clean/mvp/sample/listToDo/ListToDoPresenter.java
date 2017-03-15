@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 public class ListToDoPresenter extends GenericPresenter
@@ -24,8 +23,7 @@ public class ListToDoPresenter extends GenericPresenter
 
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<Integer> posSelected = new ArrayList<>();
-    private ArrayList<Integer> nOfTimesItemClicked = new ArrayList<>();
-    private Task_Adapter adapter;
+
 
 
     /**
@@ -44,7 +42,6 @@ public class ListToDoPresenter extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        adapter = new Task_Adapter((Context) view, R.layout.item_list, TaskRepository.getInstance().getTasks());
         app.startingListToDoScreen(this);
     }
 
@@ -112,17 +109,21 @@ public class ListToDoPresenter extends GenericPresenter
     }
 
     @Override
-    public void onListClick(int position) {
+    public void onListClick(int position, Task_Adapter adapter) {
         Task currentTask = adapter.getItem(position);
         if (listClicked) {                                //Esta seleccionado algo?
             if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
                 setItemChecked(position, false);         //Se deselecciona
+                Log.v("se deselecciona", "pos: " + position);
                 tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
                 posSelected.remove(position);                  //Se elimina del array de posiciones seleccionadas
 
                 checkSelection();                       //Comprobamos si sigue alguno seleccionado
             } else {                                      //Si no estaba seleccionado
+
                 setItemChecked(position, true);          //Lo seleccionamos
+                Log.v("se selecciona", "pos: " + position);
+
                 tasksSelected.add(currentTask);           //Se añade al array de seleccionados
                 posSelected.add(position);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
 
@@ -135,7 +136,7 @@ public class ListToDoPresenter extends GenericPresenter
     }
 
     @Override
-    public void onLongListClick(int pos) {
+    public void onLongListClick(int pos, Task_Adapter adapter) {
         getView().startSelection();           //iniciamos modo seleccion multiple
 
         Log.v("long click", "pos: " + pos);
@@ -163,18 +164,16 @@ public class ListToDoPresenter extends GenericPresenter
     }
 
     @Override
-    public void onBinBtnClick() {
-        int size = tasksSelected.size();
+    public void onBinBtnClick(Task_Adapter adapter) {
+        int size = posSelected.size();
         if (size != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
-                Task task = tasksSelected.get(i);
-                adapter.remove(task);                   //Se elimina la tarea
-
-
+                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
+                adapter.notifyDataSetChanged();
             }
-            adapter.notifyDataSetChanged();
-            //deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            //checkSelection();
+
+            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
+            checkSelection();
 
         }
     }
@@ -185,8 +184,6 @@ public class ListToDoPresenter extends GenericPresenter
         }
         posSelected.clear();
         tasksSelected.clear();
-
-
     }
 
     private void checkSelection() {

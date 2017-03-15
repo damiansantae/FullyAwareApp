@@ -60,6 +60,8 @@ public class Task {
         return taskId;
     }
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

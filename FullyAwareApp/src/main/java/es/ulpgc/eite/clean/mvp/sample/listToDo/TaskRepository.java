@@ -37,4 +37,9 @@ public class TaskRepository {
     public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
+
+    public void deleteTask(Task task){
+        tasks.remove(String.valueOf(task.getTaskId()));
+
+    }
 }

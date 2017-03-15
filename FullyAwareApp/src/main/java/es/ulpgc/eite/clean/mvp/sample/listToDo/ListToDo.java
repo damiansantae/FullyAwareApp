@@ -38,11 +38,11 @@ public interface ListToDo {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-      void onListClick(int position);
+      void onListClick(int position, Task_Adapter adapter);
 
-    void onLongListClick(int pos);
+    void onLongListClick(int pos, Task_Adapter adapter);
 
-    void onBinBtnClick();
+    void onBinBtnClick(Task_Adapter adapter);
   }
 
   /**
@@ -63,6 +63,7 @@ public interface ListToDo {
     void startSelection();
 
     void setChoiceMode(int i);
+
   }
 
   /**
