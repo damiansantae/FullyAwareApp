@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listDone;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,16 +23,17 @@ import java.util.ArrayList;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 
-public class ListToDoView
-        extends GenericActivity<ListToDo.PresenterToView, ListToDo.ViewToPresenter, ListToDoPresenter>
-        implements ListToDo.PresenterToView {
+public class ListDoneView
+        extends GenericActivity<ListDone.PresenterToView, ListDone.ViewToPresenter, ListDonePresenter>
+        implements ListDone.PresenterToView {
 
     private Toolbar toolbar;
     private Button button;
     private TextView text;
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
+    private ArrayList<Integer> posSelected = new ArrayList<>();
     private ListView list;
     private FloatingActionButton bin;
-    private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -42,7 +43,7 @@ public class ListToDoView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listtodo);
+        setContentView(R.layout.activity_listdone);
 
    /* text = (TextView) findViewById(R.id.text);
 
@@ -64,18 +65,15 @@ public class ListToDoView
         bin = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
 
-        adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
+        final Task_Adapter adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                getPresenter().onListClick(position, adapter);
-
-               /* Task currentTask = adapter.getItem(position);
+                Task currentTask = adapter.getItem(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTitle(), Toast.LENGTH_SHORT);
-                toast.show();*/
+                toast.show();
             }
         });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -83,23 +81,58 @@ public class ListToDoView
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
+
+
+
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
-                getPresenter().onLongListClick(pos,adapter);
+                list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+                Log.v("long click","pos: " + pos);
+                Task currentTask = adapter.getItem(pos);
+
+                if(list.isItemChecked(pos)){                //Si el elemento ya estaba seleccionado
+                    list.setItemChecked(pos,false);          //Se deselecciona
+                    Log.v("Se deselecciona","pos: " + pos);
+                    tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
+                    posSelected.remove(pos);                  //Se elimina del array de posiciones seleccionadas (
+                }else {                                      //Si no estaba seleccionado
+                    list.setItemChecked(pos, true);           //Se selecciona
+                    Log.v("Se selecciona","pos: " + pos);
+                    tasksSelected.add(currentTask);           //Se añade al array de seleccionados
+                    posSelected.add(pos);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
+                }
+
+
                 return true;
-                   }
+            }
         });
 
         bin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPresenter().onBinBtnClick(adapter);
+                int size = tasksSelected.size();
+                if(size!=0){
+                for(int i=0;i<size;i++) {
+                    Task task = tasksSelected.get(i);
+                    adapter.remove(task);
+                    //Deseleccionamos los index de las posiciones eliminadas
+                }
+                    for(int k=0;k<posSelected.size();k++){
+                        list.setItemChecked(posSelected.get(k), false);
+                    }
+                    posSelected.clear();
+                    tasksSelected.clear();
+
+
+                    adapter.notifyDataSetChanged();
+
+
                 }
 
             }
-        );
+        });
 
     }
 
@@ -110,14 +143,14 @@ public class ListToDoView
      */
     @Override
     protected void onResume() {
-        super.onResume(ListToDoPresenter.class, this);
+        super.onResume(ListDonePresenter.class, this);
     }
 
   /*
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_listToDo, menu);
+    getMenuInflater().inflate(R.menu.menu_listDone, menu);
     return true;
   }
 
@@ -170,40 +203,6 @@ public class ListToDoView
     public void setLabel(String txt) {
         button.setText(txt);
     }
-
-    @Override
-    public boolean isItemListChecked(int pos) {
-        return list.isItemChecked(pos);
-    }
-
-    @Override
-    public void setItemChecked(int pos, boolean checked) {
-        list.setItemChecked(pos,checked);
-    }
-
-    @Override
-    public void startSelection() {
-        list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-    }
-
-    @Override
-    public void setChoiceMode(int i) {
-        if(i==0){               //Modo de seleccion nulo
-            list.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-
-        }else if(i==1){             //Modo de seleccion unico
-            list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-
-        }else if(i==2){             ///Modo de seleccion multiple
-            list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-
-        }else{
-Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
-        }
-    }
-
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
