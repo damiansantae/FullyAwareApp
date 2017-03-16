@@ -20,6 +20,12 @@ public interface ListToDo {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
+    void setAddBtnVisibility(boolean addBtnVisibility);
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+
+
+
+
   }
 
   interface ListToDoTo {
@@ -53,7 +59,14 @@ public interface ListToDo {
     void hideToolbar();
     void hideText();
     void showText();
-    void setText(String txt);
+
+      void showAddBtn();
+
+      void hideDeleteBtn();
+
+      void showDeleteBtn();
+
+      void setText(String txt);
     void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
@@ -64,6 +77,7 @@ public interface ListToDo {
 
     void setChoiceMode(int i);
 
+      void hideAddBtn();
   }
 
   /**

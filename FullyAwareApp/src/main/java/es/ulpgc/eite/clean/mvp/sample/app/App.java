@@ -26,6 +26,8 @@ public class App extends Application implements Mediator, Navigator {
     toListToDoState = new ListToDoState();
     toListToDoState.toolbarVisibility = false;
     toListToDoState.textVisibility = false;
+    toListToDoState.addBtnVisibility=true;
+    toListToDoState.deleteBtnVisibility=false;
 
     toListDoneState = new ListDoneState();
     toListDoneState.toolbarVisibility = false;
@@ -51,6 +53,9 @@ public class App extends Application implements Mediator, Navigator {
     if(toListToDoState != null) {
       presenter.setToolbarVisibility(toListToDoState.toolbarVisibility);
       presenter.setTextVisibility(toListToDoState.textVisibility);
+      presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
+      presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
+
     }
     presenter.onScreenStarted();
   }
@@ -93,6 +98,10 @@ public class App extends Application implements Mediator, Navigator {
   private class ListToDoState {
     boolean toolbarVisibility;
     boolean textVisibility;
+    boolean addBtnVisibility;
+    boolean deleteBtnVisibility;
+
+
   }
 
   private class ListDoneState {

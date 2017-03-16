@@ -18,6 +18,8 @@ public class ListToDoPresenter extends GenericPresenter
 
     private boolean toolbarVisible;
     private boolean buttonClicked;
+    private boolean deleteBtnVisible;
+    private boolean addBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
 
@@ -62,12 +64,16 @@ public class ListToDoPresenter extends GenericPresenter
 
             checkToolbarVisibility();
             checkTextVisibility();
+            checkAddBtnVisibility();
+            checkDeleteBtnVisibility();
 
             if (buttonClicked) {
                 getView().setText(getModel().getText());
             }
         }
     }
+
+
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
@@ -112,6 +118,7 @@ public class ListToDoPresenter extends GenericPresenter
     public void onListClick(int position, Task_Adapter adapter) {
         Task currentTask = adapter.getItem(position);
         if (listClicked) {                                //Esta seleccionado algo?
+
             if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
                 setItemChecked(position, false);         //Se deselecciona
                 Log.v("se deselecciona", "pos: " + position);
@@ -132,7 +139,8 @@ public class ListToDoPresenter extends GenericPresenter
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
         }
-
+        checkDeleteBtnVisibility();
+checkAddBtnVisibility();
     }
 
     @Override
@@ -156,10 +164,12 @@ public class ListToDoPresenter extends GenericPresenter
             setItemChecked(pos, true);           //Se selecciona
             Log.v("Se selecciona", "pos: " + pos);
             tasksSelected.add(currentTask);           //Se añade al array de seleccionados
-            posSelected.add(pos);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
-;
-        }
+            posSelected.add(pos);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
+            checkSelection();
 
+        }
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
 
     }
 
@@ -176,6 +186,9 @@ public class ListToDoPresenter extends GenericPresenter
             checkSelection();
 
         }
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+
     }
 
     private void deselectAll() {
@@ -190,8 +203,13 @@ public class ListToDoPresenter extends GenericPresenter
         if (posSelected.size() == 0) {                   //Si no hay nada seleccionado
             setListClicked(false);                      //Cambiamos estado a nada seleccionado
             getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+            deleteBtnVisible=false;
+            addBtnVisible=true;
         } else {                                          //Si hay algo seleccionado
             getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
+            deleteBtnVisible=true;
+            addBtnVisible=false;
+
         }
     }
 
@@ -231,6 +249,18 @@ public class ListToDoPresenter extends GenericPresenter
     @Override
     public void setTextVisibility(boolean visible) {
         textVisible = visible;
+    }
+
+    @Override
+    public void setAddBtnVisibility(boolean addBtnVisibility) {
+        addBtnVisible=addBtnVisibility;
+
+    }
+
+    @Override
+    public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
+        deleteBtnVisible=deleteBtnVisibility;
+
     }
 
 
@@ -279,6 +309,27 @@ public class ListToDoPresenter extends GenericPresenter
                 getView().hideText();
             } else {
                 getView().showText();
+            }
+        }
+    }
+
+    private void checkAddBtnVisibility() {
+        Log.d(TAG, "calling checkAddBtnVisibility()");
+        if (isViewRunning()) {
+            if (!addBtnVisible) {
+                getView().hideAddBtn();
+            } else {
+                getView().showAddBtn();
+            }
+        }
+    }
+    private void checkDeleteBtnVisibility() {
+        Log.d(TAG, "calling checkDeleteBtnVisibility()");
+        if (isViewRunning()) {
+            if (!deleteBtnVisible) {
+                getView().hideDeleteBtn();
+            } else {
+                getView().showDeleteBtn();
             }
         }
     }

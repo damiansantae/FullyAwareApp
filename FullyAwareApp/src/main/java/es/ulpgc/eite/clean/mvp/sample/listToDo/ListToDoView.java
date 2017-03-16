@@ -30,6 +30,7 @@ public class ListToDoView
     private TextView text;
     private ListView list;
     private FloatingActionButton bin;
+    private FloatingActionButton add;
     private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -60,6 +61,7 @@ public class ListToDoView
         ////////////////////////////////////////////////////////////
          list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
+        add= (FloatingActionButton) findViewById(R.id.floatingAddButton);
 
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
@@ -162,6 +164,32 @@ public class ListToDoView
     }
 
     @Override
+    public void hideAddBtn() {
+        add.setVisibility(View.INVISIBLE);
+
+
+    }
+    @Override
+    public void showAddBtn() {
+        add.setVisibility(View.VISIBLE);
+
+
+    }
+    @Override
+    public void hideDeleteBtn() {
+        bin.setVisibility(View.INVISIBLE);
+
+
+    }
+    @Override
+    public void showDeleteBtn() {
+        bin.setVisibility(View.VISIBLE);
+
+
+
+    }
+
+    @Override
     public void setText(String txt) {
         text.setText(txt);
     }
@@ -203,6 +231,8 @@ public class ListToDoView
 Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }
     }
+
+
 
 
     /**
