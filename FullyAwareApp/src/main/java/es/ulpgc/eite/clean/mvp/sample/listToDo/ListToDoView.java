@@ -1,5 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDo;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,14 +12,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.ArrayList;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
@@ -61,7 +59,7 @@ public class ListToDoView
 
         ////////////////////////////////////////////////////////////
          list = (ListView) findViewById(R.id.list);
-        bin = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
 
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
@@ -96,6 +94,7 @@ public class ListToDoView
             @Override
             public void onClick(View v) {
                 getPresenter().onBinBtnClick(adapter);
+                adapter.notifyDataSetChanged();
                 }
 
             }
@@ -108,6 +107,7 @@ public class ListToDoView
      * Method that initialized MVP objects
      * {@link super#onResume(Class, Object)} should always be called
      */
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onResume() {
         super.onResume(ListToDoPresenter.class, this);

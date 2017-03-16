@@ -21,7 +21,7 @@
         android:clickable="true"
         app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_menu_delete"
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingDeleteButton"
         android:layout_marginBottom="29dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

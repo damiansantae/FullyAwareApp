@@ -62,7 +62,7 @@ public class ListDoneView
 
         ////////////////////////////////////////////////////////////
          list = (ListView) findViewById(R.id.list);
-        bin = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
 
 
         final Task_Adapter adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
