@@ -24,7 +24,7 @@ public class ListToDoPresenter extends GenericPresenter
     private boolean listClicked;
 
     private ArrayList<Task> tasksSelected = new ArrayList<>();
-    private ArrayList<Integer> posSelected = new ArrayList<>();
+    private ArrayList<String> posSelected = new ArrayList<>();
 
 
 
@@ -123,7 +123,7 @@ public class ListToDoPresenter extends GenericPresenter
                 setItemChecked(position, false);         //Se deselecciona
                 Log.v("se deselecciona", "pos: " + position);
                 tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
-                posSelected.remove(position);                  //Se elimina del array de posiciones seleccionadas
+                posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
 
                 checkSelection();                       //Comprobamos si sigue alguno seleccionado
             } else {                                      //Si no estaba seleccionado
@@ -132,7 +132,7 @@ public class ListToDoPresenter extends GenericPresenter
                 Log.v("se selecciona", "pos: " + position);
 
                 tasksSelected.add(currentTask);           //Se añade al array de seleccionados
-                posSelected.add(position);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
+                posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
 
             }
 
@@ -157,14 +157,14 @@ checkAddBtnVisibility();
             Log.v("Se deselecciona", "pos: " + pos);
 
             tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
-            posSelected.remove(pos);                  //Se elimina del array de posiciones seleccionadas
+            posSelected.remove(Integer.toString(pos));                  //Se elimina del array de posiciones seleccionadas
             checkSelection();                        //miramos si hay algun seleccionado
         } else {                                      //Si no estaba seleccionado
             setListClicked(true);                   //actualizamos estado a algo seleccionado
             setItemChecked(pos, true);           //Se selecciona
             Log.v("Se selecciona", "pos: " + pos);
             tasksSelected.add(currentTask);           //Se añade al array de seleccionados
-            posSelected.add(pos);                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
+            posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
             checkSelection();
 
         }
@@ -193,7 +193,7 @@ checkAddBtnVisibility();
 
     private void deselectAll() {
         for (int k = 0; k < posSelected.size(); k++) {
-            setItemChecked(posSelected.get(k), false);
+            setItemChecked(Integer.parseInt(posSelected.get(k)), false);
         }
         posSelected.clear();
         tasksSelected.clear();
@@ -219,7 +219,7 @@ checkAddBtnVisibility();
 
     private boolean isItemListChecked(int pos) {
         boolean result=false;
-        if(posSelected.size()>0 && posSelected.contains(pos)) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
+        if(posSelected.size()>0 && posSelected.contains(Integer.toString(pos))) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
                 result = true;                                              //Entonces si estaba seleccionado
         }
         return result;
