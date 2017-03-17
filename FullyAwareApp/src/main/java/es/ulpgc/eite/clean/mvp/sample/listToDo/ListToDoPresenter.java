@@ -184,7 +184,6 @@ checkAddBtnVisibility();
 
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
             checkSelection();
-
         }
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
