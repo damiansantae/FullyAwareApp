@@ -165,7 +165,7 @@ checkAddBtnVisibility();
             Log.v("Se selecciona", "pos: " + pos);
             tasksSelected.add(currentTask);           //Se añade al array de seleccionados
             posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
-            checkSelection();
+           checkSelection();
 
         }
         checkAddBtnVisibility();
@@ -180,7 +180,7 @@ checkAddBtnVisibility();
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
                 adapter.remove(tasksSelected.get(i));
-                adapter.notifyDataSetChanged();
+
             }
 
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
@@ -192,9 +192,11 @@ checkAddBtnVisibility();
     }
 
     private void deselectAll() {
+
         for (int k = 0; k < posSelected.size(); k++) {
             setItemChecked(Integer.parseInt(posSelected.get(k)), false);
         }
+
         posSelected.clear();
         tasksSelected.clear();
     }
@@ -202,7 +204,7 @@ checkAddBtnVisibility();
     private void checkSelection() {
         if (posSelected.size() == 0) {                   //Si no hay nada seleccionado
             setListClicked(false);                      //Cambiamos estado a nada seleccionado
-            getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+           // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
             deleteBtnVisible=false;
             addBtnVisible=true;
         } else {                                          //Si hay algo seleccionado
