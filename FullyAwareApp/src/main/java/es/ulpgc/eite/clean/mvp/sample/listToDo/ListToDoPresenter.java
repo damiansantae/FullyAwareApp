@@ -179,6 +179,7 @@ checkAddBtnVisibility();
         if (size != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
+                adapter.remove(tasksSelected.get(i));
                 adapter.notifyDataSetChanged();
             }
 
