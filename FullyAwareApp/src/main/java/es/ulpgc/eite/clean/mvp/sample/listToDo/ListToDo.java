@@ -49,6 +49,8 @@ public interface ListToDo {
     void onLongListClick(int pos, Task_Adapter adapter);
 
     void onBinBtnClick(Task_Adapter adapter);
+
+      void onAddBtnClick(Task_Adapter adapter);
   }
 
   /**

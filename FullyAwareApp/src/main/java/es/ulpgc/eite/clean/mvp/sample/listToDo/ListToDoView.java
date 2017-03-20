@@ -59,9 +59,9 @@ public class ListToDoView
 
 
         ////////////////////////////////////////////////////////////
-         list = (ListView) findViewById(R.id.list);
+        list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
-        add= (FloatingActionButton) findViewById(R.id.floatingAddButton);
+        add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
 
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
@@ -87,19 +87,29 @@ public class ListToDoView
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
-                getPresenter().onLongListClick(pos,adapter);
+                getPresenter().onLongListClick(pos, adapter);
                 return true;
-                   }
+            }
         });
 
         bin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPresenter().onBinBtnClick(adapter);
-                adapter.notifyDataSetChanged();
-                }
+                                   @Override
+                                   public void onClick(View v) {
+                                       getPresenter().onBinBtnClick(adapter);
+                                       adapter.notifyDataSetChanged();
+                                   }
 
-            }
+                               }
+        );
+
+        add.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View v) {
+                                       getPresenter().onAddBtnClick(adapter);
+                                       adapter.notifyDataSetChanged();
+                                   }
+
+                               }
         );
 
     }
@@ -169,22 +179,24 @@ public class ListToDoView
 
 
     }
+
     @Override
     public void showAddBtn() {
         add.setVisibility(View.VISIBLE);
 
 
     }
+
     @Override
     public void hideDeleteBtn() {
         bin.setVisibility(View.INVISIBLE);
 
 
     }
+
     @Override
     public void showDeleteBtn() {
         bin.setVisibility(View.VISIBLE);
-
 
 
     }
@@ -206,7 +218,8 @@ public class ListToDoView
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        list.setItemChecked(pos,checked);
+        list.setItemChecked(pos, checked);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -217,22 +230,20 @@ public class ListToDoView
 
     @Override
     public void setChoiceMode(int i) {
-        if(i==0){               //Modo de seleccion nulo
+        if (i == 0) {               //Modo de seleccion nulo
             list.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
 
-        }else if(i==1){             //Modo de seleccion unico
+        } else if (i == 1) {             //Modo de seleccion unico
             list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        }else if(i==2){             ///Modo de seleccion multiple
+        } else if (i == 2) {             ///Modo de seleccion multiple
             list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 
-        }else{
-Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
+        } else {
+            Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }
     }
-
-
 
 
     /**

@@ -2,9 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDo;
 
 import java.util.UUID;
 
-/**
- * Created by Damian on 26/02/2017.
- */
+
 
 public class Task {
 

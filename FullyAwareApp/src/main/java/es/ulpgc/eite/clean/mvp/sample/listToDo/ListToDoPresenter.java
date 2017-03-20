@@ -60,19 +60,34 @@ public class ListToDoPresenter extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {
-            getView().setLabel(getModel().getLabel());
+            //getView().setLabel(getModel().getLabel());
 
-            checkToolbarVisibility();
-            checkTextVisibility();
+
+           // checkToolbarVisibility();
+            //checkTextVisibility();
             checkAddBtnVisibility();
             checkDeleteBtnVisibility();
+            if(listClicked) {
+                getView().startSelection();
 
-            if (buttonClicked) {
-                getView().setText(getModel().getText());
+                onCheckItems();
             }
+
+//            if (buttonClicked) {
+//                getView().setText(getModel().getText());
+//            }
         }
     }
 
+    /**
+     * Selecciona los elementos de la lista que estaban seleccionados
+     */
+    private void onCheckItems() {
+        for(int i=0; i<posSelected.size();i++){
+            setItemChecked(Integer.parseInt(posSelected.get(i)), true);
+        }
+
+    }
 
 
     /**
@@ -191,6 +206,13 @@ checkAddBtnVisibility();
 
     }
 
+    @Override
+    public void onAddBtnClick(Task_Adapter adapter) {
+
+
+
+    }
+
     private void deselectAll() {
 
         for (int k = 0; k < posSelected.size(); k++) {
@@ -217,6 +239,7 @@ checkAddBtnVisibility();
 
     private void setItemChecked(int pos, boolean checked) {
         getView().setItemChecked(pos, checked);
+
     }
 
     private boolean isItemListChecked(int pos) {
