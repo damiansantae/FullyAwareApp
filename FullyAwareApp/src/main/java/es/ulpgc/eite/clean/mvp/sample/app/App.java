@@ -28,7 +28,6 @@ public class App extends Application implements Mediator, Navigator {
     toListToDoState.textVisibility = false;
     toListToDoState.addBtnVisibility = true;
     toListToDoState.deleteBtnVisibility = false;
-    toListToDoState.doneBtnVisibility=false;
 
     toListDoneState = new ListDoneState();
     toListDoneState.toolbarVisibility = false;
@@ -56,7 +55,6 @@ public class App extends Application implements Mediator, Navigator {
       presenter.setTextVisibility(toListToDoState.textVisibility);
       presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
       presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
-        presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
 
     }
     presenter.onScreenStarted();
@@ -72,12 +70,7 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
-//
-//  @Override
-//  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
-//
-//  }
-
+  
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
 
@@ -111,7 +104,6 @@ public class App extends Application implements Mediator, Navigator {
     boolean deleteBtnVisibility;
 
 
-    boolean doneBtnVisibility;
   }
 
   private class ListDoneState {
