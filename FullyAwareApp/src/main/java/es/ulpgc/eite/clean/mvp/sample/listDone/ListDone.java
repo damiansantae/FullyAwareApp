@@ -20,6 +20,8 @@ public interface ListDone {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
+    void setAddBtnVisibility(boolean visible);
+    void setDeleteBtnVisibility(boolean visible);
   }
 
   interface ListDoneTo {
@@ -37,6 +39,9 @@ public interface ListDone {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
+    void onListClick(int position, Task_Adapter adapter);
+    void onLongListClick(int pos, Task_Adapter adapter);
+    void onBinBtnClick(Task_Adapter adapter);
   }
 
   /**
@@ -47,8 +52,25 @@ public interface ListDone {
     void hideToolbar();
     void hideText();
     void showText();
+
+    void hideAddBtn();
+
+    void showAddBtn();
+
+    void hideDeleteBtn();
+
+    void showDeleteBtn();
+
     void setText(String txt);
     void setLabel(String txt);
+
+    boolean isItemListChecked(int pos);
+
+    void setItemChecked(int pos, boolean checked);
+
+    void startSelection();
+
+    void setChoiceMode(int i);
   }
 
   /**

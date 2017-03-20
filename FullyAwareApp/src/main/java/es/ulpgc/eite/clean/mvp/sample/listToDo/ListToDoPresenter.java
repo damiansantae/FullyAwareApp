@@ -191,6 +191,21 @@ checkAddBtnVisibility();
 
     }
 
+    @Override
+    public void onListClick(int position) {
+
+    }
+
+    @Override
+    public void onLongListClick(int pos) {
+
+    }
+
+    @Override
+    public void onBinBtnClick() {
+
+    }
+
     private void deselectAll() {
 
         for (int k = 0; k < posSelected.size(); k++) {

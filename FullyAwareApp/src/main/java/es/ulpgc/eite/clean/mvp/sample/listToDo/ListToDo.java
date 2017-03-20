@@ -44,11 +44,17 @@ public interface ListToDo {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-      void onListClick(int position, Task_Adapter adapter);
+    void onListClick(int position, Task_Adapter adapter);
 
     void onLongListClick(int pos, Task_Adapter adapter);
 
     void onBinBtnClick(Task_Adapter adapter);
+
+    void onListClick(int position);
+
+    void onLongListClick(int pos);
+
+    void onBinBtnClick();
   }
 
   /**
@@ -59,25 +65,17 @@ public interface ListToDo {
     void hideToolbar();
     void hideText();
     void showText();
-
-      void showAddBtn();
-
-      void hideDeleteBtn();
-
-      void showDeleteBtn();
-
-      void setText(String txt);
+    void showAddBtn();
+    void hideAddBtn();
+    void hideDeleteBtn();
+    void showDeleteBtn();
+    void setText(String txt);
     void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
-
     void setItemChecked(int pos, boolean checked);
-
     void startSelection();
-
     void setChoiceMode(int i);
-
-      void hideAddBtn();
   }
 
   /**
