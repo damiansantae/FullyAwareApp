@@ -20,6 +20,7 @@ public class ListToDoPresenter extends GenericPresenter
     private boolean buttonClicked;
     private boolean deleteBtnVisible;
     private boolean addBtnVisible;
+    private boolean doneBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
 
@@ -66,7 +67,10 @@ public class ListToDoPresenter extends GenericPresenter
            // checkToolbarVisibility();
             //checkTextVisibility();
             checkAddBtnVisibility();
+            
             checkDeleteBtnVisibility();
+            checkDoneBtnVisibility();
+            CheckDoneBtnVisibility();
             if(listClicked) {
                 getView().startSelection();
 
@@ -78,6 +82,8 @@ public class ListToDoPresenter extends GenericPresenter
 //            }
         }
     }
+
+
 
     /**
      * Selecciona los elementos de la lista que estaban seleccionados
@@ -155,6 +161,7 @@ public class ListToDoPresenter extends GenericPresenter
             //Codigo DETALLE
         }
         checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
 checkAddBtnVisibility();
     }
 
@@ -185,6 +192,7 @@ checkAddBtnVisibility();
         }
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
 
     }
 
@@ -203,6 +211,7 @@ checkAddBtnVisibility();
         }
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
 
     }
 
@@ -228,10 +237,12 @@ checkAddBtnVisibility();
             setListClicked(false);                      //Cambiamos estado a nada seleccionado
            // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
             deleteBtnVisible=false;
+            doneBtnVisible=false;
             addBtnVisible=true;
         } else {                                          //Si hay algo seleccionado
             getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
             deleteBtnVisible=true;
+            doneBtnVisible=true;
             addBtnVisible=false;
 
         }
@@ -259,12 +270,17 @@ checkAddBtnVisibility();
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
-    /*if(isViewRunning()) {
+   /* if(isViewRunning()) {
       getView().setLabel(getModel().getLabel());
     }
-    checkToolbarVisibility();
-    checkTextVisibility();*/
+    //checkToolbarVisibility();
+    //checkTextVisibility();*/
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
     }
+
+
 
     @Override
     public void setToolbarVisibility(boolean visible) {
@@ -285,6 +301,12 @@ checkAddBtnVisibility();
     @Override
     public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
         deleteBtnVisible=deleteBtnVisibility;
+
+    }
+
+    @Override
+    public void setDoneBtnVisibility(boolean doneBtnVisibility) {
+        doneBtnVisible=doneBtnVisibility;
 
     }
 
@@ -355,6 +377,26 @@ checkAddBtnVisibility();
                 getView().hideDeleteBtn();
             } else {
                 getView().showDeleteBtn();
+            }
+        }
+    }
+    private void checkDoneBtnVisibility() {
+        Log.d(TAG, "calling checkDoneBtnVisibility()");
+        if (isViewRunning()) {
+            if (!doneBtnVisible) {
+                getView().hideDoneBtn();
+            } else {
+                getView().showDoneBtn();
+            }
+        }
+    }
+    private void CheckDoneBtnVisibility() {
+        Log.d(TAG, "calling checkDoneBtnVisibility()");
+        if (isViewRunning()) {
+            if (!doneBtnVisible) {
+                getView().hideDoneBtn();
+            } else {
+                getView().showDoneBtn();
             }
         }
     }

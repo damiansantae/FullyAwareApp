@@ -31,6 +31,8 @@ public class ListToDoView
     private ListView list;
     private FloatingActionButton bin;
     private FloatingActionButton add;
+    private FloatingActionButton done;
+
     private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -62,6 +64,7 @@ public class ListToDoView
         list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
+        done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
 
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
@@ -176,6 +179,21 @@ public class ListToDoView
     @Override
     public void hideAddBtn() {
         add.setVisibility(View.INVISIBLE);
+
+
+    }
+
+    @Override
+    public void hideDoneBtn() {
+        done.setVisibility(View.INVISIBLE);
+
+
+
+    }
+
+    @Override
+    public void showDoneBtn() {
+        done.setVisibility(View.VISIBLE);
 
 
     }

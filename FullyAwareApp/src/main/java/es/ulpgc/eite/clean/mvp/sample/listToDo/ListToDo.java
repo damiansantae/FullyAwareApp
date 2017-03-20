@@ -24,8 +24,7 @@ public interface ListToDo {
     void setDeleteBtnVisibility(boolean deleteBtnVisibility);
 
 
-
-
+      void setDoneBtnVisibility(boolean doneBtnVisibility);
   }
 
   interface ListToDoTo {
@@ -80,6 +79,10 @@ public interface ListToDo {
     void setChoiceMode(int i);
 
       void hideAddBtn();
+
+    void hideDoneBtn();
+
+    void showDoneBtn();
   }
 
   /**
