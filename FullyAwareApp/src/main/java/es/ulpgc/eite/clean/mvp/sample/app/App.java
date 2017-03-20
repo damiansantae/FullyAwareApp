@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
@@ -15,6 +17,7 @@ public class App extends Application implements Mediator, Navigator {
   private DummyState toDummyState, dummyToState;
   private ListToDoState toListToDoState, listToDoToState;
   private ListDoneState toListDoneState, listDoneToState;
+  private AddTaskState toAddTaskState, addTaskToState;
 
   @Override
   public void onCreate() {
@@ -32,6 +35,8 @@ public class App extends Application implements Mediator, Navigator {
     toListDoneState = new ListDoneState();
     toListDoneState.toolbarVisibility = false;
     toListDoneState.textVisibility = false;
+
+    toAddTaskState = new AddTaskState();
 
 
   }
@@ -70,7 +75,9 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
-  
+
+
+
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
 
@@ -86,7 +93,18 @@ public class App extends Application implements Mediator, Navigator {
       view.startActivity(new Intent(view, DummyView.class));
       presenter.destroyView();
     }
+  }
+  @Override
+  public void gotoAddTaskScreen(AddTask.AddTaskTo presenter) {
+    addTaskToState = new AddTaskState();
+    addTaskToState.toolbarVisibility = presenter.isToolbarVisible();
+    addTaskToState.textVisibility = presenter.isTextVisible();
 
+    Context view = presenter.getManagedContext();
+    if (view != null) {
+      view.startActivity(new Intent(view, AddTaskView.class));
+      presenter.destroyView();
+    }
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -102,8 +120,6 @@ public class App extends Application implements Mediator, Navigator {
     boolean textVisibility;
     boolean addBtnVisibility;
     boolean deleteBtnVisibility;
-
-
   }
 
   private class ListDoneState {
@@ -111,6 +127,11 @@ public class App extends Application implements Mediator, Navigator {
     boolean textVisibility;
     boolean addBtnVisibility;
     boolean deleteBtnVisibility;
+  }
+
+  private class AddTaskState {
+    boolean toolbarVisibility;
+    boolean textVisibility;
   }
 
 }
