@@ -49,4 +49,16 @@ android:longClickable="true"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingDoneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/floatingAddButton"
+        android:layout_marginRight="2pt"
+        android:layout_toLeftOf="@id/floatingAddButton"
+        android:clickable="true"
+        app:backgroundTint="@color/flatBlue"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
 </RelativeLayout>
