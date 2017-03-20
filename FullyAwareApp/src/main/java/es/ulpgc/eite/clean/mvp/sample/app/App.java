@@ -70,7 +70,12 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
-  
+
+  @Override
+  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
+
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
 
