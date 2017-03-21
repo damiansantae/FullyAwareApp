@@ -66,6 +66,9 @@ public class ListToDoView
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
@@ -109,7 +112,7 @@ public class ListToDoView
                                    @Override
                                    public void onClick(View v) {
                                        getPresenter().onAddBtnClick(adapter);
-                                       adapter.notifyDataSetChanged();
+                                       //adapter.notifyDataSetChanged();
                                    }
 
                                }

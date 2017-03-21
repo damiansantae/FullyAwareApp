@@ -35,7 +35,7 @@ public class App extends Application implements Mediator, Navigator {
     toDummyState.textVisibility = false;
 
     toListToDoState = new ListToDoState();
-    toListToDoState.toolbarVisibility = false;
+    toListToDoState.toolbarVisibility = true;
     toListToDoState.textVisibility = false;
     toListToDoState.addBtnVisibility = true;
     toListToDoState.deleteBtnVisibility = false;
@@ -52,7 +52,7 @@ public class App extends Application implements Mediator, Navigator {
     toListToDoState.deleteBtnVisibility = false;
 
     toAddTaskState = new AddTaskState();
-    toAddTaskState.toolbarVisibility = false;
+    toAddTaskState.toolbarVisibility = true;
     toAddTaskState.textVisibility = false;
     toAddTaskState.addBtnVisibility = true;
     toAddTaskState.deleteBtnVisibility = false;
@@ -147,8 +147,8 @@ public class App extends Application implements Mediator, Navigator {
   @Override
   public void goToAddTaskScreen(ListToDo.ListToDoTo presenter) {
       listToDoToState = new ListToDoState();
-      listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
-      listDoneToState.textVisibility = presenter.isTextVisible();
+     // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
+      //listDoneToState.textVisibility = presenter.isTextVisible();
 
       Context view = presenter.getManagedContext();
       if (view != null) {

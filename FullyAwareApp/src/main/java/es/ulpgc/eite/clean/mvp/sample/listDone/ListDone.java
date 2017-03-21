@@ -42,6 +42,7 @@ public interface ListDone {
     void onListClick(int position, Task_Adapter adapter);
     void onLongListClick(int pos, Task_Adapter adapter);
     void onBinBtnClick(Task_Adapter adapter);
+
   }
 
   /**

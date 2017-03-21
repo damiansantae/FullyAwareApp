@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Subject"
+            android:textColor="#2c3e50"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/subjectLabel"/>
 
@@ -34,7 +35,7 @@
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hint"
+                android:textColor="#000000"
                 android:id="@+id/subject"/>
 
         <Space
@@ -46,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:textColor="#2c3e50"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:id="@+id/titleLabel"/>
 
@@ -53,7 +55,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint"
+            android:textColor="#000000"
             android:id="@+id/title"/>
 
         <Space
@@ -65,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
+            android:textColor="#2c3e50"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:id="@+id/descriptionLabel"/>
 
@@ -72,7 +75,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint"
+            android:textColor="#000000"
             android:id="@+id/description"/>
 
         <Space
@@ -80,21 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/dateLabel"/>
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
 
-        <DatePicker
+
+     <!--   <DatePicker
             android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="460dp"
+            android:layout_height="96dp"
+            android:layout_weight="617.68"/>-->
 
 
 
@@ -109,13 +104,74 @@
             android:inputType="date"/>-->
 
 
-        <!--<Button
-            android:id="@+id/button"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/selectDateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:text="Select date"
+                android:textColor="#ecf0f1"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"/>
+
+            <Button
+                android:id="@+id/selectTimeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:text="Select time"
+                android:textColor="#ecf0f1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="14dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="14dp"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_label"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="@dimen/fab_margin"/>-->
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/addTaskBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Add Task"
+            android:textColor="#ecf0f1"/>
 
     </LinearLayout>
 

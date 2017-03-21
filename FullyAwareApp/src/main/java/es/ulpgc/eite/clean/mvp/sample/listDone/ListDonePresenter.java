@@ -10,6 +10,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 
 
 public class ListDonePresenter extends GenericPresenter
@@ -189,6 +190,7 @@ public class ListDonePresenter extends GenericPresenter
     checkAddBtnVisibility();
     checkDeleteBtnVisibility();
   }
+
 
   private void deselectAll() {
     for (int k = 0; k < posSelected.size(); k++) {

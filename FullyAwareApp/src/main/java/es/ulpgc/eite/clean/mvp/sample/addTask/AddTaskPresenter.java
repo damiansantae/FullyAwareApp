@@ -1,8 +1,16 @@
 package es.ulpgc.eite.clean.mvp.sample.addTask;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -50,14 +58,8 @@ public class AddTaskPresenter extends GenericPresenter
     Log.d(TAG, "calling onResume()");
 
     if(configurationChangeOccurred()) {
-      getView().setLabel(getModel().getLabel());
 
       checkToolbarVisibility();
-      checkTextVisibility();
-
-      if (buttonClicked) {
-        getView().setText(getModel().getText());
-      }
     }
   }
 
@@ -87,19 +89,41 @@ public class AddTaskPresenter extends GenericPresenter
 
   ///////////////////////////////////////////////////////////////////////////////////
   // View To Presenter /////////////////////////////////////////////////////////////
-
   @Override
-  public void onButtonClicked() {
-    Log.d(TAG, "calling onButtonClicked()");
-    if(isViewRunning()) {
-      getModel().onChangeMsgByBtnClicked();
-      getView().setText(getModel().getText());
-      textVisible = true;
-      buttonClicked = true;
-    }
-    checkTextVisibility();
+  public void onSelectDateBtnClicked() {
+    final Calendar c = Calendar.getInstance();
+    int year = c.get(Calendar.YEAR);
+    int month = c.get(Calendar.MONTH);
+    int day = c.get(Calendar.DAY_OF_MONTH);
+
+    DatePickerDialog datePicker = new DatePickerDialog(getManagedContext(), new DatePickerDialog.OnDateSetListener() {
+      @Override
+      public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        getView().setDateText(dayOfMonth+"/"+monthOfYear+"/"+year);
+      }
+    }, year, month, day);
+    datePicker.show();
   }
 
+  @Override
+  public void onSelectTimeBtnClicked() {
+    final Calendar c = Calendar.getInstance();
+    int hours = c.get(Calendar.HOUR_OF_DAY);
+    int minutes = c.get(Calendar.MINUTE);
+
+    TimePickerDialog timePicker = new TimePickerDialog(getManagedContext(), new TimePickerDialog.OnTimeSetListener() {
+      @Override
+      public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        getView().setTimeText(hourOfDay+":"+minute);
+      }
+    }, hours, minutes, false);
+    timePicker.show();
+  }
+
+  @Override
+  public void onAddTaskBtnClicked() {
+
+  }
 
   ///////////////////////////////////////////////////////////////////////////////////
   // To ListDone //////////////////////////////////////////////////////////////////////
@@ -107,11 +131,7 @@ public class AddTaskPresenter extends GenericPresenter
   @Override
   public void onScreenStarted() {
     Log.d(TAG, "calling onScreenStarted()");
-    if(isViewRunning()) {
-      getView().setLabel(getModel().getLabel());
-    }
     checkToolbarVisibility();
-    checkTextVisibility();
   }
 
   @Override
@@ -172,15 +192,7 @@ public class AddTaskPresenter extends GenericPresenter
     }
   }
 
-  private void checkTextVisibility(){
-    Log.d(TAG, "calling checkTextVisibility()");
-    if(isViewRunning()) {
-      if(!textVisible) {
-        getView().hideText();
-      } else {
-        getView().showText();
-      }
-    }
-  }
+
+
 
 }
