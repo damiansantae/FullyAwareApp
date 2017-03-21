@@ -10,8 +10,8 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 public class AddTaskPresenter extends GenericPresenter
-    <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
-    implements AddTask.ViewToPresenter, AddTask.ModelToPresenter {
+        <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
+        implements AddTask.ViewToPresenter, AddTask.ModelToPresenter, AddTask.AddTaskTo, AddTask.ToAddTask {
 
 
   private boolean toolbarVisible;
@@ -102,7 +102,7 @@ public class AddTaskPresenter extends GenericPresenter
 
 
   ///////////////////////////////////////////////////////////////////////////////////
-  // To ListAddTask //////////////////////////////////////////////////////////////////////
+  // To ListDone //////////////////////////////////////////////////////////////////////
 
   @Override
   public void onScreenStarted() {
