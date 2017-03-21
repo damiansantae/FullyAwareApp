@@ -1,5 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
@@ -17,4 +18,6 @@ public interface Mediator {
   void startingListForgottenScreen(ListForgotten.ToListForgotten presenter);
 
   void taskDone(Task taskDone);
+
+  void startingAddTaskScreen(AddTaskPresenter addTaskPresenter);
 }
