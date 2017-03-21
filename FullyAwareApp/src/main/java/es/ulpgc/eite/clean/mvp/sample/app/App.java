@@ -106,7 +106,7 @@ public class App extends Application implements Mediator, Navigator {
   @Override
   public void taskDone(Task taskDone) {
 
-    ListDonePresenter.setNewTask(null); // Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
+    ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
   }
 
   @Override

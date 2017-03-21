@@ -1,5 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listDone;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +24,7 @@ public class TaskRepository {
     }
 
     public void saveTask(Task task) {
-        tasks.put(String.valueOf(task.getTaskId()), task);
+        //tasks.put(String.valueOf(task.getTaskId()), task); PENDIENTE
     }
 
     public ArrayList<Task> getTasks() {

@@ -50,6 +50,8 @@ public interface ListToDo {
     void onBinBtnClick(Task_Adapter adapter);
 
       void onAddBtnClick(Task_Adapter adapter);
+
+      void onDoneBtnClick(Task_Adapter adapter);
   }
 
   /**
