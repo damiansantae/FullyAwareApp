@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
@@ -21,6 +22,7 @@ public class App extends Application implements Mediator, Navigator {
   private ListToDoState toListToDoState, listToDoToState;
   private ListDoneState toListDoneState, listDoneToState;
   private ListForgottenState toListForgottenState, listForgottenToState;
+  private AddTaskState toAddTaskState;
 
   @Override
   public void onCreate() {
@@ -45,6 +47,12 @@ public class App extends Application implements Mediator, Navigator {
     toListToDoState.textVisibility = false;
     toListToDoState.addBtnVisibility = true;
     toListToDoState.deleteBtnVisibility = false;
+
+    toAddTaskState = new AddTaskState();
+    toAddTaskState.toolbarVisibility = false;
+    toAddTaskState.textVisibility = false;
+    toAddTaskState.addBtnVisibility = true;
+    toAddTaskState.deleteBtnVisibility = false;
 
   }
 
@@ -97,8 +105,13 @@ public class App extends Application implements Mediator, Navigator {
 
   @Override
   public void taskDone(Task taskDone) {
-    ListDonePresenter.setNewTask(taskDone);
-    // Preguntar como llamar directamente al presentador de ListDone.
+
+    ListDonePresenter.setNewTask(null); // Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
+  }
+
+  @Override
+  public void startingAddTaskScreen(AddTaskPresenter addTaskPresenter) {
+
   }
 
 
@@ -150,6 +163,13 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   private class ListForgottenState {
+    boolean toolbarVisibility;
+    boolean textVisibility;
+    boolean addBtnVisibility;
+    boolean deleteBtnVisibility;
+  }
+
+  private class AddTaskState {
     boolean toolbarVisibility;
     boolean textVisibility;
     boolean addBtnVisibility;
