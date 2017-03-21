@@ -11,7 +11,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
-    implements AddTask.ViewToPresenter, AddTask.ModelToPresenter, AddTask.DummyTo, AddTask.ToDummy {
+    implements AddTask.ViewToPresenter, AddTask.ModelToPresenter, AddTask.AddTaskTo, AddTask.ToAddTask {
 
 
   private boolean toolbarVisible;
@@ -34,7 +34,7 @@ public class AddTaskPresenter extends GenericPresenter
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
-    app.startingDummyScreen(this);
+    app.startingAddTaskScreen(this);
   }
 
   /**
@@ -122,6 +122,16 @@ public class AddTaskPresenter extends GenericPresenter
   @Override
   public void setTextVisibility(boolean visible) {
     textVisible = visible;
+  }
+
+  @Override
+  public void setAddBtnVisibility(boolean addBtnVisibility) {
+
+  }
+
+  @Override
+  public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
+
   }
 
 

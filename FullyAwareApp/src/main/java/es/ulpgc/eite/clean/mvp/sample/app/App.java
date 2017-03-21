@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
+import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
@@ -15,6 +18,7 @@ public class App extends Application implements Mediator, Navigator {
   private DummyState toDummyState, dummyToState;
   private ListToDoState toListToDoState, listToDoToState;
   private ListDoneState toListDoneState, listDoneToState;
+  private AddTaskState toAddTaskState, addTaskToState;
 
   @Override
   public void onCreate() {
@@ -32,6 +36,11 @@ public class App extends Application implements Mediator, Navigator {
     toListDoneState = new ListDoneState();
     toListDoneState.toolbarVisibility = false;
     toListDoneState.textVisibility = false;
+    toAddTaskState = new AddTaskState();
+
+    toAddTaskState.textVisibility = false;
+    toAddTaskState.toolbarVisibility = false;
+
 
 
   }
@@ -62,7 +71,7 @@ public class App extends Application implements Mediator, Navigator {
 
   @Override
   public void startingListDoneScreen(ListDone.ToListDone presenter) {
-    if(toDummyState != null) {
+    if(toListDoneState != null) {
       presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
       presenter.setTextVisibility(toListDoneState.textVisibility);
       presenter.setAddBtnVisibility(toListDoneState.addBtnVisibility);
@@ -70,7 +79,24 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
-  
+
+
+  @Override
+  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
+
+  }
+
+  @Override
+  public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
+    if(toAddTaskState != null) {
+      presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
+      presenter.setTextVisibility(toAddTaskState.textVisibility);
+      presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
+      presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+    }
+    presenter.onScreenStarted();
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
 
@@ -87,6 +113,19 @@ public class App extends Application implements Mediator, Navigator {
       presenter.destroyView();
     }
 
+  }
+
+  @Override
+  public void goToAddTaskScreen(ListToDo.ListToDoTo presenter) {
+      listToDoToState = new ListToDoState();
+      listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
+      listDoneToState.textVisibility = presenter.isTextVisible();
+
+      Context view = presenter.getManagedContext();
+      if (view != null) {
+        view.startActivity(new Intent(view, AddTaskView.class));
+        presenter.destroyView();
+      }
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +146,13 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   private class ListDoneState {
+    boolean toolbarVisibility;
+    boolean textVisibility;
+    boolean addBtnVisibility;
+    boolean deleteBtnVisibility;
+  }
+
+  private class AddTaskState {
     boolean toolbarVisibility;
     boolean textVisibility;
     boolean addBtnVisibility;

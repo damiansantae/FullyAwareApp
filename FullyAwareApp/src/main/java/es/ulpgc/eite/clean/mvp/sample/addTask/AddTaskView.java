@@ -60,6 +60,7 @@ public class AddTaskView
         getPresenter().onButtonClicked();
       }
     });
+
   }
 
   /**
@@ -128,5 +129,6 @@ public class AddTaskView
   public void setLabel(String txt) {
 
   }
+
 
 }

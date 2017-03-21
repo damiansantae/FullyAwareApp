@@ -20,6 +20,8 @@ public interface AddTask {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
+    void setAddBtnVisibility(boolean addBtnVisibility);
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
   }
 
   interface AddTaskTo {

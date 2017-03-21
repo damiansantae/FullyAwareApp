@@ -10,6 +10,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 
 public class ListToDoPresenter extends GenericPresenter
         <ListToDo.PresenterToView, ListToDo.PresenterToModel, ListToDo.ModelToPresenter, ListToDoModel>
@@ -217,9 +218,8 @@ checkAddBtnVisibility();
 
     @Override
     public void onAddBtnClick(Task_Adapter adapter) {
-
-
-
+        Navigator app = (Navigator)getView().getApplication();
+        app.goToAddTaskScreen(this);
     }
 
     private void deselectAll() {
