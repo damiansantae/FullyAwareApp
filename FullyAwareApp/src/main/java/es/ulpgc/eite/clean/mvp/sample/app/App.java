@@ -7,10 +7,16 @@ import android.content.Intent;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
+import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
+import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
+import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDoPresenter;
+import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
 
 
 public class App extends Application implements Mediator, Navigator {
@@ -18,6 +24,7 @@ public class App extends Application implements Mediator, Navigator {
   private DummyState toDummyState, dummyToState;
   private ListToDoState toListToDoState, listToDoToState;
   private ListDoneState toListDoneState, listDoneToState;
+  private ListForgottenState toListForgottenState, listForgottenToState;
   private AddTaskState toAddTaskState, addTaskToState;
 
   @Override
@@ -36,12 +43,19 @@ public class App extends Application implements Mediator, Navigator {
     toListDoneState = new ListDoneState();
     toListDoneState.toolbarVisibility = false;
     toListDoneState.textVisibility = false;
+    toListDoneState.taskDone = null;
+
+    toListForgottenState = new ListForgottenState();
+    toListToDoState.toolbarVisibility = false;
+    toListToDoState.textVisibility = false;
+    toListToDoState.addBtnVisibility = true;
+    toListToDoState.deleteBtnVisibility = false;
+
     toAddTaskState = new AddTaskState();
-
-    toAddTaskState.textVisibility = false;
     toAddTaskState.toolbarVisibility = false;
-
-
+    toAddTaskState.textVisibility = false;
+    toAddTaskState.addBtnVisibility = true;
+    toAddTaskState.deleteBtnVisibility = false;
 
   }
 
@@ -71,7 +85,7 @@ public class App extends Application implements Mediator, Navigator {
 
   @Override
   public void startingListDoneScreen(ListDone.ToListDone presenter) {
-    if(toListDoneState != null) {
+    if(toDummyState != null) {
       presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
       presenter.setTextVisibility(toListDoneState.textVisibility);
       presenter.setAddBtnVisibility(toListDoneState.addBtnVisibility);
@@ -96,6 +110,27 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
+
+
+  @Override
+  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
+    if(toListForgottenState != null) {
+      presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
+      presenter.setTextVisibility(toListForgottenState.textVisibility);
+      presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
+      presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
+
+    }
+    presenter.onScreenStarted();
+  }
+
+  @Override
+  public void taskDone(Task taskDone) {
+
+    ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
+  }
+
+
 
   ///////////////////////////////////////////////////////////////////////////////////
   // Navigator /////////////////////////////////////////////////////////////////////
@@ -128,6 +163,7 @@ public class App extends Application implements Mediator, Navigator {
       }
   }
 
+
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
@@ -150,6 +186,14 @@ public class App extends Application implements Mediator, Navigator {
     boolean textVisibility;
     boolean addBtnVisibility;
     boolean deleteBtnVisibility;
+    Task taskDone;
+  }
+
+  private class ListForgottenState {
+    boolean toolbarVisibility;
+    boolean textVisibility;
+    boolean addBtnVisibility;
+    boolean deleteBtnVisibility;
   }
 
   private class AddTaskState {
@@ -158,5 +202,6 @@ public class App extends Application implements Mediator, Navigator {
     boolean addBtnVisibility;
     boolean deleteBtnVisibility;
   }
+
 
 }

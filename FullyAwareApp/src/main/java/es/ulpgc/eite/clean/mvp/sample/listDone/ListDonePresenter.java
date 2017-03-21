@@ -27,6 +27,7 @@ public class ListDonePresenter extends GenericPresenter
   private ArrayList<Task> tasksSelected = new ArrayList<>();
   private ArrayList<String> posSelected = new ArrayList<>();
 
+
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
    * Responsible to initialize MODEL.
@@ -331,5 +332,10 @@ public class ListDonePresenter extends GenericPresenter
 
   public void setListClicked(boolean listClicked) {
     this.listClicked = listClicked;
+  }
+
+
+  public static void setNewTask(Task newTask) {
+    TaskRepository.getInstance().saveTask(newTask);
   }
 }

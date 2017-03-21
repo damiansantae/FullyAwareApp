@@ -114,6 +114,15 @@ public class ListToDoView
 
                                }
         );
+        done.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View v) {
+                                       getPresenter().onDoneBtnClick(adapter);
+                                       adapter.notifyDataSetChanged();
+                                   }
+
+                               }
+        );
 
     }
 
