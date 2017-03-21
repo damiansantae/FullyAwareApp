@@ -40,6 +40,9 @@ public class TaskRepository {
 
     public void deleteTask(Task task){
         tasks.remove(String.valueOf(task.getTaskId()));
+    }
 
+    public Task taskDone(Task task){
+        return tasks.get(String.valueOf(task.getTaskId()));
     }
 }
