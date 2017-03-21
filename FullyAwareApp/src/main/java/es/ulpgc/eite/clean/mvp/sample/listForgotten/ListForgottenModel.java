@@ -15,6 +15,7 @@ public class ListForgottenModel extends GenericModel<ListForgotten.ModelToPresen
   //Linea de prueba para commit.
   //Linea prueba 2 para commit.
   //Linea prueba 3 para commit.
+  //Linea prueba 4 para commit.
   /**
    * Method that recovers a reference to the PRESENTER
    * You must ALWAYS call {@link super#onCreate(Object)} here
