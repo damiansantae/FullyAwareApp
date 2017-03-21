@@ -96,11 +96,6 @@ public class App extends Application implements Mediator, Navigator {
 
 
   @Override
-  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
-
-  }
-
-  @Override
   public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
     if(toAddTaskState != null) {
       presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
@@ -129,7 +124,6 @@ public class App extends Application implements Mediator, Navigator {
 
     ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
   }
-
 
 
   ///////////////////////////////////////////////////////////////////////////////////

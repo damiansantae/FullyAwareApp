@@ -22,5 +22,4 @@ public interface Mediator {
 
   void taskDone(Task taskDone);
 
-  void startingAddTaskScreen(AddTaskPresenter addTaskPresenter);
 }
