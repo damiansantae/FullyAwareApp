@@ -211,6 +211,7 @@ checkAddBtnVisibility();
 
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
             checkSelection();
+
         }
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -221,6 +222,7 @@ checkAddBtnVisibility();
     @Override
     public void onAddBtnClick(Task_Adapter adapter) {
         Navigator app = (Navigator)getView().getApplication();
+
         app.goToAddTaskScreen(this);
     }
 
@@ -247,7 +249,7 @@ checkAddBtnVisibility();
     private void deselectAll() {
 
         for (int k = 0; k < posSelected.size(); k++) {
-            setItemChecked(Integer.parseInt(posSelected.get(k)), false);
+            getView().deselect(Integer.parseInt(posSelected.get(k)), false);
         }
 
         posSelected.clear();
@@ -257,7 +259,8 @@ checkAddBtnVisibility();
     private void checkSelection() {
         if (posSelected.size() == 0) {                   //Si no hay nada seleccionado
             setListClicked(false);                      //Cambiamos estado a nada seleccionado
-           // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+          // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+
             deleteBtnVisible=false;
             doneBtnVisible=false;
             addBtnVisible=true;
@@ -278,7 +281,7 @@ checkAddBtnVisibility();
     private boolean isItemListChecked(int pos) {
         boolean result=false;
         if(posSelected.size()>0 && posSelected.contains(Integer.toString(pos))) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
-                result = true;                                              //Entonces si estaba seleccionado
+                result = true;                                                      //Entonces si estaba seleccionado
         }
         return result;
         }

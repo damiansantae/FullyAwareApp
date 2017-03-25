@@ -5,9 +5,7 @@ import java.util.HashMap;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 
-/**
- * Created by Damian on 26/02/2017.
- */
+
 
 public class TaskRepository {
     private static TaskRepository repository = new TaskRepository();

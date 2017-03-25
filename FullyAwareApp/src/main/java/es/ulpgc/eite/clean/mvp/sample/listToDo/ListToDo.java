@@ -85,6 +85,8 @@ public interface ListToDo {
     void hideDoneBtn();
 
     void showDoneBtn();
+
+    void deselect(int i, boolean b);
   }
 
   /**

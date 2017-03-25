@@ -121,6 +121,7 @@ public class ListToDoView
                                    @Override
                                    public void onClick(View v) {
                                        getPresenter().onDoneBtnClick(adapter);
+                                       list.clearChoices();
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -211,6 +212,11 @@ public class ListToDoView
     }
 
     @Override
+    public void deselect(int i, boolean b) {
+        list.setItemChecked(i,b);
+    }
+
+    @Override
     public void showAddBtn() {
         add.setVisibility(View.VISIBLE);
 
@@ -262,6 +268,7 @@ public class ListToDoView
     public void setChoiceMode(int i) {
         if (i == 0) {               //Modo de seleccion nulo
             list.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+            list.invalidateViews();
 
         } else if (i == 1) {             //Modo de seleccion unico
             list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
