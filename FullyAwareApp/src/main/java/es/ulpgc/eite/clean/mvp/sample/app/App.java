@@ -6,16 +6,12 @@ import android.content.Intent;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
-import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
-import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
-import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
+import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
+import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
+import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
-import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
-import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDoPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
 
 
@@ -146,14 +142,15 @@ public class App extends Application implements Mediator, Navigator {
 
   @Override
   public void goToAddTaskScreen(ListToDo.ListToDoTo presenter) {
-      listToDoToState = new ListToDoState();
+
      // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
       //listDoneToState.textVisibility = presenter.isTextVisible();
+    addTaskToState = new AddTaskState();
+      addTaskToState.toolbarVisibility=true;
 
       Context view = presenter.getManagedContext();
       if (view != null) {
         view.startActivity(new Intent(view, AddTaskView.class));
-        presenter.destroyView();
       }
   }
 

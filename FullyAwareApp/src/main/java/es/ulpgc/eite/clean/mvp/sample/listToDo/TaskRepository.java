@@ -28,7 +28,7 @@ public class TaskRepository {
 
     }
 
-    private void saveTask(Task task) {
+    public void saveTask(Task task) {
         tasks.put(String.valueOf(task.getTaskId()), task);
     }
 
