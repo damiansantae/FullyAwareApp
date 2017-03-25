@@ -4,8 +4,6 @@ package es.ulpgc.eite.clean.mvp.sample.addTask;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -15,7 +13,10 @@ import java.util.Calendar;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDo.TaskRepository;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
@@ -122,10 +123,32 @@ public class AddTaskPresenter extends GenericPresenter
 
   @Override
   public void onAddTaskBtnClicked() {
+      String title = getTitle();
+      String description = getDescription();
+      String subject = getSubject();
+      String dateTime = getDeadLine();
+
+    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,dateTime));
 
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////
+    private String getDeadLine() {
+        return null;
+    }
+
+    private String getSubject() {
+        return null;
+    }
+
+    private String getDescription() {
+        return null;
+    }
+
+    private String getTitle() {
+        return null;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////
   // To ListDone //////////////////////////////////////////////////////////////////////
 
   @Override
