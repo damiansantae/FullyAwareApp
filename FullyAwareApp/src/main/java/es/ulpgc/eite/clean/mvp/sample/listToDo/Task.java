@@ -60,6 +60,12 @@ public class Task {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (obj instanceof Task){
+            Task task = (Task) obj;
+            if(task.getTaskId() == getTaskId()){
+                return true;
+            }
+        }
+        return false;
     }
 }
