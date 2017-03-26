@@ -13,6 +13,7 @@ import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
+import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDoView;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
 
 
@@ -165,7 +166,7 @@ public class App extends Application implements Mediator, Navigator {
 
     Context view = addTaskPresenter.getManagedContext();
     if (view != null) {
-      view.startActivity(new Intent(view, ListToDo.class));
+      view.startActivity(new Intent(view, ListToDoView.class));
     }
 
   }
