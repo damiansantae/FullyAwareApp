@@ -5,10 +5,8 @@ import android.content.Context;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-/**
- * Created by Luis on 12/11/16.
- */
 
 public interface ListToDoMaster {
 
@@ -22,9 +20,7 @@ public interface ListToDoMaster {
     void setTextVisibility(boolean visible);
     void setAddBtnVisibility(boolean addBtnVisibility);
     void setDeleteBtnVisibility(boolean deleteBtnVisibility);
-
-
-      void setDoneBtnVisibility(boolean doneBtnVisibility);
+    void setDoneBtnVisibility(boolean deleteBtnVisibility);
   }
 
   interface ListToDoTo {
@@ -33,6 +29,23 @@ public interface ListToDoMaster {
     boolean isToolbarVisible();
     boolean isTextVisible();
   }
+  /**
+   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
+   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   */
+   interface MasterListToDetail{
+    Context getManagedContext();
+    Task getSelectedTask();
+    boolean getToolbarVisibility();
+
+  }
+  /**
+   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
+   * del detalle cuando está finaliza
+   */
+  interface DetailToMaster {
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////////////
   // Screen ////////////////////////////////////////////////////////////////////////

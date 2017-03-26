@@ -1,10 +1,9 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
-import android.content.Context;
-
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public interface ListToDoDetail {
 
@@ -12,21 +11,23 @@ public interface ListToDoDetail {
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
-  interface ToListToDo {
+  /**
+   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
+   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   */
+  interface MasterListToDetail{
+    void setToolbarVisibility(boolean b);
+    void setItem(Task selectedItem);
+
     void onScreenStarted();
-    void setToolbarVisibility(boolean visible);
-    void setTextVisibility(boolean visible);
-
-
-
-
   }
-
-  interface ListToDoTo {
-    Context getManagedContext();
+  /**
+   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
+   * del detalle cuando está finaliza
+   */
+  interface DetailToMaster {
     void destroyView();
-    boolean isToolbarVisible();
-
+    Task getTaskToDelete();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +39,7 @@ public interface ListToDoDetail {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-
+    Task getTask();
   }
 
   /**
@@ -56,9 +57,8 @@ public interface ListToDoDetail {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
+    void setTask(Task selectedItem);
+    Task getItem();
   }
 
   /**
@@ -67,4 +67,8 @@ public interface ListToDoDetail {
   interface ModelToPresenter {
 
   }
+
+  ///////////////////////////////////////////
+
+
 }

@@ -1,25 +1,22 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 
-import android.content.Context;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
-import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
-        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.ListToDoTo, ListToDoDetail.ToListToDo {
+        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster {
 
 
 
 
-
+private boolean toolbarVisible;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -31,6 +28,14 @@ public class ListToDoPresenterDetail extends GenericPresenter
      */
     @Override
     public void onCreate(ListToDoDetail.PresenterToView view) {
+        super.onCreate(ListToDoModelDetail.class, this);
+        setView(view);
+
+        // Debe llamarse al arrancar el detalle para fijar su estado inicial.
+        // En este caso, este estado es fijado por el mediador en función de
+        // los valores pasados desde el maestro
+        Mediator app = (Mediator) getView().getApplication();
+        app.startingDetailScreen((ListToDoDetail.MasterListToDetail) this);
 
     }
 
@@ -89,7 +94,10 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
     }
 
-
+    @Override
+    public Task getTask() {
+        return null;
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +106,7 @@ public class ListToDoPresenterDetail extends GenericPresenter
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
+        checkToolbarVisibility();
    /* if(isViewRunning()) {
       getView().setLabel(getModel().getLabel());
     }
@@ -108,27 +117,24 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 
 
+
     @Override
     public void setToolbarVisibility(boolean visible) {
         toolbarVisible = visible;
     }
 
     @Override
-    public void setTextVisibility(boolean visible) {
-        textVisible = visible;
+    public void setItem(Task selectedItem) {
+        getModel().setTask(selectedItem);
+
     }
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////
     // ListToDoDetail To //////////////////////////////////////////////////////////////////////
 
 
-    @Override
-    public Context getManagedContext() {
-        return getActivityContext();
-    }
+
 
     @Override
     public void destroyView() {
@@ -138,8 +144,8 @@ public class ListToDoPresenterDetail extends GenericPresenter
     }
 
     @Override
-    public boolean isToolbarVisible() {
-        return toolbarVisible;
+    public Task getTaskToDelete() {
+        return getModel().getItem();
     }
 
 

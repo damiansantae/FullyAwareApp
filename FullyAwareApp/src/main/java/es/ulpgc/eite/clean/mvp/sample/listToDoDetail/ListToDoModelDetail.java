@@ -1,15 +1,15 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPresenter>
     implements ListToDoDetail.PresenterToModel {
 
-  private String listToDoText;
-  private String listToDoLabel;
-  private int numOfTimes;
-  private String msgText;
+  private Task task;
+
+
 
   /**
    * Method that recovers a reference to the PRESENTER
@@ -21,8 +21,7 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
   public void onCreate(ListToDoDetail.ModelToPresenter presenter) {
     super.onCreate(presenter);
 
-    listToDoLabel = "Click Me!";
-    listToDoText = "Hello World!";
+
   }
 
   /**
@@ -40,22 +39,16 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
   // Presenter To Model ////////////////////////////////////////////////////////////
 
 
+
+
   @Override
-  public void onChangeMsgByBtnClicked() {
-    msgText = listToDoText;
-    if(numOfTimes > 0) {
-      msgText += ", " + numOfTimes + " times";
-    }
-    numOfTimes++;
+  public void setTask(Task selectedItem) {
+    this.task = selectedItem;
+
   }
 
   @Override
-  public String getText() {
-    return msgText;
-  }
-
-  @Override
-  public String getLabel() {
-    return listToDoLabel;
+  public Task getItem() {
+    return task;
   }
 }

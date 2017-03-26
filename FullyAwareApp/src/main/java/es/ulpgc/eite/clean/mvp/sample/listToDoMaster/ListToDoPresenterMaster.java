@@ -15,7 +15,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo {
+        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster {
 
 
     private boolean toolbarVisible;
@@ -26,6 +26,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean textVisible;
     private boolean listClicked;
     private Task taskDone;
+
+    private Task selectedTask;
 
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
@@ -163,6 +165,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
+            selectedTask = adapter.getItem(position);
+            Navigator app = (Navigator) getView().getApplication();
+            app.goToDetailScreen(this);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -347,6 +352,16 @@ checkAddBtnVisibility();
     }
 
     @Override
+    public Task getSelectedTask() {
+        return selectedTask;
+    }
+
+    @Override
+    public boolean getToolbarVisibility() {
+        return toolbarVisible;
+    }
+
+    @Override
     public void destroyView() {
         if (isViewRunning()) {
             getView().finishScreen();
@@ -430,6 +445,7 @@ checkAddBtnVisibility();
     public void setListClicked(boolean listClicked) {
         this.listClicked = listClicked;
     }
+
 
 
 }

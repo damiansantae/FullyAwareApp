@@ -12,7 +12,10 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
+import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
+import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 
@@ -23,6 +26,8 @@ public class App extends Application implements Mediator, Navigator {
   private ListDoneState toListDoneState, listDoneToState;
   private ListForgottenState toListForgottenState, listForgottenToState;
   private AddTaskState toAddTaskState, addTaskToState;
+
+    private DetailState masterListToDetailState;
 
   @Override
   public void onCreate() {
@@ -75,6 +80,8 @@ public class App extends Application implements Mediator, Navigator {
       presenter.setTextVisibility(toListToDoState.textVisibility);
       presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
       presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
+        presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
+
 
     }
     presenter.onScreenStarted();
@@ -115,8 +122,26 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
+    /**
+     * Llamado cuando arranca el detalle para fijar su estado inicial
+     *
+     * @param presenter implementando la interfaz necesaria para fijar su estado inicial
+     *  en funcion de los valores pasado desde el maestro
+     */
+    @Override
+    public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter){
+        if(masterListToDetailState != null) {
+            presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
+            presenter.setItem(masterListToDetailState.selectedItem);
+        }
 
-  @Override
+        // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
+        masterListToDetailState = null;
+        presenter.onScreenStarted();
+    }
+
+
+    @Override
   public void taskDone(Task taskDone) {
 
     ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
@@ -170,8 +195,20 @@ public class App extends Application implements Mediator, Navigator {
 
   }
 
+    @Override
+    public void goToDetailScreen(ListToDoPresenterMaster listToDoPresenterMaster) {
+        masterListToDetailState =new DetailState();
+        masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
+        masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+        // Arrancamos la pantalla del detalle sin finalizar la del maestro
+        Context view = listToDoPresenterMaster.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListToDoViewDetail.class));
+        }
+    }
 
-  ///////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
   private class DummyState {
@@ -184,6 +221,8 @@ public class App extends Application implements Mediator, Navigator {
     boolean textVisibility;
     boolean addBtnVisibility;
     boolean deleteBtnVisibility;
+      boolean doneBtnVisibility;
+
 
 
   }
@@ -210,5 +249,9 @@ public class App extends Application implements Mediator, Navigator {
     boolean deleteBtnVisibility;
   }
 
+    private class DetailState {
+        boolean toolbarVisible;
+        Task selectedItem;
+    }
 
 }

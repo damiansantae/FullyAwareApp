@@ -29,7 +29,7 @@ public class ListToDoViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listtodo_detail);
+        setContentView(R.layout.activity_task_detail);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,7 +85,7 @@ public class ListToDoViewDetail
 
         // Show the dummy content as text in a TextView.
         if (task != null) {
-            ((TextView) findViewById(R.id.task_detail)).setText(task.getDetails());
+            ((TextView) findViewById(R.id.task_detail)).setText(task.getDescription());
         }
     }
 
@@ -94,7 +94,7 @@ public class ListToDoViewDetail
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_listToDo_detail, menu);
+    getMenuInflater().inflate(R.menu.menu_listtodo_detail, menu);
     return true;
   }
 
