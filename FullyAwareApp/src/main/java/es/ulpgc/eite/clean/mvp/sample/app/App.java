@@ -12,9 +12,8 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDo;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.ListToDoView;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 
 public class App extends Application implements Mediator, Navigator {
@@ -70,7 +69,7 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   @Override
-  public void startingListToDoScreen(ListToDo.ToListToDo presenter){
+  public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter){
     if(toListToDoState != null) {
       presenter.setToolbarVisibility(toListToDoState.toolbarVisibility);
       presenter.setTextVisibility(toListToDoState.textVisibility);
@@ -143,7 +142,7 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   @Override
-  public void goToAddTaskScreen(ListToDo.ListToDoTo presenter) {
+  public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {
 
      // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
       //listDoneToState.textVisibility = presenter.isTextVisible();
@@ -166,7 +165,7 @@ public class App extends Application implements Mediator, Navigator {
 
     Context view = addTaskPresenter.getManagedContext();
     if (view != null) {
-      view.startActivity(new Intent(view, ListToDoView.class));
+      view.startActivity(new Intent(view, ListToDoViewMaster.class));
     }
 
   }

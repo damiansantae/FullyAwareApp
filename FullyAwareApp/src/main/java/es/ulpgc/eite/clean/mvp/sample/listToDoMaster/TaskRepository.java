@@ -1,10 +1,10 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class TaskRepository {

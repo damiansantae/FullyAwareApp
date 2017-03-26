@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 
 import android.content.Context;
@@ -11,10 +11,11 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-public class ListToDoPresenter extends GenericPresenter
-        <ListToDo.PresenterToView, ListToDo.PresenterToModel, ListToDo.ModelToPresenter, ListToDoModel>
-        implements ListToDo.ViewToPresenter, ListToDo.ModelToPresenter, ListToDo.ListToDoTo, ListToDo.ToListToDo {
+public class ListToDoPresenterMaster extends GenericPresenter
+        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
+        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo {
 
 
     private boolean toolbarVisible;
@@ -41,8 +42,8 @@ public class ListToDoPresenter extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListToDo.PresenterToView view) {
-        super.onCreate(ListToDoModel.class, this);
+    public void onCreate(ListToDoMaster.PresenterToView view) {
+        super.onCreate(ListToDoModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
 
@@ -59,7 +60,7 @@ public class ListToDoPresenter extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListToDo.PresenterToView view) {
+    public void onResume(ListToDoMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
 
@@ -290,7 +291,7 @@ checkAddBtnVisibility();
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // To ListToDo //////////////////////////////////////////////////////////////////////
+    // To ListToDoDetail //////////////////////////////////////////////////////////////////////
 
     @Override
     public void onScreenStarted() {
@@ -337,7 +338,7 @@ checkAddBtnVisibility();
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // ListToDo To //////////////////////////////////////////////////////////////////////
+    // ListToDoDetail To //////////////////////////////////////////////////////////////////////
 
 
     @Override

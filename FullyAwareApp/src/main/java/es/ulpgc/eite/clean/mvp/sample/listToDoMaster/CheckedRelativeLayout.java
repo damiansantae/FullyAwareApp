@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.util.AttributeSet;

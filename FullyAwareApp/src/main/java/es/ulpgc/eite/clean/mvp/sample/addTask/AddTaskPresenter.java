@@ -16,8 +16,8 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDo.TaskRepository;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>

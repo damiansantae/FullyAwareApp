@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDo;
+package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
@@ -21,9 +21,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 
-public class ListToDoView
-        extends GenericActivity<ListToDo.PresenterToView, ListToDo.ViewToPresenter, ListToDoPresenter>
-        implements ListToDo.PresenterToView {
+public class ListToDoViewMaster
+        extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
+        implements ListToDoMaster.PresenterToView {
 
     private Toolbar toolbar;
     private Button button;
@@ -138,7 +138,7 @@ public class ListToDoView
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onResume() {
-        super.onResume(ListToDoPresenter.class, this);
+        super.onResume(ListToDoPresenterMaster.class, this);
     }
 
   /*

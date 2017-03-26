@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <es.ulpgc.eite.clean.mvp.sample.listToDo.CheckedRelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    <es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
@@ -43,4 +43,4 @@
         android:layout_below="@+id/description"
         android:text="Fecha de entrega"
       />
-    </es.ulpgc.eite.clean.mvp.sample.listToDo.CheckedRelativeLayout>
+    </es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout>
