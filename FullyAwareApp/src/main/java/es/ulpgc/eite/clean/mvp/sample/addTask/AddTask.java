@@ -52,6 +52,17 @@ public interface AddTask {
     void setDateText(String txt);
 
     void setTimeText(String txt);
+
+
+    String getDescription();
+
+    String getDate();
+
+    String getTime();
+
+    String getTaskTitle();
+
+    String getTaskSubject();
   }
 
   /**

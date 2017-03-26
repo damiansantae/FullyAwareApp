@@ -1,20 +1,12 @@
 package es.ulpgc.eite.clean.mvp.sample.addTask;
 
-import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
-import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 
@@ -79,6 +71,7 @@ public class AddTaskView
       @Override
       public void onClick(View v) {
         getPresenter().onAddTaskBtnClicked();
+
       }
     });
 
@@ -142,6 +135,32 @@ public class AddTaskView
   public void setTimeText(String txt) {
     time.setText(txt);
   }
+
+  @Override
+  public String getDescription() {
+    return description.getText().toString();
+  }
+
+  @Override
+  public String getDate() {
+    return date.getText().toString();
+
+  }
+
+  @Override
+  public String getTime() {
+    return time.getText().toString();
+  }
+
+    @Override
+    public String getTaskTitle() {
+        return title.getText().toString();
+    }
+
+    @Override
+    public String getTaskSubject() {
+        return subject.getText().toString();
+    }
 
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
+import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
@@ -152,6 +153,21 @@ public class App extends Application implements Mediator, Navigator {
       if (view != null) {
         view.startActivity(new Intent(view, AddTaskView.class));
       }
+  }
+
+  @Override
+  public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
+    if (listToDoToState==null){
+      listToDoToState = new ListToDoState();
+
+    }
+    listToDoToState.toolbarVisibility=true;
+
+    Context view = addTaskPresenter.getManagedContext();
+    if (view != null) {
+      view.startActivity(new Intent(view, ListToDo.class));
+    }
+
   }
 
 

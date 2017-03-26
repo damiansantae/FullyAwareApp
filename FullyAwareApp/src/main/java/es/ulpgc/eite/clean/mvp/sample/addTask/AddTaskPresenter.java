@@ -15,6 +15,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDo.TaskRepository;
 
@@ -126,26 +127,38 @@ public class AddTaskPresenter extends GenericPresenter
       String title = getTitle();
       String description = getDescription();
       String subject = getSubject();
-      String dateTime = getDeadLine();
+    String time = getTime();
+      String date = getDate();
+    String deadline = getDeadLine(time,date);
+    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline));
+      Navigator app = (Navigator)getView().getApplication();
 
-    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,dateTime));
+      app.goToListToDoScreen(this);
 
   }
 
-    private String getDeadLine() {
-        return null;
+    private String getDeadLine(String time, String date) {
+        return time +" - "+ date;
+    }
+
+    private String getTime() {
+    return getView().getTime();
+  }
+
+  private String getDate() {
+        return getView().getDate();
     }
 
     private String getSubject() {
-        return null;
+        return getView().getTaskSubject();
     }
 
     private String getDescription() {
-        return null;
+        return getView().getDescription();
     }
 
     private String getTitle() {
-        return null;
+      return getView().getTaskTitle();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +227,6 @@ public class AddTaskPresenter extends GenericPresenter
       }
     }
   }
-
 
 
 
