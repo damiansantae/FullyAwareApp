@@ -7,6 +7,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoPresenterDetail extends GenericPresenter
@@ -35,7 +36,7 @@ private boolean toolbarVisible;
         // En este caso, este estado es fijado por el mediador en función de
         // los valores pasados desde el maestro
         Mediator app = (Mediator) getView().getApplication();
-        app.startingDetailScreen((ListToDoDetail.MasterListToDetail) this);
+        app.startingDetailScreen(this);
 
     }
 
@@ -48,18 +49,16 @@ private boolean toolbarVisible;
      */
     @Override
     public void onResume(ListToDoDetail.PresenterToView view) {
+        setView(view);
+
+        // Verificamos si mostramos o no la barra de tareas cuando se produce un giro de pantalla
+        // en función de la orientación actual de la pantalla
+        if(configurationChangeOccurred()) {
+            checkToolbarVisibility();
+        }
 
     }
 
-
-
-    /**
-     * Selecciona los elementos de la lista que estaban seleccionados
-     */
-    private void onCheckItems() {
-
-
-    }
 
 
     /**
@@ -96,7 +95,13 @@ private boolean toolbarVisible;
 
     @Override
     public Task getTask() {
-        return null;
+        return getModel().getTask();
+    }
+
+    @Override
+    public void onDeleteActionClicked() {
+        Navigator app = (Navigator) getView().getApplication();
+        app.backToMasterScreen(this);
     }
 
 
@@ -145,7 +150,7 @@ private boolean toolbarVisible;
 
     @Override
     public Task getTaskToDelete() {
-        return getModel().getItem();
+        return getModel().getTask();
     }
 
 

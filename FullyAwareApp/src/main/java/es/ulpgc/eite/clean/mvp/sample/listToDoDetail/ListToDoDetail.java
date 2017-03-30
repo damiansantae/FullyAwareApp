@@ -40,6 +40,8 @@ public interface ListToDoDetail {
     void onButtonClicked();
 
     Task getTask();
+
+    void onDeleteActionClicked();
   }
 
   /**
@@ -58,7 +60,7 @@ public interface ListToDoDetail {
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
     void setTask(Task selectedItem);
-    Task getItem();
+    Task getTask();
   }
 
   /**

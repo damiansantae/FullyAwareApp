@@ -48,7 +48,7 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
   }
 
   @Override
-  public Task getItem() {
+  public Task getTask() {
     return task;
   }
 }

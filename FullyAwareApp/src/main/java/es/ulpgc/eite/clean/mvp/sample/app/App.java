@@ -15,7 +15,6 @@ import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 
@@ -28,6 +27,7 @@ public class App extends Application implements Mediator, Navigator {
   private AddTaskState toAddTaskState, addTaskToState;
 
     private DetailState masterListToDetailState;
+  private ListState listToDoDetailToMasterState;
 
   @Override
   public void onCreate() {
@@ -196,10 +196,11 @@ public class App extends Application implements Mediator, Navigator {
   }
 
     @Override
-    public void goToDetailScreen(ListToDoPresenterMaster listToDoPresenterMaster) {
+    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster) {
         masterListToDetailState =new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
         if (view != null) {
@@ -207,8 +208,17 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
+  @Override
+  public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
+    listToDoDetailToMasterState = new ListState();
+    listToDoDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
 
-    ///////////////////////////////////////////////////////////////////////////////////
+    // Al volver al maestro, el detalle debe finalizar
+    presenter.destroyView();
+  }
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
   private class DummyState {
@@ -253,5 +263,13 @@ public class App extends Application implements Mediator, Navigator {
         boolean toolbarVisible;
         Task selectedItem;
     }
+
+
+  /**
+   * Estado a actualizar en el maestro en función de la ejecución del detalle
+   */
+  private class ListState {
+    Task taskToDelete;
+  }
 
 }

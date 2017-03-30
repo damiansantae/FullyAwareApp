@@ -79,7 +79,7 @@ public class ListToDoViewMaster
 
                 getPresenter().onListClick(position, adapter);
 
-               /* Task currentTask = adapter.getItem(position);
+               /* Task currentTask = adapter.getTask(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
                 toast.show();*/
             }

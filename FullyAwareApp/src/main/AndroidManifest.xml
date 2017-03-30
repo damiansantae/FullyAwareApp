@@ -24,6 +24,17 @@
             android:label="Add a new task"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".listToDoDetail.ListToDoViewDetail"
+            android:label="Detail"
+            android:parentActivityName=".listToDoMaster.ListToDoViewMaster"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.ulpgc.eite.clean.mvp.masterdetail.master.MasterView"/>
+            -->
+        </activity>
 
         <activity
             android:name=".listDone.ListDoneView"

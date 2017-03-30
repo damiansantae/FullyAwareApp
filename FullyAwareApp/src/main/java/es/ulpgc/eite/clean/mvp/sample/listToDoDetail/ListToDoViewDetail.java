@@ -62,9 +62,6 @@ public class ListToDoViewDetail
         ////////////////////////////////////////////////////////////
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
     }
 
 
@@ -76,7 +73,7 @@ public class ListToDoViewDetail
     @Override
     protected void onResume() {
         super.onResume(ListToDoPresenterDetail.class, this);
-        super.onResume(ListToDoPresenterDetail.class, this);
+
         task = getPresenter().getTask();
 
         if (toolbarLayout != null && task != null) {
@@ -106,7 +103,7 @@ public class ListToDoViewDetail
     int id = item.getItemId();
 
     //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
+    if (id == R.id.action_delete) {
       return true;
     }
 
