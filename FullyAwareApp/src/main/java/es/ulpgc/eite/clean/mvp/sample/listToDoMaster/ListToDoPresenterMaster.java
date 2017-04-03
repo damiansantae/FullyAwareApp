@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -213,7 +214,20 @@ checkAddBtnVisibility();
                 adapter.remove(tasksSelected.get(i));
 
             }
+            Context context = getApplicationContext();
+            if(size == 1) {
+                CharSequence text = "Task removed";
+                int duration = Toast.LENGTH_SHORT;
 
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }else if(size > 1){
+                CharSequence text = "Tasks removed";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
             checkSelection();
 
