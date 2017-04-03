@@ -125,15 +125,14 @@ public class AddTaskPresenter extends GenericPresenter
 
   @Override
   public void onAddTaskBtnClicked() {
-      String title = getTitle();
-      String description = getDescription();
-      String subject = getSubject();
+    String title = getTitle();
+    String description = getDescription();
+    String subject = getSubject();
     String time = getTime();
-      String date = getDate();
+    String date = getDate();
     String deadline = getDeadLine(time,date);
     TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline));
       Navigator app = (Navigator)getView().getApplication();
-
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
       CharSequence text = "Task added";

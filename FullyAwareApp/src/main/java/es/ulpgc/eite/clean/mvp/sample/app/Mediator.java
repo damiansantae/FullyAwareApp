@@ -24,6 +24,7 @@ public interface Mediator {
 
    void taskDone(Task taskDone);
 
-    void startingDetailScreen(ListDonePresenterDetail listDonePresenterDetail);
+    void startingDetailScreen(ListDoneDetail.MasterListToDetail listDonePresenterDetail);
+
 
 }

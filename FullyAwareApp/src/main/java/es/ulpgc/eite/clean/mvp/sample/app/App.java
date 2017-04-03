@@ -28,7 +28,7 @@ public class App extends Application implements Mediator, Navigator {
   private ListForgottenState toListForgottenState, listForgottenToState;
   private AddTaskState toAddTaskState, addTaskToState;
 
-    private DetailState masterListToDetailState;
+  private DetailState masterListToDetailState;
   private ListState listToDoDetailToMasterState;
   private ListState listDoneDetailToMasterState;
 
@@ -150,9 +150,19 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   @Override
-  public void startingDetailScreen(ListDonePresenterDetail listDonePresenterDetail) {
+  public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
+    if(masterListToDetailState != null) {
+      presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
+      presenter.setItem(masterListToDetailState.selectedItem);
+    }
+
+    // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
+    masterListToDetailState = null;
+    presenter.onScreenStarted();
   }
+
+
 
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -207,6 +217,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailState =new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+        masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getDate();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -294,6 +305,8 @@ public class App extends Application implements Mediator, Navigator {
     private class DetailState {
         boolean toolbarVisible;
         Task selectedItem;
+      String subject;
+      String date;
     }
 
 

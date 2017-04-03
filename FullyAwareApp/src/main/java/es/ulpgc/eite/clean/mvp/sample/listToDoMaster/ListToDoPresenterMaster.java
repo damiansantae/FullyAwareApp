@@ -375,6 +375,11 @@ checkAddBtnVisibility();
     }
 
     @Override
+    public String getTaskDate() {
+        return null;
+    }
+
+    @Override
     public void destroyView() {
         if (isViewRunning()) {
             getView().finishScreen();
