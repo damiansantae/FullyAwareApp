@@ -5,4 +5,5 @@
     <string name="screen_text">Text</string>
     <string name="button_label">Button</string>
     <string name="action_delete">Delete</string>
+    <string name="action_recover">Recover</string>
 </resources>

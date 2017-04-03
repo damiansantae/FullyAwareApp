@@ -2,6 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
@@ -20,6 +22,8 @@ public interface Mediator {
 
   void startingDetailScreen(ListToDoDetail.MasterListToDetail listToDoPresenterDetail);
 
-  void taskDone(Task taskDone);
+   void taskDone(Task taskDone);
+
+    void startingDetailScreen(ListDonePresenterDetail listDonePresenterDetail);
 
 }

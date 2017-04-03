@@ -9,6 +9,8 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
@@ -28,6 +30,7 @@ public class App extends Application implements Mediator, Navigator {
 
     private DetailState masterListToDetailState;
   private ListState listToDoDetailToMasterState;
+  private ListState listDoneDetailToMasterState;
 
   @Override
   public void onCreate() {
@@ -92,7 +95,6 @@ public class App extends Application implements Mediator, Navigator {
     if(toDummyState != null) {
       presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
       presenter.setTextVisibility(toListDoneState.textVisibility);
-      presenter.setAddBtnVisibility(toListDoneState.addBtnVisibility);
       presenter.setDeleteBtnVisibility(toListDoneState.deleteBtnVisibility);
     }
     presenter.onScreenStarted();
@@ -145,6 +147,11 @@ public class App extends Application implements Mediator, Navigator {
     @Override
   public void taskDone(Task taskDone) {
    // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
+  }
+
+  @Override
+  public void startingDetailScreen(ListDonePresenterDetail listDonePresenterDetail) {
+
   }
 
 
@@ -224,6 +231,14 @@ public class App extends Application implements Mediator, Navigator {
 
   }
 
+  @Override
+  public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
+    listDoneDetailToMasterState = new ListState();
+    listDoneDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+
+    // Al volver al maestro, el detalle debe finalizar
+    presenter.destroyView();
+  }
 
 
   ///////////////////////////////////////////////////////////////////////////////////
