@@ -35,7 +35,7 @@ public class ListToDoViewMaster
     private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT;}
+    enum Direction {LEFT, RIGHT}
 
     private Task_Adapter adapter;
     /**
