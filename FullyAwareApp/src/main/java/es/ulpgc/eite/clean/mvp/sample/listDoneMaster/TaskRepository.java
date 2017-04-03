@@ -16,16 +16,7 @@ public class TaskRepository {
     }
 
     private TaskRepository() {
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8"));
-        saveTask(new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9"));
-
+        saveTask(new Task(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017"));
     }
 
     public void saveTask(Task task) {
