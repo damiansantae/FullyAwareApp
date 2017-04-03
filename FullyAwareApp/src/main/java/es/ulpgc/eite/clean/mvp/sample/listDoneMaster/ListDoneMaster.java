@@ -1,16 +1,14 @@
-package es.ulpgc.eite.clean.mvp.sample.listDone;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.content.Context;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-/**
- * Created by Luis on 12/11/16.
- */
 
-public interface ListDone {
+public interface ListDoneMaster {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -20,8 +18,9 @@ public interface ListDone {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-    void setAddBtnVisibility(boolean visible);
-    void setDeleteBtnVisibility(boolean visible);
+    void setAddBtnVisibility(boolean addBtnVisibility);
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+    void setDoneBtnVisibility(boolean deleteBtnVisibility);
   }
 
   interface ListDoneTo {
@@ -30,6 +29,23 @@ public interface ListDone {
     boolean isToolbarVisible();
     boolean isTextVisible();
   }
+  /**
+   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
+   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   */
+   interface MasterListToDetail{
+    Context getManagedContext();
+    Task getSelectedTask();
+    boolean getToolbarVisibility();
+
+  }
+  /**
+   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
+   * del detalle cuando está finaliza
+   */
+  interface DetailToMaster {
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////////////
   // Screen ////////////////////////////////////////////////////////////////////////
@@ -39,10 +55,16 @@ public interface ListDone {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
+
     void onListClick(int position, Task_Adapter adapter);
+
     void onLongListClick(int pos, Task_Adapter adapter);
+
     void onBinBtnClick(Task_Adapter adapter);
 
+    void onAddBtnClick(Task_Adapter adapter);
+
+    void onDoneBtnClick(Task_Adapter adapter);
   }
 
   /**
@@ -54,15 +76,13 @@ public interface ListDone {
     void hideText();
     void showText();
 
-    void hideAddBtn();
+      void showAddBtn();
 
-    void showAddBtn();
+      void hideDeleteBtn();
 
-    void hideDeleteBtn();
+      void showDeleteBtn();
 
-    void showDeleteBtn();
-
-    void setText(String txt);
+      void setText(String txt);
     void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
@@ -72,6 +92,14 @@ public interface ListDone {
     void startSelection();
 
     void setChoiceMode(int i);
+
+      void hideAddBtn();
+
+    void hideDoneBtn();
+
+    void showDoneBtn();
+
+    void deselect(int i, boolean b);
   }
 
   /**

@@ -56,15 +56,15 @@ public interface ListToDoMaster {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-      void onListClick(int position, Task_Adapter adapter);
+    void onListClick(int position, Task_Adapter adapter);
 
     void onLongListClick(int pos, Task_Adapter adapter);
 
     void onBinBtnClick(Task_Adapter adapter);
 
-      void onAddBtnClick(Task_Adapter adapter);
+    void onAddBtnClick(Task_Adapter adapter);
 
-      void onDoneBtnClick(Task_Adapter adapter);
+    void onDoneBtnClick(Task_Adapter adapter);
   }
 
   /**

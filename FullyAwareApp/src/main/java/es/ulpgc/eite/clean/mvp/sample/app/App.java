@@ -9,8 +9,8 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
@@ -88,7 +88,7 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   @Override
-  public void startingListDoneScreen(ListDone.ToListDone presenter) {
+  public void startingListDoneScreen(ListDoneMaster.ToListDone presenter) {
     if(toDummyState != null) {
       presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
       presenter.setTextVisibility(toListDoneState.textVisibility);
@@ -97,6 +97,7 @@ public class App extends Application implements Mediator, Navigator {
     }
     presenter.onScreenStarted();
   }
+
 
 
   @Override
@@ -143,8 +144,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
   public void taskDone(Task taskDone) {
-
-    ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDone o crear clase Task Común
+   // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
   }
 
 
@@ -208,6 +208,8 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
+
+
   @Override
   public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
     listToDoDetailToMasterState = new ListState();
@@ -216,6 +218,12 @@ public class App extends Application implements Mediator, Navigator {
     // Al volver al maestro, el detalle debe finalizar
     presenter.destroyView();
   }
+
+  @Override
+  public void goToDetailScreen(ListDonePresenterMaster listDonePresenterMaster) {
+
+  }
+
 
 
   ///////////////////////////////////////////////////////////////////////////////////

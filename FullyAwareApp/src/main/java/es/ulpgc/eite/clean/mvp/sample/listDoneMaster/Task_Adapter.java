@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listDone;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 /**
  * Created by Damian on 26/02/2017.
@@ -66,7 +67,6 @@ public class Task_Adapter extends ArrayAdapter<Task> {
         // Lead actual.
         Task task = getItem(position);
 
-
         // Setup.
         tag.setImageResource(task.getTagId());
         title.setText(task.getTitle());
@@ -75,4 +75,5 @@ public class Task_Adapter extends ArrayAdapter<Task> {
 
         return convertView;
     }
+
 }

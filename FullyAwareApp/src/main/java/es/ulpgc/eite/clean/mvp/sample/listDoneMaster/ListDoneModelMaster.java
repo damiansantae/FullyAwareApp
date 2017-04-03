@@ -1,10 +1,10 @@
-package es.ulpgc.eite.clean.mvp.sample.listDone;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
 
 
-public class ListDoneModel extends GenericModel<ListDone.ModelToPresenter>
-    implements ListDone.PresenterToModel {
+public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPresenter>
+    implements ListDoneMaster.PresenterToModel {
 
   private String listDoneText;
   private String listDoneLabel;
@@ -18,7 +18,7 @@ public class ListDoneModel extends GenericModel<ListDone.ModelToPresenter>
    * @param presenter Presenter interface
    */
   @Override
-  public void onCreate(ListDone.ModelToPresenter presenter) {
+  public void onCreate(ListDoneMaster.ModelToPresenter presenter) {
     super.onCreate(presenter);
 
     listDoneLabel = "Click Me!";

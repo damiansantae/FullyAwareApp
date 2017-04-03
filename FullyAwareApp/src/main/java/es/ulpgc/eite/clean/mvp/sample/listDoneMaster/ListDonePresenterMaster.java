@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 
 import android.content.Context;
@@ -13,9 +13,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster {
+public class ListDonePresenterMaster extends GenericPresenter
+        <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
+        implements ListDoneMaster.ViewToPresenter, ListDoneMaster.ModelToPresenter, ListDoneMaster.ListDoneTo, ListDoneMaster.ToListDone, ListDoneMaster.MasterListToDetail, ListDoneMaster.DetailToMaster {
 
 
     private boolean toolbarVisible;
@@ -44,14 +44,14 @@ public class ListToDoPresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListToDoMaster.PresenterToView view) {
-        super.onCreate(ListToDoModelMaster.class, this);
+    public void onCreate(ListDoneMaster.PresenterToView view) {
+        super.onCreate(ListDoneModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        app.startingListToDoScreen(this);
+        app.startingListDoneScreen(this);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListToDoMaster.PresenterToView view) {
+    public void onResume(ListDoneMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
 
@@ -73,7 +73,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
            // checkToolbarVisibility();
             //checkTextVisibility();
             checkAddBtnVisibility();
-            
+
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             CheckDoneBtnVisibility();
@@ -226,10 +226,9 @@ checkAddBtnVisibility();
 
     @Override
     public void onAddBtnClick(Task_Adapter adapter) {
-        Navigator app = (Navigator)getView().getApplication();
 
-        app.goToAddTaskScreen(this);
     }
+
 
     @Override
     public void onDoneBtnClick(Task_Adapter adapter) {
