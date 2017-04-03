@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 
 public class ListDoneView
         extends GenericActivity<ListDone.PresenterToView, ListDone.ViewToPresenter, ListDonePresenter>
@@ -47,38 +50,19 @@ public class ListDoneView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listdone);
 
-   /* text = (TextView) findViewById(R.id.text);
-
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-
-    button = (Button) findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        getPresenter().onButtonClicked();
-      }
-    });
-*/
-
-
         ////////////////////////////////////////////////////////////
-        list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
+        ///////////////////////////////////////////////////////////////////
+        list = (ListView) findViewById(R.id.list);
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 getPresenter().onListClick(position, adapter);
-
-               /* Task currentTask = adapter.getTask(position);
-                Toast toast = Toast.makeText(getBaseContext(), currentTask.getTitle(), Toast.LENGTH_SHORT);
-                toast.show();*/
             }
         });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -106,6 +90,10 @@ public class ListDoneView
 
             }
         );
+        ////////////////////////////////////////////////////////
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
     }
 
 
@@ -118,29 +106,45 @@ public class ListDoneView
         super.onResume(ListDonePresenter.class, this);
     }
 
-  /*
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_listDone, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
+    //Este metodo sirve para inflar el menu en la action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_listtodo_master_done, menu);
+        return true;
     }
 
-    return super.onOptionsItemSelected(item);
-  }
-  */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete) {
+            return true;
+        }else if (id ==R.id.menuToDo){
+            Navigator app = (Navigator) getApplication();
+            app.goToListToDoScreen((ListDone.ListDoneTo) getPresenter());
+
+            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
+        }
+
+        else if (id ==R.id.menucalendar){
+            Navigator app = (Navigator) getApplication();
+            // app.goToCalendarScreen();
+            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuForgotten){
+            Navigator app = (Navigator) getApplication();
+            app.goToListForgottenScreen((ListDone.ListDoneTo) getPresenter());
+            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////

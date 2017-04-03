@@ -50,13 +50,11 @@ public class ListToDoViewMaster
         setContentView(R.layout.activity_listtodo);
 
         ////////////////////////////////////////////////////////////
-        list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
-
-
-
+        ///////////////////////////////////////////////////////////////////
+        list = (ListView) findViewById(R.id.list);
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
 
@@ -112,6 +110,8 @@ public class ListToDoViewMaster
 
                                }
         );
+
+        ////////////////////////////////////////////////////////
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
