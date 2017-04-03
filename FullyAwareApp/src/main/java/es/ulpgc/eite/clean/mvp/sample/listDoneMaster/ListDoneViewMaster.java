@@ -63,8 +63,7 @@ public class ListDoneViewMaster
         ////////////////////////////////////////////////////////////
         list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
-        add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
-        done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,25 +107,8 @@ public class ListDoneViewMaster
                                }
         );
 
-        add.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       getPresenter().onAddBtnClick(adapter);
-                                       //adapter.notifyDataSetChanged();
-                                   }
 
-                               }
-        );
-        done.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       getPresenter().onDoneBtnClick(adapter);
-                                       list.clearChoices();
-                                       adapter.notifyDataSetChanged();
-                                   }
 
-                               }
-        );
 
     }
 
@@ -189,39 +171,17 @@ public class ListDoneViewMaster
         text.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void hideAddBtn() {
-        add.setVisibility(View.INVISIBLE);
-
-
-    }
-
-    @Override
-    public void hideDoneBtn() {
-        done.setVisibility(View.INVISIBLE);
 
 
 
-    }
 
-    @Override
-    public void showDoneBtn() {
-        done.setVisibility(View.VISIBLE);
-
-
-    }
 
     @Override
     public void deselect(int i, boolean b) {
         list.setItemChecked(i,b);
     }
 
-    @Override
-    public void showAddBtn() {
-        add.setVisibility(View.VISIBLE);
 
-
-    }
 
     @Override
     public void hideDeleteBtn() {

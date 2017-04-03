@@ -72,11 +72,10 @@ public class ListDonePresenterMaster extends GenericPresenter
 
            // checkToolbarVisibility();
             //checkTextVisibility();
-            checkAddBtnVisibility();
+
 
             checkDeleteBtnVisibility();
-            checkDoneBtnVisibility();
-            CheckDoneBtnVisibility();
+
             if(listClicked) {
                 getView().startSelection();
 
@@ -169,8 +168,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             app.goToDetailScreen(this);
         }
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
-checkAddBtnVisibility();
+
     }
 
     @Override
@@ -198,9 +196,9 @@ checkAddBtnVisibility();
            checkSelection();
 
         }
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
+
 
     }
 
@@ -218,36 +216,13 @@ checkAddBtnVisibility();
             checkSelection();
 
         }
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
 
-    }
-
-    @Override
-    public void onAddBtnClick(Task_Adapter adapter) {
 
     }
 
 
-    @Override
-    public void onDoneBtnClick(Task_Adapter adapter) {
-        int size = posSelected.size();
-        if (size !=0){
-            for (int i = 0; i < size; i++){
-
-                Mediator app = (Mediator) getApplication();
-                app.taskDone(TaskRepository.getInstance().taskDone(tasksSelected.get(i)));
-                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));
-                adapter.remove(tasksSelected.get(i));
-            }
-            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            checkSelection();
-        }
-        checkAddBtnVisibility();
-        checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
-    }
 
 
     private void deselectAll() {
@@ -304,9 +279,8 @@ checkAddBtnVisibility();
     }
     //checkToolbarVisibility();
     //checkTextVisibility();*/
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
     }
 
 
@@ -321,11 +295,7 @@ checkAddBtnVisibility();
         textVisible = visible;
     }
 
-    @Override
-    public void setAddBtnVisibility(boolean addBtnVisibility) {
-        addBtnVisible=addBtnVisibility;
 
-    }
 
     @Override
     public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
@@ -333,11 +303,7 @@ checkAddBtnVisibility();
 
     }
 
-    @Override
-    public void setDoneBtnVisibility(boolean doneBtnVisibility) {
-        doneBtnVisible=doneBtnVisibility;
 
-    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -399,16 +365,7 @@ checkAddBtnVisibility();
         }
     }
 
-    private void checkAddBtnVisibility() {
-        Log.d(TAG, "calling checkAddBtnVisibility()");
-        if (isViewRunning()) {
-            if (!addBtnVisible) {
-                getView().hideAddBtn();
-            } else {
-                getView().showAddBtn();
-            }
-        }
-    }
+
     private void checkDeleteBtnVisibility() {
         Log.d(TAG, "calling checkDeleteBtnVisibility()");
         if (isViewRunning()) {
@@ -419,26 +376,7 @@ checkAddBtnVisibility();
             }
         }
     }
-    private void checkDoneBtnVisibility() {
-        Log.d(TAG, "calling checkDoneBtnVisibility()");
-        if (isViewRunning()) {
-            if (!doneBtnVisible) {
-                getView().hideDoneBtn();
-            } else {
-                getView().showDoneBtn();
-            }
-        }
-    }
-    private void CheckDoneBtnVisibility() {
-        Log.d(TAG, "calling checkDoneBtnVisibility()");
-        if (isViewRunning()) {
-            if (!doneBtnVisible) {
-                getView().hideDoneBtn();
-            } else {
-                getView().showDoneBtn();
-            }
-        }
-    }
+
 
     public void setListClicked(boolean listClicked) {
         this.listClicked = listClicked;

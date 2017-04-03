@@ -95,7 +95,6 @@ public class App extends Application implements Mediator, Navigator {
     if(toDummyState != null) {
       presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
       presenter.setTextVisibility(toListDoneState.textVisibility);
-      presenter.setAddBtnVisibility(toListDoneState.addBtnVisibility);
       presenter.setDeleteBtnVisibility(toListDoneState.deleteBtnVisibility);
     }
     presenter.onScreenStarted();

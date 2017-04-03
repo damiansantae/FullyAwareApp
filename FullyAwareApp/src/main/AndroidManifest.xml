@@ -13,10 +13,11 @@
             android:name=".listToDoMaster.ListToDoViewMaster"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>
+              <action android:name="android.intent.action.MAIN"/>
+              <category android:name="android.intent.category.LAUNCHER"/>
+          </intent-filter>-->
+
         </activity>
 
         <activity
@@ -35,6 +36,20 @@
                 android:value="es.ulpgc.eite.clean.mvp.masterdetail.master.MasterView"/>
             -->
         </activity>
+
+        <activity
+            android:name=".listDoneMaster.ListDoneViewMaster"
+            android:label="FullyAware"
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+
 
         <activity
             android:name=".listDoneDetail.ListDoneViewDetail"

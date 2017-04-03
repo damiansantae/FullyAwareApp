@@ -18,9 +18,9 @@ public interface ListDoneMaster {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-    void setAddBtnVisibility(boolean addBtnVisibility);
+
     void setDeleteBtnVisibility(boolean deleteBtnVisibility);
-    void setDoneBtnVisibility(boolean deleteBtnVisibility);
+
   }
 
   interface ListDoneTo {
@@ -62,9 +62,6 @@ public interface ListDoneMaster {
 
     void onBinBtnClick(Task_Adapter adapter);
 
-    void onAddBtnClick(Task_Adapter adapter);
-
-    void onDoneBtnClick(Task_Adapter adapter);
   }
 
   /**
@@ -76,7 +73,6 @@ public interface ListDoneMaster {
     void hideText();
     void showText();
 
-      void showAddBtn();
 
       void hideDeleteBtn();
 
@@ -92,12 +88,7 @@ public interface ListDoneMaster {
     void startSelection();
 
     void setChoiceMode(int i);
-
-      void hideAddBtn();
-
-    void hideDoneBtn();
-
-    void showDoneBtn();
+    
 
     void deselect(int i, boolean b);
   }
