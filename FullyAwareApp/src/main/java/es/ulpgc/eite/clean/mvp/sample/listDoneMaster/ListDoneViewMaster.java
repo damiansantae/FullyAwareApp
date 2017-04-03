@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -123,7 +124,7 @@ public class ListDoneViewMaster
             return true;
         }else if (id ==R.id.menuToDo){
             Navigator app = (Navigator) getApplication();
-            app.goToListToDoScreen((ListDone.ListDoneTo) getPresenter());
+            app.goToListToDoScreen((ListDoneMaster.ListDoneTo) getPresenter());
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
         }
@@ -135,7 +136,7 @@ public class ListDoneViewMaster
         }
         else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
-            app.goToListForgottenScreen((ListDone.ListDoneTo) getPresenter());
+            app.goToListForgottenScreen((ListDoneMaster.ListDoneTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
         }
 
@@ -171,10 +172,7 @@ public class ListDoneViewMaster
     public void deselect(int i, boolean b) {
         list.setItemChecked(i,b);
     }
-    @Override
-    public void showAddBtn() {
-        add.setVisibility(View.VISIBLE);
-    }
+
     @Override
     public void hideDeleteBtn() {
         bin.setVisibility(View.INVISIBLE);

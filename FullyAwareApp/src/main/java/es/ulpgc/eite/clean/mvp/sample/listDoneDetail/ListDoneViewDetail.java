@@ -82,7 +82,7 @@ public class ListDoneViewDetail
 
         // Show the dummy content as text in a TextView.
         if (task != null) {
-            ((TextView) findViewById(R.id.task_detail)).setText(task.getDescription());
+            ((TextView) findViewById(R.id.task_description)).setText(task.getDescription());
         }
     }
 

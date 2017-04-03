@@ -10,12 +10,8 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
-import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
-import es.ulpgc.eite.clean.mvp.sample.listDone.ListDoneView;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
@@ -268,7 +264,7 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneView.class));
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
         }
 
     }
@@ -313,14 +309,14 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneView.class));
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
         }
 
 
     }
 
     @Override
-    public void goToListForgottenScreen(ListDone.ListDoneTo presenter) {
+    public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
         if (listForgottenToState==null){
             listForgottenToState = new ListForgottenState();
         }
@@ -336,7 +332,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToListToDoScreen(ListDone.ListDoneTo presenter) {
+    public void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter) {
         if (listToDoToState==null){
             listToDoToState = new ListToDoState();
 
