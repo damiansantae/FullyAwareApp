@@ -130,6 +130,7 @@ public class ListToDoViewMaster
         super.onResume(ListToDoPresenterMaster.class, this);
     }
 
+
     //Este metodo sirve para inflar el menu en la action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
