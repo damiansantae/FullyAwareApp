@@ -13,4 +13,7 @@ public interface Navigator {
 
   void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
   void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
+
+    void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter);
+  void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter);
 }

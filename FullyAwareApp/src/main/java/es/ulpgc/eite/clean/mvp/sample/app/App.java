@@ -11,7 +11,9 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDone;
 import es.ulpgc.eite.clean.mvp.sample.listDone.ListDonePresenter;
+import es.ulpgc.eite.clean.mvp.sample.listDone.ListDoneView;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
+import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -217,8 +219,37 @@ public class App extends Application implements Mediator, Navigator {
     presenter.destroyView();
   }
 
+    @Override
+    public void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter) {
+        if(listDoneToState==null) {
+            listDoneToState = new ListDoneState();
+        }
+        listDoneToState.toolbarVisibility=true;
 
-  ///////////////////////////////////////////////////////////////////////////////////
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneView.class));
+        }
+
+    }
+
+    @Override
+    public void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter) {
+        if (listForgottenToState==null){
+            listForgottenToState = new ListForgottenState();
+        }
+        listForgottenToState.toolbarVisibility=true;
+        Context view = presenter.getManagedContext();
+
+        if(view !=null){
+            view.startActivity(new Intent(view, ListForgottenView.class));
+
+        }
+
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
   private class DummyState {

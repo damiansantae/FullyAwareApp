@@ -5,4 +5,6 @@
     <string name="screen_text">Text</string>
     <string name="button_label">Button</string>
     <string name="action_delete">Delete</string>
+    <string name="subject">Subject</string>
+
 </resources>

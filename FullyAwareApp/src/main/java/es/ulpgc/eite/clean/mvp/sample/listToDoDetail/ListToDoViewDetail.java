@@ -33,6 +33,7 @@ public class ListToDoViewDetail
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
+
         // Show the Up button in the action bar.
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -43,23 +44,6 @@ public class ListToDoViewDetail
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
 
-
-   /* text = (TextView) findViewById(R.id.text);
-
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-
-    button = (Button) findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        getPresenter().onButtonClicked();
-      }
-    });
-*/
-
-
-        ////////////////////////////////////////////////////////////
 
 
     }
@@ -82,7 +66,7 @@ public class ListToDoViewDetail
 
         // Show the dummy content as text in a TextView.
         if (task != null) {
-            ((TextView) findViewById(R.id.task_detail)).setText(task.getDescription());
+            ((TextView) findViewById(R.id.task_description)).setText(task.getDescription());
         }
     }
 

@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="es.ulpgc.eite.clean.mvp.masterdetail.detail.DetailView">
+    <item
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="spinner"
+        app:showAsAction="always">
+        <menu>
+
+            <item
+                android:id="@+id/menuDone"
+                android:icon="@android:drawable/checkbox_on_background"
+                android:title="Done" />
+            <item
+                android:id="@+id/menuForgotten"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:title="Forgotten" />
+            <item
+                android:id="@+id/menucalendar"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="Calendar" />
+        </menu>
+    </item>
+    <item
+android:id="@+id/action_delete"
+android:orderInCategory="100"
+android:title="@string/action_delete"
+app:showAsAction="never"/>
+
+
+</menu>
