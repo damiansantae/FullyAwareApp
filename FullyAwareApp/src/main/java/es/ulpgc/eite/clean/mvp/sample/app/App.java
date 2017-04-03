@@ -227,9 +227,18 @@ public class App extends Application implements Mediator, Navigator {
   }
 
   @Override
-  public void goToDetailScreen(ListDonePresenterMaster listDonePresenterMaster) {
+  public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
+    masterListToDetailState =new DetailState();
+    masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
+    masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
 
+    // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
+    Context view = listDonePresenterMaster.getManagedContext();
+    if (view != null) {
+      view.startActivity(new Intent(view, ListToDoViewDetail.class));
+    }
   }
+
 
   @Override
   public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
