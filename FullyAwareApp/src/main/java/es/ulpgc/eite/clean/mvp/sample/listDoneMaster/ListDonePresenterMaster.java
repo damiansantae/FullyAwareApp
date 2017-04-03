@@ -52,6 +52,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         app.startingListDoneScreen(this);
+
     }
 
     /**
