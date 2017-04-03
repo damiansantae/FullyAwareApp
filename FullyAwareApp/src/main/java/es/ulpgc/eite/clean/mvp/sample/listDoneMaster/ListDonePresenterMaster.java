@@ -1,9 +1,8 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,9 +13,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster {
+public class ListDonePresenterMaster extends GenericPresenter
+        <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
+        implements ListDoneMaster.ViewToPresenter, ListDoneMaster.ModelToPresenter, ListDoneMaster.ListDoneTo, ListDoneMaster.ToListDone, ListDoneMaster.MasterListToDetail, ListDoneMaster.DetailToMaster {
 
 
     private boolean toolbarVisible;
@@ -45,14 +44,15 @@ public class ListToDoPresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListToDoMaster.PresenterToView view) {
-        super.onCreate(ListToDoModelMaster.class, this);
+    public void onCreate(ListDoneMaster.PresenterToView view) {
+        super.onCreate(ListDoneModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        app.startingListToDoScreen(this);
+        app.startingListDoneScreen(this);
+
     }
 
     /**
@@ -63,7 +63,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListToDoMaster.PresenterToView view) {
+    public void onResume(ListDoneMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
 
@@ -73,11 +73,10 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
            // checkToolbarVisibility();
             //checkTextVisibility();
-            checkAddBtnVisibility();
-            
+
+
             checkDeleteBtnVisibility();
-            checkDoneBtnVisibility();
-            CheckDoneBtnVisibility();
+
             if(listClicked) {
                 getView().startSelection();
 
@@ -167,11 +166,11 @@ public class ListToDoPresenterMaster extends GenericPresenter
             //Codigo DETALLE
             selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
+            Mediator mediator =(Mediator) getView().getApplication();
             app.goToDetailScreen(this);
         }
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
-checkAddBtnVisibility();
+
     }
 
     @Override
@@ -199,9 +198,9 @@ checkAddBtnVisibility();
            checkSelection();
 
         }
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
+
 
     }
 
@@ -214,55 +213,18 @@ checkAddBtnVisibility();
                 adapter.remove(tasksSelected.get(i));
 
             }
-            Context context = getApplicationContext();
-            if(size == 1) {
-                CharSequence text = "Task removed";
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }else if(size > 1){
-                CharSequence text = "Tasks removed";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
             checkSelection();
 
         }
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
+
 
     }
 
-    @Override
-    public void onAddBtnClick(Task_Adapter adapter) {
-        Navigator app = (Navigator)getView().getApplication();
 
-        app.goToAddTaskScreen(this);
-    }
-
-    @Override
-    public void onDoneBtnClick(Task_Adapter adapter) {
-        int size = posSelected.size();
-        if (size !=0){
-            for (int i = 0; i < size; i++){
-
-                Mediator app = (Mediator) getApplication();
-                app.taskDone(TaskRepository.getInstance().taskDone(tasksSelected.get(i)));
-                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));
-                adapter.remove(tasksSelected.get(i));
-            }
-            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            checkSelection();
-        }
-        checkAddBtnVisibility();
-        checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
-    }
 
 
     private void deselectAll() {
@@ -319,9 +281,8 @@ checkAddBtnVisibility();
     }
     //checkToolbarVisibility();
     //checkTextVisibility();*/
-        checkAddBtnVisibility();
+
         checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
     }
 
 
@@ -336,11 +297,7 @@ checkAddBtnVisibility();
         textVisible = visible;
     }
 
-    @Override
-    public void setAddBtnVisibility(boolean addBtnVisibility) {
-        addBtnVisible=addBtnVisibility;
 
-    }
 
     @Override
     public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
@@ -348,11 +305,7 @@ checkAddBtnVisibility();
 
     }
 
-    @Override
-    public void setDoneBtnVisibility(boolean doneBtnVisibility) {
-        doneBtnVisible=doneBtnVisibility;
 
-    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -372,11 +325,6 @@ checkAddBtnVisibility();
     @Override
     public boolean getToolbarVisibility() {
         return toolbarVisible;
-    }
-
-    @Override
-    public String getTaskDate() {
-        return null;
     }
 
     @Override
@@ -419,16 +367,7 @@ checkAddBtnVisibility();
         }
     }
 
-    private void checkAddBtnVisibility() {
-        Log.d(TAG, "calling checkAddBtnVisibility()");
-        if (isViewRunning()) {
-            if (!addBtnVisible) {
-                getView().hideAddBtn();
-            } else {
-                getView().showAddBtn();
-            }
-        }
-    }
+
     private void checkDeleteBtnVisibility() {
         Log.d(TAG, "calling checkDeleteBtnVisibility()");
         if (isViewRunning()) {
@@ -439,26 +378,7 @@ checkAddBtnVisibility();
             }
         }
     }
-    private void checkDoneBtnVisibility() {
-        Log.d(TAG, "calling checkDoneBtnVisibility()");
-        if (isViewRunning()) {
-            if (!doneBtnVisible) {
-                getView().hideDoneBtn();
-            } else {
-                getView().showDoneBtn();
-            }
-        }
-    }
-    private void CheckDoneBtnVisibility() {
-        Log.d(TAG, "calling checkDoneBtnVisibility()");
-        if (isViewRunning()) {
-            if (!doneBtnVisible) {
-                getView().hideDoneBtn();
-            } else {
-                getView().showDoneBtn();
-            }
-        }
-    }
+
 
     public void setListClicked(boolean listClicked) {
         this.listClicked = listClicked;

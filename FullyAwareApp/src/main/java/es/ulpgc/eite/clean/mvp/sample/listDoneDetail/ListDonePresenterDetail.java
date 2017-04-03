@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
+package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
 
 
 import android.util.Log;
@@ -10,9 +10,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-public class ListToDoPresenterDetail extends GenericPresenter
-        <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
-        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster {
+public class ListDonePresenterDetail extends GenericPresenter
+        <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
+        implements ListDoneDetail.ViewToPresenter, ListDoneDetail.ModelToPresenter, ListDoneDetail.MasterListToDetail, ListDoneDetail.DetailToMaster {
 
 
 
@@ -28,8 +28,8 @@ private boolean toolbarVisible;
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListToDoDetail.PresenterToView view) {
-        super.onCreate(ListToDoModelDetail.class, this);
+    public void onCreate(ListDoneDetail.PresenterToView view) {
+        super.onCreate(ListDoneModelDetail.class, this);
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -48,7 +48,7 @@ private boolean toolbarVisible;
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListToDoDetail.PresenterToView view) {
+    public void onResume(ListDoneDetail.PresenterToView view) {
         setView(view);
 
         // Verificamos si mostramos o no la barra de tareas cuando se produce un giro de pantalla

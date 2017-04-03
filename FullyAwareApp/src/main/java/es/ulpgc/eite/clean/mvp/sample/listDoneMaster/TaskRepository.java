@@ -1,15 +1,11 @@
-package es.ulpgc.eite.clean.mvp.sample.listDone;
-
-import android.util.Log;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-/**
- * Created by Damian on 26/02/2017.
- */
 
 public class TaskRepository {
     private static TaskRepository repository = new TaskRepository();
@@ -20,19 +16,22 @@ public class TaskRepository {
     }
 
     private TaskRepository() {
-        saveTask(new Task(R.drawable.bg_controll_plane,"Tilutlo1","Descripcion1","Fecha1"));
+        saveTask(new Task(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017"));
     }
 
     public void saveTask(Task task) {
-        //tasks.put(String.valueOf(task.getTaskId()), task); PENDIENTE
+        tasks.put(String.valueOf(task.getTaskId()), task);
     }
 
     public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    public void deleteTask(Task task) {
+    public void deleteTask(Task task){
         tasks.remove(String.valueOf(task.getTaskId()));
     }
 
+    public Task taskDone(Task task){
+        return tasks.get(String.valueOf(task.getTaskId()));
+    }
 }
