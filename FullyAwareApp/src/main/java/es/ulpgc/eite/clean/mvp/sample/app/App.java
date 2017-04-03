@@ -248,6 +248,37 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void goToListToDoScreen(ListForgotten.ListForgottenTo presenter) {
+        if (listToDoToState==null){
+            listToDoToState = new ListToDoState();
+
+        }
+        listToDoToState.toolbarVisibility=true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListToDoViewMaster.class));
+        }
+
+
+    }
+
+    @Override
+    public void goToListDoneScreen(ListForgotten.ListForgottenTo presenter) {
+        if(listDoneToState==null) {
+            listDoneToState = new ListDoneState();
+        }
+        listDoneToState.toolbarVisibility=true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneView.class));
+        }
+
+
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
