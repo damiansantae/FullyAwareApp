@@ -66,6 +66,8 @@ public interface ListToDoMaster {
     void onAddBtnClick(Task_Adapter adapter);
 
     void onDoneBtnClick(Task_Adapter adapter);
+
+      void onSwipeMade(int pos, Task_Adapter adapter);
   }
 
   /**
