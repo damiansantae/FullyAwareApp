@@ -43,7 +43,7 @@ public class ListDoneViewMaster
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listtodo);
+        setContentView(R.layout.activity_listdone);
 
    /* text = (TextView) findViewById(R.id.text);
 
