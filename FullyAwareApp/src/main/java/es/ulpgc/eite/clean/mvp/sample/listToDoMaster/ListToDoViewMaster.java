@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -36,6 +37,9 @@ public class ListToDoViewMaster
     private FloatingActionButton bin;
     private FloatingActionButton add;
     private FloatingActionButton done;
+    float historicX = Float.NaN, historicY = Float.NaN;
+    static final int DELTA = 50;
+    enum Direction {LEFT, RIGHT}
 
     private Task_Adapter adapter;
     /**
@@ -58,12 +62,54 @@ public class ListToDoViewMaster
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
 
+        list.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        historicX = event.getX();
+                        historicY = event.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if (event.getX() - historicX < -DELTA) {
+                            int posicion = 0;
+                            getPresenter().onSwipeMade(posicion, adapter);
+                            adapter.notifyDataSetChanged();
+                            Log.d("error msg", "SWIPE MODE");
+                            return true;
+                        }
+                        else if (event.getX() - historicX > DELTA) {
+                //Swipe hacia el otro lado;
+                            return true;
+                        }
+                        break;
+
+                    default:
+                        return false;
+                }
+                return false;
+            }
+        });
+
+
+
+
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 getPresenter().onListClick(position, adapter);
 
+
+                Log.d("error msg", "Click Simple");
+               /* Task currentTask = adapter.getTask(position);
+                Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
+                toast.show();*/
 
             }
         });
@@ -77,6 +123,7 @@ public class ListToDoViewMaster
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
                 getPresenter().onLongListClick(pos, adapter);
+                Log.d("error msg", "Click Largo");
                 return true;
             }
         });

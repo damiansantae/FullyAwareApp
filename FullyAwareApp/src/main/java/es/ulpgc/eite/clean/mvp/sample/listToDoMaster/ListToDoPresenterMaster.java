@@ -205,6 +205,51 @@ checkAddBtnVisibility();
 
     }
 
+    public void onSwipeMade(int position, Task_Adapter adapter){
+ /*       int sizes = posSelected.size();
+        if (sizes != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
+            for (int i = 0; i < sizes; i++) {            //Lo recorremos para elminarlas
+                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
+                adapter.remove(tasksSelected.get(i));
+            }
+            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
+            checkSelection();
+    }
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
+    }*/
+
+    Task currentTask = adapter.getItem(position);
+        if (listClicked) {                                //Esta seleccionado algo?
+
+            int sizes = posSelected.size();
+            if (sizes != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
+                for (int i = 0; i < sizes; i++) {            //Lo recorremos para elminarlas
+                    TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
+                    adapter.remove(tasksSelected.get(i));
+                }
+                deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
+                checkSelection();
+            }
+            checkAddBtnVisibility();
+            checkDeleteBtnVisibility();
+            checkDoneBtnVisibility();
+
+    } else {                                          //Si no estaba ningun elemento seleccionado
+        //Codigo DETALLE
+
+            TaskRepository.getInstance().deleteTask(currentTask);  //Se elimina la tarea
+            adapter.remove(currentTask);
+            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
+            checkSelection();
+    }
+    checkDeleteBtnVisibility();
+    checkDoneBtnVisibility();
+    checkAddBtnVisibility();
+}
+
+
     @Override
     public void onBinBtnClick(Task_Adapter adapter) {
         int size = posSelected.size();
@@ -263,6 +308,8 @@ checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
     }
+
+
 
 
     private void deselectAll() {
