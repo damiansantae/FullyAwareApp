@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -134,6 +135,12 @@ public class AddTaskPresenter extends GenericPresenter
       Navigator app = (Navigator)getView().getApplication();
 
       app.goToListToDoScreen(this);
+      Context context = getApplicationContext();
+      CharSequence text = "Task added";
+      int duration = Toast.LENGTH_SHORT;
+
+      Toast toast = Toast.makeText(context, text, duration);
+      toast.show();
 
   }
 
