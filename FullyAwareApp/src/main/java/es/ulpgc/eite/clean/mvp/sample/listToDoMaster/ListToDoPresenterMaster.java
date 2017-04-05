@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -436,6 +437,8 @@ checkAddBtnVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
+
+        getModel().loadItems();
     }
 
 
@@ -579,5 +582,14 @@ checkAddBtnVisibility();
     }
 
 
+    @Override
+    public void onLoadItemsTaskStarted() {
 
+    }
+
+    @Override
+    public void onLoadItemsTaskFinished(List<Task> items) {
+        getView().setRecyclerAdapterContent(items);
+
+    }
 }

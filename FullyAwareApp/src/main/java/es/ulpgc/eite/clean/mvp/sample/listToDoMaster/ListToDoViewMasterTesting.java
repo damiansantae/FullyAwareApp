@@ -6,15 +6,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,9 +61,10 @@ public class ListToDoViewMasterTesting
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
-        recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
+        recyclerView = (RecyclerView) findViewById(R.id.checkeable_container);
         adapter = new TaskRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
+
 
         /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
@@ -108,7 +105,7 @@ public class ListToDoViewMasterTesting
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       getPresenter().onBinBtnClick(adapter);
+                                      // getPresenter().onBinBtnClick(adapter);
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -118,7 +115,7 @@ public class ListToDoViewMasterTesting
         add.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       getPresenter().onAddBtnClick(adapter);
+                                       //getPresenter().onAddBtnClick(adapter);
                                        //adapter.notifyDataSetChanged();
                                    }
 
@@ -127,8 +124,8 @@ public class ListToDoViewMasterTesting
         done.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       getPresenter().onDoneBtnClick(adapter);
-                                       recyclerView.clearChoices();
+                                      // getPresenter().onDoneBtnClick(adapter);
+                                      // recyclerView.clearChoices();
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -247,7 +244,7 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-       recyclerView.setItemChecked(i,b);
+       //recyclerView.setItemChecked(i,b);
 
     }
 
@@ -285,6 +282,7 @@ public class ListToDoViewMasterTesting
     @Override
     public boolean isItemListChecked(int pos) {
         //return recyclerView.isItemChecked(pos);
+        return false;
     }
 
     @Override
@@ -389,15 +387,20 @@ public class ListToDoViewMasterTesting
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
+
             holder.item = items.get(position);
             holder.tag.setImageResource(items.get(position).getTagId());
             holder.title.setText(items.get(position).getTitle());
             holder.description.setText(items.get(position).getDescription());
             holder.date.setText(items.get(position).getDate());
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getPresenter().onListClick2(holder.item);
+                    holder.itemView.setSelected(true);
+
+
                   //  getPresenter().onItemClicked(holder.item);
                 }
             });
@@ -406,6 +409,7 @@ public class ListToDoViewMasterTesting
                 @Override
                 public boolean onLongClick(View v) {
                     getPresenter().onLongListClick2(holder.item);
+                    return true;
                 }
             });
         }
@@ -426,6 +430,7 @@ public class ListToDoViewMasterTesting
 
             public ViewHolder(View view) {
                 super(view);
+                view.setClickable(true);
                 itemView = view;
                 tag = (ImageView) view.findViewById(R.id.tag);
                 title = (TextView) view.findViewById(R.id.title);

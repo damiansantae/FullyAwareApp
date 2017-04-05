@@ -22,9 +22,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -60,7 +63,8 @@ public class ListToDoViewMaster
         ///////////////////////////////////////////////////////////////////
         list = (ListView) findViewById(R.id.list);
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
-        list.setAdapter(adapter);
+       // list.setAdapter(adapter);
+
 
         list.setOnTouchListener(new View.OnTouchListener() {
 
@@ -270,6 +274,12 @@ public class ListToDoViewMaster
     @Override
     public void deselect(int i, boolean b) {
         list.setItemChecked(i,b);
+    }
+
+    //TODO:Este metodo no hace nada aqui, acordarse de borrarlo
+    @Override
+    public void setRecyclerAdapterContent(List<Task> items) {
+
     }
 
     @Override

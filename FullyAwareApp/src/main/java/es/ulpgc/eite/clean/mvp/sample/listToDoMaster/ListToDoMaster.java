@@ -120,6 +120,8 @@ public interface ListToDoMaster {
     void onChangeMsgByBtnClicked();
     String getText();
     String getLabel();
+
+      void loadItems();
   }
 
   /**
@@ -127,5 +129,8 @@ public interface ListToDoMaster {
    */
   interface ModelToPresenter {
 
+    void onLoadItemsTaskStarted();
+
+    void onLoadItemsTaskFinished(List<Task> items);
   }
 }
