@@ -7,14 +7,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +25,13 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoViewMasterTesting
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -42,7 +48,7 @@ public class ListToDoViewMasterTesting
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT}
 
-    private Task_Adapter adapter;
+    private TaskRecyclerViewAdapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -59,11 +65,11 @@ public class ListToDoViewMasterTesting
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
-        recyclerView = (RecyclerView) findViewById(R.id.list);
-        adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
+        recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
+        adapter = new TaskRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+        /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
 
             @Override
@@ -95,39 +101,9 @@ public class ListToDoViewMasterTesting
                 }
                 return false;
             }
-        });
+        });*/
 
 
-
-
-
-        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                getPresenter().onListClick(position, adapter);
-
-
-                Log.d("error msg", "Click Simple");
-               /* Task currentTask = adapter.getTask(position);
-                Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
-                toast.show();*/
-
-            }
-        });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-        recyclerView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-                getPresenter().onLongListClick(pos, adapter);
-                Log.d("error msg", "Click Largo");
-                return true;
-            }
-        });
 
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
@@ -231,6 +207,7 @@ public class ListToDoViewMasterTesting
         finish();
     }
 
+
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
@@ -270,7 +247,8 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-        recyclerView.setItemChecked(i,b);
+       recyclerView.setItemChecked(i,b);
+
     }
 
     @Override
@@ -306,24 +284,24 @@ public class ListToDoViewMasterTesting
 
     @Override
     public boolean isItemListChecked(int pos) {
-        return recyclerView.isItemChecked(pos);
+        //return recyclerView.isItemChecked(pos);
     }
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        recyclerView.setItemChecked(pos, checked);
+       // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-        recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
     @Override
     public void setChoiceMode(int i) {
-        if (i == 0) {               //Modo de seleccion nulo
+       /* if (i == 0) {               //Modo de seleccion nulo
             recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
             recyclerView.invalidateViews();
 
@@ -336,6 +314,14 @@ public class ListToDoViewMasterTesting
 
         } else {
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
+        }*/
+    }
+    @Override
+    public void setRecyclerAdapterContent(List<Task> items) {
+        if(recyclerView != null) {
+           TaskRecyclerViewAdapter recyclerAdapter =
+                    (TaskRecyclerViewAdapter) recyclerView.getAdapter();
+            recyclerAdapter.setItemList(items);
         }
     }
 
@@ -373,5 +359,85 @@ public class ListToDoViewMasterTesting
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+
+    ///////////////////////////////////////////////////////////////
+
+
+    public class TaskRecyclerViewAdapter
+            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
+
+        private List<Task> items;
+
+        public TaskRecyclerViewAdapter() {
+            items = new ArrayList<>();
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_list, parent, false);
+            return new ViewHolder(view);
+        }
+
+        public void setItemList(List<Task> items) {
+            this.items = items;
+            notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            holder.item = items.get(position);
+            holder.tag.setImageResource(items.get(position).getTagId());
+            holder.title.setText(items.get(position).getTitle());
+            holder.description.setText(items.get(position).getDescription());
+            holder.date.setText(items.get(position).getDate());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getPresenter().onListClick2(holder.item);
+                  //  getPresenter().onItemClicked(holder.item);
+                }
+            });
+            holder.itemView.setLongClickable(true);
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    getPresenter().onLongListClick2(holder.item);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View itemView;
+            public final ImageView tag;
+            public final  TextView title;
+            public final  TextView description;
+            public final    TextView date;
+
+            public Task item;
+
+            public ViewHolder(View view) {
+                super(view);
+                itemView = view;
+                tag = (ImageView) view.findViewById(R.id.tag);
+                title = (TextView) view.findViewById(R.id.title);
+                description = (TextView) view.findViewById(R.id.description);
+                date = (TextView) view.findViewById(R.id.date);
+
+            }
+
+       /* @Override
+        public String toString() {
+            return super.toString() + " '" + contentView.getText() + "'";
+        }*/
+        }
     }
 }

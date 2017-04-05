@@ -2,6 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
@@ -68,6 +70,10 @@ public interface ListToDoMaster {
     void onDoneBtnClick(Task_Adapter adapter);
 
       void onSwipeMade(int pos, Task_Adapter adapter);
+
+      void onListClick2(Task item);
+
+    void onLongListClick2(Task item);
   }
 
   /**
@@ -103,6 +109,8 @@ public interface ListToDoMaster {
     void showDoneBtn();
 
     void deselect(int i, boolean b);
+
+      void setRecyclerAdapterContent(List<Task> items);
   }
 
   /**

@@ -27,9 +27,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean textVisible;
     private boolean listClicked;
     private Task taskDone;
-
     private Task selectedTask;
-
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
 
@@ -173,6 +171,45 @@ public class ListToDoPresenterMaster extends GenericPresenter
         checkDoneBtnVisibility();
 checkAddBtnVisibility();
     }
+    @Override
+    public void onListClick2(Task item) {
+        Task currentTask = item;
+        if (listClicked) {                                //Esta seleccionado algo?
+
+            if (isTaskSelected(currentTask)) {            //Si el elemento ya estaba seleccionado
+                deselectTask(currentTask);                    //Se deselecciona
+
+                //checkSelection();                       //Comprobamos si sigue alguno seleccionado
+            } else {                                      //Si no estaba seleccionado
+                tasksSelected.add(currentTask);
+            }
+
+        } else {                                          //Si no estaba ningun elemento seleccionado
+            //Codigo DETALLE
+            selectedTask = currentTask;
+            Navigator app = (Navigator) getView().getApplication();
+            app.goToDetailScreen(this);
+        }
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
+        checkAddBtnVisibility();
+    }
+
+
+
+    private void deselectTask(Task currentTask) {
+       tasksSelected.remove(currentTask);
+    }
+
+    private boolean isTaskSelected(Task currentTask) {
+        boolean result = false;
+        for(int i=0;i<tasksSelected.size();i++){
+            if(currentTask.equals(tasksSelected.get(i)))
+                result= true;
+    }
+        return result;
+
+}
 
     @Override
     public void onLongListClick(int pos, Task_Adapter adapter) {
@@ -197,6 +234,34 @@ checkAddBtnVisibility();
             tasksSelected.add(currentTask);           //Se añade al array de seleccionados
             posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
            checkSelection();
+
+        }
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
+
+    }
+
+    @Override
+    public void onLongListClick2(Task task) {
+        getView().startSelection();           //iniciamos modo seleccion multiple
+
+
+        Task currentTask = task;
+
+
+
+        if (isTaskSelected(currentTask)) {                //Si el elemento ya estaba seleccionado
+               //Se deselecciona
+            tasksSelected.remove(currentTask);
+
+
+           // checkSelection();                        //miramos si hay algun seleccionado
+        } else {                                      //Si no estaba seleccionado
+            setListClicked(true);                   //actualizamos estado a algo seleccionado
+                   //Se selecciona
+            tasksSelected.add(currentTask);
+         //checkSelection();
 
         }
         checkAddBtnVisibility();
@@ -248,6 +313,8 @@ checkAddBtnVisibility();
     checkDoneBtnVisibility();
     checkAddBtnVisibility();
 }
+
+
 
 
     @Override
