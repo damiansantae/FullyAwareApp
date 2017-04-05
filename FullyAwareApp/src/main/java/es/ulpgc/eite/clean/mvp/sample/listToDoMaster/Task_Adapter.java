@@ -13,9 +13,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-/**
- * Created by Damian on 26/02/2017.
- */
+
 
 public class Task_Adapter extends ArrayAdapter<Task> {
     public Task_Adapter(Context context, int resource) {
