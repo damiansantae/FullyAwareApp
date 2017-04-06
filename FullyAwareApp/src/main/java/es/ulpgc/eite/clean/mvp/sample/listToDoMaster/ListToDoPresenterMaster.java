@@ -584,6 +584,7 @@ checkAddBtnVisibility();
 
     @Override
     public void onLoadItemsTaskStarted() {
+        checkToolbarVisibility();
 
     }
 

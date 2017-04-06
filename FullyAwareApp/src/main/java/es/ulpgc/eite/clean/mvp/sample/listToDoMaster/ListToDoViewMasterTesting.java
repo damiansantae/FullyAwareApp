@@ -52,7 +52,8 @@ public class ListToDoViewMasterTesting
     private GoogleApiClient client;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listtodo);
 
@@ -61,7 +62,7 @@ public class ListToDoViewMasterTesting
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
         done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
-        recyclerView = (RecyclerView) findViewById(R.id.checkeable_container);
+        recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
         adapter = new TaskRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -105,7 +106,7 @@ public class ListToDoViewMasterTesting
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                      // getPresenter().onBinBtnClick(adapter);
+                                       // getPresenter().onBinBtnClick(adapter);
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -122,14 +123,14 @@ public class ListToDoViewMasterTesting
                                }
         );
         done.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                      // getPresenter().onDoneBtnClick(adapter);
-                                      // recyclerView.clearChoices();
-                                       adapter.notifyDataSetChanged();
-                                   }
+                                    @Override
+                                    public void onClick(View v) {
+                                        // getPresenter().onDoneBtnClick(adapter);
+                                        // recyclerView.clearChoices();
+                                        adapter.notifyDataSetChanged();
+                                    }
 
-                               }
+                                }
         );
 
         ////////////////////////////////////////////////////////
@@ -139,7 +140,6 @@ public class ListToDoViewMasterTesting
 
 
     }
-
 
     /**
      * Method that initialized MVP objects
@@ -343,10 +343,10 @@ public class ListToDoViewMasterTesting
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+       /* // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());*/
     }
 
     @Override
