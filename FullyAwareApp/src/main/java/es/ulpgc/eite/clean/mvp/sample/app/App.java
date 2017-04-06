@@ -51,10 +51,11 @@ public class App extends Application implements Mediator, Navigator {
     toListDoneState.taskDone = null;
 
     toListForgottenState = new ListForgottenState();
-    toListToDoState.toolbarVisibility = false;
+      //TODO: Aqui no va lisToDoState...
+ /*   toListToDoState.toolbarVisibility = false;
     toListToDoState.textVisibility = false;
     toListToDoState.addBtnVisibility = true;
-    toListToDoState.deleteBtnVisibility = false;
+    toListToDoState.deleteBtnVisibility = false;*/
 
     toAddTaskState = new AddTaskState();
     toAddTaskState.toolbarVisibility = true;
@@ -133,7 +134,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter){
         if(masterListToDetailState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
+            presenter.setToolbarVisibility(masterListToDetailState.toolbarVisible);
             presenter.setItem(masterListToDetailState.selectedItem);
         }
 
@@ -214,7 +215,8 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailState =new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
-        masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getDate();
+
+       // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();

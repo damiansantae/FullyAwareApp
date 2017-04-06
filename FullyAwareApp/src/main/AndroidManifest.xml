@@ -34,6 +34,16 @@
           </intent-filter>-->
 
         </activity>
+        <activity
+            android:name=".listToDoMaster.ListToDoViewMasterTesting"
+            android:label="FullyAware"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>
+              <action android:name="android.intent.action.MAIN"/>
+              <category android:name="android.intent.category.LAUNCHER"/>
+          </intent-filter>-->
+
+        </activity>
 
         <activity
             android:name=".addTask.AddTaskView"

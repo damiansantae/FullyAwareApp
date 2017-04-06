@@ -63,7 +63,7 @@ public class ListToDoViewMaster
         ///////////////////////////////////////////////////////////////////
         list = (ListView) findViewById(R.id.list);
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
-       // list.setAdapter(adapter);
+       list.setAdapter(adapter);
 
 
         list.setOnTouchListener(new View.OnTouchListener() {
@@ -238,6 +238,7 @@ public class ListToDoViewMaster
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
+
 
     @Override
     public void hideText() {

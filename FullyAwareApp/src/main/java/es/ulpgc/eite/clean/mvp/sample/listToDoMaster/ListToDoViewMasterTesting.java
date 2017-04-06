@@ -45,6 +45,7 @@ public class ListToDoViewMasterTesting
     enum Direction {LEFT, RIGHT}
 
     private TaskRecyclerViewAdapter adapter;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -116,7 +117,7 @@ public class ListToDoViewMasterTesting
         add.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       //getPresenter().onAddBtnClick(adapter);
+                                       //getPresenter().onAddBtnCl ick(adapter);
                                        //adapter.notifyDataSetChanged();
                                    }
 
@@ -137,6 +138,9 @@ public class ListToDoViewMasterTesting
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
     }
@@ -343,10 +347,10 @@ public class ListToDoViewMasterTesting
     public void onStart() {
         super.onStart();
 
-       /* // ATTENTION: This was auto-generated to implement the App Indexing API.
+       // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());*/
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
@@ -408,6 +412,7 @@ public class ListToDoViewMasterTesting
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+
                     getPresenter().onLongListClick2(holder.item);
                     return true;
                 }

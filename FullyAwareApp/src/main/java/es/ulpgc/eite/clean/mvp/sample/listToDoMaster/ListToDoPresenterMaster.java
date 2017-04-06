@@ -70,7 +70,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             //getView().setLabel(getModel().getLabel());
 
 
-           // checkToolbarVisibility();
+           checkToolbarVisibility();
             //checkTextVisibility();
             checkAddBtnVisibility();
             

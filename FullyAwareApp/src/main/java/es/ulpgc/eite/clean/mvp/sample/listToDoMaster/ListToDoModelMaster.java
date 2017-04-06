@@ -79,7 +79,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     items.add(task);
   }
   private Task createItem(int position) {
-    return new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
+    return new Task(R.drawable.bg_controll_plane,"Titulo"+position,"Descripcion"+position,"Fecha"+position);
   }
 
   private String makeDetails(int position) {
