@@ -268,6 +268,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
         if (view != null) {
             view.startActivity(new Intent(view, ListDoneViewMaster.class));
+            presenter.destroyView();
         }
 
     }
