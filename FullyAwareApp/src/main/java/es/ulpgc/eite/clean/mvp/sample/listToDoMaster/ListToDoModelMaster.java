@@ -22,6 +22,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
 
   public List<Task> items = null;
   private boolean runningTask;
+  private TaskRepository bbdd;
   private String errorMsg;
 
   /**
@@ -34,8 +35,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   public void onCreate(ListToDoMaster.ModelToPresenter presenter) {
     super.onCreate(presenter);
 
-    listToDoLabel = "Click Me!";
-    listToDoText = "Hello World!";
+
     errorMsg = "Error deleting item";
   }
 
@@ -106,11 +106,11 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   }
   private void setItems(){
     items = new ArrayList();
-
-    // Add some sample items.
+    items= TaskRepository.getInstance().getTasks();
+   /* // Add some sample items.
     for (int count = 1; count <= ITEM_COUNT; count++) {
       addItem(createItem(count));
-    }
+    }*/
   }
 
   private void startDelayedTask() {

@@ -3,6 +3,10 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.util.Log;
 
+import com.google.android.gms.common.data.DataBufferObserver;
+
+import java.util.Observer;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
@@ -12,12 +16,13 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
-        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster {
+        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster, DataBufferObserver.Observable {
 
 
 
 
 private boolean toolbarVisible;
+    private Observer observer;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -31,6 +36,7 @@ private boolean toolbarVisible;
     public void onCreate(ListToDoDetail.PresenterToView view) {
         super.onCreate(ListToDoModelDetail.class, this);
         setView(view);
+
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
         // En este caso, este estado es fijado por el mediador en función de
@@ -168,5 +174,13 @@ private boolean toolbarVisible;
     }
 
 
+    @Override
+    public void addObserver(DataBufferObserver dataBufferObserver) {
 
+    }
+
+    @Override
+    public void removeObserver(DataBufferObserver dataBufferObserver) {
+
+    }
 }

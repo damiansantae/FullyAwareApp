@@ -88,6 +88,7 @@ public class ListToDoViewDetail
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_delete) {
+        getPresenter().onDeleteActionClicked();
       return true;
     }
 
