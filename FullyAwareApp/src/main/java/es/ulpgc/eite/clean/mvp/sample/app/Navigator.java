@@ -7,29 +7,66 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Navigator {
-  void goToNextScreen(Dummy.DummyTo presenter);
-  void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter);
-  void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
 
-  void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
-  void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
+    void goToNextScreen(Dummy.DummyTo presenter);
 
 
+    /*******************************************************************
+     ******** Navegación direccion ListoDo al resto de pantallas y detalle*/
 
-  void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
-
-  void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
+    void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter);
 
     void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter);
-  void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter);
 
-  void goToListToDoScreen(ListForgotten.ListForgottenTo presenter);
+    void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter);
 
-  void goToListDoneScreen(ListForgotten.ListForgottenTo presenter);
+    void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter);
 
+    //Comunicación M/D
+    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
+
+    void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
+
+
+    /***********************************************************************
+     ******** Navegación direccion ListDone al resto de pantallas y detalle*/
     void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter);
-
     void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter);
+    void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
+
+
+    //Comunicación M/D
+    void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
+
+    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
+
+
+    /****************************************************************************
+     ******** Navegación direccion ListForgotten al resto de pantallas y detalle*/
+    void goToListToDoScreen(ListForgotten.ListForgottenTo presenter);
+
+    void goToListDoneScreen(ListForgotten.ListForgottenTo presenter);
+    void goToScheduleScreen(ListForgotten.ListForgottenTo presenter);
+
+    //Comunicación M/D
+
+    /***************************************************************
+     ******** Navegación direccion Shedule al resto de pantallas */
+
+    void goToListToDoScreen(Schedule.ScheduleTo presenter);
+
+    void goToListDoneScreen(Schedule.ScheduleTo presenter);
+
+    void goToListForgottenScreen(Schedule.ScheduleTo presenter);
+
+
+    /*******************************************************************
+     ******** Navegación direccion AddTask al resto de pantallas*/
+    void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
+
+
+
 }

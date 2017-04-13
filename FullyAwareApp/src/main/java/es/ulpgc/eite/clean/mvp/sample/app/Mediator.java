@@ -3,11 +3,11 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
-import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Mediator {
   void startingDummyScreen(Dummy.ToDummy presenter);
@@ -21,6 +21,9 @@ public interface Mediator {
   void startingAddTaskScreen(AddTask.ToAddTask presenter);
 
   void startingDetailScreen(ListToDoDetail.MasterListToDetail listToDoPresenterDetail);
+
+    void startingScheduleScreen(Schedule.ToSchedule presenter);
+    
 
    void taskDone(Task taskDone);
 

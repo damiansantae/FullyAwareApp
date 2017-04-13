@@ -140,7 +140,7 @@ public class ListForgottenView
       }
       else if (id ==R.id.menucalendar){
           Navigator app = (Navigator) getApplication();
-          // app.goToCalendarScreen();
+          app.goToScheduleScreen((ListForgotten.ListForgottenTo)getPresenter());
           Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
       }
 

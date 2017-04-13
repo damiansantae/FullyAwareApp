@@ -17,124 +17,130 @@ import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
+import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
 
 
 public class App extends Application implements Mediator, Navigator {
 
-  private DummyState toDummyState, dummyToState;
-  private ListToDoState toListToDoState, listToDoToState;
-  private ListDoneState toListDoneState, listDoneToState;
-  private ListForgottenState toListForgottenState, listForgottenToState;
-  private AddTaskState toAddTaskState, addTaskToState;
+    private DummyState toDummyState, dummyToState;
+    private ListToDoState toListToDoState, listToDoToState;
+    private ListDoneState toListDoneState, listDoneToState;
+    private ListForgottenState toListForgottenState, listForgottenToState;
+    private AddTaskState toAddTaskState, addTaskToState;
+    private ScheduleState toScheduleState, scheduleToState;
 
-  private DetailState masterListToDetailState;
-  private ListState listToDoDetailToMasterState;
-  private ListState listDoneDetailToMasterState;
+    private DetailState masterListToDetailState;
+    private ListState listToDoDetailToMasterState;
+    private ListState listDoneDetailToMasterState;
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    toDummyState = new DummyState();
-    toDummyState.toolbarVisibility = false;
-    toDummyState.textVisibility = false;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        toDummyState = new DummyState();
+        toDummyState.toolbarVisibility = false;
+        toDummyState.textVisibility = false;
 
-    toListToDoState = new ListToDoState();
-    toListToDoState.toolbarVisibility = true;
-    toListToDoState.textVisibility = false;
-    toListToDoState.addBtnVisibility = true;
-    toListToDoState.deleteBtnVisibility = false;
+        toListToDoState = new ListToDoState();
+        toListToDoState.toolbarVisibility = true;
+        toListToDoState.textVisibility = false;
+        toListToDoState.addBtnVisibility = true;
+        toListToDoState.deleteBtnVisibility = false;
 
-    toListDoneState = new ListDoneState();
-    toListDoneState.toolbarVisibility = false;
-    toListDoneState.textVisibility = false;
-    toListDoneState.taskDone = null;
+        toListDoneState = new ListDoneState();
+        toListDoneState.toolbarVisibility = false;
+        toListDoneState.textVisibility = false;
+        toListDoneState.taskDone = null;
 
-    toListForgottenState = new ListForgottenState();
-      //TODO: Aqui no va lisToDoState...
+        toListForgottenState = new ListForgottenState();
+        //TODO: Aqui no va lisToDoState...
  /*   toListToDoState.toolbarVisibility = false;
     toListToDoState.textVisibility = false;
     toListToDoState.addBtnVisibility = true;
     toListToDoState.deleteBtnVisibility = false;*/
 
-    toAddTaskState = new AddTaskState();
-    toAddTaskState.toolbarVisibility = true;
-    toAddTaskState.textVisibility = false;
-    toAddTaskState.addBtnVisibility = true;
-    toAddTaskState.deleteBtnVisibility = false;
+        toAddTaskState = new AddTaskState();
+        toAddTaskState.toolbarVisibility = true;
+        toAddTaskState.textVisibility = false;
+        toAddTaskState.addBtnVisibility = true;
+        toAddTaskState.deleteBtnVisibility = false;
 
-  }
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Mediator //////////////////////////////////////////////////////////////////////
-
-  @Override
-  public void startingDummyScreen(Dummy.ToDummy presenter){
-    if(toDummyState != null) {
-      presenter.setToolbarVisibility(toDummyState.toolbarVisibility);
-      presenter.setTextVisibility(toDummyState.textVisibility);
-    }
-    presenter.onScreenStarted();
-  }
-
-  @Override
-  public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter){
-    if(toListToDoState != null) {
-      presenter.setToolbarVisibility(toListToDoState.toolbarVisibility);
-      presenter.setTextVisibility(toListToDoState.textVisibility);
-      presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
-      presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
-        presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
-
+        toScheduleState = new ScheduleState();
+        toScheduleState.toolbarVisibility = true;
 
     }
-    presenter.onScreenStarted();
-  }
 
-  @Override
-  public void startingListDoneScreen(ListDoneMaster.ToListDone presenter) {
-    if(toDummyState != null) {
-      presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
-      presenter.setTextVisibility(toListDoneState.textVisibility);
-      presenter.setDeleteBtnVisibility(toListDoneState.deleteBtnVisibility);
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Mediator //////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void startingDummyScreen(Dummy.ToDummy presenter) {
+        if (toDummyState != null) {
+            presenter.setToolbarVisibility(toDummyState.toolbarVisibility);
+            presenter.setTextVisibility(toDummyState.textVisibility);
+        }
+        presenter.onScreenStarted();
     }
-    presenter.onScreenStarted();
-  }
+
+    @Override
+    public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter) {
+        if (toListToDoState != null) {
+            presenter.setToolbarVisibility(toListToDoState.toolbarVisibility);
+            presenter.setTextVisibility(toListToDoState.textVisibility);
+            presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
+            presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
 
 
-  @Override
-  public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
-    if(toAddTaskState != null) {
-      presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
-      presenter.setTextVisibility(toAddTaskState.textVisibility);
-      presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
-      presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+        }
+        presenter.onScreenStarted();
     }
-    presenter.onScreenStarted();
-  }
 
-
-  @Override
-  public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
-    if(toListForgottenState != null) {
-      presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
-      presenter.setTextVisibility(toListForgottenState.textVisibility);
-      presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
-      presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
-
+    @Override
+    public void startingListDoneScreen(ListDoneMaster.ToListDone presenter) {
+        if (toDummyState != null) {
+            presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
+            presenter.setTextVisibility(toListDoneState.textVisibility);
+            presenter.setDeleteBtnVisibility(toListDoneState.deleteBtnVisibility);
+        }
+        presenter.onScreenStarted();
     }
-    presenter.onScreenStarted();
-  }
+
+
+    @Override
+    public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
+        if (toAddTaskState != null) {
+            presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
+            presenter.setTextVisibility(toAddTaskState.textVisibility);
+            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+        }
+        presenter.onScreenStarted();
+    }
+
+
+    @Override
+    public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
+        if (toListForgottenState != null) {
+            presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
+            presenter.setTextVisibility(toListForgottenState.textVisibility);
+            presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
+
+        }
+        presenter.onScreenStarted();
+    }
+
     /**
      * Llamado cuando arranca el detalle para fijar su estado inicial
      *
      * @param presenter implementando la interfaz necesaria para fijar su estado inicial
-     *  en funcion de los valores pasado desde el maestro
+     *                  en funcion de los valores pasado desde el maestro
      */
     @Override
-    public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter){
-        if(masterListToDetailState != null) {
+    public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter) {
+        if (masterListToDetailState != null) {
             presenter.setToolbarVisibility(masterListToDetailState.toolbarVisible);
             presenter.setItem(masterListToDetailState.selectedItem);
         }
@@ -144,80 +150,90 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
+    @Override
+    public void startingScheduleScreen(Schedule.ToSchedule presenter) {
+        if (toScheduleState != null) {
+            presenter.setToolbarVisibility(toScheduleState.toolbarVisibility);
+        }
+        presenter.onScreenStarted();
+
+    }
+
 
     @Override
-  public void taskDone(Task taskDone) {
-   // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
-  }
-
-  @Override
-  public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
-
-    if(masterListToDetailState != null) {
-      presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
-      presenter.setItem(masterListToDetailState.selectedItem);
+    public void taskDone(Task taskDone) {
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
     }
 
-    // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-    masterListToDetailState = null;
-    presenter.onScreenStarted();
-  }
+    @Override
+    public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
+        if (masterListToDetailState != null) {
+            presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
+            presenter.setItem(masterListToDetailState.selectedItem);
+        }
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Navigator /////////////////////////////////////////////////////////////////////
-
-
-  @Override
-  public void goToNextScreen(Dummy.DummyTo presenter) {
-    dummyToState = new DummyState();
-    dummyToState.toolbarVisibility = presenter.isToolbarVisible();
-    dummyToState.textVisibility = presenter.isTextVisible();
-
-    Context view = presenter.getManagedContext();
-    if (view != null) {
-      view.startActivity(new Intent(view, DummyView.class));
-      presenter.destroyView();
+        // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
+        masterListToDetailState = null;
+        presenter.onScreenStarted();
     }
 
-  }
 
-  @Override
-  public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Navigator /////////////////////////////////////////////////////////////////////
 
-     // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
-      //listDoneToState.textVisibility = presenter.isTextVisible();
-    addTaskToState = new AddTaskState();
-      addTaskToState.toolbarVisibility=true;
 
-      Context view = presenter.getManagedContext();
-      if (view != null) {
-        view.startActivity(new Intent(view, AddTaskView.class));
-      }
-  }
+    @Override
+    public void goToNextScreen(Dummy.DummyTo presenter) {
+        dummyToState = new DummyState();
+        dummyToState.toolbarVisibility = presenter.isToolbarVisible();
+        dummyToState.textVisibility = presenter.isTextVisible();
 
-  @Override
-  public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
-    if (listToDoToState==null){
-      listToDoToState = new ListToDoState();
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, DummyView.class));
+            presenter.destroyView();
+        }
 
     }
-    listToDoToState.toolbarVisibility=true;
 
-    Context view = addTaskPresenter.getManagedContext();
-    if (view != null) {
-      view.startActivity(new Intent(view, ListToDoViewMaster.class));
+    @Override
+    public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {
+
+        // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
+        //listDoneToState.textVisibility = presenter.isTextVisible();
+        addTaskToState = new AddTaskState();
+        addTaskToState.toolbarVisibility = true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, AddTaskView.class));
+        }
     }
 
-  }
+    @Override
+    public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
+        if (listToDoToState == null) {
+            listToDoToState = new ListToDoState();
+
+        }
+        listToDoToState.toolbarVisibility = true;
+
+        Context view = addTaskPresenter.getManagedContext();
+        if (view != null) {
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
+        }
+
+    }
 
     @Override
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster) {
-        masterListToDetailState =new DetailState();
+        masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
 
-       // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -226,44 +242,44 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
-  @Override
-  public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
-    listToDoDetailToMasterState = new ListState();
-    listToDoDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+    @Override
+    public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
+        listToDoDetailToMasterState = new ListState();
+        listToDoDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
 
-    // Al volver al maestro, el detalle debe finalizar
-    presenter.destroyView();
-  }
-
-  @Override
-  public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
-    masterListToDetailState =new DetailState();
-    masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-    masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
-
-    // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
-    Context view = listDonePresenterMaster.getManagedContext();
-    if (view != null) {
-      view.startActivity(new Intent(view, ListToDoViewDetail.class));
+        // Al volver al maestro, el detalle debe finalizar
+        presenter.destroyView();
     }
-  }
+
+    @Override
+    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
+        masterListToDetailState = new DetailState();
+        masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
+        masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
+
+        // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
+        Context view = listDonePresenterMaster.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListToDoViewDetail.class));
+        }
+    }
 
 
-  @Override
-  public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
-    listDoneDetailToMasterState = new ListState();
-    listDoneDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+    @Override
+    public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
+        listDoneDetailToMasterState = new ListState();
+        listDoneDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
 
-    // Al volver al maestro, el detalle debe finalizar
-    presenter.destroyView();
-  }
+        // Al volver al maestro, el detalle debe finalizar
+        presenter.destroyView();
+    }
 
     @Override
     public void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter) {
-        if(listDoneToState==null) {
+        if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
         }
-        listDoneToState.toolbarVisibility=true;
+        listDoneToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
@@ -275,13 +291,13 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter) {
-        if (listForgottenToState==null){
+        if (listForgottenToState == null) {
             listForgottenToState = new ListForgottenState();
         }
-        listForgottenToState.toolbarVisibility=true;
+        listForgottenToState.toolbarVisibility = true;
         Context view = presenter.getManagedContext();
 
-        if(view !=null){
+        if (view != null) {
             view.startActivity(new Intent(view, ListForgottenView.class));
 
         }
@@ -289,12 +305,26 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
+    public void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter) {
+        if (scheduleToState == null) {
+            scheduleToState = new ScheduleState();
+        }
+        scheduleToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, ScheduleView.class));
+
+        }
+    }
+
+    @Override
     public void goToListToDoScreen(ListForgotten.ListForgottenTo presenter) {
-        if (listToDoToState==null){
+        if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
 
         }
-        listToDoToState.toolbarVisibility=true;
+        listToDoToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
@@ -307,10 +337,10 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToListDoneScreen(ListForgotten.ListForgottenTo presenter) {
-        if(listDoneToState==null) {
+        if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
         }
-        listDoneToState.toolbarVisibility=true;
+        listDoneToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
@@ -321,14 +351,74 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
-        if (listForgottenToState==null){
-            listForgottenToState = new ListForgottenState();
+    public void goToScheduleScreen(ListForgotten.ListForgottenTo presenter) {
+        if (scheduleToState == null) {
+            scheduleToState = new ScheduleState();
         }
-        listForgottenToState.toolbarVisibility=true;
+        scheduleToState.toolbarVisibility = true;
         Context view = presenter.getManagedContext();
 
-        if(view !=null){
+        if (view != null) {
+            view.startActivity(new Intent(view, ScheduleView.class));
+
+        }
+
+    }
+
+    @Override
+    public void goToListToDoScreen(Schedule.ScheduleTo presenter) {
+        if (listToDoToState == null) {
+            listToDoToState = new ListToDoState();
+
+        }
+        listToDoToState.toolbarVisibility = true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
+        }
+
+    }
+
+    @Override
+    public void goToListDoneScreen(Schedule.ScheduleTo presenter) {
+        if (listDoneToState == null) {
+            listDoneToState = new ListDoneState();
+        }
+        listDoneToState.toolbarVisibility = true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+        }
+
+
+    }
+
+    @Override
+    public void goToListForgottenScreen(Schedule.ScheduleTo presenter) {
+        if (listForgottenToState == null) {
+            listForgottenToState = new ListForgottenState();
+        }
+        listForgottenToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, ListForgottenView.class));
+
+        }
+
+    }
+
+    @Override
+    public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
+        if (listForgottenToState == null) {
+            listForgottenToState = new ListForgottenState();
+        }
+        listForgottenToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
             view.startActivity(new Intent(view, ListForgottenView.class));
 
         }
@@ -338,11 +428,11 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter) {
-        if (listToDoToState==null){
+        if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
 
         }
-        listToDoToState.toolbarVisibility=true;
+        listToDoToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
@@ -356,62 +446,79 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter) {
+        if (scheduleToState == null) {
+            scheduleToState = new ScheduleState();
+        }
+        scheduleToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, ScheduleView.class));
+
+        }
+
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-  // State /////////////////////////////////////////////////////////////////////////
+    // State /////////////////////////////////////////////////////////////////////////
 
-  private class DummyState {
-    boolean toolbarVisibility;
-    boolean textVisibility;
-  }
+    private class DummyState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+    }
 
-  private class ListToDoState {
-    boolean toolbarVisibility;
-    boolean textVisibility;
-    boolean addBtnVisibility;
-    boolean deleteBtnVisibility;
-      boolean doneBtnVisibility;
+    private class ListToDoState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+        boolean doneBtnVisibility;
 
 
+    }
 
-  }
+    private class ListDoneState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+        Task taskDone;
+    }
 
-  private class ListDoneState {
-    boolean toolbarVisibility;
-    boolean textVisibility;
-    boolean addBtnVisibility;
-    boolean deleteBtnVisibility;
-    Task taskDone;
-  }
+    private class ListForgottenState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+    }
 
-  private class ListForgottenState {
-    boolean toolbarVisibility;
-    boolean textVisibility;
-    boolean addBtnVisibility;
-    boolean deleteBtnVisibility;
-  }
+    private class AddTaskState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+    }
 
-  private class AddTaskState {
-    boolean toolbarVisibility;
-    boolean textVisibility;
-    boolean addBtnVisibility;
-    boolean deleteBtnVisibility;
-  }
+    private class ScheduleState {
+        boolean toolbarVisibility;
+    }
 
     private class DetailState {
         boolean toolbarVisible;
         Task selectedItem;
-      String subject;
-      String date;
+        String subject;
+        String date;
     }
 
 
-  /**
-   * Estado a actualizar en el maestro en función de la ejecución del detalle
-   */
-  private class ListState {
-    Task taskToDelete;
-  }
+    /**
+     * Estado a actualizar en el maestro en función de la ejecución del detalle
+     */
+    private class ListState {
+        Task taskToDelete;
+    }
 
 }

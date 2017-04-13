@@ -53,8 +53,7 @@ public class ListToDoViewMasterTesting
     private GoogleApiClient client;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listtodo);
 
@@ -185,7 +184,7 @@ public class ListToDoViewMasterTesting
         }
         else if (id ==R.id.menucalendar){
             Navigator app = (Navigator) getApplication();
-           // app.goToCalendarScreen();
+            app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.menuForgotten){
