@@ -18,6 +18,7 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 
 public class App extends Application implements Mediator, Navigator {
@@ -296,7 +297,8 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
         }
 
 
@@ -343,7 +345,11 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListToDoViewMaster.class));
+
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
+
+
         }
 
 

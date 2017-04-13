@@ -74,6 +74,8 @@ public interface ListToDoMaster {
       void onListClick2(Task item);
 
     void onLongListClick2(Task item);
+
+      void onAddBtnClick();
   }
 
   /**

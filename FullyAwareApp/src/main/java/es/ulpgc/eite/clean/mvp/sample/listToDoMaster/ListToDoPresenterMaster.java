@@ -271,6 +271,14 @@ checkAddBtnVisibility();
 
     }
 
+    @Override
+    public void onAddBtnClick() {
+        Navigator app = (Navigator)getView().getApplication();
+
+        app.goToAddTaskScreen(this);
+
+    }
+
     public void onSwipeMade(int position, Task_Adapter adapter){
  /*       int sizes = posSelected.size();
         if (sizes != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
@@ -351,6 +359,7 @@ checkAddBtnVisibility();
 
     }
 
+    //TODO: Quitar parametro
     @Override
     public void onAddBtnClick(Task_Adapter adapter) {
         Navigator app = (Navigator)getView().getApplication();

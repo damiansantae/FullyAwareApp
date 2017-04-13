@@ -117,7 +117,7 @@ public class ListToDoViewMasterTesting
         add.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       //getPresenter().onAddBtnCl ick(adapter);
+                                       getPresenter().onAddBtnClick();
                                        //adapter.notifyDataSetChanged();
                                    }
 

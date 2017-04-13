@@ -126,6 +126,7 @@ public class ListDoneViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToListToDoScreen((ListDoneMaster.ListDoneTo) getPresenter());
 
+
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
         }
 
