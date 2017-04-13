@@ -8,6 +8,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 
 
 public interface ListToDoMaster {
@@ -71,7 +72,7 @@ public interface ListToDoMaster {
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
-      void onListClick2(Task item);
+      void onListClick2(Task item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
     void onLongListClick2(Task item);
 
@@ -135,4 +136,12 @@ public interface ListToDoMaster {
 
     void onLoadItemsTaskFinished(List<Task> items);
   }
+
+interface Observer {
+  //method to update the observer, used by subject
+  void update();
+
+  //attach with subject to observe
+ void setObservable(ListToDoDetail.Observable sub);
+}
 }

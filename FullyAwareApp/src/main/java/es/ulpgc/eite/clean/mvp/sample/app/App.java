@@ -143,6 +143,7 @@ public class App extends Application implements Mediator, Navigator {
         if (masterListToDetailState != null) {
             presenter.setToolbarVisibility(masterListToDetailState.toolbarVisible);
             presenter.setItem(masterListToDetailState.selectedItem);
+            presenter.setAdapter(masterListToDetailState.adapter);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
@@ -228,10 +229,11 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster) {
+    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+        masterListToDetailState.adapter = adapter;
 
         // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
@@ -511,6 +513,7 @@ public class App extends Application implements Mediator, Navigator {
         Task selectedItem;
         String subject;
         String date;
+        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
     }
 
 

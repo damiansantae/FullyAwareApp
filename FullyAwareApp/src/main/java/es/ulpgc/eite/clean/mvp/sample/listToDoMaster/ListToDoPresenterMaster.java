@@ -7,8 +7,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -16,10 +14,11 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer {
+        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, ListToDoMaster.Observer {
 
 
     private boolean toolbarVisible;
@@ -33,6 +32,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private Task selectedTask;
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
+    private ListToDoDetail.Observable detail;
 
 
 
@@ -168,14 +168,14 @@ public class ListToDoPresenterMaster extends GenericPresenter
             //Codigo DETALLE
             selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailScreen(this);
+           // app.goToDetailScreen(this, adapter);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
 checkAddBtnVisibility();
     }
     @Override
-    public void onListClick2(Task item) {
+    public void onListClick2(Task item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         Task currentTask = item;
         if (listClicked) {                                //Esta seleccionado algo?
 
@@ -191,11 +191,12 @@ checkAddBtnVisibility();
             //Codigo DETALLE
             selectedTask = currentTask;
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailScreen(this);
+            app.goToDetailScreen(this, adapter);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
         checkAddBtnVisibility();
+
     }
 
 
@@ -605,8 +606,20 @@ checkAddBtnVisibility();
 
     }
 
+
+
     @Override
-    public void update(Observable o, Object arg) {
+    public void update() {
+       Task taskToDelete= (Task) detail.getUpdate(this);
+        TaskRepository.getInstance().deleteTask(taskToDelete);
+
+
+    }
+
+    @Override
+    public void setObservable(ListToDoDetail.Observable detail) {
+        this.detail=detail;
+
 
     }
 }

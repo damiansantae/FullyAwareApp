@@ -3,27 +3,26 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.util.Log;
 
-import com.google.android.gms.common.data.DataBufferObserver;
-
-import java.util.Observer;
-
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
-import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
-        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster, DataBufferObserver.Observable {
+        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster, ListToDoDetail.Observable {
 
 
 
 
 private boolean toolbarVisible;
-    private Observer observer;
-
+    private ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    private ListToDoMaster.Observer observer;
+    private boolean isChanged;
+    private final Object MUTEX= new Object();
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
      * Responsible to initialize MODEL.
@@ -106,8 +105,10 @@ private boolean toolbarVisible;
 
     @Override
     public void onDeleteActionClicked() {
-        Navigator app = (Navigator) getView().getApplication();
-        app.backToMasterScreen(this);
+       /* Navigator app = (Navigator) getView().getApplication();
+        app.backToMasterScreen(this);*/
+       this.isChanged=true;
+       notifyObservers();
     }
 
 
@@ -126,7 +127,10 @@ private boolean toolbarVisible;
 
     }
 
-
+    @Override
+    public void setAdapter(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        this.adapter=adapter;
+    }
 
 
     @Override
@@ -174,13 +178,46 @@ private boolean toolbarVisible;
     }
 
 
+
+
     @Override
-    public void addObserver(DataBufferObserver dataBufferObserver) {
+    public void register(ListToDoMaster.Observer obj) {
+        if(obj == null) throw new NullPointerException("Null Observer");
+        synchronized (MUTEX) {
+            if(observer==null) observer = obj;
+        }
+
 
     }
 
     @Override
-    public void removeObserver(DataBufferObserver dataBufferObserver) {
+    public void unregister() {
+        synchronized (MUTEX) {
+           observer=null;
+        }
+
 
     }
+
+    @Override
+    public void notifyObservers() {
+   ListToDoMaster.Observer localObserver;
+
+        synchronized (MUTEX) {
+            if (!isChanged)
+                return;
+            localObserver = observer;
+            this.isChanged=false;
+        }
+    localObserver.update();
+        }
+
+    @Override
+    public Object getUpdate(ListToDoMaster.Observer obj) {
+        return getTaskToDelete();
+    }
+
+
+
+
 }

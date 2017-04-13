@@ -7,6 +7,7 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Navigator {
@@ -26,7 +27,7 @@ public interface Navigator {
     void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter);
 
     //Comunicación M/D
-    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
+    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
     void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
 

@@ -400,10 +400,10 @@ public class ListToDoViewMasterTesting
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getPresenter().onListClick2(holder.item);
+                    getPresenter().onListClick2(holder.item, adapter);
                     holder.itemView.setSelected(true);
 
-
+                    adapter.notifyDataSetChanged();
                   //  getPresenter().onItemClicked(holder.item);
                 }
             });
