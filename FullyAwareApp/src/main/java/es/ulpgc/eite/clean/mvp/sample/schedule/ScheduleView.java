@@ -62,7 +62,7 @@ public class ScheduleView
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_listtodo_master_todo, menu);
+        getMenuInflater().inflate(R.menu.menu_schedule, menu);
         return true;
     }
 
