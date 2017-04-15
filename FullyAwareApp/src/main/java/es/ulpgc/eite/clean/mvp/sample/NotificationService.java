@@ -14,7 +14,7 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+//iniciamos el servicio y lo destruimos para que no se quede guardado en RAM
         stopSelf();
         return START_NOT_STICKY;
 
@@ -28,7 +28,7 @@ public class NotificationService extends Service {
 
     @Override
     public void onDestroy() {
-        // I want to restart this service again in one hour
+        //Se lanza la notificación 5 segundos despues de iniciar la app
         scheduleNotification(getNotification("Hace 5 segundos desde el inicio de la app"));
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarm.set(
