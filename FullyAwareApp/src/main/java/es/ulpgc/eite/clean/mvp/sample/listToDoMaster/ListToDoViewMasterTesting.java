@@ -1,14 +1,8 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -114,7 +108,7 @@ public class ListToDoViewMasterTesting
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
-                                       scheduleNotification(getNotification("Eliminar pulsado"), 5000);
+
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -124,7 +118,9 @@ public class ListToDoViewMasterTesting
         add.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
+
                                        getPresenter().onAddBtnClick();
+
                                        //adapter.notifyDataSetChanged();
                                    }
 
@@ -180,7 +176,7 @@ public class ListToDoViewMasterTesting
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-            return true;
+
         }else if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
@@ -460,24 +456,5 @@ public class ListToDoViewMasterTesting
 
 
 
-    //Notificacion
-    private void scheduleNotification(Notification notification, int delay) {
 
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-    }
-
-    private Notification getNotification(String content) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Scheduled Notification");
-        builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.common_plus_signin_btn_icon_dark);
-        return builder.build();
-    }
 }

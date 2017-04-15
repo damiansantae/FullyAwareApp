@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
@@ -38,6 +39,8 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Inicializamos servicio de notificaciones
+        startService(new Intent(this, NotificationService.class));
         toDummyState = new DummyState();
         toDummyState.toolbarVisibility = false;
         toDummyState.textVisibility = false;
