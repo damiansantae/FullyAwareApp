@@ -14,11 +14,10 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, ListToDoMaster.Observer {
+        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster{
 
 
     private boolean toolbarVisible;
@@ -32,7 +31,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private Task selectedTask;
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
-    private ListToDoDetail.Observable detail;
+
 
 
 
@@ -53,6 +52,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
+
         app.startingListToDoScreen(this);
     }
 
@@ -606,20 +606,4 @@ checkAddBtnVisibility();
 
     }
 
-
-
-    @Override
-    public void update() {
-       Task taskToDelete= (Task) detail.getUpdate(this);
-        TaskRepository.getInstance().deleteTask(taskToDelete);
-
-
-    }
-
-    @Override
-    public void setObservable(ListToDoDetail.Observable detail) {
-        this.detail=detail;
-
-
-    }
 }

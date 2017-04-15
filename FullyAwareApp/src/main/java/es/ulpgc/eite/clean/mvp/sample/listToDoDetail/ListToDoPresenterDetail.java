@@ -7,22 +7,23 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
-        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster, ListToDoDetail.Observable {
+        implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster{
 
 
 
 
 private boolean toolbarVisible;
     private ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
-    private ListToDoMaster.Observer observer;
+
     private boolean isChanged;
     private final Object MUTEX= new Object();
+
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
      * Responsible to initialize MODEL.
@@ -35,7 +36,6 @@ private boolean toolbarVisible;
     public void onCreate(ListToDoDetail.PresenterToView view) {
         super.onCreate(ListToDoModelDetail.class, this);
         setView(view);
-
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
         // En este caso, este estado es fijado por el mediador en función de
@@ -105,10 +105,9 @@ private boolean toolbarVisible;
 
     @Override
     public void onDeleteActionClicked() {
-       /* Navigator app = (Navigator) getView().getApplication();
-        app.backToMasterScreen(this);*/
-       this.isChanged=true;
-       notifyObservers();
+       Navigator app = (Navigator) getView().getApplication();
+        app.backToMasterScreen(this);
+
     }
 
 
@@ -176,47 +175,6 @@ private boolean toolbarVisible;
             }
         }
     }
-
-
-
-
-    @Override
-    public void register(ListToDoMaster.Observer obj) {
-        if(obj == null) throw new NullPointerException("Null Observer");
-        synchronized (MUTEX) {
-            if(observer==null) observer = obj;
-        }
-
-
-    }
-
-    @Override
-    public void unregister() {
-        synchronized (MUTEX) {
-           observer=null;
-        }
-
-
-    }
-
-    @Override
-    public void notifyObservers() {
-   ListToDoMaster.Observer localObserver;
-
-        synchronized (MUTEX) {
-            if (!isChanged)
-                return;
-            localObserver = observer;
-            this.isChanged=false;
-        }
-    localObserver.update();
-        }
-
-    @Override
-    public Object getUpdate(ListToDoMaster.Observer obj) {
-        return getTaskToDelete();
-    }
-
 
 
 

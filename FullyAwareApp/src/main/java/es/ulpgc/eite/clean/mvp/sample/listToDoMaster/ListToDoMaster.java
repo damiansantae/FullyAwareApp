@@ -8,7 +8,6 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 
 
 public interface ListToDoMaster {
@@ -137,11 +136,5 @@ public interface ListToDoMaster {
     void onLoadItemsTaskFinished(List<Task> items);
   }
 
-interface Observer {
-  //method to update the observer, used by subject
-  void update();
 
-  //attach with subject to observe
- void setObservable(ListToDoDetail.Observable sub);
-}
 }

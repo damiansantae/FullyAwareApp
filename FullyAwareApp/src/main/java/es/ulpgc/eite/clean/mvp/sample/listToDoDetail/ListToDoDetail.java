@@ -4,7 +4,6 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public interface ListToDoDetail {
@@ -76,15 +75,5 @@ public interface ListToDoDetail {
 
   ///////////////////////////////////////////
 
-  interface Observable{
-    //methods to register and unregister observers
-   void register(ListToDoMaster.Observer obj);
-  void unregister();
 
-    //method to notify observers of change
-   void notifyObservers();
-
-    //method to get updates from subject
- Object getUpdate(ListToDoMaster.Observer obj);
-  }
 }
