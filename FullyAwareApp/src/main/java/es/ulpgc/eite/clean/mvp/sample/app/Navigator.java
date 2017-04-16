@@ -65,7 +65,7 @@ public interface Navigator {
 
 
     /*******************************************************************
-     ******** Navegación direccion AddTask al resto de pantallas*/
+     ******** Navegación direccion Preferences al resto de pantallas*/
     void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
 
 
