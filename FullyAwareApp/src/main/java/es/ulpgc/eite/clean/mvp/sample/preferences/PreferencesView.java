@@ -14,7 +14,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
@@ -55,24 +61,38 @@ private ListView list;
        prefItems = new String[]{"App Coulour", "Change Subjects", "Add Subjects"};
        descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
 
-        imageItems = new String[]{};
+        imageItems = new String[]{"hola","hola","hola"};
+
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 3; i++) {
+            Map<String, Object> datum = new HashMap<String, Object>(2);
+            datum.put("Title", prefItems[i]);
+            datum.put("Description", descriptionItems[i]);
+            datum.put("Image", imageItems[i]);
+            data.add(datum);
+        }
+        ListView list = (ListView) findViewById(R.id.preferences_list);
+        list.setAdapter(new SimpleAdapter(this, data, R.layout.item_preferences, new String[] {"Title","Description,Image"}, new int[] {R.id.title, R.id.description, R.id.tag}));
+
+
+
 
 
 
         //Creamos el adapter
-       ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
-        ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
+       //ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
+        //ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
        // ArrayAdapter<ImageView> imageItemAdapter = new ArrayAdapter<ImageView>(this, R.layout.item_preferences, R.id.tag, imageItems);
 
         //Lo enlazamos al layout
 
 
-        ListView list = (ListView) findViewById(R.id.preferences_list);
-        list.setAdapter(itemAdapter);
-        list.setAdapter(descriptionAdapter);
+
+       // list.setAdapter(itemAdapter);
+        //list.setAdapter(descriptionAdapter);
 
         //list.setAdapter(imageItemAdapter);
-       
+
     }
 
 
