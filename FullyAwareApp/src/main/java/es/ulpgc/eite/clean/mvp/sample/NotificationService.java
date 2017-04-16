@@ -53,6 +53,7 @@ public class NotificationService extends Service {
     private Notification getNotification(String content) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Scheduled Notification");
+
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.common_plus_signin_btn_icon_dark);
         return builder.build();
