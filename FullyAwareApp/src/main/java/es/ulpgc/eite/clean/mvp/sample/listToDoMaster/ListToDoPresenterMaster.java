@@ -193,7 +193,7 @@ checkAddBtnVisibility();
             //Codigo DETALLE
             selectedTaskToDo = currentTaskToDo;
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailToDoScreen(this, adapter);
+            app.goToDetailScreen(this, adapter);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -451,6 +451,7 @@ checkAddBtnVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
+
         getModel().loadItems();
     }
 

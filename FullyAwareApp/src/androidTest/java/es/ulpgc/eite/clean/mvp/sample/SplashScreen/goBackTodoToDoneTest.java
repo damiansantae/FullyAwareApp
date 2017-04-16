@@ -54,7 +54,7 @@ public class goBackTodoToDoneTest {
         appCompatTextView.perform(click());
 
         ViewInteraction relativeLayout = onView(
-                allOf(withId(R.id.content_listDone),
+                allOf(withId(R.id.content_listdone),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),

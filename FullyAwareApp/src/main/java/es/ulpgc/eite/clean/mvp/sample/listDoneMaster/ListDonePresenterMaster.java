@@ -13,7 +13,6 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 public class ListDonePresenterMaster extends GenericPresenter
         <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
@@ -168,7 +167,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             //Codigo DETALLE
             selectedTaskDone = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailDoneScreen(this);
+            app.goToDetailScreen(this);
         }
         checkDeleteBtnVisibility();
 
