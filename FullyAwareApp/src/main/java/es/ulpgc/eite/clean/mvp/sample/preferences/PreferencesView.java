@@ -35,6 +35,7 @@ public class PreferencesView
 private ListView list;
   private Adapter adapter;
     private String [] prefItems;
+    private String [] descriptionItems;
 
 
   @Override
@@ -47,15 +48,19 @@ private ListView list;
 
     private void preferencesListView(){
         // Creamos lista de elementos
-       prefItems = new String[]{"Change App Coulour", "Change Subjects", "Add Subjects"};
+       prefItems = new String[]{"App Coulour", "Change Subjects", "Add Subjects"};
+       descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
+        descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
 
         //Creamos el adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_preferences, prefItems);
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
+        ArrayAdapter<String> decriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
+        ArrayAdapter<String> decriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
 
         //Lo enlazamos al layout
 
         ListView list = (ListView) findViewById(R.id.preferences_list);
-        list.setAdapter(adapter);
+        list.setAdapter(itemAdapter);
 
     }
 
