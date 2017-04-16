@@ -20,6 +20,8 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class App extends Application implements Mediator, Navigator {
@@ -38,6 +40,14 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("tasks.realm")
+                .deleteRealmIfMigrationNeeded()
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
         toDummyState = new DummyState();
         toDummyState.toolbarVisibility = false;
         toDummyState.textVisibility = false;
@@ -51,7 +61,7 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState = new ListDoneState();
         toListDoneState.toolbarVisibility = false;
         toListDoneState.textVisibility = false;
-        toListDoneState.taskDone = null;
+        toListDoneState.taskToDoDone = null;
 
         toListForgottenState = new ListForgottenState();
         //TODO: Aqui no va lisToDoState...
@@ -162,8 +172,8 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void taskDone(Task taskDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
+    public void taskDone(TaskToDo taskToDoDone) {
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase TaskToDo Común
     }
 
     @Override
@@ -232,10 +242,10 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+        masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
         masterListToDetailState.adapter = adapter;
 
-        // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -247,7 +257,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
         listToDoDetailToMasterState = new ListState();
-        listToDoDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+        listToDoDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -257,7 +267,7 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
         masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
+        masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTaskToDo();
 
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listDonePresenterMaster.getManagedContext();
@@ -270,7 +280,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
         listDoneDetailToMasterState = new ListState();
-        listDoneDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+        listDoneDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -487,7 +497,7 @@ public class App extends Application implements Mediator, Navigator {
         boolean textVisibility;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
-        Task taskDone;
+        TaskToDo taskToDoDone;
     }
 
     private class ListForgottenState {
@@ -510,7 +520,7 @@ public class App extends Application implements Mediator, Navigator {
 
     private class DetailState {
         boolean toolbarVisible;
-        Task selectedItem;
+        TaskToDo selectedItem;
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -521,7 +531,7 @@ public class App extends Application implements Mediator, Navigator {
      * Estado a actualizar en el maestro en función de la ejecución del detalle
      */
     private class ListState {
-        Task taskToDelete;
+        TaskToDo taskToDoToDelete;
     }
 
 }

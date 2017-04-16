@@ -11,11 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
-
-public class Task_Adapter extends ArrayAdapter<Task> {
+public class Task_Adapter extends ArrayAdapter<TaskToDo> {
     public Task_Adapter(Context context, int resource) {
         super(context, resource);
     }
@@ -24,19 +23,19 @@ public class Task_Adapter extends ArrayAdapter<Task> {
         super(context, resource, textViewResourceId);
     }
 
-    public Task_Adapter(Context context, int resource, Task[] objects) {
+    public Task_Adapter(Context context, int resource, TaskToDo[] objects) {
         super(context, resource, objects);
     }
 
-    public Task_Adapter(Context context, int resource, int textViewResourceId, Task[] objects) {
+    public Task_Adapter(Context context, int resource, int textViewResourceId, TaskToDo[] objects) {
         super(context, resource, textViewResourceId, objects);
     }
 
-    public Task_Adapter(Context context, int resource, List<Task> objects) {
+    public Task_Adapter(Context context, int resource, List<TaskToDo> objects) {
         super(context, resource, objects);
     }
 
-    public Task_Adapter(Context context, int resource, int textViewResourceId, List<Task> objects) {
+    public Task_Adapter(Context context, int resource, int textViewResourceId, List<TaskToDo> objects) {
         super(context, resource, textViewResourceId, objects);
     }
 
@@ -63,13 +62,13 @@ public class Task_Adapter extends ArrayAdapter<Task> {
         TextView date = (TextView) convertView.findViewById(R.id.date);
 
         // Lead actual.
-        Task task = getItem(position);
+        TaskToDo taskToDo = getItem(position);
 
         // Setup.
-        tag.setImageResource(task.getTagId());
-        title.setText(task.getTitle());
-        description.setText(task.getDescription());
-        date.setText(task.getDate());
+        tag.setImageResource(taskToDo.getTagId());
+        title.setText(taskToDo.getTitle());
+        description.setText(taskToDo.getDescription());
+        date.setText(taskToDo.getDate());
 
         return convertView;
     }

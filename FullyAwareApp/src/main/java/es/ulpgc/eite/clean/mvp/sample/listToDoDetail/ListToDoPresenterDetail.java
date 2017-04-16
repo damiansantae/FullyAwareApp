@@ -8,7 +8,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public class ListToDoPresenterDetail extends GenericPresenter
@@ -99,8 +99,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public Task getTask() {
-        return getModel().getTask();
+    public TaskToDo getTask() {
+        return getModel().getTaskToDo();
     }
 
     @Override
@@ -138,8 +138,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public void setItem(Task selectedItem) {
-        getModel().setTask(selectedItem);
+    public void setItem(TaskToDo selectedItem) {
+        getModel().setTaskToDo(selectedItem);
 
     }
 
@@ -158,8 +158,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public Task getTaskToDelete() {
-        return getModel().getTask();
+    public TaskToDo getTaskToDelete() {
+        return getModel().getTaskToDo();
     }
 
 

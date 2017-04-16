@@ -5,7 +5,7 @@ import android.content.Context;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
 public interface ListDoneMaster {
@@ -35,7 +35,7 @@ public interface ListDoneMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    Task getSelectedTask();
+    TaskToDo getSelectedTaskToDo();
     boolean getToolbarVisibility();
 
   }

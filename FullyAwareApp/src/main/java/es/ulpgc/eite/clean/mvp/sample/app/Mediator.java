@@ -25,7 +25,7 @@ public interface Mediator {
     void startingScheduleScreen(Schedule.ToSchedule presenter);
     
 
-   void taskDone(Task taskDone);
+   void taskDone(TaskToDo taskToDoDone);
 
     void startingDetailScreen(ListDoneDetail.MasterListToDetail listDonePresenterDetail);
 
