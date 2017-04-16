@@ -1,41 +1,29 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
-import android.database.DataSetObserver;
-import android.graphics.drawable.Drawable;
+
+import android.annotation.SuppressLint;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
-import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 
-public class PreferencesView
-    extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter>
-    implements Preferences.PresenterToView {
+
+public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView {
 
   private Toolbar toolbar;
     private String [] prefItems;
@@ -45,30 +33,22 @@ public class PreferencesView
     private SimpleAdapter adapter;
     private GoogleApiClient client;
 
-
-    public PreferencesView() {
-    }
-
     @Override
-  protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-        getPresenter();
     setContentView(R.layout.activity_preferences);
     preferencesListView();
-
-
-
 
     }
 
     private void preferencesListView(){
         // Creamos lista de elementos
-       prefItems = new String[]{"App Colour","Add Subjects","Change Subjects","About"};
-       descriptionItems = new String[]{"Change the colour of the App!", "Add a new subject", "To make changes on your subjects", "All about FullyAware App and xDroidInc"};
+       prefItems = new String[]{"App Colour","Edit Subjects","Donate","About"};
+       descriptionItems = new String[]{"Change the colour of the App!", "Add subjects or make changes", "To contribute", "All about FullyAware App and xDroidInc"};
         imageItems = new int[]{
                 android.R.drawable.ic_menu_edit,
-                android.R.drawable.ic_menu_add,
                 android.R.drawable.ic_menu_manage,
+                android.R.drawable.ic_menu_share,
                 android.R.drawable.ic_menu_info_details,
         };
 
@@ -102,15 +82,21 @@ public class PreferencesView
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-            getPresenter().onListClick(position, adapter);
-            }
+          getPresenter().onListClick(position,adapter);
+        }
         });
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
+
+
+
+
+
+
 
 
 
@@ -191,6 +177,17 @@ public void onStart(){
         client.disconnect();
     }
 
+
+    /**
+     * Method that initialized MVP objects
+     * {@link super#onResume(Class, Object)} should always be called
+     */
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onResume() {
+        super.onResume(PreferencesPresenter.class, this);
+    }
+
 }
 
 
@@ -213,12 +210,6 @@ public void onStart(){
 
 
 
-
-
-  /**
-   * Method that initialized MVP objects
-   * {@link super#onResume(Class, Object)} should always be called
-   */
 
 
   /*

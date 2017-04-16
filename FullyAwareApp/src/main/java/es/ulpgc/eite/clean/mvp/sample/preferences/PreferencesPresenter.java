@@ -148,13 +148,28 @@ public class PreferencesPresenter extends GenericPresenter
   public void onListClick(int position, SimpleAdapter adapter) {
 
     Object item = adapter.getItem(position);
-
     Object selectedItem = adapter.getItem(position);
-        Navigator app = (Navigator) getView().getApplication();
+      Navigator app = (Navigator) getView().getApplication();
+      if (position==0){
+      //app.goToChangeColourScreen();
+
+      } else if (position ==1){
+        // app.goToEditSubjects();
+      } else if (position==2){
+          //app.goToDonete();
+      } else if (position == 3){
+          //app.goToAboutApp();
+      }
+
+
+
+
         Mediator mediator =(Mediator) getView().getApplication();
         //app.goToDetailScreen(this);
+
+
     Context context = getApplicationContext();
-    CharSequence text = "Preferences";
+    CharSequence text = "Preferences DOS";
     int duration = Toast.LENGTH_SHORT;
 
     Toast toast = Toast.makeText(context, text, duration);
