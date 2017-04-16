@@ -166,8 +166,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             //Codigo DETALLE
             selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
-            Mediator mediator =(Mediator) getView().getApplication();
-            app.goToDetailScreen(this);
+            app.goToDetailDoneScreen(this);
         }
         checkDeleteBtnVisibility();
 

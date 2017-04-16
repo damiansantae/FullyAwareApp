@@ -170,7 +170,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             //Codigo DETALLE
             selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
-           // app.goToDetailScreen(this, adapter);
+           // app.goToDetailToDoScreen(this, adapter);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -193,7 +193,7 @@ checkAddBtnVisibility();
             //Codigo DETALLE
             selectedTask = currentTask;
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailScreen(this, adapter);
+            app.goToDetailToDoScreen(this, adapter);
         }
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

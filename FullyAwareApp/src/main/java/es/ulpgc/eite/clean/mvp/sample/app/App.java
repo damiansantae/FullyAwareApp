@@ -11,6 +11,7 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
@@ -231,7 +232,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void goToDetailToDoScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
@@ -256,7 +257,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
+    public void goToDetailDoneScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
         masterListToDetailState = new DetailState();
         masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
         masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
@@ -264,7 +265,7 @@ public class App extends Application implements Mediator, Navigator {
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listDonePresenterMaster.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListToDoViewDetail.class));
+            view.startActivity(new Intent(view, ListDoneViewDetail.class));
         }
     }
 

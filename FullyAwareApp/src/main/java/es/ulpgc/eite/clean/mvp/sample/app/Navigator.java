@@ -27,7 +27,7 @@ public interface Navigator {
     void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter);
 
     //Comunicación M/D
-    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void goToDetailToDoScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
     void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
 
@@ -42,7 +42,7 @@ public interface Navigator {
     //Comunicación M/D
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
-    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
+    void goToDetailDoneScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
 
 
     /****************************************************************************
