@@ -55,11 +55,9 @@ public class ListForgottenView
         ////////////////////////////////////////////////////////////
         list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
-        add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
 
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -174,11 +172,11 @@ public class ListForgottenView
 
     @Override
     public void hideAddBtn() {
-        add.setVisibility(View.INVISIBLE);
+       // add.setVisibility(View.INVISIBLE);
     }
     @Override
     public void showAddBtn() {
-        add.setVisibility(View.VISIBLE);
+         //add.setVisibility(View.VISIBLE);
     }
     @Override
     public void hideDeleteBtn() {
