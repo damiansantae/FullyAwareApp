@@ -451,7 +451,6 @@ checkAddBtnVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
-        getModel().addInitialTasks();
         getModel().loadItems();
     }
 
