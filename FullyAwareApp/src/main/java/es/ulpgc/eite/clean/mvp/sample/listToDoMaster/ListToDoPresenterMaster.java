@@ -338,7 +338,7 @@ checkAddBtnVisibility();
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
                 adapter.remove(tasksSelected.get(i));
-
+                getModel().deleteItem(tasksSelected.get(i));
             }
             Context context = getApplicationContext();
             if(size == 1) {
@@ -451,7 +451,6 @@ checkAddBtnVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
-
         getModel().loadItems();
     }
 

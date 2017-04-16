@@ -131,11 +131,12 @@ public class AddTaskPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    TaskRepository.getInstance().saveTask(new TaskToDo(R.drawable.bg_controll_plane,title,description,deadline));
+    TaskToDo newTask = new TaskToDo(R.drawable.bg_controll_plane, title, description, deadline);
+    getModel().addTaskToDo(newTask);
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
-      CharSequence text = "TaskToDo added";
+      CharSequence text = "Task added";
       int duration = Toast.LENGTH_SHORT;
 
       Toast toast = Toast.makeText(context, text, duration);
@@ -144,7 +145,7 @@ public class AddTaskPresenter extends GenericPresenter
   }
 
     private String getDeadLine(String time, String date) {
-        return time +" - "+ date;
+        return date +" - "+ time;
     }
 
     private String getTime() {
@@ -232,6 +233,12 @@ public class AddTaskPresenter extends GenericPresenter
         getView().hideToolbar();
       }
     }
+  }
+
+  @Override
+  public void onLoadItemsTaskStarted() {
+    checkToolbarVisibility();
+
   }
 
 
