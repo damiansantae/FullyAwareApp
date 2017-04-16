@@ -20,8 +20,12 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class App extends Application implements Mediator, Navigator {
@@ -33,14 +37,23 @@ public class App extends Application implements Mediator, Navigator {
     private AddTaskState toAddTaskState, addTaskToState;
     private ScheduleState toScheduleState, scheduleToState;
 
-    private DetailState masterListToDetailState;
-    private ListState listToDoDetailToMasterState;
-    private ListState listDoneDetailToMasterState;
+    private DetailToDoState masterListToDetailToDoState;
+    private DetailDoneState masterListToDetailDoneState;
+    private ListToDoStateTask listToDoDetailToMasterState;
+    private ListDoneStateTask listDoneDetailToMasterState;
+    private PreferencesState toPreferencesState, preferencesToState;
 
     @Override
     public void onCreate() {
         super.onCreate();
         //Inicializamos servicio de notificaciones
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("tasks.realm")
+                .deleteRealmIfMigrationNeeded()
+                .schemaVersion(1)
+                .build();
+        Realm.setDefaultConfiguration(realmConfiguration);
         startService(new Intent(this, NotificationService.class));
         toDummyState = new DummyState();
         toDummyState.toolbarVisibility = false;
@@ -55,12 +68,11 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState = new ListDoneState();
         toListDoneState.toolbarVisibility = false;
         toListDoneState.textVisibility = false;
-        toListDoneState.taskDone = null;
+        toListDoneState.taskToDoDone = null;
 
         toListForgottenState = new ListForgottenState();
         toListForgottenState.toolbarVisibility = false;
         toListForgottenState.textVisibility = false;
-        toListForgottenState.addBtnVisibility = true;
         toListForgottenState.deleteBtnVisibility = false;
 
         toAddTaskState = new AddTaskState();
@@ -68,6 +80,12 @@ public class App extends Application implements Mediator, Navigator {
         toAddTaskState.textVisibility = false;
         toAddTaskState.addBtnVisibility = true;
         toAddTaskState.deleteBtnVisibility = false;
+
+        toPreferencesState = new PreferencesState();
+        toPreferencesState.toolbarVisibility = true;
+        toPreferencesState.textVisibility = false;
+        toPreferencesState.addBtnVisibility = true;
+        toPreferencesState.deleteBtnVisibility = false;
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
@@ -128,12 +146,23 @@ public class App extends Application implements Mediator, Navigator {
         if (toListForgottenState != null) {
             presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
             presenter.setTextVisibility(toListForgottenState.textVisibility);
-            presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
 
         }
         presenter.onScreenStarted();
     }
+
+    @Override
+    public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
+        if (toAddTaskState != null) {
+            presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
+            presenter.setTextVisibility(toAddTaskState.textVisibility);
+            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+        }
+        presenter.onScreenStarted();
+    }
+
 
     /**
      * Llamado cuando arranca el detalle para fijar su estado inicial
@@ -143,14 +172,14 @@ public class App extends Application implements Mediator, Navigator {
      */
     @Override
     public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter) {
-        if (masterListToDetailState != null) {
-            presenter.setToolbarVisibility(masterListToDetailState.toolbarVisible);
-            presenter.setItem(masterListToDetailState.selectedItem);
-            presenter.setAdapter(masterListToDetailState.adapter);
+        if (masterListToDetailToDoState != null) {
+            presenter.setToolbarVisibility(masterListToDetailToDoState.toolbarVisible);
+            presenter.setItem(masterListToDetailToDoState.selectedItem);
+            presenter.setAdapter(masterListToDetailToDoState.adapter);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailState = null;
+        masterListToDetailToDoState = null;
         presenter.onScreenStarted();
     }
 
@@ -165,20 +194,20 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void taskDone(Task taskDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
+    public void taskDone(TaskToDo taskToDoDone) {
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase TaskToDo Común
     }
 
     @Override
     public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
-        if (masterListToDetailState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
-            presenter.setItem(masterListToDetailState.selectedItem);
+        if (masterListToDetailDoneState != null) {
+            presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
+            presenter.setItem(masterListToDetailDoneState.selectedItem);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailState = null;
+        masterListToDetailDoneState = null;
         presenter.onScreenStarted();
     }
 
@@ -215,6 +244,23 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
+
+    @Override
+    public void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter) {
+
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+
+    }
+
     @Override
     public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
         if (listToDoToState == null) {
@@ -232,13 +278,13 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToDetailToDoScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        masterListToDetailState = new DetailState();
-        masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTask();
-        masterListToDetailState.adapter = adapter;
+    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        masterListToDetailToDoState = new DetailToDoState();
+        masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
+        masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
+        masterListToDetailToDoState.adapter = adapter;
 
-        // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -249,18 +295,18 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
-        listToDoDetailToMasterState = new ListState();
-        listToDoDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+        listToDoDetailToMasterState = new ListToDoStateTask();
+        listToDoDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
     }
 
     @Override
-    public void goToDetailDoneScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
-        masterListToDetailState = new DetailState();
-        masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTask();
+    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
+        masterListToDetailDoneState = new DetailDoneState();
+        masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
+        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTaskDone();
 
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listDonePresenterMaster.getManagedContext();
@@ -272,8 +318,8 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
-        listDoneDetailToMasterState = new ListState();
-        listDoneDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
+        listDoneDetailToMasterState = new ListDoneStateTask();
+        listDoneDetailToMasterState.taskDoneToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -416,6 +462,11 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
+    public void goToPreferencesScreen(Preferences.PreferencesTo presenter) {
+        //TODO: borrar metodo de la interfaz.
+    }
+
+    @Override
     public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
         if (listForgottenToState == null) {
             listForgottenToState = new ListForgottenState();
@@ -490,13 +541,12 @@ public class App extends Application implements Mediator, Navigator {
         boolean textVisibility;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
-        Task taskDone;
+        TaskToDo taskToDoDone;
     }
 
     private class ListForgottenState {
         boolean toolbarVisibility;
         boolean textVisibility;
-        boolean addBtnVisibility;
         boolean deleteBtnVisibility;
     }
 
@@ -507,13 +557,28 @@ public class App extends Application implements Mediator, Navigator {
         boolean deleteBtnVisibility;
     }
 
+    private class PreferencesState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+    }
+
     private class ScheduleState {
         boolean toolbarVisibility;
     }
 
-    private class DetailState {
+    private class DetailToDoState {
         boolean toolbarVisible;
-        Task selectedItem;
+        TaskToDo selectedItem;
+        String subject;
+        String date;
+        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    }
+
+    private class DetailDoneState {
+        boolean toolbarVisible;
+        TaskDone selectedItem;
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -523,8 +588,12 @@ public class App extends Application implements Mediator, Navigator {
     /**
      * Estado a actualizar en el maestro en función de la ejecución del detalle
      */
-    private class ListState {
-        Task taskToDelete;
+    private class ListToDoStateTask {
+        TaskToDo taskToDoToDelete;
+    }
+
+    private class ListDoneStateTask {
+        TaskDone taskDoneToDelete;
     }
 
 }

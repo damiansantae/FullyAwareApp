@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 public class ListToDoViewMasterTesting
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -195,7 +196,13 @@ public class ListToDoViewMasterTesting
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+
+    } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+            Log.d("TAG", "PULSADO");
+    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -322,7 +329,7 @@ public class ListToDoViewMasterTesting
         }*/
     }
     @Override
-    public void setRecyclerAdapterContent(List<Task> items) {
+    public void setRecyclerAdapterContent(List<TaskToDo> items) {
         if(recyclerView != null) {
            TaskRecyclerViewAdapter recyclerAdapter =
                     (TaskRecyclerViewAdapter) recyclerView.getAdapter();
@@ -373,7 +380,7 @@ public class ListToDoViewMasterTesting
     public class TaskRecyclerViewAdapter
             extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
-        private List<Task> items;
+        private List<TaskToDo> items;
 
         public TaskRecyclerViewAdapter() {
             items = new ArrayList<>();
@@ -386,7 +393,7 @@ public class ListToDoViewMasterTesting
             return new ViewHolder(view);
         }
 
-        public void setItemList(List<Task> items) {
+        public void setItemList(List<TaskToDo> items) {
             this.items = items;
             notifyDataSetChanged();
         }
@@ -434,7 +441,7 @@ public class ListToDoViewMasterTesting
             public final  TextView description;
             public final    TextView date;
 
-            public Task item;
+            public TaskToDo item;
 
             public ViewHolder(View view) {
                 super(view);

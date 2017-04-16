@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.addTask;
+package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
 import android.app.DatePickerDialog;
@@ -20,9 +20,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
 
-public class AddTaskPresenter extends GenericPresenter
-    <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
-    implements AddTask.ViewToPresenter, AddTask.ModelToPresenter, AddTask.AddTaskTo, AddTask.ToAddTask {
+public class PreferencesPresenter extends GenericPresenter
+    <Preferences.PresenterToView, Preferences.PresenterToModel, Preferences.ModelToPresenter, PreferencesModel>
+    implements Preferences.ViewToPresenter, Preferences.ModelToPresenter, Preferences.PreferencesTo, Preferences.ToPreferences {
 
 
   private boolean toolbarVisible;
@@ -38,14 +38,14 @@ public class AddTaskPresenter extends GenericPresenter
    * @param view The current VIEW instance
    */
   @Override
-  public void onCreate(AddTask.PresenterToView view) {
-    super.onCreate(AddTaskModel.class, this);
+  public void onCreate(Preferences.PresenterToView view) {
+    super.onCreate(PreferencesModel.class, this);
     setView(view);
     Log.d(TAG, "calling onCreate()");
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
-    app.startingAddTaskScreen(this);
+   app.startingPreferencesScreen(this);
   }
 
   /**
@@ -56,7 +56,7 @@ public class AddTaskPresenter extends GenericPresenter
    * @param view The current VIEW instance
    */
   @Override
-  public void onResume(AddTask.PresenterToView view) {
+  public void onResume(Preferences.PresenterToView view) {
     setView(view);
     Log.d(TAG, "calling onResume()");
 
@@ -132,14 +132,14 @@ public class AddTaskPresenter extends GenericPresenter
     String date = getDate();
     String deadline = getDeadLine(time,date);
     TaskRepository.getInstance().saveTask(new TaskToDo(R.drawable.bg_controll_plane,title,description,deadline));
-      Navigator app = (Navigator)getView().getApplication();
-      app.goToListToDoScreen(this);
-      Context context = getApplicationContext();
-      CharSequence text = "TaskToDo added";
-      int duration = Toast.LENGTH_SHORT;
+    Navigator app = (Navigator)getView().getApplication();
+    //app.goToListToDoScreen(this);
+    Context context = getApplicationContext();
+    CharSequence text = "Task added";
+    int duration = Toast.LENGTH_SHORT;
 
-      Toast toast = Toast.makeText(context, text, duration);
-      toast.show();
+    Toast toast = Toast.makeText(context, text, duration);
+    toast.show();
 
   }
 

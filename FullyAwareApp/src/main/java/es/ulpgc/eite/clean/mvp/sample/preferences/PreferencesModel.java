@@ -1,15 +1,15 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
+package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
-public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPresenter>
-    implements ListToDoDetail.PresenterToModel {
+public class PreferencesModel extends GenericModel<Preferences.ModelToPresenter>
+    implements Preferences.PresenterToModel {
 
-  private TaskToDo taskToDo;
-
-
+  private String dummyText;
+  private String dummyLabel;
+  private int numOfTimes;
+  private String msgText;
 
   /**
    * Method that recovers a reference to the PRESENTER
@@ -18,10 +18,11 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
    * @param presenter Presenter interface
    */
   @Override
-  public void onCreate(ListToDoDetail.ModelToPresenter presenter) {
+  public void onCreate(Preferences.ModelToPresenter presenter) {
     super.onCreate(presenter);
 
-
+    dummyLabel = "Click Me!";
+    dummyText = "Hello World!";
   }
 
   /**
@@ -39,14 +40,22 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
   // Presenter To Model ////////////////////////////////////////////////////////////
 
 
-
-
-  public void setTaskToDo(TaskToDo selectedItem) {
-    this.taskToDo = selectedItem;
-
+  @Override
+  public void onChangeMsgByBtnClicked() {
+    msgText = dummyText;
+    if(numOfTimes > 0) {
+      msgText += ", " + numOfTimes + " times";
+    }
+    numOfTimes++;
   }
 
-  public TaskToDo getTaskToDo() {
-    return taskToDo;
+  @Override
+  public String getText() {
+    return msgText;
+  }
+
+  @Override
+  public String getLabel() {
+    return dummyLabel;
   }
 }

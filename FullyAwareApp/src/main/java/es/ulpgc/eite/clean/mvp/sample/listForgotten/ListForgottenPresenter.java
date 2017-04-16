@@ -20,7 +20,6 @@ public class ListForgottenPresenter extends GenericPresenter
   private boolean toolbarVisible;
   private boolean buttonClicked;
   private boolean textVisible;
-  private boolean addBtnVisible;
   private boolean deleteBtnVisible;
   private boolean listClicked;
 
@@ -44,6 +43,7 @@ public class ListForgottenPresenter extends GenericPresenter
     Log.d(TAG, "calling startingListForgottenScreen()");
     Mediator app = (Mediator) getView().getApplication();
     app.startingListForgottenScreen(this);
+      checkDeleteBtnVisibility();
   }
 
   /**
@@ -63,7 +63,6 @@ public class ListForgottenPresenter extends GenericPresenter
 
       checkToolbarVisibility();
       checkTextVisibility();
-      checkAddBtnVisibility();
       checkDeleteBtnVisibility();
 
       if (buttonClicked) {
@@ -123,13 +122,11 @@ public class ListForgottenPresenter extends GenericPresenter
         Log.v("se deselecciona", "pos: " + position);
         tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
         posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
-
         checkSelection();                       //Comprobamos si sigue alguno seleccionado
       } else {                                      //Si no estaba seleccionado
 
         setItemChecked(position, true);          //Lo seleccionamos
         Log.v("se selecciona", "pos: " + position);
-
         tasksSelected.add(currentTask);           //Se añade al array de seleccionados
         posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
 
@@ -139,7 +136,6 @@ public class ListForgottenPresenter extends GenericPresenter
       //Codigo DETALLE
     }
     checkDeleteBtnVisibility();
-    checkAddBtnVisibility();
   }
 
 
@@ -168,7 +164,6 @@ public class ListForgottenPresenter extends GenericPresenter
       checkSelection();
 
     }
-    checkAddBtnVisibility();
     checkDeleteBtnVisibility();
   }
 
@@ -181,11 +176,9 @@ public class ListForgottenPresenter extends GenericPresenter
         adapter.remove(tasksSelected.get(i));
 
       }
-
       deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
       checkSelection();
     }
-    checkAddBtnVisibility();
     checkDeleteBtnVisibility();
   }
 
@@ -203,12 +196,9 @@ public class ListForgottenPresenter extends GenericPresenter
       setListClicked(false);                      //Cambiamos estado a nada seleccionado
       // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
       deleteBtnVisible=false;
-      addBtnVisible=true;
     } else {                                          //Si hay algo seleccionado
       getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
       deleteBtnVisible=true;
-      addBtnVisible=false;
-
     }
   }
 
@@ -248,10 +238,6 @@ public class ListForgottenPresenter extends GenericPresenter
     textVisible = visible;
   }
 
-  @Override
-  public void setAddBtnVisibility(boolean visible) {
-    addBtnVisible = visible;
-  }
 
   @Override
   public void setDeleteBtnVisibility(boolean visible) {
@@ -318,16 +304,6 @@ public class ListForgottenPresenter extends GenericPresenter
     }
   }
 
-  private void checkAddBtnVisibility() {
-    Log.d(TAG, "calling checkAddBtnVisibility()");
-    if (isViewRunning()) {
-      if (!addBtnVisible) {
-        getView().hideAddBtn();
-      } else {
-        getView().showAddBtn();
-      }
-    }
-  }
 
   public void setListClicked(boolean listClicked) {
     this.listClicked = listClicked;

@@ -3,7 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public interface ListToDoDetail {
@@ -18,7 +18,7 @@ public interface ListToDoDetail {
    */
   interface MasterListToDetail{
     void setToolbarVisibility(boolean b);
-    void setItem(Task selectedItem);
+    void setItem(TaskToDo selectedItem);
 
     void onScreenStarted();
 
@@ -30,7 +30,7 @@ public interface ListToDoDetail {
    */
   interface DetailToMaster {
     void destroyView();
-    Task getTaskToDelete();
+    TaskToDo getTaskToDelete();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ public interface ListToDoDetail {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-    Task getTask();
+    TaskToDo getTask();
 
     void onDeleteActionClicked();
   }
@@ -62,8 +62,8 @@ public interface ListToDoDetail {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void setTask(Task selectedItem);
-    Task getTask();
+    void setTaskToDo(TaskToDo selectedItem);
+    TaskToDo getTaskToDo();
   }
 
   /**

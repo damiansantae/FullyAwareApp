@@ -21,7 +21,7 @@
                 android:title="Calendar" />
 
             <item
-                android:id="@+id/menupreferences"
+                android:id="@+id/menuPreferences"
                 android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Preferences" />
         </menu>

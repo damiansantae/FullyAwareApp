@@ -1,33 +1,34 @@
-package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
+package es.ulpgc.eite.clean.mvp.sample.preferences;
+
+import android.content.Context;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
 
-public interface ListDoneDetail {
+/**
+ * Created by Luis on 12/11/16.
+ */
+
+public interface Preferences {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
-  /**
-   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
-   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
-   */
-  interface MasterListToDetail{
-    void setToolbarVisibility(boolean b);
-    void setItem(TaskDone selectedItem);
-
+  interface ToPreferences {
     void onScreenStarted();
+    void setToolbarVisibility(boolean visible);
+    void setTextVisibility(boolean visible);
+    void setAddBtnVisibility(boolean addBtnVisibility);
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
   }
-  /**
-   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
-   * del detalle cuando está finaliza
-   */
-  interface DetailToMaster {
+
+  interface PreferencesTo {
+    Context getManagedContext();
     void destroyView();
-    TaskDone getTaskToDelete();
+    boolean isToolbarVisible();
+    boolean isTextVisible();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -37,11 +38,9 @@ public interface ListDoneDetail {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
-
-    TaskDone getTask();
-
-    void onDeleteActionClicked();
+    void onSelectDateBtnClicked();
+    void onSelectTimeBtnClicked();
+    void onAddTaskBtnClicked();
   }
 
   /**
@@ -50,17 +49,29 @@ public interface ListDoneDetail {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
+    void setDateText(String txt);
+
+    void setTimeText(String txt);
 
 
+    String getDescription();
 
+    String getDate();
+
+    String getTime();
+
+    String getTaskTitle();
+
+    String getTaskSubject();
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void setTaskDone(TaskDone selectedItem);
-    TaskDone getTaskDone();
+    void onChangeMsgByBtnClicked();
+    String getText();
+    String getLabel();
   }
 
   /**
@@ -69,8 +80,5 @@ public interface ListDoneDetail {
   interface ModelToPresenter {
 
   }
-
-  ///////////////////////////////////////////
-
 
 }

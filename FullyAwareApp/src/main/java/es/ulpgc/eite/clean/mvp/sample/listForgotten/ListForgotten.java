@@ -20,7 +20,6 @@ public interface ListForgotten {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-    void setAddBtnVisibility(boolean visible);
     void setDeleteBtnVisibility(boolean visible);
   }
 

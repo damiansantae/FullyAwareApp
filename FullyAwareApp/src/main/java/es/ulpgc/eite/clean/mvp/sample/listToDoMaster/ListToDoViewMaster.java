@@ -27,7 +27,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -111,7 +111,7 @@ public class ListToDoViewMaster
 
 
                 Log.d("error msg", "Click Simple");
-               /* Task currentTask = adapter.getTask(position);
+               /* TaskToDo currentTask = adapter.getTaskToDo(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
                 toast.show();*/
 
@@ -208,18 +208,23 @@ public class ListToDoViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
+            Log.d("error msg", "PULSADO");
         }
         else if (id ==R.id.menucalendar){
-            Navigator app = (Navigator) getApplication();
-           // app.goToCalendarScreen();
+           Navigator app = (Navigator) getApplication();
+          // app.goToCalendarScreen();
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+        } else if (id ==R.id.menuPreferences) {
+           // Navigator app = (Navigator) getApplication();
+           // app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
 
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -277,9 +282,11 @@ public class ListToDoViewMaster
         list.setItemChecked(i,b);
     }
 
+
+
     //TODO:Este metodo no hace nada aqui, acordarse de borrarlo
     @Override
-    public void setRecyclerAdapterContent(List<Task> items) {
+    public void setRecyclerAdapterContent(List<TaskToDo> items) {
 
     }
 
