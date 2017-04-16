@@ -1,6 +1,8 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ private ListView list;
   private Adapter adapter;
     private String [] prefItems;
     private String [] descriptionItems;
+    private Drawable[] imageItems;
 
 
   @Override
@@ -50,12 +54,15 @@ private ListView list;
         // Creamos lista de elementos
        prefItems = new String[]{"App Coulour", "Change Subjects", "Add Subjects"};
        descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
-        descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageItems = new Drawable[]{getResources().getDrawable(android.R.drawable.star_big_on,null),getResources().getDrawable(android.R.drawable.star_big_on,null),getResources().getDrawable(android.R.drawable.star_big_on,null)};
+        }
+
 
         //Creamos el adapter
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
         ArrayAdapter<String> decriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
-        ArrayAdapter<String> decriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
+        ArrayAdapter<Drawable> imageItem = new ArrayAdapter<Drawable>(this, R.layout.item_preferences, R.id.description, imageItems);
 
         //Lo enlazamos al layout
 

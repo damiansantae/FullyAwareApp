@@ -17,7 +17,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/bg_controll_plane" />
+        android:background="@android:drawable/star_big_on" />
 
     <TextView
         android:id="@+id/title"
