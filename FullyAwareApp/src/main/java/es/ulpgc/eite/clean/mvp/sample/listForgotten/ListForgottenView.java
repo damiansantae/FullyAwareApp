@@ -38,7 +38,6 @@ public class ListForgottenView
     private ArrayList<Integer> posSelected = new ArrayList<>();
     private ListView list;
     private FloatingActionButton bin;
-    private FloatingActionButton add;
     private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -93,7 +92,6 @@ public class ListForgottenView
         );
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
 

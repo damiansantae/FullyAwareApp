@@ -59,7 +59,6 @@ public class App extends Application implements Mediator, Navigator {
         toListForgottenState = new ListForgottenState();
         toListForgottenState.toolbarVisibility = false;
         toListForgottenState.textVisibility = false;
-        toListForgottenState.addBtnVisibility = true;
         toListForgottenState.deleteBtnVisibility = false;
 
         toAddTaskState = new AddTaskState();
@@ -127,7 +126,6 @@ public class App extends Application implements Mediator, Navigator {
         if (toListForgottenState != null) {
             presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
             presenter.setTextVisibility(toListForgottenState.textVisibility);
-            presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
 
         }
@@ -495,7 +493,6 @@ public class App extends Application implements Mediator, Navigator {
     private class ListForgottenState {
         boolean toolbarVisibility;
         boolean textVisibility;
-        boolean addBtnVisibility;
         boolean deleteBtnVisibility;
     }
 
