@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.content.Context;
+import android.widget.SimpleAdapter;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
@@ -41,6 +42,7 @@ public interface Preferences {
     void onSelectDateBtnClicked();
     void onSelectTimeBtnClicked();
     void onAddTaskBtnClicked();
+      void onListClick(int position, SimpleAdapter adapter);
   }
 
   /**

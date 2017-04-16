@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -143,7 +144,26 @@ public class PreferencesPresenter extends GenericPresenter
 
   }
 
-    private String getDeadLine(String time, String date) {
+  @Override
+  public void onListClick(int position, SimpleAdapter adapter) {
+
+    Object item = adapter.getItem(position);
+
+    Object selectedItem = adapter.getItem(position);
+        Navigator app = (Navigator) getView().getApplication();
+        Mediator mediator =(Mediator) getView().getApplication();
+        //app.goToDetailScreen(this);
+    Context context = getApplicationContext();
+    CharSequence text = "Preferences";
+    int duration = Toast.LENGTH_SHORT;
+
+    Toast toast = Toast.makeText(context, text, duration);
+    toast.show();
+
+    }
+
+
+  private String getDeadLine(String time, String date) {
         return time +" - "+ date;
     }
 

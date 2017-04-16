@@ -60,7 +60,6 @@ public class ListDoneViewMaster
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 getPresenter().onListClick(position, adapter);
             }
         });

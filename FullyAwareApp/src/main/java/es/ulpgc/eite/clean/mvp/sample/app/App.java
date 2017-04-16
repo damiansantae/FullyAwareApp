@@ -144,10 +144,10 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
         if (toAddTaskState != null) {
-            presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
-            presenter.setTextVisibility(toAddTaskState.textVisibility);
-            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+            presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
+            presenter.setTextVisibility(toPreferencesState.textVisibility);
+            presenter.setAddBtnVisibility(toPreferencesState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toPreferencesState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
