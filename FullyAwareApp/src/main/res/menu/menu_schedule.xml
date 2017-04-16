@@ -20,7 +20,7 @@
                 android:icon="@android:drawable/ic_menu_close_clear_cancel"
                 android:title="Forgotten" />
             <item
-                android:id="@+id/menupreferences"
+                android:id="@+id/menuPreferences"
                 android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Preferences" />
 
