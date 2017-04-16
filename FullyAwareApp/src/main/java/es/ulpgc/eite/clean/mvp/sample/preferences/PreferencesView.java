@@ -39,7 +39,7 @@ private ListView list;
   private Adapter adapter;
     private String [] prefItems;
     private String [] descriptionItems;
-    private Drawable[] imageItems;
+    private String[] imageItems;
 
 
   @Override
@@ -54,21 +54,25 @@ private ListView list;
         // Creamos lista de elementos
        prefItems = new String[]{"App Coulour", "Change Subjects", "Add Subjects"};
        descriptionItems = new String[]{"Change the colour of the App!", "To make changes on your subjects", "Add a new subject"};
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            imageItems = new Drawable[]{getResources().getDrawable(android.R.drawable.star_big_on,null),getResources().getDrawable(android.R.drawable.star_big_on,null),getResources().getDrawable(android.R.drawable.star_big_on,null)};
-        }
+
+        imageItems = new String[]{};
+
 
 
         //Creamos el adapter
-        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
-        ArrayAdapter<String> decriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
-        ArrayAdapter<Drawable> imageItem = new ArrayAdapter<Drawable>(this, R.layout.item_preferences, R.id.description, imageItems);
+       ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
+        ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
+       // ArrayAdapter<ImageView> imageItemAdapter = new ArrayAdapter<ImageView>(this, R.layout.item_preferences, R.id.tag, imageItems);
 
         //Lo enlazamos al layout
 
+
         ListView list = (ListView) findViewById(R.id.preferences_list);
         list.setAdapter(itemAdapter);
+        list.setAdapter(descriptionAdapter);
 
+        //list.setAdapter(imageItemAdapter);
+       
     }
 
 
