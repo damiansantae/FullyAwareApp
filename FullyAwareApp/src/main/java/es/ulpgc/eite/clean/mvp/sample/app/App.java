@@ -36,9 +36,10 @@ public class App extends Application implements Mediator, Navigator {
     private AddTaskState toAddTaskState, addTaskToState;
     private ScheduleState toScheduleState, scheduleToState;
 
-    private DetailState masterListToDetailState;
-    private ListState listToDoDetailToMasterState;
-    private ListState listDoneDetailToMasterState;
+    private DetailToDoState masterListToDetailToDoState;
+    private DetailDoneState masterListToDetailDoneState;
+    private ListToDoStateTask listToDoDetailToMasterState;
+    private ListDoneStateTask listDoneDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
 
     @Override
@@ -170,14 +171,14 @@ public class App extends Application implements Mediator, Navigator {
      */
     @Override
     public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter) {
-        if (masterListToDetailState != null) {
-            presenter.setToolbarVisibility(masterListToDetailState.toolbarVisible);
-            presenter.setItem(masterListToDetailState.selectedItem);
-            presenter.setAdapter(masterListToDetailState.adapter);
+        if (masterListToDetailToDoState != null) {
+            presenter.setToolbarVisibility(masterListToDetailToDoState.toolbarVisible);
+            presenter.setItem(masterListToDetailToDoState.selectedItem);
+            presenter.setAdapter(masterListToDetailToDoState.adapter);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailState = null;
+        masterListToDetailToDoState = null;
         presenter.onScreenStarted();
     }
 
@@ -199,13 +200,13 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
-        if (masterListToDetailState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailState.toolbarVisible);
-            presenter.setItem(masterListToDetailState.selectedItem);
+        if (masterListToDetailDoneState != null) {
+            presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
+            presenter.setItem(masterListToDetailDoneState.selectedItem);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailState = null;
+        masterListToDetailDoneState = null;
         presenter.onScreenStarted();
     }
 
@@ -277,12 +278,12 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        masterListToDetailState = new DetailState();
-        masterListToDetailState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
-        masterListToDetailState.adapter = adapter;
+        masterListToDetailToDoState = new DetailToDoState();
+        masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
+        masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
+        masterListToDetailToDoState.adapter = adapter;
 
-        // masterListToDetailState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -293,7 +294,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
-        listToDoDetailToMasterState = new ListState();
+        listToDoDetailToMasterState = new ListToDoStateTask();
         listToDoDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
@@ -302,9 +303,9 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
-        masterListToDetailState = new DetailState();
-        masterListToDetailState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailState.selectedItem = listDonePresenterMaster.getSelectedTaskToDo();
+        masterListToDetailDoneState = new DetailDoneState();
+        masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
+        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTaskDone();
 
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listDonePresenterMaster.getManagedContext();
@@ -316,8 +317,8 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
-        listDoneDetailToMasterState = new ListState();
-        listDoneDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
+        listDoneDetailToMasterState = new ListDoneStateTask();
+        listDoneDetailToMasterState.taskDoneToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -566,9 +567,17 @@ public class App extends Application implements Mediator, Navigator {
         boolean toolbarVisibility;
     }
 
-    private class DetailState {
+    private class DetailToDoState {
         boolean toolbarVisible;
         TaskToDo selectedItem;
+        String subject;
+        String date;
+        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    }
+
+    private class DetailDoneState {
+        boolean toolbarVisible;
+        TaskDone selectedItem;
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -578,8 +587,12 @@ public class App extends Application implements Mediator, Navigator {
     /**
      * Estado a actualizar en el maestro en función de la ejecución del detalle
      */
-    private class ListState {
+    private class ListToDoStateTask {
         TaskToDo taskToDoToDelete;
+    }
+    
+    private class ListDoneStateTask {
+        TaskDone taskDoneToDelete;
     }
 
 }
