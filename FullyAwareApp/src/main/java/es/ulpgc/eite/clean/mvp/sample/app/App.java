@@ -57,11 +57,10 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState.taskDone = null;
 
         toListForgottenState = new ListForgottenState();
-        //TODO: Aqui no va lisToDoState...
- /*   toListToDoState.toolbarVisibility = false;
-    toListToDoState.textVisibility = false;
-    toListToDoState.addBtnVisibility = true;
-    toListToDoState.deleteBtnVisibility = false;*/
+        toListForgottenState.toolbarVisibility = false;
+        toListForgottenState.textVisibility = false;
+        toListForgottenState.addBtnVisibility = true;
+        toListForgottenState.deleteBtnVisibility = false;
 
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
