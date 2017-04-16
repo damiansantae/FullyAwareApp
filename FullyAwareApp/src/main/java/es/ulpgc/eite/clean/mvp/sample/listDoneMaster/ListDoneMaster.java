@@ -2,10 +2,13 @@ package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.content.Context;
 
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
 public interface ListDoneMaster {
@@ -35,7 +38,7 @@ public interface ListDoneMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    Task getSelectedTask();
+    TaskDone getSelectedTaskDone();
     boolean getToolbarVisibility();
 
   }
@@ -54,7 +57,6 @@ public interface ListDoneMaster {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
 
     void onListClick(int position, Task_Adapter adapter);
 
@@ -62,6 +64,14 @@ public interface ListDoneMaster {
 
     void onBinBtnClick(Task_Adapter adapter);
 
+
+
+    /*
+          @Override
+          public void onLoadItemsTaskFinished(List<TaskDone> items) {
+              getView().setRecyclerAdapterContent(items);
+      
+          }*/
   }
 
   /**
@@ -97,9 +107,12 @@ public interface ListDoneMaster {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
+    void deleteItem(TaskDone item);
+    void loadItems();
+    void reloadItems();
+    void setDatabaseValidity(boolean valid);
+    String getErrorMessage();
+    void addInitialTasks();
   }
 
   /**
@@ -107,5 +120,10 @@ public interface ListDoneMaster {
    */
   interface ModelToPresenter {
 
+    void onLoadItemsTaskStarted();
+
+    void onLoadItemsTaskFinished(List<TaskDone> itemsFromDatabase);
+
+    void onErrorDeletingItem(TaskDone item);
   }
 }

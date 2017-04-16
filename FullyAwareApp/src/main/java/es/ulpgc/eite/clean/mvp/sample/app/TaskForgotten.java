@@ -2,9 +2,10 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 
 import java.util.UUID;
 
+import io.realm.RealmObject;
 
 
-public class Task {
+public class TaskForgotten extends RealmObject{
 
 
     private String taskId;
@@ -13,12 +14,15 @@ public class Task {
     private String title;
     private String description;
 
-    public Task(int tagId,  String title, String description, String date) {
+    public TaskForgotten(int tagId, String title, String description, String date) {
         this.taskId= UUID.randomUUID().toString();
         this.tagId = tagId;
         this.date = date;
         this.title = title;
         this.description = description;
+    }
+    public TaskForgotten(){
+
     }
 
     public int getTagId() {
@@ -60,9 +64,9 @@ public class Task {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Task){
-            Task task = (Task) obj;
-            if(task.getTaskId() == getTaskId()){
+        if (obj instanceof TaskForgotten){
+            TaskForgotten taskToDo = (TaskForgotten) obj;
+            if(taskToDo.getTaskId() == getTaskId()){
                 return true;
             }
         }

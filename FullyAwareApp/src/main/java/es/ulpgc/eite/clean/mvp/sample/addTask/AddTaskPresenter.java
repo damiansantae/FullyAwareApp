@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
 
 public class AddTaskPresenter extends GenericPresenter
@@ -131,11 +131,11 @@ public class AddTaskPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline));
+    TaskRepository.getInstance().saveTask(new TaskToDo(R.drawable.bg_controll_plane,title,description,deadline));
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
-      CharSequence text = "Task added";
+      CharSequence text = "TaskToDo added";
       int duration = Toast.LENGTH_SHORT;
 
       Toast toast = Toast.makeText(context, text, duration);

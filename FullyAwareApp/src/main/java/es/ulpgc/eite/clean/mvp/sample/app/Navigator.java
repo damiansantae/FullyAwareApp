@@ -40,10 +40,12 @@ public interface Navigator {
     void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
 
 
+    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
+
     //Comunicación M/D
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
-    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
+
 
 
     /****************************************************************************

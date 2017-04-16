@@ -27,7 +27,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -111,7 +111,7 @@ public class ListToDoViewMaster
 
 
                 Log.d("error msg", "Click Simple");
-               /* Task currentTask = adapter.getTask(position);
+               /* TaskToDo currentTask = adapter.getTaskToDo(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
                 toast.show();*/
 
@@ -286,7 +286,7 @@ public class ListToDoViewMaster
 
     //TODO:Este metodo no hace nada aqui, acordarse de borrarlo
     @Override
-    public void setRecyclerAdapterContent(List<Task> items) {
+    public void setRecyclerAdapterContent(List<TaskToDo> items) {
 
     }
 

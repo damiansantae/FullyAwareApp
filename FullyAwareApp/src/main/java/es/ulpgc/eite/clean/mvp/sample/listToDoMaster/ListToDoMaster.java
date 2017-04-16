@@ -7,7 +7,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
 public interface ListToDoMaster {
@@ -37,7 +37,7 @@ public interface ListToDoMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    Task getSelectedTask();
+    TaskToDo getSelectedTaskToDo();
     boolean getToolbarVisibility();
 
       String getTaskDate();
@@ -57,7 +57,7 @@ public interface ListToDoMaster {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
+//    void onButtonClicked();
 
     void onListClick(int position, Task_Adapter adapter);
 
@@ -71,9 +71,9 @@ public interface ListToDoMaster {
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
-      void onListClick2(Task item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+      void onListClick2(TaskToDo item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
-    void onLongListClick2(Task item);
+    void onLongListClick2(TaskToDo item);
 
       void onAddBtnClick();
   }
@@ -112,28 +112,29 @@ public interface ListToDoMaster {
 
     void deselect(int i, boolean b);
 
-      void setRecyclerAdapterContent(List<Task> items);
+      void setRecyclerAdapterContent(List<TaskToDo> items);
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
-
-      void loadItems();
+    void deleteItem(TaskToDo item);
+    void loadItems();
+    void reloadItems();
+    void setDatabaseValidity(boolean valid);
+    String getErrorMessage();
+    void addInitialTasks();
   }
 
   /**
    * Required PRESENTER methods available to MODEL
    */
   interface ModelToPresenter {
-
+    Context getManagedContext();
+    void onErrorDeletingItem(TaskToDo item);
+    void onLoadItemsTaskFinished(List<TaskToDo> items);
     void onLoadItemsTaskStarted();
-
-    void onLoadItemsTaskFinished(List<Task> items);
   }
 
 

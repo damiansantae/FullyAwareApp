@@ -59,7 +59,7 @@
 
         <activity
             android:name=".addTask.AddTaskView"
-            android:label="Add a new task"
+            android:label="Add a new taskToDo"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
