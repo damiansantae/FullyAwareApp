@@ -208,18 +208,23 @@ public class ListToDoViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
+            Log.d("error msg", "PULSADO");
         }
         else if (id ==R.id.menucalendar){
-            Navigator app = (Navigator) getApplication();
-           // app.goToCalendarScreen();
+           Navigator app = (Navigator) getApplication();
+          // app.goToCalendarScreen();
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+        } else if (id ==R.id.menuPreferences) {
+           // Navigator app = (Navigator) getApplication();
+           // app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
 
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -276,6 +281,8 @@ public class ListToDoViewMaster
     public void deselect(int i, boolean b) {
         list.setItemChecked(i,b);
     }
+
+
 
     //TODO:Este metodo no hace nada aqui, acordarse de borrarlo
     @Override

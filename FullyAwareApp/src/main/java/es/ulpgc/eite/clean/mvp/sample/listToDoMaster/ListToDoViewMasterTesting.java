@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -108,6 +109,7 @@ public class ListToDoViewMasterTesting
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
+
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -117,7 +119,9 @@ public class ListToDoViewMasterTesting
         add.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
+
                                        getPresenter().onAddBtnClick();
+
                                        //adapter.notifyDataSetChanged();
                                    }
 
@@ -173,7 +177,7 @@ public class ListToDoViewMasterTesting
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-            return true;
+
         }else if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
@@ -192,7 +196,13 @@ public class ListToDoViewMasterTesting
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+
+    } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+            Log.d("TAG", "PULSADO");
+    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -450,4 +460,8 @@ public class ListToDoViewMasterTesting
         }*/
         }
     }
+
+
+
+
 }

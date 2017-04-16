@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView">
+    tools:context="es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -15,13 +15,15 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:title="Add a New Task"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:title="FullyAware"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_listforgotten" />
+
+    <include layout="@layout/content_preferences"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

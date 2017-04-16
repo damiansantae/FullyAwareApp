@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listForgotten;
+package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.content.Context;
 
@@ -10,20 +10,21 @@ import es.ulpgc.eite.clean.mvp.Presenter;
  * Created by Luis on 12/11/16.
  */
 
-public interface ListForgotten {
+public interface Preferences {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
-  interface ToListForgotten {
+  interface ToPreferences {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-    void setDeleteBtnVisibility(boolean visible);
+    void setAddBtnVisibility(boolean addBtnVisibility);
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
   }
 
-  interface ListForgottenTo {
+  interface PreferencesTo {
     Context getManagedContext();
     void destroyView();
     boolean isToolbarVisible();
@@ -37,10 +38,9 @@ public interface ListForgotten {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
-    void onListClick(int position, Task_Adapter adapter);
-    void onLongListClick(int pos, Task_Adapter adapter);
-    void onBinBtnClick(Task_Adapter adapter);
+    void onSelectDateBtnClicked();
+    void onSelectTimeBtnClicked();
+    void onAddTaskBtnClicked();
   }
 
   /**
@@ -49,27 +49,20 @@ public interface ListForgotten {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
-    void hideText();
-    void showText();
+    void setDateText(String txt);
 
-    void hideAddBtn();
+    void setTimeText(String txt);
 
-    void showAddBtn();
 
-    void hideDeleteBtn();
+    String getDescription();
 
-    void showDeleteBtn();
+    String getDate();
 
-    void setText(String txt);
-    void setLabel(String txt);
+    String getTime();
 
-    boolean isItemListChecked(int pos);
+    String getTaskTitle();
 
-    void setItemChecked(int pos, boolean checked);
-
-    void startSelection();
-
-    void setChoiceMode(int i);
+    String getTaskSubject();
   }
 
   /**
@@ -87,4 +80,5 @@ public interface ListForgotten {
   interface ModelToPresenter {
 
   }
+
 }

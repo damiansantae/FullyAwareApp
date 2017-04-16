@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
@@ -18,6 +19,8 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
 import io.realm.Realm;
@@ -36,18 +39,20 @@ public class App extends Application implements Mediator, Navigator {
     private DetailState masterListToDetailState;
     private ListState listToDoDetailToMasterState;
     private ListState listDoneDetailToMasterState;
+    private PreferencesState toPreferencesState, preferencesToState;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //Inicializamos servicio de notificaciones
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .name("tasks.realm")
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
                 .build();
-
         Realm.setDefaultConfiguration(realmConfiguration);
+        startService(new Intent(this, NotificationService.class));
         toDummyState = new DummyState();
         toDummyState.toolbarVisibility = false;
         toDummyState.textVisibility = false;
@@ -64,17 +69,21 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState.taskToDoDone = null;
 
         toListForgottenState = new ListForgottenState();
-        //TODO: Aqui no va lisToDoState...
- /*   toListToDoState.toolbarVisibility = false;
-    toListToDoState.textVisibility = false;
-    toListToDoState.addBtnVisibility = true;
-    toListToDoState.deleteBtnVisibility = false;*/
+        toListForgottenState.toolbarVisibility = false;
+        toListForgottenState.textVisibility = false;
+        toListForgottenState.deleteBtnVisibility = false;
 
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
         toAddTaskState.textVisibility = false;
         toAddTaskState.addBtnVisibility = true;
         toAddTaskState.deleteBtnVisibility = false;
+
+        toPreferencesState = new PreferencesState();
+        toPreferencesState.toolbarVisibility = true;
+        toPreferencesState.textVisibility = false;
+        toPreferencesState.addBtnVisibility = true;
+        toPreferencesState.deleteBtnVisibility = false;
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
@@ -135,12 +144,23 @@ public class App extends Application implements Mediator, Navigator {
         if (toListForgottenState != null) {
             presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
             presenter.setTextVisibility(toListForgottenState.textVisibility);
-            presenter.setAddBtnVisibility(toListForgottenState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
 
         }
         presenter.onScreenStarted();
     }
+
+    @Override
+    public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
+        if (toAddTaskState != null) {
+            presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
+            presenter.setTextVisibility(toAddTaskState.textVisibility);
+            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
+            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
+        }
+        presenter.onScreenStarted();
+    }
+
 
     /**
      * Llamado cuando arranca el detalle para fijar su estado inicial
@@ -220,6 +240,23 @@ public class App extends Application implements Mediator, Navigator {
         if (view != null) {
             view.startActivity(new Intent(view, AddTaskView.class));
         }
+    }
+
+
+    @Override
+    public void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter) {
+
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+
     }
 
     @Override
@@ -423,6 +460,11 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
+    public void goToPreferencesScreen(Preferences.PreferencesTo presenter) {
+        //TODO: borrar metodo de la interfaz.
+    }
+
+    @Override
     public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
         if (listForgottenToState == null) {
             listForgottenToState = new ListForgottenState();
@@ -503,11 +545,17 @@ public class App extends Application implements Mediator, Navigator {
     private class ListForgottenState {
         boolean toolbarVisibility;
         boolean textVisibility;
-        boolean addBtnVisibility;
         boolean deleteBtnVisibility;
     }
 
     private class AddTaskState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
+    }
+
+    private class PreferencesState {
         boolean toolbarVisibility;
         boolean textVisibility;
         boolean addBtnVisibility;

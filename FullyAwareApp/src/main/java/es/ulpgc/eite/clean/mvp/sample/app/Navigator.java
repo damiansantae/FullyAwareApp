@@ -8,6 +8,7 @@ import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Navigator {
@@ -64,8 +65,12 @@ public interface Navigator {
     void goToListForgottenScreen(Schedule.ScheduleTo presenter);
 
 
+    void goToPreferencesScreen(Preferences.PreferencesTo presenter);
+
+    void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter);
+
     /*******************************************************************
-     ******** Navegación direccion AddTask al resto de pantallas*/
+     ******** Navegación direccion Preferences al resto de pantallas*/
     void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
 
 
