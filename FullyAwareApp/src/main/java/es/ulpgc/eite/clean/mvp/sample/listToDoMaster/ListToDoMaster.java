@@ -79,6 +79,8 @@ public interface ListToDoMaster {
       void onAddBtnClick();
 
       boolean isSelected(int adapterPosition);
+
+    void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
   }
 
   /**

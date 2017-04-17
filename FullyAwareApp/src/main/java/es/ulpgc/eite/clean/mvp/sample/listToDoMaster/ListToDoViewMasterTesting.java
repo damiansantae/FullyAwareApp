@@ -112,6 +112,7 @@ public class ListToDoViewMasterTesting
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
+                                       getPresenter().onBinBtnClick2(adapter);
 
                                        adapter.notifyDataSetChanged();
                                    }
@@ -379,6 +380,10 @@ public class ListToDoViewMasterTesting
             notifyDataSetChanged();
         }
 
+
+    public List<TaskToDo> getItems(){
+    return this.items;
+}
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {

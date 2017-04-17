@@ -3,7 +3,6 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -15,10 +14,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.kizitonwose.colorpreference.ColorDialog;
 import com.kizitonwose.colorpreference.ColorShape;
 
 import java.util.ArrayList;
@@ -28,8 +29,6 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-
-import static es.ulpgc.eite.clean.mvp.sample.R.id.fab;
 
 
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
