@@ -21,6 +21,7 @@ import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
@@ -244,8 +245,15 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public boolean checkToolbarChanged() {
-        return preferencesToState.toolbarColourChanged;
+    public boolean checkToolbarChanged(ListToDoPresenterMaster listToDoPresenterMaster) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+            preferencesToState.toolbarVisibility = true;
+            preferencesToState.toolbarColour = 111;
+        }
+
+
+        return this.preferencesToState.toolbarColourChanged;
     }
 
     private String getColorHex(int color) {
@@ -658,7 +666,7 @@ public class App extends Application implements Mediator, Navigator {
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
         int toolbarColour;
-        boolean toolbarColourChanged;
+        boolean toolbarColourChanged = false;
     }
 
     private class ScheduleState {

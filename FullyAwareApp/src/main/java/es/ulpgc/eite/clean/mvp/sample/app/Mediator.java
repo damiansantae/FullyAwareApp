@@ -7,6 +7,7 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
@@ -38,5 +39,5 @@ public interface Mediator {
 
     String getToolbarColour();
 
-    boolean checkToolbarChanged();
+    boolean checkToolbarChanged(ListToDoPresenterMaster listToDoPresenterMaster);
 }
