@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listForgotten;
+package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.content.Context;
 import android.util.AttributeSet;

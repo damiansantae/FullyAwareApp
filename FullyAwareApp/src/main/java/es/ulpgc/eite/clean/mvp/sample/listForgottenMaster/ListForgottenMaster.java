@@ -1,16 +1,16 @@
-package es.ulpgc.eite.clean.mvp.sample.listForgotten;
+package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.content.Context;
+
+import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
 
-/**
- * Created by Luis on 12/11/16.
- */
 
-public interface ListForgotten {
+public interface ListForgottenMaster {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,9 @@ public interface ListForgotten {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-    void setDeleteBtnVisibility(boolean visible);
+
+    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+
   }
 
   interface ListForgottenTo {
@@ -29,6 +31,23 @@ public interface ListForgotten {
     boolean isToolbarVisible();
     boolean isTextVisible();
   }
+  /**
+   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
+   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   */
+   interface MasterListToDetail{
+    Context getManagedContext();
+    TaskForgotten getSelectedTaskForgotten();
+    boolean getToolbarVisibility();
+
+  }
+  /**
+   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
+   * del detalle cuando está finaliza
+   */
+  interface DetailToMaster {
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////////////
   // Screen ////////////////////////////////////////////////////////////////////////
@@ -37,10 +56,21 @@ public interface ListForgotten {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
+
     void onListClick(int position, Task_Adapter adapter);
+
     void onLongListClick(int pos, Task_Adapter adapter);
+
     void onBinBtnClick(Task_Adapter adapter);
+
+
+
+    /*
+          @Override
+          public void onLoadItemsTaskFinished(List<TaskForgotten> items) {
+              getView().setRecyclerAdapterContent(items);
+      
+          }*/
   }
 
   /**
@@ -52,15 +82,12 @@ public interface ListForgotten {
     void hideText();
     void showText();
 
-    void hideAddBtn();
 
-    void showAddBtn();
+      void hideDeleteBtn();
 
-    void hideDeleteBtn();
+      void showDeleteBtn();
 
-    void showDeleteBtn();
-
-    void setText(String txt);
+      void setText(String txt);
     void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
@@ -70,15 +97,21 @@ public interface ListForgotten {
     void startSelection();
 
     void setChoiceMode(int i);
+    
+
+    void deselect(int i, boolean b);
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
+    void deleteItem(TaskForgotten item);
+    void loadItems();
+    void reloadItems();
+    void setDatabaseValidity(boolean valid);
+    String getErrorMessage();
+    void addInitialTasks();
   }
 
   /**
@@ -86,5 +119,10 @@ public interface ListForgotten {
    */
   interface ModelToPresenter {
 
+    void onLoadItemsTaskStarted();
+
+    void onLoadItemsTaskFinished(List<TaskForgotten> itemsFromDatabase);
+
+    void onErrorDeletingItem(TaskForgotten item);
   }
 }
