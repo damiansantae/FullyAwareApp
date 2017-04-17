@@ -44,6 +44,10 @@ public interface Preferences {
     void onSelectTimeBtnClicked();
     void onAddTaskBtnClicked();
       void onListClick(int position, SimpleAdapter adapter);
+
+    void setNewToolbarColor(int newColor);
+
+    void setToolbarColorChanged(boolean toolbarColorChanged);
   }
 
   /**
@@ -67,7 +71,7 @@ public interface Preferences {
 
     String getTaskSubject();
 
-      void changeColourDialog(PresenterToView view);
+      void onChangeColourDialog(PresenterToView view);
   }
 
   /**

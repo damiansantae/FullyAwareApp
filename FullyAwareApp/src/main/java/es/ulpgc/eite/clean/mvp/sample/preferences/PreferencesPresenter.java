@@ -38,8 +38,8 @@ public class PreferencesPresenter extends GenericPresenter
   private boolean buttonClicked;
   private boolean textVisible;
 
-
-    private int toolbarColor;
+ private boolean toolbarColorChanged;
+  private int toolbarColour;
     List<String> colorPrimaryList;
     List<String> colorPrimaryDarkList;
     SharedPreferences preferences;
@@ -167,7 +167,7 @@ public class PreferencesPresenter extends GenericPresenter
     Object selectedItem = adapter.getItem(position);
       Navigator app = (Navigator) getView().getApplication();
       if (position==0){
-        getView().changeColourDialog(getView());
+        getView().onChangeColourDialog(getView());
 
       } else if (position ==1){
          //app.goToEditSubjects();
@@ -181,18 +181,23 @@ public class PreferencesPresenter extends GenericPresenter
         //app.goToDetailScreen(this);
 
 
-    Context context = getApplicationContext();
-    CharSequence text = "Preferences DOS";
-    int duration = Toast.LENGTH_SHORT;
 
-    Toast toast = Toast.makeText(context, text, duration);
-    toast.show();
 
     }
 
+  @Override
+  public void setNewToolbarColor(int newColor) {
+    this.toolbarColour = newColor;
 
 
-    private String getDeadLine(String time, String date) {
+  }
+
+  @Override
+  public void setToolbarColorChanged(boolean toolbarColorChanged) {
+  }
+
+
+  private String getDeadLine(String time, String date) {
         return time +" - "+ date;
     }
 
