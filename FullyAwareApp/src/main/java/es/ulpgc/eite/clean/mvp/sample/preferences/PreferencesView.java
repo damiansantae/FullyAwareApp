@@ -167,7 +167,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     showColorDialog(this);
     }
 
-
     private void showColorDialog(final Preferences.PresenterToView view) {
         new ColorDialog.Builder(this)
                 .setColorShape(view instanceof Toolbar ? com.kizitonwose.colorpreference.ColorShape.SQUARE : ColorShape.CIRCLE)
@@ -205,8 +204,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 
-    //////////////////////////////////////////////////////////////////
-
     @Override
     public void onColorSelected(int newColor, String tag) {
         View view = findViewById(Integer.parseInt(tag));
@@ -217,7 +214,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
             updateStatusBarColor(newColor);
         }
 
-@Override
+    @Override
     public void setNewToolbarColor(int newColor) {
         getPresenter().setNewToolbarColor(newColor);
     }

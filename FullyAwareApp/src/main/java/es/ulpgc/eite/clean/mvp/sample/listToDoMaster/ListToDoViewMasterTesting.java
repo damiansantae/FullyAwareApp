@@ -203,7 +203,7 @@ public class ListToDoViewMasterTesting
         Navigator app = (Navigator) getApplication();
         app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
         Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "PULSADO");
+            Log.d(TAG, "Pasando a pantalla Preferencias");
     }
 
         return super.onOptionsItemSelected(item);

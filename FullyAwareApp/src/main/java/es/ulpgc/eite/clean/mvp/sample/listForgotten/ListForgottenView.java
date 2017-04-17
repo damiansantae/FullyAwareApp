@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 
 public class ListForgottenView
         extends GenericActivity<ListForgotten.PresenterToView, ListForgotten.ViewToPresenter, ListForgottenPresenter>
@@ -138,6 +139,11 @@ public class ListForgottenView
           Navigator app = (Navigator) getApplication();
           app.goToScheduleScreen((ListForgotten.ListForgottenTo)getPresenter());
           Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+      } else if (id ==R.id.menuPreferences) {
+          Navigator app = (Navigator) getApplication();
+          app.goToPreferencesScreen((ListForgotten.ListForgottenTo) getPresenter());
+          Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+
       }
 
 

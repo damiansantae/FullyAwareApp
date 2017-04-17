@@ -173,7 +173,7 @@ public class ListDoneViewMasterTesting
         Navigator app = (Navigator) getApplication();
         app.goToPreferencesScreen((ListDoneMaster.ListDoneTo) getPresenter());
         Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "PULSADO");
+
     }
 
         return super.onOptionsItemSelected(item);

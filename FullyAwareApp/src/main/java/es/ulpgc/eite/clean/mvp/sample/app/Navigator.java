@@ -58,6 +58,9 @@ public interface Navigator {
 
     void goToListDoneScreen(ListForgotten.ListForgottenTo presenter);
     void goToScheduleScreen(ListForgotten.ListForgottenTo presenter);
+
+    void goToPreferencesScreen(Schedule.ScheduleTo presenter);
+
     void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter);
 
     //Comunicación M/D
@@ -81,5 +84,5 @@ public interface Navigator {
     void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
 
 
-    void goTochangeColourDialog(PreferencesPresenter preferencesPresenter);
+    void goToChangeColourDialog(PreferencesPresenter preferencesPresenter);
 }

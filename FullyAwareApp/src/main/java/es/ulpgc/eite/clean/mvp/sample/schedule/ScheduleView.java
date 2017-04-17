@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 
 public class ScheduleView
         extends GenericActivity<Schedule.PresenterToView, Schedule.ViewToPresenter, SchedulePresenter>
@@ -91,7 +93,11 @@ public class ScheduleView
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((Schedule.ScheduleTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+           } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((Schedule.ScheduleTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+    }
 
         return super.onOptionsItemSelected(item);
     }
