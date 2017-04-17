@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.content.Context;
 import android.widget.SimpleAdapter;
+import android.widget.Toolbar;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
@@ -65,6 +66,8 @@ public interface Preferences {
     String getTaskTitle();
 
     String getTaskSubject();
+
+      void changeColourDialog(PresenterToView view);
   }
 
   /**

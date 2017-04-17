@@ -20,7 +20,9 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
@@ -276,6 +278,16 @@ public class App extends Application implements Mediator, Navigator {
         }
 
     }
+
+    @Override
+    public void goTochangeColourDialog(PreferencesPresenter preferencesPresenter) {
+        Context view = preferencesPresenter.getManagedContext();
+        if (view != null) {
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+           // view.startActivity(new Intent(view, ExtrasActivity.class));
+        }
+    }
+
 
     @Override
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {

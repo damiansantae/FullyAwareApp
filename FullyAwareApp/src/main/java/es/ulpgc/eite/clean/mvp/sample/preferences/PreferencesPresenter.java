@@ -4,13 +4,19 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -21,6 +27,8 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
 
+import static es.ulpgc.eite.clean.mvp.sample.R.id.toolbar;
+
 public class PreferencesPresenter extends GenericPresenter
     <Preferences.PresenterToView, Preferences.PresenterToModel, Preferences.ModelToPresenter, PreferencesModel>
     implements Preferences.ViewToPresenter, Preferences.ModelToPresenter, Preferences.PreferencesTo, Preferences.ToPreferences {
@@ -29,6 +37,14 @@ public class PreferencesPresenter extends GenericPresenter
   private boolean toolbarVisible;
   private boolean buttonClicked;
   private boolean textVisible;
+
+
+    private int toolbarColor;
+    List<String> colorPrimaryList;
+    List<String> colorPrimaryDarkList;
+    SharedPreferences preferences;
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+
 
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -151,18 +167,15 @@ public class PreferencesPresenter extends GenericPresenter
     Object selectedItem = adapter.getItem(position);
       Navigator app = (Navigator) getView().getApplication();
       if (position==0){
-      //app.goToChangeColourScreen();
+        getView().changeColourDialog(getView());
 
       } else if (position ==1){
-        // app.goToEditSubjects();
+         //app.goToEditSubjects();
       } else if (position==2){
           //app.goToDonete();
       } else if (position == 3){
           //app.goToAboutApp();
       }
-
-
-
 
         Mediator mediator =(Mediator) getView().getApplication();
         //app.goToDetailScreen(this);
@@ -178,7 +191,8 @@ public class PreferencesPresenter extends GenericPresenter
     }
 
 
-  private String getDeadLine(String time, String date) {
+
+    private String getDeadLine(String time, String date) {
         return time +" - "+ date;
     }
 
