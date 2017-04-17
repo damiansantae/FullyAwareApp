@@ -48,6 +48,8 @@ public interface Preferences {
     void setNewToolbarColor(int newColor);
 
     void setToolbarColorChanged(boolean toolbarColorChanged);
+
+    void toolbarChanged();
   }
 
   /**
@@ -72,6 +74,8 @@ public interface Preferences {
     String getTaskSubject();
 
       void onChangeColourDialog(PresenterToView view);
+
+    String getColorHex(int color);
   }
 
   /**

@@ -188,12 +188,23 @@ public class PreferencesPresenter extends GenericPresenter
   @Override
   public void setNewToolbarColor(int newColor) {
     this.toolbarColour = newColor;
-
-
   }
 
   @Override
   public void setToolbarColorChanged(boolean toolbarColorChanged) {
+    this.toolbarColorChanged = toolbarColorChanged;
+
+  }
+
+  @Override
+  public void toolbarChanged() {
+    Mediator mediator =(Mediator) getView().getApplication();
+    mediator.toolbarColourChanged(this);
+  }
+
+
+  public int getToolbarColour(){
+    return this.toolbarColour;
   }
 
 
@@ -289,5 +300,7 @@ public class PreferencesPresenter extends GenericPresenter
   }
 
 
-
+  public boolean getToolbarColourChanged() {
+    return this.toolbarColorChanged;
+  }
 }

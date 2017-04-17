@@ -165,6 +165,7 @@ public class ColorDialog extends DialogFragment {
     }
 
     public interface OnColorSelectedListener {
+
         void onColorSelected(int newColor, String tag);
     }
 

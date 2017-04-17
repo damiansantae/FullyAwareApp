@@ -185,6 +185,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
             setToolbarColorChanged(true);
             setNewToolbarColor(newColor);
+            toolbarChanged();
         } else {
             Context context = getApplicationContext();
             CharSequence text = "Sistema Operativo no compatible";
@@ -196,7 +197,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         }
     }
 
-    private String getColorHex(int color) {
+    private void toolbarChanged() {
+        getPresenter().toolbarChanged();
+    }
+
+    @Override
+    public String getColorHex(int color) {
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 
@@ -222,9 +228,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
 
 
-    public int getToolbarColorChanged(){
-        return this.toolbarColour;
-    }
 
 
 

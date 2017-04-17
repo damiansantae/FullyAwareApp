@@ -82,7 +82,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
             getModel().loadItems();
             if(listClicked) {
                 getView().startSelection();
-
                 onCheckItems();
             }
 

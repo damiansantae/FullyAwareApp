@@ -3,6 +3,8 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -214,6 +216,40 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
+    @Override
+    public void toolbarColourChanged(PreferencesPresenter presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+        preferencesToState.toolbarColourChanged = presenter.getToolbarColourChanged();
+
+    /*    if (preferencesToState.toolbarColourChanged == true){
+            changeToolbarColour(presenter, preferencesToState.toolbarColour);
+        }
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+*/
+        }
+
+
+    public String getToolbarColour() {
+        String newColourString = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+         newColourString = getColorHex(preferencesToState.toolbarColour);
+        }
+        return newColourString;
+    }
+
+    public boolean checkToolbarChanged() {
+        return preferencesToState.toolbarColourChanged;
+    }
+
+    private String getColorHex(int color) {
+        return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Navigator /////////////////////////////////////////////////////////////////////
@@ -268,7 +304,6 @@ public class App extends Application implements Mediator, Navigator {
     public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
         if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
-
         }
         listToDoToState.toolbarVisibility = true;
 
@@ -621,6 +656,8 @@ public class App extends Application implements Mediator, Navigator {
         boolean textVisibility;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
+        int toolbarColour;
+        boolean toolbarColourChanged;
     }
 
     private class ScheduleState {
