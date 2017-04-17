@@ -2,11 +2,11 @@
     android:shape="rectangle"
     >
 
-    <stroke android:width="4dp" android:color="#636161" />
+    <stroke android:width="4dp" android:color="#34495e" />
     <padding android:left="20dp"
         android:top="20dp"
         android:right="20dp"
         android:bottom="20dp" />
     <corners android:radius="24dp" />
-    <solid android:color="#7534495e" />
+    <solid android:color="#da34495e" />
 </shape>

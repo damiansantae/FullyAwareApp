@@ -1,19 +1,18 @@
-package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
+package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,27 +21,28 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
 
-public class ListToDoViewMaster
-        extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
-        implements ListToDoMaster.PresenterToView {
+public class ListDoneViewMasterTesting
+        extends GenericActivity<ListDoneMaster.PresenterToView, ListDoneMaster.ViewToPresenter, ListDonePresenterMaster>
+        implements ListDoneMaster.PresenterToView  {
 
     private Toolbar toolbar;
-    private ListView list;
+    private RecyclerView recyclerView;
     private FloatingActionButton bin;
-    private FloatingActionButton add;
-    private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT}
 
-    private Task_Adapter adapter;
+    private TaskRecyclerViewAdapter adapter;
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -52,19 +52,17 @@ public class ListToDoViewMaster
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listtodo);
+        setContentView(R.layout.activity_listdone);
 
         ////////////////////////////////////////////////////////////
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
-        add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
-        done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
-        list = (ListView) findViewById(R.id.list);
-        adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
-       list.setAdapter(adapter);
+        recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
+        adapter = new TaskRecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
 
 
-        list.setOnTouchListener(new View.OnTouchListener() {
+        /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
 
             @Override
@@ -96,78 +94,32 @@ public class ListToDoViewMaster
                 }
                 return false;
             }
-        });
+        });*/
 
 
-
-
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                getPresenter().onListClick(position, adapter);
-
-
-                Log.d("error msg", "Click Simple");
-               /* TaskToDo currentTask = adapter.getTaskToDo(position);
-                Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
-                toast.show();*/
-
-            }
-        });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
-                getPresenter().onLongListClick(pos, adapter);
-                Log.d("error msg", "Click Largo");
-                return true;
-            }
-        });
 
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       getPresenter().onBinBtnClick(adapter);
+                                       // getPresenter().onBinBtnClick(adapter);
+
                                        adapter.notifyDataSetChanged();
                                    }
 
                                }
         );
 
-        add.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       getPresenter().onAddBtnClick(adapter);
-                                       //adapter.notifyDataSetChanged();
-                                   }
-
-                               }
-        );
-        done.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       getPresenter().onDoneBtnClick(adapter);
-                                       list.clearChoices();
-                                       adapter.notifyDataSetChanged();
-                                   }
-
-                               }
-        );
 
         ////////////////////////////////////////////////////////
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
     }
-
 
     /**
      * Method that initialized MVP objects
@@ -176,7 +128,7 @@ public class ListToDoViewMaster
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onResume() {
-        super.onResume(ListToDoPresenterMaster.class, this);
+        super.onResume(ListDonePresenterMaster.class, this);
     }
 
 
@@ -184,7 +136,7 @@ public class ListToDoViewMaster
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_listtodo_master_todo, menu);
+        getMenuInflater().inflate(R.menu.menu_listtodo_master_done, menu);
         return true;
     }
 
@@ -198,31 +150,32 @@ public class ListToDoViewMaster
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
             return true;
+
         }else if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
-            app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-            Log.d("error msg", "PULSADO");
+            app.goToListToDoScreen((ListDoneMaster.ListDoneTo) getPresenter());
         }
+
         else if (id ==R.id.menucalendar){
-           Navigator app = (Navigator) getApplication();
-          // app.goToCalendarScreen();
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+            Navigator app = (Navigator) getApplication();
+            app.goToScheduleScreen((ListDoneMaster.ListDoneTo) getPresenter());
+
         }
         else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
-            app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
+            app.goToListForgottenScreen((ListDoneMaster.ListDoneTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        } else if (id ==R.id.menuPreferences) {
-           // Navigator app = (Navigator) getApplication();
-           // app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
 
-        }
+    } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((ListDoneMaster.ListDoneTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+            Log.d("TAG", "PULSADO");
+    }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,53 +190,19 @@ public class ListToDoViewMaster
         finish();
     }
 
+
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
 
 
-
-    @Override
-    public void hideAddBtn() {
-        add.setVisibility(View.INVISIBLE);
-
-
-    }
-
-    @Override
-    public void hideDoneBtn() {
-        done.setVisibility(View.INVISIBLE);
-
-
-
-    }
-
-    @Override
-    public void showDoneBtn() {
-        done.setVisibility(View.VISIBLE);
-
-
-    }
-
     @Override
     public void deselect(int i, boolean b) {
-        list.setItemChecked(i,b);
-    }
-
-
-
-    //TODO:Este metodo no hace nada aqui, es para la RecyclerView
-    @Override
-    public void setRecyclerAdapterContent(List<TaskToDo> items) {
-    }
-
-    @Override
-    public void showAddBtn() {
-        add.setVisibility(View.VISIBLE);
-
+       //recyclerView.setItemChecked(i,b);
 
     }
+
 
     @Override
     public void hideDeleteBtn() {
@@ -299,38 +218,49 @@ public class ListToDoViewMaster
 
     }
 
+
     @Override
     public boolean isItemListChecked(int pos) {
-        return list.isItemChecked(pos);
+        //return recyclerView.isItemChecked(pos);
+        return false;
     }
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        list.setItemChecked(pos, checked);
+       // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-        list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
     @Override
     public void setChoiceMode(int i) {
-        if (i == 0) {               //Modo de seleccion nulo
-            list.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-            list.invalidateViews();
+       /* if (i == 0) {               //Modo de seleccion nulo
+            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+            recyclerView.invalidateViews();
 
         } else if (i == 1) {             //Modo de seleccion unico
-            list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
         } else if (i == 2) {             ///Modo de seleccion multiple
-            list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 
         } else {
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
+        }*/
+    }
+
+    @Override
+    public void setRecyclerAdapterContent(List<TaskDone> items) {
+        if(recyclerView != null) {
+           TaskRecyclerViewAdapter recyclerAdapter =
+                    (TaskRecyclerViewAdapter) recyclerView.getAdapter();
+            recyclerAdapter.setItemList(items);
         }
     }
 
@@ -354,7 +284,7 @@ public class ListToDoViewMaster
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+       // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
@@ -369,4 +299,97 @@ public class ListToDoViewMaster
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+
+
+    ///////////////////////////////////////////////////////////////
+
+
+    public class TaskRecyclerViewAdapter
+            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
+
+        private List<TaskDone> items;
+
+        public TaskRecyclerViewAdapter() {
+            items = new ArrayList<>();
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_list, parent, false);
+            return new ViewHolder(view);
+        }
+
+        public void setItemList(List<TaskDone> items) {
+            this.items = items;
+            notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+
+            holder.item = items.get(position);
+            holder.tag.setImageResource(items.get(position).getTagId());
+            holder.title.setText(items.get(position).getTitle());
+            holder.description.setText(items.get(position).getDescription());
+            holder.date.setText(items.get(position).getDate());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getPresenter().onListClick2(holder.item, adapter);
+                    holder.itemView.setSelected(true);
+
+                    adapter.notifyDataSetChanged();
+                  //  getPresenter().onItemClicked(holder.item);
+                }
+            });
+            holder.itemView.setLongClickable(true);
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    getPresenter().onLongListClick2(holder.item);
+                    return true;
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final View itemView;
+            public final ImageView tag;
+            public final  TextView title;
+            public final  TextView description;
+            public final    TextView date;
+
+            public TaskDone item;
+
+            public ViewHolder(View view) {
+                super(view);
+                view.setClickable(true);
+                itemView = view;
+                tag = (ImageView) view.findViewById(R.id.tag);
+                title = (TextView) view.findViewById(R.id.title);
+                description = (TextView) view.findViewById(R.id.description);
+                date = (TextView) view.findViewById(R.id.date);
+
+            }
+
+       /* @Override
+        public String toString() {
+            return super.toString() + " '" + contentView.getText() + "'";
+        }*/
+        }
+    }
+
+
+
+
+
 }

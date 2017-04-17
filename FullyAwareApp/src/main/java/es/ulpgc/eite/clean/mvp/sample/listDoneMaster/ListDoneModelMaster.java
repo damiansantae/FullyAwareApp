@@ -178,6 +178,7 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
         getPresenter().onLoadItemsTaskStarted();
 
         // Mock Hello: A handler to delay the answer
+        //TODO: quitar este retraso
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -188,7 +189,7 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
                 //getPresenter().onLoadItemsTaskFinished(items);
                 getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
             }
-        }, 5000);
+        },0);
     }
 
 

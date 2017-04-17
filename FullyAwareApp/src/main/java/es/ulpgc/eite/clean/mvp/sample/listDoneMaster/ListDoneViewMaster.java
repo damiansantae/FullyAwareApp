@@ -21,9 +21,12 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
 
 public class ListDoneViewMaster
         extends GenericActivity<ListDoneMaster.PresenterToView, ListDoneMaster.ViewToPresenter, ListDonePresenterMaster>
@@ -158,19 +161,15 @@ public class ListDoneViewMaster
         toolbar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void hideText() {
-        text.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showText() {
-        text.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public void deselect(int i, boolean b) {
         list.setItemChecked(i,b);
+    }
+
+    @Override
+    public void setRecyclerAdapterContent(List<TaskDone> items) {
+
     }
 
     @Override
@@ -180,15 +179,6 @@ public class ListDoneViewMaster
     @Override
     public void showDeleteBtn() {
         bin.setVisibility(View.VISIBLE);
-    }
-    @Override
-    public void setText(String txt) {
-        text.setText(txt);
-    }
-
-    @Override
-    public void setLabel(String txt) {
-        button.setText(txt);
     }
 
     @Override

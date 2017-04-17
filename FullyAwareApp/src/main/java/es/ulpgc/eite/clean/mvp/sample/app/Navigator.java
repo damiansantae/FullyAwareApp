@@ -6,10 +6,12 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Navigator {
@@ -41,6 +43,7 @@ public interface Navigator {
     void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter);
     void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter);
     void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
+    void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter);
 
 
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
@@ -48,6 +51,7 @@ public interface Navigator {
     void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster);
 
     //Comunicación M/D
+    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
 
@@ -81,5 +85,5 @@ public interface Navigator {
     void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
 
 
-
+    void goTochangeColourDialog(PreferencesPresenter preferencesPresenter);
 }
