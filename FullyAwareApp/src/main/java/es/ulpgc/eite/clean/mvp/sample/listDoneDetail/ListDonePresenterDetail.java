@@ -9,6 +9,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 
 public class ListDonePresenterDetail extends GenericPresenter
         <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
@@ -18,6 +19,7 @@ public class ListDonePresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
+    private ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -120,7 +122,10 @@ private boolean toolbarVisible;
 
     }
 
-
+    @Override
+    public void setAdapter(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        this.adapter=adapter;
+    }
 
 
     @Override

@@ -225,6 +225,19 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     realmDatabase.commitTransaction();
   }
 
+  @Override
+  public void deleteTestItems() {
+    realmDatabase.executeTransaction(new Realm.Transaction() {
+      @Override
+      public void execute(Realm realm) {
+        realm.where(TaskToDo.class).beginsWith("title", "Titulo")
+                .findAll()
+                .deleteAllFromRealm();
+        ;
+      }
+    });
+  }
+
   private void deleteAllDatabaseItems(){
     for(TaskToDo item: getItemsFromDatabase()){
       deleteDatabaseItem(item);

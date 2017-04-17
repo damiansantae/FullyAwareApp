@@ -8,7 +8,6 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 
 public interface ListDoneMaster {
@@ -63,6 +62,9 @@ public interface ListDoneMaster {
     void onLongListClick(int pos, Task_Adapter adapter);
 
     void onBinBtnClick(Task_Adapter adapter);
+    void onListClick2(TaskDone item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+
+    void onLongListClick2(TaskDone item);
 
 
 
@@ -80,16 +82,10 @@ public interface ListDoneMaster {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
-    void hideText();
-    void showText();
-
 
       void hideDeleteBtn();
 
       void showDeleteBtn();
-
-      void setText(String txt);
-    void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
 
@@ -101,6 +97,7 @@ public interface ListDoneMaster {
     
 
     void deselect(int i, boolean b);
+    void setRecyclerAdapterContent(List<TaskDone> items);
   }
 
   /**

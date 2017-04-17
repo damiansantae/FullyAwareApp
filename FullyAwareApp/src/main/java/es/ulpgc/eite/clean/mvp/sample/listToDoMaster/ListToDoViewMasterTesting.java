@@ -224,15 +224,7 @@ public class ListToDoViewMasterTesting
         toolbar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void hideText() {
-        text.setVisibility(View.GONE);
-    }
 
-    @Override
-    public void showText() {
-        text.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public void hideAddBtn() {
@@ -283,15 +275,6 @@ public class ListToDoViewMasterTesting
 
     }
 
-    @Override
-    public void setText(String txt) {
-        text.setText(txt);
-    }
-
-    @Override
-    public void setLabel(String txt) {
-        button.setText(txt);
-    }
 
     @Override
     public boolean isItemListChecked(int pos) {

@@ -4,6 +4,7 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -39,11 +40,13 @@ public interface Navigator {
     void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter);
     void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter);
     void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
+    void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter);
 
 
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
 
     //Comunicación M/D
+    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
 
@@ -55,6 +58,7 @@ public interface Navigator {
 
     void goToListDoneScreen(ListForgotten.ListForgottenTo presenter);
     void goToScheduleScreen(ListForgotten.ListForgottenTo presenter);
+    void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter);
 
     //Comunicación M/D
 

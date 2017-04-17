@@ -13,7 +13,7 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
@@ -206,6 +206,7 @@ public class App extends Application implements Mediator, Navigator {
         if (masterListToDetailDoneState != null) {
             presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
+            presenter.setAdapter(masterListToDetailDoneState.adapter);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
@@ -327,6 +328,22 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
+    @Override
+    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        masterListToDetailDoneState = new DetailDoneState();
+        masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
+        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTaskDone();
+        masterListToDetailDoneState.adapter = adapter;
+
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
+
+        // Arrancamos la pantalla del detalle sin finalizar la del maestro
+        Context view = listDonePresenterMaster.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneViewDetail.class));
+        }
+    }
+
 
     @Override
     public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
@@ -346,7 +363,10 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
+
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+
             presenter.destroyView();
         }
 
@@ -407,7 +427,9 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
+
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
 
@@ -425,6 +447,11 @@ public class App extends Application implements Mediator, Navigator {
             view.startActivity(new Intent(view, ScheduleView.class));
 
         }
+
+    }
+
+    @Override
+    public void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter) {
 
     }
 
@@ -452,7 +479,10 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
+
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+
         }
 
 
@@ -505,7 +535,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
         if (view != null) {
 
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            //TODO: activar esta linea para funcionamiento con listView: view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
 
 
@@ -526,6 +556,23 @@ public class App extends Application implements Mediator, Navigator {
             view.startActivity(new Intent(view, ScheduleView.class));
 
         }
+
+    }
+
+    @Override
+    public void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter) {
+
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+
 
     }
 
@@ -593,7 +640,7 @@ public class App extends Application implements Mediator, Navigator {
         TaskDone selectedItem;
         String subject;
         String date;
-        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+        ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
     }
 
 

@@ -59,7 +59,7 @@
 
         <activity
             android:name=".addTask.AddTaskView"
-            android:label="Add a new taskToDo"
+            android:label="Add a new task"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -84,6 +84,12 @@
 
         <activity
             android:name=".listDoneMaster.ListDoneViewMaster"
+            android:label="FullyAware"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".listDoneMaster.ListDoneViewMasterTesting"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
