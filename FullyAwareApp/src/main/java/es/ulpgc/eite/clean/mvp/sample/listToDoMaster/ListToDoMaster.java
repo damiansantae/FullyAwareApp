@@ -122,6 +122,8 @@ public interface ListToDoMaster {
     void setDatabaseValidity(boolean valid);
     String getErrorMessage();
     void addInitialTasks();
+
+    void deleteTestItems();
   }
 
   /**

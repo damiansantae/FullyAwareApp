@@ -5,6 +5,7 @@ import android.content.Context;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
 
 /**
  * Created by Luis on 12/11/16.
@@ -41,6 +42,8 @@ public interface AddTask {
     void onSelectDateBtnClicked();
     void onSelectTimeBtnClicked();
     void onAddTaskBtnClicked();
+
+    void onLoadItemsTaskStarted();
   }
 
   /**
@@ -69,9 +72,9 @@ public interface AddTask {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
+
+
+    void addTaskToDo(TaskToDo taskToDo);
   }
 
   /**
