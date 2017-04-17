@@ -81,6 +81,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             CheckDoneBtnVisibility();
+            getModel().loadItems();
             if(listClicked) {
                 getView().startSelection();
 
@@ -342,7 +343,7 @@ checkAddBtnVisibility();
             }
             Context context = getApplicationContext();
             if(size == 1) {
-                CharSequence text = "TaskToDo removed";
+                CharSequence text = "Task removed";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
