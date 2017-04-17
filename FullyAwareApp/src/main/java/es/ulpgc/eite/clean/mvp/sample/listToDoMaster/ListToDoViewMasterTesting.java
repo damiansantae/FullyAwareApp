@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,10 @@ public class ListToDoViewMasterTesting
     private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
+
     enum Direction {LEFT, RIGHT}
+
+    private SparseBooleanArray tasksSelected;
 
     private TaskRecyclerViewAdapter adapter;
 
@@ -62,7 +66,7 @@ public class ListToDoViewMasterTesting
         ////////////////////////////////////////////////////////////
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
-        done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
+        done = (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
         recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
         adapter = new TaskRecyclerViewAdapter();
@@ -102,7 +106,6 @@ public class ListToDoViewMasterTesting
                 return false;
             }
         });*/
-
 
 
         bin.setOnClickListener(new View.OnClickListener() {
@@ -178,36 +181,31 @@ public class ListToDoViewMasterTesting
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
 
-        }else if (id ==R.id.menuToDo){
+        } else if (id == R.id.menuToDo) {
 
-            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menuDone){
+            Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menuDone) {
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menucalendar){
+            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menucalendar) {
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menuForgotten){
+            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menuForgotten) {
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
 
-    } else if (id ==R.id.menuPreferences) {
-        Navigator app = (Navigator) getApplication();
-        app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
-        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menuPreferences) {
+            Navigator app = (Navigator) getApplication();
+            app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "PULSADO");
-    }
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +223,6 @@ public class ListToDoViewMasterTesting
     }
 
 
-
     @Override
     public void hideAddBtn() {
         add.setVisibility(View.INVISIBLE);
@@ -236,7 +233,6 @@ public class ListToDoViewMasterTesting
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
-
 
 
     }
@@ -250,7 +246,7 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-       //recyclerView.setItemChecked(i,b);
+        //recyclerView.setItemChecked(i,b);
 
     }
 
@@ -284,13 +280,13 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-       // recyclerView.setItemChecked(pos, checked);
+        // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
@@ -311,10 +307,11 @@ public class ListToDoViewMasterTesting
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }*/
     }
+
     @Override
     public void setRecyclerAdapterContent(List<TaskToDo> items) {
-        if(recyclerView != null) {
-           TaskRecyclerViewAdapter recyclerAdapter =
+        if (recyclerView != null) {
+            TaskRecyclerViewAdapter recyclerAdapter =
                     (TaskRecyclerViewAdapter) recyclerView.getAdapter();
             recyclerAdapter.setItemList(items);
         }
@@ -336,11 +333,12 @@ public class ListToDoViewMasterTesting
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
+
     @Override
     public void onStart() {
         super.onStart();
 
-       // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
@@ -384,32 +382,9 @@ public class ListToDoViewMasterTesting
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
+            TaskToDo task = items.get(position);
+            holder.bindView(task);
 
-            holder.item = items.get(position);
-            holder.tag.setImageResource(items.get(position).getTagId());
-            holder.title.setText(items.get(position).getTitle());
-            holder.description.setText(items.get(position).getDescription());
-            holder.date.setText(items.get(position).getDate());
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getPresenter().onListClick2(holder.item, adapter);
-                    holder.itemView.setSelected(true);
-
-                    adapter.notifyDataSetChanged();
-                  //  getPresenter().onItemClicked(holder.item);
-                }
-            });
-            holder.itemView.setLongClickable(true);
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    getPresenter().onLongListClick2(holder.item);
-                    return true;
-                }
-            });
         }
 
         @Override
@@ -419,32 +394,69 @@ public class ListToDoViewMasterTesting
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View itemView;
-            public final ImageView tag;
-            public final  TextView title;
-            public final  TextView description;
-            public final    TextView date;
+            private ImageView tag;
+            private TextView title;
+            private TextView description;
+            private TextView date;
 
             public TaskToDo item;
 
             public ViewHolder(View view) {
                 super(view);
-                view.setClickable(true);
+
                 itemView = view;
-                tag = (ImageView) view.findViewById(R.id.tag);
-                title = (TextView) view.findViewById(R.id.title);
-                description = (TextView) view.findViewById(R.id.description);
-                date = (TextView) view.findViewById(R.id.date);
 
             }
 
-       /* @Override
-        public String toString() {
-            return super.toString() + " '" + contentView.getText() + "'";
-        }*/
+            /* @Override
+             public String toString() {
+                 return super.toString() + " '" + contentView.getText() + "'";
+             }*/
+            public void bindView(TaskToDo task) {
+                tag = (ImageView) itemView.findViewById(R.id.tag);
+                title = (TextView) itemView.findViewById(R.id.title);
+                description = (TextView) itemView.findViewById(R.id.description);
+                date = (TextView) itemView.findViewById(R.id.date);
+
+                tag.setImageResource(task.getTagId());
+                title.setText(task.getTitle());
+                description.setText(task.getDescription());
+                date.setText(task.getDate());
+
+                //Selecciona si estaba seleccionado
+                if (tasksSelected.get(getAdapterPosition())) {
+                    itemView.setSelected(true);
+                } else {
+                    itemView.setSelected(false);
+
+                }
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter);
+
+                    }
+                });
+                itemView.setLongClickable(true);
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        getPresenter().onLongListClick2(v,getAdapterPosition());
+
+                        return true;
+                    }
+                });
+
+
+            }
         }
+
+
     }
-
-
-
-
 }
+
+
+
+
+
