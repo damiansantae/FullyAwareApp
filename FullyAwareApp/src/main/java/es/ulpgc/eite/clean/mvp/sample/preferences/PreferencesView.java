@@ -2,10 +2,15 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,16 +19,20 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.kizitonwose.colorpreference.ColorShape;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
+
+import static es.ulpgc.eite.clean.mvp.sample.R.id.fab;
 
 
-public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView {
+public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
 
   private Toolbar toolbar;
     private String [] prefItems;
@@ -32,6 +41,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     private ListView list;
     private SimpleAdapter adapter;
     private GoogleApiClient client;
+    private int toolbarColor;
+    private int fabColor;
+    SharedPreferences preferences;
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    List<String> colorPrimaryList;
+    List<String> colorPrimaryDarkList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +110,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
 
 
-
-
-
-
-
     @Override
     public void finishScreen() {
 
@@ -145,8 +155,29 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         return null;
     }
 
+    @Override
+    public void changeColourDialog(Preferences.PresenterToView view) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        toolbarColor = preferences.getInt(TOOLBAR_COLOR_KEY, ContextCompat.getColor(this, R.color.colorPrimary));
 
-@Override
+        colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+    showColorDialog(this);
+    }
+
+
+    private void showColorDialog(final Preferences.PresenterToView view) {
+        new ColorDialog.Builder(this)
+                .setColorShape(view instanceof Toolbar ? com.kizitonwose.colorpreference.ColorShape.SQUARE : ColorShape.CIRCLE)
+                .setColorChoices(R.array.default_color_choice_values)
+                .setTag(String.valueOf(view instanceof Toolbar ? R.id.toolbar : R.id.fab))
+                .setSelectedColor(view instanceof Toolbar ? toolbarColor : fabColor)
+                .show();
+    }
+
+
+
+    @Override
 public void onStart(){
     super.onStart();
 
@@ -186,6 +217,29 @@ public void onStart(){
     @Override
     protected void onResume() {
         super.onResume(PreferencesPresenter.class, this);
+    }
+
+    @Override
+    public void onColorSelected(int newColor, String tag) {
+        View view = findViewById(Integer.parseInt(tag));
+            toolbar.setBackgroundColor(newColor);
+            toolbarColor = newColor;
+            preferences.edit().putInt(TOOLBAR_COLOR_KEY, newColor).apply();
+            //change the status bar color
+            updateStatusBarColor(newColor);
+        }
+
+
+
+    private void updateStatusBarColor(int newColor) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String newColorString = getColorHex(newColor);
+            getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
+        }
+    }
+
+    private String getColorHex(int color) {
+        return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 
 }
