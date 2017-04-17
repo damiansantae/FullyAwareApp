@@ -424,12 +424,7 @@ public class ListToDoViewMasterTesting
                 date.setText(task.getDate());
 
                 //Selecciona si estaba seleccionado
-                if (tasksSelected.get(getAdapterPosition())) {
-                    itemView.setSelected(true);
-                } else {
-                    itemView.setSelected(false);
-
-                }
+              itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

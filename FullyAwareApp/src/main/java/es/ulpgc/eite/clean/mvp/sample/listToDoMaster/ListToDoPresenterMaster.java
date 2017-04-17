@@ -34,7 +34,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private ArrayList<TaskToDo> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
 
-    private SparseBooleanArray itemsSelected;
+    private SparseBooleanArray itemsSelected =new SparseBooleanArray();
 
 
 
@@ -186,6 +186,7 @@ checkAddBtnVisibility();
             if(!v.isSelected()){
                 v.setSelected(true);
                 itemsSelected.put(adapterPosition,true);
+
             }else{
                 v.setSelected(false);
                 itemsSelected.put(adapterPosition,false);
@@ -196,13 +197,21 @@ checkAddBtnVisibility();
             app.goToDetailScreen(this, adapter);
         }
 checkSelection2();
+        checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
 
     }
 
     private void checkSelection2() {
-        if(itemsSelected.size()==0)
-            selectedState= false;
-
+        if(itemsSelected.size()==0) {
+            selectedState = false;
+            setAddBtnVisibility(true);
+            setDeleteBtnVisibility(false);
+            setDoneBtnVisibility(false);
+        }else{
+            setAddBtnVisibility(false);
+            setDeleteBtnVisibility(true);
+            setDoneBtnVisibility(true);
+        }
 
     }
 
@@ -256,10 +265,17 @@ checkSelection2();
     public void onLongListClick2(View v, int adapterPosition) {
         if(!selectedState){
             selectedState =true;
+            setAddBtnVisibility(false);
+            setDeleteBtnVisibility(true);
+            setDoneBtnVisibility(true);
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
 
         }
+checkSelection2();
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
 
 
 
@@ -272,6 +288,18 @@ checkSelection2();
 
         app.goToAddTaskScreen(this);
 
+    }
+
+    @Override
+    public boolean isSelected(int adapterPosition) {
+        boolean result = false;
+        if(itemsSelected.size()!=0) {
+
+            if (itemsSelected.get(adapterPosition)) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     public void onSwipeMade(int position, Task_Adapter adapter){

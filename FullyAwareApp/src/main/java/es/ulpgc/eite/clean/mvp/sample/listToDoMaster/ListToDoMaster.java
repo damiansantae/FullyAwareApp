@@ -77,6 +77,8 @@ public interface ListToDoMaster {
     void onLongListClick2(View item, int adapterPosition);
 
       void onAddBtnClick();
+
+      boolean isSelected(int adapterPosition);
   }
 
   /**
