@@ -15,6 +15,7 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
@@ -247,7 +248,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public boolean checkToolbarChanged(ListToDoPresenterMaster listToDoPresenterMaster) {
+    public boolean checkToolbarChanged() {
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
             preferencesToState.toolbarVisibility = true;
@@ -257,6 +258,9 @@ public class App extends Application implements Mediator, Navigator {
 
         return this.preferencesToState.toolbarColourChanged;
     }
+
+
+
 
     private String getColorHex(int color) {
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));

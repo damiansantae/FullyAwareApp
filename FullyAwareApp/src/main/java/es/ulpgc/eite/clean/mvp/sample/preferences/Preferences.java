@@ -80,6 +80,8 @@ public interface Preferences {
       void setNewToolbarColor(int newColor);
 
     void setToolbarColorChanged(boolean toolbarColorChanged);
+
+      void toolbarChanged(String colour);
   }
 
   /**

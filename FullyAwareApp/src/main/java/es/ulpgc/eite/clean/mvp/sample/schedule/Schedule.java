@@ -41,6 +41,8 @@ public interface Schedule {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
+
+      void toolbarChanged(String colour);
   }
 
   /**

@@ -70,6 +70,8 @@ public interface ListForgotten {
     void startSelection();
 
     void setChoiceMode(int i);
+
+    void toolbarChanged(String colour);
   }
 
   /**

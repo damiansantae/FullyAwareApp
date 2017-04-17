@@ -55,7 +55,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
 
         app.startingListToDoScreen(this);
-        if (app.checkToolbarChanged(this) == true){
+        if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
@@ -98,7 +98,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        if (app.checkToolbarChanged(this) == true){
+        if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }

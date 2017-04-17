@@ -44,6 +44,11 @@ public class ListForgottenPresenter extends GenericPresenter
     Mediator app = (Mediator) getView().getApplication();
     app.startingListForgottenScreen(this);
       checkDeleteBtnVisibility();
+    if (app.checkToolbarChanged() == true){
+      String colour = app.getToolbarColour();
+      getView().toolbarChanged(colour);
+    }
+
   }
 
   /**
@@ -69,6 +74,12 @@ public class ListForgottenPresenter extends GenericPresenter
         getView().setText(getModel().getText());
       }
     }
+    Mediator app = (Mediator) getView().getApplication();
+    if (app.checkToolbarChanged() == true){
+      String colour = app.getToolbarColour();
+      getView().toolbarChanged(colour);
+    }
+
   }
 
 

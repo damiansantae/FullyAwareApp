@@ -63,6 +63,10 @@ public class PreferencesPresenter extends GenericPresenter
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
    app.startingPreferencesScreen(this);
+      if (app.checkToolbarChanged() == true){
+          String colour = app.getToolbarColour();
+          getView().toolbarChanged(colour);
+      }
   }
 
   /**
@@ -81,6 +85,12 @@ public class PreferencesPresenter extends GenericPresenter
 
       checkToolbarVisibility();
     }
+
+      Mediator app = (Mediator) getView().getApplication();
+      if (app.checkToolbarChanged() == true){
+          String colour = app.getToolbarColour();
+          getView().toolbarChanged(colour);
+      }
   }
 
   /**

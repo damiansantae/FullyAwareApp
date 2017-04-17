@@ -80,7 +80,9 @@ public interface ListDoneMaster {
    * Required VIEW methods available to PRESENTER
    */
   interface PresenterToView extends ContextView {
-    void finishScreen();
+      void toolbarChanged(String colour);
+
+      void finishScreen();
     void hideToolbar();
 
       void hideDeleteBtn();
