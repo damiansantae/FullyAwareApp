@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
+import android.widget.Toolbar;
 
 import java.util.List;
 
@@ -110,6 +111,9 @@ public interface ListToDoMaster {
     void deselect(int i, boolean b);
 
       void setRecyclerAdapterContent(List<TaskToDo> items);
+
+
+    void toolbarChanged(String colour);
   }
 
   /**

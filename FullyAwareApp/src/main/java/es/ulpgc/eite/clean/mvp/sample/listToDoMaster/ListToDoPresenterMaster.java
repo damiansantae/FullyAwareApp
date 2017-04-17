@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -85,9 +86,17 @@ public class ListToDoPresenterMaster extends GenericPresenter
                 onCheckItems();
             }
 
+
+
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
 //            }
+        }
+
+        Mediator app = (Mediator) getView().getApplication();
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
         }
     }
 
@@ -124,7 +133,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onDestroy(boolean isChangingConfiguration) {
         super.onDestroy(isChangingConfiguration);
-        Log.d(TAG, "calling onDestroy()");
+        Log.d(TAG, "SE ELIMINA EL PRESENTADOR DEL TODOOOOOOOOOOOOO");
     }
 
 

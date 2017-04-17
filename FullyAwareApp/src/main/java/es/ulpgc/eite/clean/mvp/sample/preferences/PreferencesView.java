@@ -55,7 +55,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_preferences);
     preferencesListView();
-    setToolbarColorChanged(false);
     }
 
     private void preferencesListView(){
@@ -218,10 +217,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
             updateStatusBarColor(newColor);
         }
 
-
+@Override
     public void setNewToolbarColor(int newColor) {
         getPresenter().setNewToolbarColor(newColor);
     }
+
+    @Override
     public void setToolbarColorChanged( boolean toolbarColorChanged) {
        getPresenter().setToolbarColorChanged(toolbarColorChanged);
     }

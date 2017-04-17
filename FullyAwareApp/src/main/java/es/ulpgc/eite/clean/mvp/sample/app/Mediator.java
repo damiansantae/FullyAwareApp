@@ -35,4 +35,8 @@ public interface Mediator {
 
 
     void toolbarColourChanged(PreferencesPresenter preferencesPresenter);
+
+    String getToolbarColour();
+
+    boolean checkToolbarChanged();
 }

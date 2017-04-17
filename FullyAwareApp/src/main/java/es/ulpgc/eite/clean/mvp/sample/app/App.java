@@ -234,7 +234,7 @@ public class App extends Application implements Mediator, Navigator {
 */
         }
 
-
+@Override
     public String getToolbarColour() {
         String newColourString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -243,6 +243,7 @@ public class App extends Application implements Mediator, Navigator {
         return newColourString;
     }
 
+    @Override
     public boolean checkToolbarChanged() {
         return preferencesToState.toolbarColourChanged;
     }

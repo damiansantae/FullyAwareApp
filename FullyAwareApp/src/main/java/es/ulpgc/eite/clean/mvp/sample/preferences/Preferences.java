@@ -76,6 +76,10 @@ public interface Preferences {
       void onChangeColourDialog(PresenterToView view);
 
     String getColorHex(int color);
+
+      void setNewToolbarColor(int newColor);
+
+    void setToolbarColorChanged(boolean toolbarColorChanged);
   }
 
   /**
