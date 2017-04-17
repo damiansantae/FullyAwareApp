@@ -23,13 +23,11 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     private boolean toolbarVisible;
-    private boolean buttonClicked;
     private boolean deleteBtnVisible;
     private boolean addBtnVisible;
     private boolean doneBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
-    private TaskToDo taskToDoDone;
     private TaskToDo selectedTaskToDo;
     private ArrayList<TaskToDo> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
@@ -145,6 +143,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         checkTextVisibility();
     }*/
 
+    //TODO: este método es para la ListView
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
         TaskToDo currentTaskToDo = adapter.getItem(position);
@@ -543,16 +542,6 @@ checkAddBtnVisibility();
         }
     }
 
-    private void checkTextVisibility() {
-        Log.d(TAG, "calling checkTextVisibility()");
-        if (isViewRunning()) {
-            if (!textVisible) {
-                getView().hideText();
-            } else {
-                getView().showText();
-            }
-        }
-    }
 
     private void checkAddBtnVisibility() {
         Log.d(TAG, "calling checkAddBtnVisibility()");

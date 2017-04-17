@@ -84,8 +84,7 @@ public interface ListToDoMaster {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
-    void hideText();
-    void showText();
+
 
       void showAddBtn();
 
@@ -93,8 +92,6 @@ public interface ListToDoMaster {
 
       void showDeleteBtn();
 
-      void setText(String txt);
-    void setLabel(String txt);
 
     boolean isItemListChecked(int pos);
 

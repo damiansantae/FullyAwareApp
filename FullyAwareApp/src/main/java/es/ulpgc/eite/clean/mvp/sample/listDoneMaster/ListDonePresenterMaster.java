@@ -20,13 +20,9 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
     private boolean toolbarVisible;
-    private boolean buttonClicked;
     private boolean deleteBtnVisible;
-    private boolean addBtnVisible;
-    private boolean doneBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
-    private TaskDone taskDone;
 
     private TaskDone selectedTaskDone;
 
@@ -49,6 +45,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         super.onCreate(ListDoneModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
+
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
@@ -141,7 +138,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         }
         checkTextVisibility();
     }*/
-
+//TODO: este método es para la ListView
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
         TaskDone currentTaskDone = adapter.getItem(position);
@@ -174,6 +171,46 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
+    public void onListClick2(TaskDone item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        TaskDone currentTaskDone = item;
+        if (listClicked) {                                //Esta seleccionado algo?
+
+            if (isTaskSelected(currentTaskDone)) {            //Si el elemento ya estaba seleccionado
+                deselectTask(currentTaskDone);                    //Se deselecciona
+
+                //checkSelection();                       //Comprobamos si sigue alguno seleccionado
+            } else {                                      //Si no estaba seleccionado
+                tasksSelected.add(currentTaskDone);
+            }
+
+        } else {                                          //Si no estaba ningun elemento seleccionado
+            //Codigo DETALLE
+            selectedTaskDone = currentTaskDone;
+            Navigator app = (Navigator) getView().getApplication();
+            app.goToDetailScreen(this,adapter);
+        }
+        checkDeleteBtnVisibility();
+        
+
+    }
+    
+
+    private void deselectTask(TaskDone currentTaskDone) {
+        tasksSelected.remove(currentTaskDone);
+    }
+
+    private boolean isTaskSelected(TaskDone currentTaskDone) {
+        boolean result = false;
+        for(int i=0;i<tasksSelected.size();i++){
+            if(currentTaskDone.equals(tasksSelected.get(i)))
+                result= true;
+        }
+        return result;
+
+    }
+
+
+    @Override
     public void onLongListClick(int pos, Task_Adapter adapter) {
         getView().startSelection();           //iniciamos modo seleccion multiple
 
@@ -201,6 +238,31 @@ public class ListDonePresenterMaster extends GenericPresenter
 
         checkDeleteBtnVisibility();
 
+
+    }
+    @Override
+    public void onLongListClick2(TaskDone taskToDo) {
+        getView().startSelection();           //iniciamos modo seleccion multiple
+
+
+        TaskDone currentTaskDone = taskToDo;
+
+
+
+        if (isTaskSelected(currentTaskDone)) {                //Si el elemento ya estaba seleccionado
+            //Se deselecciona
+            tasksSelected.remove(currentTaskDone);
+
+
+            // checkSelection();                        //miramos si hay algun seleccionado
+        } else {                                      //Si no estaba seleccionado
+            setListClicked(true);                   //actualizamos estado a algo seleccionado
+            //Se selecciona
+            tasksSelected.add(currentTaskDone);
+            //checkSelection();
+
+        }
+        checkDeleteBtnVisibility();
 
     }
 
@@ -243,13 +305,10 @@ public class ListDonePresenterMaster extends GenericPresenter
           // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
 
             deleteBtnVisible=false;
-            doneBtnVisible=false;
-            addBtnVisible=true;
+
         } else {                                          //Si hay algo seleccionado
             getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
             deleteBtnVisible=true;
-            doneBtnVisible=true;
-            addBtnVisible=false;
 
         }
     }
@@ -354,17 +413,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             }
         }
     }
-
-    private void checkTextVisibility() {
-        Log.d(TAG, "calling checkTextVisibility()");
-        if (isViewRunning()) {
-            if (!textVisible) {
-                getView().hideText();
-            } else {
-                getView().showText();
-            }
-        }
-    }
+    
 
 
     private void checkDeleteBtnVisibility() {
@@ -391,7 +440,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     @Override
     public void onLoadItemsTaskFinished(List<TaskDone> itemsFromDatabase) {
-
+        getView().setRecyclerAdapterContent(itemsFromDatabase);
     }
 
     /*
