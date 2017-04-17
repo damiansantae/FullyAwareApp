@@ -14,8 +14,9 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
-import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
-import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgottenView;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -39,8 +40,10 @@ public class App extends Application implements Mediator, Navigator {
 
     private DetailToDoState masterListToDetailToDoState;
     private DetailDoneState masterListToDetailDoneState;
+    private DetailForgottenState masterListToDetailForgottenState;
     private ListToDoStateTask listToDoDetailToMasterState;
     private ListDoneStateTask listDoneDetailToMasterState;
+    private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
 
     @Override
@@ -92,6 +95,7 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+
     ///////////////////////////////////////////////////////////////////////////////////
     // Mediator //////////////////////////////////////////////////////////////////////
 
@@ -142,7 +146,7 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void startingListForgottenScreen(ListForgotten.ToListForgotten presenter) {
+    public void startingListForgottenScreen(ListForgottenMaster.ToListForgotten presenter) {
         if (toListForgottenState != null) {
             presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
             presenter.setTextVisibility(toListForgottenState.textVisibility);
@@ -154,7 +158,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
-        if (toAddTaskState != null) {
+        if (toPreferencesState != null) {
             presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
             presenter.setTextVisibility(toPreferencesState.textVisibility);
             presenter.setAddBtnVisibility(toPreferencesState.addBtnVisibility);
@@ -195,7 +199,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void taskDone(TaskToDo taskToDoDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase TaskToDo Común
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListForgottenMaster o crear clase TaskToDo Común
     }
 
     @Override
@@ -208,6 +212,19 @@ public class App extends Application implements Mediator, Navigator {
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
         masterListToDetailDoneState = null;
+        presenter.onScreenStarted();
+    }
+
+    @Override
+    public void startingDetailScreen(ListForgottenDetail.MasterListToDetail presenter) {
+
+        if (masterListToDetailForgottenState != null) {
+            presenter.setToolbarVisibility(!masterListToDetailForgottenState.toolbarVisible);
+            presenter.setItem(masterListToDetailForgottenState.selectedItem);
+        }
+
+        // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
+        masterListToDetailForgottenState = null;
         presenter.onScreenStarted();
     }
 
@@ -284,7 +301,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
         masterListToDetailToDoState.adapter = adapter;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getSubjectId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -326,6 +343,29 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
+    public void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster) {
+        masterListToDetailForgottenState = new DetailForgottenState();
+        masterListToDetailForgottenState.toolbarVisible = listForgottenPresenterMaster.getToolbarVisibility();
+        masterListToDetailForgottenState.selectedItem = listForgottenPresenterMaster.getSelectedTaskForgotten();
+
+        // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
+        Context view = listForgottenPresenterMaster.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneViewDetail.class));
+        }
+    }
+
+
+    @Override
+    public void backToMasterScreen(ListForgottenDetail.DetailToMaster presenter) {
+        listForgottenDetailToMasterState = new ListForgottenStateTask();
+        listForgottenDetailToMasterState.taskForgottenToDelete = presenter.getTaskToDelete();
+
+        // Al volver al maestro, el detalle debe finalizar
+        presenter.destroyView();
+    }
+
+    @Override
     public void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter) {
         if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
@@ -349,7 +389,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
 
         if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenView.class));
+            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
 
         }
 
@@ -370,7 +410,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToListToDoScreen(ListForgotten.ListForgottenTo presenter) {
+    public void goToListToDoScreen(ListForgottenMaster.ListForgottenTo presenter) {
         if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
 
@@ -387,7 +427,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToListDoneScreen(ListForgotten.ListForgottenTo presenter) {
+    public void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter) {
         if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
         }
@@ -402,7 +442,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToScheduleScreen(ListForgotten.ListForgottenTo presenter) {
+    public void goToScheduleScreen(ListForgottenMaster.ListForgottenTo presenter) {
         if (scheduleToState == null) {
             scheduleToState = new ScheduleState();
         }
@@ -455,7 +495,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
 
         if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenView.class));
+            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
 
         }
 
@@ -475,7 +515,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
 
         if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenView.class));
+            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
 
         }
 
@@ -584,6 +624,14 @@ public class App extends Application implements Mediator, Navigator {
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
     }
 
+    private class DetailForgottenState {
+        boolean toolbarVisible;
+        TaskForgotten selectedItem;
+        String subject;
+        String date;
+        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    }
+
 
     /**
      * Estado a actualizar en el maestro en función de la ejecución del detalle
@@ -594,6 +642,10 @@ public class App extends Application implements Mediator, Navigator {
 
     private class ListDoneStateTask {
         TaskDone taskDoneToDelete;
+    }
+
+    private class ListForgottenStateTask {
+        TaskForgotten taskForgottenToDelete;
     }
 
 }

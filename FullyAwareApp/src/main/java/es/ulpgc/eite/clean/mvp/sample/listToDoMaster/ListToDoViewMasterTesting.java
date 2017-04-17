@@ -403,7 +403,7 @@ public class ListToDoViewMasterTesting
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
             holder.item = items.get(position);
-            holder.tag.setImageResource(items.get(position).getTagId());
+            holder.tag.setImageResource(items.get(position).getSubjectId());
             holder.title.setText(items.get(position).getTitle());
             holder.description.setText(items.get(position).getDescription());
             holder.date.setText(items.get(position).getDate());

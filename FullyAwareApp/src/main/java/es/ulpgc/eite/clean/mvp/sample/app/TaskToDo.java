@@ -9,14 +9,14 @@ public class TaskToDo extends RealmObject{
 
 
     private String taskId;
-    private int tagId;
+    private int subjectId;
     private String date;
     private String title;
     private String description;
 
-    public TaskToDo(int tagId, String title, String description, String date) {
+    public TaskToDo(int subjectId, String title, String description, String date) {
         this.taskId= UUID.randomUUID().toString();
-        this.tagId = tagId;
+        this.subjectId = subjectId;
         this.date = date;
         this.title = title;
         this.description = description;
@@ -25,12 +25,12 @@ public class TaskToDo extends RealmObject{
 
     }
 
-    public int getTagId() {
-        return tagId;
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
 
     public String getDate() {
