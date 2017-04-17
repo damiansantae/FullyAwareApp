@@ -321,13 +321,21 @@ checkSelection2();
             getModel().deleteItem(selected.get(i));
 
         }
-        deselectAll1();
+        ArrayList<Integer> pos = new ArrayList<>();
+        for(int j=0;j<adapter.getItemCount();j++){
+            if(itemsSelected.get(j)){
+                adapter.notifyItemRemoved(j);
+            }
+       
+        }
+
+itemsSelected.clear();
+checkSelection2();
 
     }
 
-    private void deselectAll1() {
 
-    }
+
 
     private ArrayList<TaskToDo> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         ArrayList<TaskToDo> selected = new ArrayList<>();
