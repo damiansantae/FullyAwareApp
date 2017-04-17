@@ -202,15 +202,26 @@ checkSelection2();
     }
 
     private void checkSelection2() {
-        if(itemsSelected.size()==0) {
+        boolean somethingSelected = false;
+        for (int i = 0; i <= itemsSelected.size(); i++) {
+            if (itemsSelected.get(i)){
+                somethingSelected=true;
+                break;
+
+            }
+
+        }
+        if(!somethingSelected){
             selectedState = false;
             setAddBtnVisibility(true);
             setDeleteBtnVisibility(false);
             setDoneBtnVisibility(false);
+
         }else{
             setAddBtnVisibility(false);
             setDeleteBtnVisibility(true);
             setDoneBtnVisibility(true);
+
         }
 
     }
