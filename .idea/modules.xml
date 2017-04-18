@@ -3,10 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CleanMvpLib/CleanMvpLib.iml" filepath="$PROJECT_DIR$/CleanMvpLib/CleanMvpLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/FullyAwareApp/FullyAwareApp-FullyAwareApp.iml" filepath="$PROJECT_DIR$/FullyAwareApp/FullyAwareApp-FullyAwareApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/FullyAwareApp2.iml" filepath="$PROJECT_DIR$/FullyAwareApp2.iml" />
     </modules>
