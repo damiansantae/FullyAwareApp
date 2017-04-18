@@ -46,7 +46,6 @@ public class ListToDoViewMasterTesting
     private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
-
     enum Direction {LEFT, RIGHT}
 
     private SparseBooleanArray tasksSelected;
@@ -108,6 +107,7 @@ public class ListToDoViewMasterTesting
                 return false;
             }
         });*/
+
 
 
         bin.setOnClickListener(new View.OnClickListener() {
@@ -183,18 +183,21 @@ public class ListToDoViewMasterTesting
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
 
-        } else if (id == R.id.menuToDo) {
+        }else if (id ==R.id.menuToDo){
 
-            Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menuDone) {
+            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menucalendar) {
+            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menucalendar){
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menuForgotten) {
+            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
@@ -207,16 +210,13 @@ public class ListToDoViewMasterTesting
             Log.d(TAG, "Pasando a pantalla Preferencias");
 
 
-        } else if (id == R.id.menuPreferences) {
-            Navigator app = (Navigator) getApplication();
-            app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "PULSADO");
-        }
 
+    }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -234,6 +234,7 @@ public class ListToDoViewMasterTesting
     }
 
 
+
     @Override
     public void hideAddBtn() {
         add.setVisibility(View.INVISIBLE);
@@ -244,6 +245,7 @@ public class ListToDoViewMasterTesting
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
+
 
 
     }
@@ -257,7 +259,7 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-        //recyclerView.setItemChecked(i,b);
+       //recyclerView.setItemChecked(i,b);
 
     }
 
@@ -291,13 +293,13 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        // recyclerView.setItemChecked(pos, checked);
+       // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
@@ -318,7 +320,6 @@ public class ListToDoViewMasterTesting
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }*/
     }
-
     @Override
     public void setRecyclerAdapterContent(List<TaskToDo> items) {
         if (recyclerView != null) {
@@ -352,12 +353,11 @@ public class ListToDoViewMasterTesting
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
-
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+       // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
@@ -447,7 +447,7 @@ public class ListToDoViewMasterTesting
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                     //   getPresenter().onListClick2(itemView, getAdapterPosition(),adapter);
+                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter);
 
                     }
                 });
@@ -455,8 +455,13 @@ public class ListToDoViewMasterTesting
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+            /* @Override
+             public String toString() {
+                 return super.toString() + " '" + contentView.getText() + "'";
+             }*/
 
-                        // getPresenter().onLongListClick2(v,getAdapterPosition());
+
+                        getPresenter().onLongListClick2(v,getAdapterPosition());
 
                         return true;
                     }

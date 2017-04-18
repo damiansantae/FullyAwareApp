@@ -4,8 +4,9 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
-import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
@@ -22,6 +23,8 @@ public interface Navigator {
      ******** Navegación direccion ListoDo al resto de pantallas y detalle*/
 
     void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter);
+
+    void backToMasterScreen(ListForgottenDetail.DetailToMaster presenter);
 
     void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter);
 
@@ -45,6 +48,8 @@ public interface Navigator {
 
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
 
+    void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster);
+
     //Comunicación M/D
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
@@ -54,14 +59,16 @@ public interface Navigator {
 
     /****************************************************************************
      ******** Navegación direccion ListForgotten al resto de pantallas y detalle*/
-    void goToListToDoScreen(ListForgotten.ListForgottenTo presenter);
+    void goToScheduleScreen(ListForgottenMaster.ListForgottenTo presenter);
+    void goToListToDoScreen(ListForgottenMaster.ListForgottenTo presenter);
 
-    void goToListDoneScreen(ListForgotten.ListForgottenTo presenter);
+
     void goToScheduleScreen(ListForgotten.ListForgottenTo presenter);
 
     void goToPreferencesScreen(Schedule.ScheduleTo presenter);
 
     void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter);
+    void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter);
 
     //Comunicación M/D
 

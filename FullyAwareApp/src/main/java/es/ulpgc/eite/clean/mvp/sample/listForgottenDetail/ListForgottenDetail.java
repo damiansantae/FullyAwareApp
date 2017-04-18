@@ -1,33 +1,33 @@
-package es.ulpgc.eite.clean.mvp.sample.listForgotten;
-
-import android.content.Context;
+package es.ulpgc.eite.clean.mvp.sample.listForgottenDetail;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
 
-/**
- * Created by Luis on 12/11/16.
- */
-
-public interface ListForgotten {
+public interface ListForgottenDetail {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
-  interface ToListForgotten {
-    void onScreenStarted();
-    void setToolbarVisibility(boolean visible);
-    void setTextVisibility(boolean visible);
-    void setDeleteBtnVisibility(boolean visible);
-  }
+  /**
+   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
+   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   */
+  interface MasterListToDetail{
+    void setToolbarVisibility(boolean b);
+    void setItem(TaskForgotten selectedItem);
 
-  interface ListForgottenTo {
-    Context getManagedContext();
+    void onScreenStarted();
+  }
+  /**
+   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
+   * del detalle cuando está finaliza
+   */
+  interface DetailToMaster {
     void destroyView();
-    boolean isToolbarVisible();
-    boolean isTextVisible();
+    TaskForgotten getTaskToDelete();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -38,9 +38,10 @@ public interface ListForgotten {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
-    void onListClick(int position, Task_Adapter adapter);
-    void onLongListClick(int pos, Task_Adapter adapter);
-    void onBinBtnClick(Task_Adapter adapter);
+
+    TaskForgotten getTask();
+
+    void onDeleteActionClicked();
   }
 
   /**
@@ -49,38 +50,17 @@ public interface ListForgotten {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
-    void hideText();
-    void showText();
 
-    void hideAddBtn();
 
-    void showAddBtn();
 
-    void hideDeleteBtn();
-
-    void showDeleteBtn();
-
-    void setText(String txt);
-    void setLabel(String txt);
-
-    boolean isItemListChecked(int pos);
-
-    void setItemChecked(int pos, boolean checked);
-
-    void startSelection();
-
-    void setChoiceMode(int i);
-
-    void toolbarChanged(String colour);
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
+    void setTaskForgotten(TaskForgotten selectedItem);
+    TaskForgotten getTaskForgotten();
   }
 
   /**
@@ -89,4 +69,8 @@ public interface ListForgotten {
   interface ModelToPresenter {
 
   }
+
+  ///////////////////////////////////////////
+
+
 }

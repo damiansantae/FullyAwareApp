@@ -65,7 +65,7 @@ public class Task_Adapter extends ArrayAdapter<TaskToDo> {
         TaskToDo taskToDo = getItem(position);
 
         // Setup.
-        tag.setImageResource(taskToDo.getTagId());
+        tag.setImageResource(taskToDo.getSubjectId());
         title.setText(taskToDo.getTitle());
         description.setText(taskToDo.getDescription());
         date.setText(taskToDo.getDate());

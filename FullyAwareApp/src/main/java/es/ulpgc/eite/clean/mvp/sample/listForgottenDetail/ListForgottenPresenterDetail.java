@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
+package es.ulpgc.eite.clean.mvp.sample.listForgottenDetail;
 
 
 import android.util.Log;
@@ -8,18 +8,16 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
 
-public class ListDonePresenterDetail extends GenericPresenter
-        <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
-        implements ListDoneDetail.ViewToPresenter, ListDoneDetail.ModelToPresenter, ListDoneDetail.MasterListToDetail, ListDoneDetail.DetailToMaster {
+public class ListForgottenPresenterDetail extends GenericPresenter
+        <ListForgottenDetail.PresenterToView, ListForgottenDetail.PresenterToModel, ListForgottenDetail.ModelToPresenter, ListForgottenModelDetail>
+        implements ListForgottenDetail.ViewToPresenter, ListForgottenDetail.ModelToPresenter, ListForgottenDetail.MasterListToDetail, ListForgottenDetail.DetailToMaster {
 
 
 
 
 private boolean toolbarVisible;
-    private ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -30,8 +28,8 @@ private boolean toolbarVisible;
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListDoneDetail.PresenterToView view) {
-        super.onCreate(ListDoneModelDetail.class, this);
+    public void onCreate(ListForgottenDetail.PresenterToView view) {
+        super.onCreate(ListForgottenModelDetail.class, this);
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -50,7 +48,7 @@ private boolean toolbarVisible;
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListDoneDetail.PresenterToView view) {
+    public void onResume(ListForgottenDetail.PresenterToView view) {
         setView(view);
 
         // Verificamos si mostramos o no la barra de tareas cuando se produce un giro de pantalla
@@ -96,8 +94,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public TaskDone getTask() {
-        return getModel().getTaskDone();
+    public TaskForgotten getTask() {
+        return getModel().getTaskForgotten();
     }
 
     @Override
@@ -122,10 +120,7 @@ private boolean toolbarVisible;
 
     }
 
-    @Override
-    public void setAdapter(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        this.adapter=adapter;
-    }
+
 
 
     @Override
@@ -134,8 +129,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public void setItem(TaskDone selectedItem) {
-        getModel().setTaskDone(selectedItem);
+    public void setItem(TaskForgotten selectedItem) {
+        getModel().setTaskForgotten(selectedItem);
 
     }
 
@@ -154,8 +149,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public TaskDone getTaskToDelete() {
-        return getModel().getTaskDone();
+    public TaskForgotten getTaskToDelete() {
+        return getModel().getTaskForgotten();
     }
 
 

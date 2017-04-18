@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listForgotten;
+package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -31,9 +31,9 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 
-public class ListForgottenView
-        extends GenericActivity<ListForgotten.PresenterToView, ListForgotten.ViewToPresenter, ListForgottenPresenter>
-        implements ListForgotten.PresenterToView {
+public class ListForgottenViewMaster
+        extends GenericActivity<ListForgottenMaster.PresenterToView, ListForgottenMaster.ViewToPresenter, ListForgottenPresenterMaster>
+        implements ListForgottenMaster.PresenterToView {
 
     private Toolbar toolbar;
     private Button button;
@@ -42,6 +42,9 @@ public class ListForgottenView
     private ArrayList<Integer> posSelected = new ArrayList<>();
     private ListView list;
     private FloatingActionButton bin;
+    private FloatingActionButton add;
+    private FloatingActionButton done;
+
     private Task_Adapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -59,14 +62,15 @@ public class ListForgottenView
         list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
 
+        ///////////////////////////////////////////////////////////////////
+        list = (ListView) findViewById(R.id.list);
+
         adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 getPresenter().onListClick(position, adapter);
-
             }
         });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -78,19 +82,17 @@ public class ListForgottenView
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
-                getPresenter().onLongListClick(pos,adapter);
+                getPresenter().onLongListClick(pos, adapter);
                 return true;
             }
         });
 
         bin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPresenter().onBinBtnClick(adapter);
-                adapter.notifyDataSetChanged();
-
-
-                }
+                                   @Override
+                                   public void onClick(View v) {
+                                       getPresenter().onBinBtnClick(adapter);
+                                       adapter.notifyDataSetChanged();
+                                   }
 
             }
         );
@@ -106,52 +108,56 @@ public class ListForgottenView
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onResume() {
-        super.onResume(ListForgottenPresenter.class, this);
+        super.onResume(ListForgottenPresenterMaster.class, this);
     }
 
 
-  //Este metodo sirve para inflar el menu en la action bar
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-      // Inflate the menu; this adds items to the action bar if it is present.
-      getMenuInflater().inflate(R.menu.menu_listtodo_master_forgotten, menu);
-      return true;
-  }
+    //Este metodo sirve para inflar el menu en la action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_listtodo_master_done, menu);
+        return true;
+    }
 
     @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-      // Handle action bar item clicks here. The action bar will
-      // automatically handle clicks on the Home/Up button, so long
-      // as you specify a parent activity in AndroidManifest.xml.
-      int id = item.getItemId();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-      //noinspection SimplifiableIfStatement
-      if (id == R.id.action_delete) {
-          return true;
-      }else if (id ==R.id.menuToDo){
-          Navigator app = (Navigator) getApplication();
-         app.goToListToDoScreen((ListForgotten.ListForgottenTo)getPresenter());
-          Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
-      }
-      else if (id ==R.id.menuDone){
-          Navigator app = (Navigator) getApplication();
-          app.goToListDoneScreen((ListForgotten.ListForgottenTo)getPresenter());
-          Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-      }
-      else if (id ==R.id.menucalendar){
-          Navigator app = (Navigator) getApplication();
-          app.goToScheduleScreen((ListForgotten.ListForgottenTo)getPresenter());
-          Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_delete) {
+            return true;
+        }else if (id ==R.id.menuToDo){
+            Navigator app = (Navigator) getApplication();
+            app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+
+
+            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
+        }
+
+        else if (id ==R.id.menucalendar){
+            Navigator app = (Navigator) getApplication();
+            app.goToScheduleScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuDone){
+            Navigator app = (Navigator) getApplication();
+            app.goToListDoneScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
+
       } else if (id ==R.id.menuPreferences) {
           Navigator app = (Navigator) getApplication();
-          app.goToPreferencesScreen((ListForgotten.ListForgottenTo) getPresenter());
+          app.goToPreferencesScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
           Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
 
       }
 
 
-      return super.onOptionsItemSelected(item);
-  }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -178,13 +184,10 @@ public class ListForgottenView
     }
 
     @Override
-    public void hideAddBtn() {
-       // add.setVisibility(View.INVISIBLE);
+    public void deselect(int i, boolean b) {
+        list.setItemChecked(i,b);
     }
-    @Override
-    public void showAddBtn() {
-         //add.setVisibility(View.VISIBLE);
-    }
+
     @Override
     public void hideDeleteBtn() {
         bin.setVisibility(View.INVISIBLE);
@@ -210,7 +213,8 @@ public class ListForgottenView
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        list.setItemChecked(pos,checked);
+        list.setItemChecked(pos, checked);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -221,17 +225,18 @@ public class ListForgottenView
 
     @Override
     public void setChoiceMode(int i) {
-        if(i==0){               //Modo de seleccion nulo
+        if (i == 0) {               //Modo de seleccion nulo
             list.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+            list.invalidateViews();
 
-        }else if(i==1){             //Modo de seleccion unico
+        } else if (i == 1) {             //Modo de seleccion unico
             list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        }else if(i==2){             ///Modo de seleccion multiple
+        } else if (i == 2) {             ///Modo de seleccion multiple
             list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 
-        }else{
+        } else {
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }
     }
