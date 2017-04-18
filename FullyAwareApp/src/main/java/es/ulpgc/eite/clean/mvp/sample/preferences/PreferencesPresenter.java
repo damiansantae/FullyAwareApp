@@ -1,12 +1,20 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
+
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+
+
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -184,7 +192,21 @@ public class PreferencesPresenter extends GenericPresenter
       } else if (position==2){
           //app.goToDonete();
       } else if (position == 3){
-          //app.goToAboutApp();
+
+          final AlertDialog alertDialog = new AlertDialog.Builder(getView().getActivityContext()).create();
+          alertDialog.setTitle("FullyAware an xDroidInc App");
+          alertDialog.setMessage("We provide services and products through our service models but mainly " +
+                  "Applications for Mobile. " + "\nThis application was created with much love for Application Design (Software Engineering)." +
+                  "\nFor more information please visit us at github.com/xDroidInc");
+          alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                  new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                          dialog.dismiss();
+                      }
+                  });
+          alertDialog.show();
+
+
       }
 
         Mediator mediator =(Mediator) getView().getApplication();
@@ -195,7 +217,9 @@ public class PreferencesPresenter extends GenericPresenter
 
     }
 
-  @Override
+
+
+    @Override
   public void setNewToolbarColor(int newColor) {
     this.toolbarColour = newColor;
   }

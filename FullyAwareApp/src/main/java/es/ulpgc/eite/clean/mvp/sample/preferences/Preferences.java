@@ -1,5 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.SimpleAdapter;
 import android.widget.Toolbar;
@@ -82,6 +83,8 @@ public interface Preferences {
     void setToolbarColorChanged(boolean toolbarColorChanged);
 
       void toolbarChanged(String colour);
+
+    //  void launchBrowser(AlertDialog alertDialog);
   }
 
   /**

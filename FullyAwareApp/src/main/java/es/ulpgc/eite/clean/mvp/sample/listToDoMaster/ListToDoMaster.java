@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.widget.Toolbar;
+import android.view.View;
 
 import java.util.List;
 
@@ -72,11 +73,10 @@ public interface ListToDoMaster {
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
-      void onListClick2(TaskToDo item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
-
-    void onLongListClick2(TaskToDo item);
 
       void onAddBtnClick();
+
+      boolean isSelected(int adapterPosition);
   }
 
   /**

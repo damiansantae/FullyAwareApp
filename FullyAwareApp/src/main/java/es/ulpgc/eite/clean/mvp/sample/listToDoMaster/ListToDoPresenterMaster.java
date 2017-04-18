@@ -2,8 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -55,6 +55,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
 
         app.startingListToDoScreen(this);
+
         if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
@@ -80,17 +81,16 @@ public class ListToDoPresenterMaster extends GenericPresenter
            checkToolbarVisibility();
             //checkTextVisibility();
             checkAddBtnVisibility();
-            
+
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             CheckDoneBtnVisibility();
             getModel().loadItems();
             if(listClicked) {
                 getView().startSelection();
+
                 onCheckItems();
             }
-
-
 
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
@@ -137,7 +137,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onDestroy(boolean isChangingConfiguration) {
         super.onDestroy(isChangingConfiguration);
-        Log.d(TAG, "SE ELIMINA EL PRESENTADOR DEL TODOOOOOOOOOOOOO");
+        Log.d(TAG, "calling onDestroy()");
     }
 
 
@@ -188,7 +188,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         checkDoneBtnVisibility();
 checkAddBtnVisibility();
     }
-    @Override
+
+   /* @Override
     public void onListClick2(TaskToDo item, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         TaskToDo currentTaskToDo = item;
         if (listClicked) {                                //Esta seleccionado algo?
@@ -211,7 +212,7 @@ checkAddBtnVisibility();
         checkDoneBtnVisibility();
         checkAddBtnVisibility();
 
-    }
+    }*/
 
 
 
@@ -260,7 +261,7 @@ checkAddBtnVisibility();
 
     }
 
-    @Override
+   /* @Override
     public void onLongListClick2(TaskToDo taskToDo) {
         getView().startSelection();           //iniciamos modo seleccion multiple
 
@@ -286,7 +287,7 @@ checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
 
-    }
+    }*/
 
     @Override
     public void onAddBtnClick() {
@@ -294,6 +295,11 @@ checkAddBtnVisibility();
 
         app.goToAddTaskScreen(this);
 
+    }
+
+    @Override
+    public boolean isSelected(int adapterPosition) {
+        return false;
     }
 
     public void onSwipeMade(int position, Task_Adapter adapter){
@@ -340,6 +346,10 @@ checkAddBtnVisibility();
     checkAddBtnVisibility();
 }
 
+    /*@Override
+    public void onListClick2(View item, int position, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+
+    }*/
 
 
 

@@ -2,7 +2,9 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
@@ -231,6 +233,13 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
         toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
     }
+
+   /* @Override
+    public void launchBrowser(AlertDialog alertDialog) {
+        Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("www.github.com/xDroidInc"));
+        startActivity(intent);
+        alertDialog.dismiss();
+    }*/
 
 
     @Override
