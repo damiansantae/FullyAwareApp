@@ -195,7 +195,7 @@ public class PreferencesPresenter extends GenericPresenter
       } else if (position == 3){
 
           final AlertDialog alertDialog = new AlertDialog.Builder(getView().getActivityContext()).create();
-          alertDialog.setTitle("FullyAware an xDroidInc App");
+          alertDialog.setTitle("FullyAware App and xDroidInc");
           alertDialog.setMessage("We provide services and products through our service models but mainly " +
                   "Applications for Mobile. " + "\nThis application was created with much love for Application Design (Software Engineering)." +
                   "\nFor more information please visit us at github.com/xDroidInc");
