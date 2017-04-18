@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 
@@ -190,7 +191,7 @@ public class PreferencesPresenter extends GenericPresenter
       } else if (position ==1){
          //app.goToEditSubjects();
       } else if (position==2){
-          //app.goToDonete();
+          openBrowserToDonate();
       } else if (position == 3){
 
           final AlertDialog alertDialog = new AlertDialog.Builder(getView().getActivityContext()).create();
@@ -198,12 +199,22 @@ public class PreferencesPresenter extends GenericPresenter
           alertDialog.setMessage("We provide services and products through our service models but mainly " +
                   "Applications for Mobile. " + "\nThis application was created with much love for Application Design (Software Engineering)." +
                   "\nFor more information please visit us at github.com/xDroidInc");
-          alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+          alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "VISIT",
+                  new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                          openBrowserToVisit();
+                          dialog.dismiss();
+                      }
+
+                  });
+
+          alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                   new DialogInterface.OnClickListener() {
                       public void onClick(DialogInterface dialog, int which) {
                           dialog.dismiss();
                       }
                   });
+
           alertDialog.show();
 
 
@@ -217,6 +228,15 @@ public class PreferencesPresenter extends GenericPresenter
 
     }
 
+    private void openBrowserToDonate() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/co/home"));
+        getView().getActivityContext().startActivity(intent);
+    }
+
+    private void openBrowserToVisit() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.github.com/xDroidInc"));
+        getView().getActivityContext().startActivity(intent);
+    }
 
 
     @Override
