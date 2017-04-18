@@ -325,6 +325,32 @@ checkSelection2();
         return result;
     }
 
+    @Override
+    public void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+
+   ArrayList<TaskToDo> selected = getSelectedTasks(adapter);
+        for(int i=0;i<selected.size();i++){
+            getModel().deleteItem(selected.get(i));
+
+        }
+        deselectAll1();
+
+    }
+
+    private void deselectAll1() {
+
+    }
+
+    private ArrayList<TaskToDo> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        ArrayList<TaskToDo> selected = new ArrayList<>();
+        for(int i=0;i<adapter.getItemCount();i++){
+            if(itemsSelected.get(i)){
+                selected.add(adapter.getItems().get(i));
+            }
+        }
+        return selected;
+    }
+
     public void onSwipeMade(int position, Task_Adapter adapter){
  /*       int sizes = posSelected.size();
         if (sizes != 0) {                                //Si el buffer de tareas seleccionadas no es nulo

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.kizitonwose.colorpreference.ColorDialog;
 import com.kizitonwose.colorpreference.ColorShape;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_preferences);
     preferencesListView();
+
     }
 
     private void preferencesListView(){
@@ -168,6 +171,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
     showColorDialog(this);
     }
+
 
     private void showColorDialog(final Preferences.PresenterToView view) {
         new ColorDialog.Builder(this)
