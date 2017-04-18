@@ -1,12 +1,20 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
+
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+
+
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -38,8 +46,8 @@ public class PreferencesPresenter extends GenericPresenter
   private boolean buttonClicked;
   private boolean textVisible;
 
-
-    private int toolbarColor;
+ private boolean toolbarColorChanged;
+  private int toolbarColour;
     List<String> colorPrimaryList;
     List<String> colorPrimaryDarkList;
     SharedPreferences preferences;
@@ -63,6 +71,10 @@ public class PreferencesPresenter extends GenericPresenter
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
    app.startingPreferencesScreen(this);
+      if (app.checkToolbarChanged() == true){
+          String colour = app.getToolbarColour();
+          getView().toolbarChanged(colour);
+      }
   }
 
   /**
@@ -81,6 +93,12 @@ public class PreferencesPresenter extends GenericPresenter
 
       checkToolbarVisibility();
     }
+
+      Mediator app = (Mediator) getView().getApplication();
+      if (app.checkToolbarChanged() == true){
+          String colour = app.getToolbarColour();
+          getView().toolbarChanged(colour);
+      }
   }
 
   /**
@@ -167,32 +185,64 @@ public class PreferencesPresenter extends GenericPresenter
     Object selectedItem = adapter.getItem(position);
       Navigator app = (Navigator) getView().getApplication();
       if (position==0){
-        getView().changeColourDialog(getView());
+        getView().onChangeColourDialog(getView());
 
       } else if (position ==1){
          //app.goToEditSubjects();
       } else if (position==2){
           //app.goToDonete();
       } else if (position == 3){
-          //app.goToAboutApp();
+
+          final AlertDialog alertDialog = new AlertDialog.Builder(getView().getActivityContext()).create();
+          alertDialog.setTitle("FullyAware an xDroidInc App");
+          alertDialog.setMessage("We provide services and products through our service models but mainly " +
+                  "Applications for Mobile. " + "\nThis application was created with much love for Application Design (Software Engineering)." +
+                  "\nFor more information please visit us at github.com/xDroidInc");
+          alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                  new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                          dialog.dismiss();
+                      }
+                  });
+          alertDialog.show();
+
+
       }
 
         Mediator mediator =(Mediator) getView().getApplication();
         //app.goToDetailScreen(this);
 
 
-    Context context = getApplicationContext();
-    CharSequence text = "Preferences DOS";
-    int duration = Toast.LENGTH_SHORT;
 
-    Toast toast = Toast.makeText(context, text, duration);
-    toast.show();
 
     }
 
 
 
-    private String getDeadLine(String time, String date) {
+    @Override
+  public void setNewToolbarColor(int newColor) {
+    this.toolbarColour = newColor;
+  }
+
+  @Override
+  public void setToolbarColorChanged(boolean toolbarColorChanged) {
+    this.toolbarColorChanged = toolbarColorChanged;
+
+  }
+
+  @Override
+  public void toolbarChanged() {
+    Mediator mediator =(Mediator) getView().getApplication();
+    mediator.toolbarColourChanged(this);
+  }
+
+
+  public int getToolbarColour(){
+    return this.toolbarColour;
+  }
+
+
+  private String getDeadLine(String time, String date) {
         return time +" - "+ date;
     }
 
@@ -284,5 +334,7 @@ public class PreferencesPresenter extends GenericPresenter
   }
 
 
-
+  public boolean getToolbarColourChanged() {
+    return this.toolbarColorChanged;
+  }
 }

@@ -279,6 +279,11 @@ public class ListToDoViewMaster
     }
 
     @Override
+    public void toolbarChanged(String colour) {
+
+    }
+
+    @Override
     public void showAddBtn() {
         add.setVisibility(View.VISIBLE);
 

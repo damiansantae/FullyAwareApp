@@ -3,6 +3,8 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -13,6 +15,7 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
@@ -20,6 +23,7 @@ import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaste
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
@@ -95,7 +99,6 @@ public class App extends Application implements Mediator, Navigator {
         toScheduleState.toolbarVisibility = true;
 
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Mediator //////////////////////////////////////////////////////////////////////
@@ -200,7 +203,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void taskDone(TaskToDo taskToDoDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListForgottenMaster o crear clase TaskToDo Común
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase TaskToDo Común
     }
 
     @Override
@@ -230,6 +233,53 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
+
+    /////////////////TOOLBAR CHANGES METHODS
+    @Override
+    public void toolbarColourChanged(PreferencesPresenter presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+        preferencesToState.toolbarColourChanged = presenter.getToolbarColourChanged();
+
+    /*    if (preferencesToState.toolbarColourChanged == true){
+            changeToolbarColour(presenter, preferencesToState.toolbarColour);
+        }
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+*/
+        }
+
+    @Override
+    public String getToolbarColour() {
+        String newColourString = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+         newColourString = getColorHex(preferencesToState.toolbarColour);
+        }
+        return newColourString;
+    }
+
+    @Override
+    public boolean checkToolbarChanged() {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+            preferencesToState.toolbarVisibility = true;
+            preferencesToState.toolbarColour = 111;
+        }
+
+
+        return this.preferencesToState.toolbarColourChanged;
+    }
+
+
+
+
+    private String getColorHex(int color) {
+        return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Navigator /////////////////////////////////////////////////////////////////////
@@ -281,6 +331,44 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
+    public void goToPreferencesScreen(Schedule.ScheduleTo presenter) {
+
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+
+    }
+
+    @Override
+    public void goToPreferencesScreen(ListForgottenMaster.ListForgottenTo presenter) {
+
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+
+    }
+
+
+
+
+
+
+
+    @Override
     public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
         if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
@@ -297,7 +385,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goTochangeColourDialog(PreferencesPresenter preferencesPresenter) {
+    public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
         Context view = preferencesPresenter.getManagedContext();
         if (view != null) {
             //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
@@ -313,7 +401,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
         masterListToDetailToDoState.adapter = adapter;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getSubjectId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -490,6 +578,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
 
+
     @Override
     public void goToListToDoScreen(Schedule.ScheduleTo presenter) {
         if (listToDoToState == null) {
@@ -656,6 +745,8 @@ public class App extends Application implements Mediator, Navigator {
         boolean textVisibility;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
+        int toolbarColour;
+        boolean toolbarColourChanged = false;
     }
 
     private class ScheduleState {

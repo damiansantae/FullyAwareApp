@@ -1,5 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.SimpleAdapter;
 import android.widget.Toolbar;
@@ -44,6 +45,12 @@ public interface Preferences {
     void onSelectTimeBtnClicked();
     void onAddTaskBtnClicked();
       void onListClick(int position, SimpleAdapter adapter);
+
+    void setNewToolbarColor(int newColor);
+
+    void setToolbarColorChanged(boolean toolbarColorChanged);
+
+    void toolbarChanged();
   }
 
   /**
@@ -67,7 +74,17 @@ public interface Preferences {
 
     String getTaskSubject();
 
-      void changeColourDialog(PresenterToView view);
+      void onChangeColourDialog(PresenterToView view);
+
+    String getColorHex(int color);
+
+      void setNewToolbarColor(int newColor);
+
+    void setToolbarColorChanged(boolean toolbarColorChanged);
+
+      void toolbarChanged(String colour);
+
+    //  void launchBrowser(AlertDialog alertDialog);
   }
 
   /**

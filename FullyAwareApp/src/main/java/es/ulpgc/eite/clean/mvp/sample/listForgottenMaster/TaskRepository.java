@@ -16,7 +16,7 @@ public class TaskRepository {
     }
 
     private TaskRepository() {
-        saveTask(new TaskForgotten(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017"));
+        saveTask(new TaskForgotten(R.drawable.bg_controll_plane,"Tarea olvidada","Descripcion de tarea olvidada","03/04/2017"));
     }
 
     public void saveTask(TaskForgotten TaskForgotten) {

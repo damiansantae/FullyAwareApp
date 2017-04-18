@@ -46,6 +46,10 @@ public class AddTaskPresenter extends GenericPresenter
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
     app.startingAddTaskScreen(this);
+    if (app.checkToolbarChanged() == true){
+      String colour = app.getToolbarColour();
+      getView().toolbarChanged(colour);
+    }
   }
 
   /**
@@ -63,6 +67,12 @@ public class AddTaskPresenter extends GenericPresenter
     if(configurationChangeOccurred()) {
 
       checkToolbarVisibility();
+    }
+
+    Mediator app = (Mediator) getView().getApplication();
+    if (app.checkToolbarChanged() == true){
+      String colour = app.getToolbarColour();
+      getView().toolbarChanged(colour);
     }
   }
 

@@ -56,11 +56,9 @@ public interface ListForgottenMaster {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-
+    void onButtonClicked();
     void onListClick(int position, Task_Adapter adapter);
-
     void onLongListClick(int pos, Task_Adapter adapter);
-
     void onBinBtnClick(Task_Adapter adapter);
 
 
@@ -69,7 +67,7 @@ public interface ListForgottenMaster {
           @Override
           public void onLoadItemsTaskFinished(List<TaskForgotten> items) {
               getView().setRecyclerAdapterContent(items);
-      
+
           }*/
   }
 
@@ -97,9 +95,11 @@ public interface ListForgottenMaster {
     void startSelection();
 
     void setChoiceMode(int i);
-    
+
 
     void deselect(int i, boolean b);
+
+    void toolbarChanged(String colour);
   }
 
   /**

@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -44,7 +46,6 @@ public class ListToDoViewMasterTesting
     private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
-
     enum Direction {LEFT, RIGHT}
 
     private SparseBooleanArray tasksSelected;
@@ -182,28 +183,35 @@ public class ListToDoViewMasterTesting
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
 
-        } else if (id == R.id.menuToDo) {
+        }else if (id ==R.id.menuToDo){
 
-            Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menuDone) {
+            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menucalendar) {
+            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menucalendar){
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menuForgotten) {
+            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
+        }
+        else if (id ==R.id.menuForgotten){
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.menuPreferences) {
-            Navigator app = (Navigator) getApplication();
-            app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d("TAG", "PULSADO");
-        }
+
+    } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Pasando a pantalla Preferencias");
+
+
+
+    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -247,7 +255,7 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-        //recyclerView.setItemChecked(i,b);
+       //recyclerView.setItemChecked(i,b);
 
     }
 
@@ -281,13 +289,13 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-        // recyclerView.setItemChecked(pos, checked);
+       // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
@@ -318,6 +326,14 @@ public class ListToDoViewMasterTesting
         }
     }
 
+    @Override
+    public void toolbarChanged(String colour) {
+        List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+    }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -339,7 +355,7 @@ public class ListToDoViewMasterTesting
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+       // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
@@ -423,7 +439,7 @@ public class ListToDoViewMasterTesting
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
 
-                tag.setImageResource(R.drawable.bg_controll_plane);
+                tag.setImageResource(task.getSubjectId());
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());

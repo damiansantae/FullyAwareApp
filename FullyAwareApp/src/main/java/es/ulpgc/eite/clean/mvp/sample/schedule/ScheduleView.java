@@ -1,9 +1,11 @@
 package es.ulpgc.eite.clean.mvp.sample.schedule;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +16,13 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.Arrays;
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+
 
 public class ScheduleView
         extends GenericActivity<Schedule.PresenterToView, Schedule.ViewToPresenter, SchedulePresenter>
@@ -91,7 +97,11 @@ public class ScheduleView
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((Schedule.ScheduleTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+           } else if (id ==R.id.menuPreferences) {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen((Schedule.ScheduleTo) getPresenter());
+        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -112,7 +122,13 @@ public class ScheduleView
         toolbar.setVisibility(View.GONE);
     }
 
-
+    @Override
+    public void toolbarChanged(String colour) {
+        List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+    }
 
 
     /**

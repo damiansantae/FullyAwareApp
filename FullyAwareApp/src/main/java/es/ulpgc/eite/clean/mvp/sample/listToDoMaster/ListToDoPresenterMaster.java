@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Toast;
@@ -58,6 +59,11 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
 
         app.startingListToDoScreen(this);
+
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     /**
@@ -93,6 +99,12 @@ public class ListToDoPresenterMaster extends GenericPresenter
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
 //            }
+        }
+
+        Mediator app = (Mediator) getView().getApplication();
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
         }
     }
 
@@ -501,7 +513,7 @@ checkSelection2();
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // To ListForgottenDetail //////////////////////////////////////////////////////////////////////
+    // To ListDoTo //////////////////////////////////////////////////////////////////////
 
     @Override
     public void onScreenStarted() {
@@ -549,7 +561,7 @@ checkSelection2();
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // ListForgottenDetail To //////////////////////////////////////////////////////////////////////
+    // ListToDo To //////////////////////////////////////////////////////////////////////
 
 
     @Override

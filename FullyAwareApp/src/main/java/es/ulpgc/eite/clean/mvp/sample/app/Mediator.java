@@ -4,11 +4,14 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 
 public interface Mediator {
@@ -37,5 +40,11 @@ public interface Mediator {
     void startingDetailScreen(ListDoneDetail.MasterListToDetail listDonePresenterDetail);
 
 
+    void toolbarColourChanged(PreferencesPresenter preferencesPresenter);
+
+    String getToolbarColour();
+
+
+    boolean checkToolbarChanged();
     void startingDetailScreen(ListForgottenDetail.MasterListToDetail presenter);
 }

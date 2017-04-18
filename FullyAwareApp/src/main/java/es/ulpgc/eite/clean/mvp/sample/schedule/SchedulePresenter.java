@@ -37,6 +37,12 @@ public class SchedulePresenter extends GenericPresenter
         Log.d(TAG, "calling startingSchedule()");
         Mediator app = (Mediator) getView().getApplication();
         app.startingScheduleScreen(this);
+
+        app.startingScheduleScreen(this);
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     /**
@@ -53,6 +59,11 @@ public class SchedulePresenter extends GenericPresenter
         if (configurationChangeOccurred()) {
            checkToolbarVisibility();
 
+        }
+        Mediator app = (Mediator) getView().getApplication();
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
         }
     }
 

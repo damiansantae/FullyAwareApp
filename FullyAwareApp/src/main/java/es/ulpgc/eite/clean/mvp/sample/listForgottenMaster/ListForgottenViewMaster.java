@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,9 +22,15 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 
 public class ListForgottenViewMaster
         extends GenericActivity<ListForgottenMaster.PresenterToView, ListForgottenMaster.ViewToPresenter, ListForgottenPresenterMaster>
@@ -32,6 +39,8 @@ public class ListForgottenViewMaster
     private Toolbar toolbar;
     private Button button;
     private TextView text;
+    private ArrayList<TaskForgotten> tasksSelected = new ArrayList<>();
+    private ArrayList<Integer> posSelected = new ArrayList<>();
     private ListView list;
     private FloatingActionButton bin;
     private FloatingActionButton add;
@@ -47,11 +56,13 @@ public class ListForgottenViewMaster
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listdone);
+        setContentView(R.layout.activity_listforgotten);
+
 
         ////////////////////////////////////////////////////////////
+        list = (ListView) findViewById(R.id.list);
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
-        add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
+
         ///////////////////////////////////////////////////////////////////
         list = (ListView) findViewById(R.id.list);
 
@@ -84,12 +95,10 @@ public class ListForgottenViewMaster
                                        adapter.notifyDataSetChanged();
                                    }
 
-                               }
+            }
         );
-        ////////////////////////////////////////////////////////
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
 
@@ -102,6 +111,7 @@ public class ListForgottenViewMaster
     protected void onResume() {
         super.onResume(ListForgottenPresenterMaster.class, this);
     }
+
 
     //Este metodo sirve para inflar el menu en la action bar
     @Override
@@ -138,11 +148,17 @@ public class ListForgottenViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-        }
+
+      } else if (id ==R.id.menuPreferences) {
+          Navigator app = (Navigator) getApplication();
+          app.goToPreferencesScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+          Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+
+      }
+
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -225,6 +241,16 @@ public class ListForgottenViewMaster
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }
     }
+
+    @Override
+    public void toolbarChanged(String colour) {
+        List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+
+    }
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

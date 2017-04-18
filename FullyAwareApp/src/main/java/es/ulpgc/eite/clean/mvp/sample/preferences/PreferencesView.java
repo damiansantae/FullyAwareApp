@@ -2,7 +2,11 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -40,8 +45,10 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     private ListView list;
     private SimpleAdapter adapter;
     private GoogleApiClient client;
-    private int toolbarColor;
+    private int toolbarColour;
     private int fabColor;
+    private boolean toolbarColorChanged;
+
     SharedPreferences preferences;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     List<String> colorPrimaryList;
@@ -154,11 +161,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         return null;
     }
 
-    @Override
-    public void changeColourDialog(Preferences.PresenterToView view) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        toolbarColor = preferences.getInt(TOOLBAR_COLOR_KEY, ContextCompat.getColor(this, R.color.colorPrimary));
 
+    ///////////////// TO CHANGE COLOUR OF TOOLBAR /////////////////////
+    @Override
+    public void onChangeColourDialog(Preferences.PresenterToView view) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        toolbarColour = preferences.getInt(TOOLBAR_COLOR_KEY, ContextCompat.getColor(this, R.color.colorPrimary));
         colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
     showColorDialog(this);
@@ -170,25 +178,87 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
                 .setColorShape(view instanceof Toolbar ? com.kizitonwose.colorpreference.ColorShape.SQUARE : ColorShape.CIRCLE)
                 .setColorChoices(R.array.default_color_choice_values)
                 .setTag(String.valueOf(view instanceof Toolbar ? R.id.toolbar : R.id.fab))
-                .setSelectedColor(view instanceof Toolbar ? toolbarColor : fabColor)
+                .setSelectedColor(view instanceof Toolbar ? toolbarColour : fabColor)
                 .show();
     }
 
+    private void updateStatusBarColor(int newColor) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            String newColorString = getColorHex(newColor);
+            getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
+            setToolbarColorChanged(true);
+            setNewToolbarColor(newColor);
+            toolbarChanged();
+        } else {
+            Context context = getApplicationContext();
+            CharSequence text = "Sistema Operativo no compatible";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+        }
+    }
+
+    private void toolbarChanged() {
+        getPresenter().toolbarChanged();
+    }
+
+    @Override
+    public String getColorHex(int color) {
+        return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
+    }
+
+    @Override
+    public void onColorSelected(int newColor, String tag) {
+        View view = findViewById(Integer.parseInt(tag));
+            toolbar.setBackgroundColor(newColor);
+            toolbarColour = newColor;
+            preferences.edit().putInt(TOOLBAR_COLOR_KEY, newColor).apply();
+            //change the status bar color
+            updateStatusBarColor(newColor);
+        }
+
+    @Override
+    public void setNewToolbarColor(int newColor) {
+        getPresenter().setNewToolbarColor(newColor);
+    }
+
+    @Override
+    public void setToolbarColorChanged(boolean toolbarColorChanged) {
+       getPresenter().setToolbarColorChanged(toolbarColorChanged);
+    }
+
+    @Override
+    public void toolbarChanged(String colour) {
+        List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
+        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+    }
+
+   /* @Override
+    public void launchBrowser(AlertDialog alertDialog) {
+        Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("www.github.com/xDroidInc"));
+        startActivity(intent);
+        alertDialog.dismiss();
+    }*/
 
 
     @Override
-public void onStart(){
-    super.onStart();
+    public void onStart(){
+        super.onStart();
 
-    // ATTENTION: This was auto-generated to implement the App Indexing API.
-    // See https://g.co/AppIndexing/AndroidStudio for more information.
-    client.connect();
-    AppIndex.AppIndexApi.start(client, getIndexApiAction());
-}
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
 
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("ListForgottenView Page") // TODO: Define a title for the content shown.
+                .setName("Preferences Page") // TODO: Define a title for the content shown.
                 // TODO: Make sure this auto-generated URL is correct.
                 .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
                 .build();
@@ -217,33 +287,7 @@ public void onStart(){
     protected void onResume() {
         super.onResume(PreferencesPresenter.class, this);
     }
-
-    @Override
-    public void onColorSelected(int newColor, String tag) {
-        View view = findViewById(Integer.parseInt(tag));
-            toolbar.setBackgroundColor(newColor);
-            toolbarColor = newColor;
-            preferences.edit().putInt(TOOLBAR_COLOR_KEY, newColor).apply();
-            //change the status bar color
-            updateStatusBarColor(newColor);
-        }
-
-
-
-    private void updateStatusBarColor(int newColor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            String newColorString = getColorHex(newColor);
-            getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
-        }
-    }
-
-    private String getColorHex(int color) {
-        return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
-    }
-
 }
-
-
 
         //Creamos el adapter
        //ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);

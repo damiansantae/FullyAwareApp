@@ -53,7 +53,10 @@ public class ListForgottenPresenterMaster extends GenericPresenter
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         app.startingListForgottenScreen(this);
-
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     /**
@@ -87,6 +90,12 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
 //            }
+        }
+
+        Mediator app = (Mediator) getView().getApplication();
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
         }
     }
 
@@ -141,6 +150,11 @@ public class ListForgottenPresenterMaster extends GenericPresenter
         }
         checkTextVisibility();
     }*/
+
+    @Override
+    public void onButtonClicked() {
+
+    }
 
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
