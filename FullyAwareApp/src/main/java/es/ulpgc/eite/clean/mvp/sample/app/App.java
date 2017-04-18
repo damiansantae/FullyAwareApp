@@ -349,7 +349,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter) {
+    public void goToPreferencesScreen(ListForgottenMaster.ListForgottenTo presenter) {
 
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
@@ -579,10 +579,7 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
-    @Override
-    public void goToPreferencesScreen(ListForgottenMaster.ListForgottenTo presenter) {
 
-    }
 
     @Override
     public void goToListToDoScreen(Schedule.ScheduleTo presenter) {

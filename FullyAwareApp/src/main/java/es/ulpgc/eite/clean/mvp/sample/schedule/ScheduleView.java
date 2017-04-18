@@ -22,7 +22,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.listForgotten.ListForgotten;
+
 
 public class ScheduleView
         extends GenericActivity<Schedule.PresenterToView, Schedule.ViewToPresenter, SchedulePresenter>

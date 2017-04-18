@@ -63,11 +63,11 @@ public interface Navigator {
     void goToListToDoScreen(ListForgottenMaster.ListForgottenTo presenter);
 
 
-    void goToScheduleScreen(ListForgotten.ListForgottenTo presenter);
+
 
     void goToPreferencesScreen(Schedule.ScheduleTo presenter);
 
-    void goToPreferencesScreen(ListForgotten.ListForgottenTo presenter);
+
     void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter);
 
     //Comunicación M/D
@@ -85,6 +85,8 @@ public interface Navigator {
     void goToPreferencesScreen(Preferences.PreferencesTo presenter);
 
     void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter);
+
+    void goToPreferencesScreen(ListForgottenMaster.ListForgottenTo presenter);
 
     /*******************************************************************
      ******** Navegación direccion Preferences al resto de pantallas*/
