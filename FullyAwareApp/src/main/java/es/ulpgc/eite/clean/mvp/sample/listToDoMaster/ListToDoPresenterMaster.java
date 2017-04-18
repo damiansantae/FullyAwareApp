@@ -63,6 +63,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
+
         }
     }
 
