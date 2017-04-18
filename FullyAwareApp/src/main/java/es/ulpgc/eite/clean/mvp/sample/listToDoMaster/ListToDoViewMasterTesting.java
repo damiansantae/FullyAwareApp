@@ -109,7 +109,6 @@ public class ListToDoViewMasterTesting
         });*/
 
 
-
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
@@ -218,8 +217,6 @@ public class ListToDoViewMasterTesting
     }
 
 
-
-
     ///////////////////////////////////////////////////////////////////////////////////
     // Presenter To View /////////////////////////////////////////////////////////////
 
@@ -235,7 +232,6 @@ public class ListToDoViewMasterTesting
     }
 
 
-
     @Override
     public void hideAddBtn() {
         add.setVisibility(View.INVISIBLE);
@@ -246,7 +242,6 @@ public class ListToDoViewMasterTesting
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
-
 
 
     }
@@ -321,6 +316,7 @@ public class ListToDoViewMasterTesting
             Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
         }*/
     }
+
     @Override
     public void setRecyclerAdapterContent(List<TaskToDo> items) {
         if (recyclerView != null) {
@@ -354,6 +350,7 @@ public class ListToDoViewMasterTesting
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -460,11 +457,6 @@ public class ListToDoViewMasterTesting
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-            /* @Override
-             public String toString() {
-                 return super.toString() + " '" + contentView.getText() + "'";
-             }*/
-
 
                         getPresenter().onLongListClick2(v,getAdapterPosition());
 
