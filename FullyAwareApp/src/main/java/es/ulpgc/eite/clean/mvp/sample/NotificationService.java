@@ -29,12 +29,12 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         //Se lanza la notificación 5 segundos despues de iniciar la app
-        scheduleNotification(getNotification("Hace 5 segundos desde el inicio de la app"));
+        scheduleNotification(getNotification("Se genera notificación cada 10 segundos"));
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarm.set(
                 alarm.RTC_WAKEUP,
-                System.currentTimeMillis() + (1000 * 5),
-                PendingIntent.getService(this, 0, new Intent(this, NotificationService.class), 0)
+                System.currentTimeMillis() + (1000 * 10),
+                PendingIntent.getService(this, 10000, new Intent(this, NotificationService.class), 0)
         );
     }
 
@@ -52,10 +52,11 @@ public class NotificationService extends Service {
 
     private Notification getNotification(String content) {
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Scheduled Notification");
+        builder.setContentTitle("Notificación automatica");
 
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.common_plus_signin_btn_icon_dark);
+        builder.setSmallIcon(R.drawable.logofully);
+
         return builder.build();
     }
 }

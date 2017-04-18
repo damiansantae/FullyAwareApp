@@ -184,7 +184,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
         //getPresenter().onLoadItemsTaskFinished(items);
         getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
       }
-    }, 5000);
+    }, 0);
   }
 
 
@@ -249,7 +249,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.where(TaskToDo.class).equalTo("id", id)
+        realm.where(TaskToDo.class).equalTo("taskId", id)
                 .findAll()
                 .deleteAllFromRealm();
                 ;
