@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.util.SparseBooleanArray;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -334,7 +333,7 @@ checkSelection2();
             getModel().deleteItem(selected.get(i));
 
         }
-        ArrayList<Integer> pos = new ArrayList<>();
+
         for(int j=0;j<adapter.getItemCount();j++){
             if(itemsSelected.get(j)){
                 adapter.notifyItemRemoved(j);
