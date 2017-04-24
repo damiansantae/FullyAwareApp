@@ -175,7 +175,7 @@ public class ListForgottenViewMaster
        if (id ==R.id.menuToDo){
             Navigator app = (Navigator) getApplication();
             app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
 
         }
         else if (id ==R.id.menuDone){
