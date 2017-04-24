@@ -59,7 +59,7 @@ public interface ListToDoDetail {
     void hideToolbar();
 
 
-
+    void toolbarChanged(String colour);
   }
 
   /**

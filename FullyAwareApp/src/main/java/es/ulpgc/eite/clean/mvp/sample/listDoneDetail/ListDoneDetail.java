@@ -55,7 +55,7 @@ public interface ListDoneDetail {
     void hideToolbar();
 
 
-
+      void toolbarChanged(String colour);
   }
 
   /**

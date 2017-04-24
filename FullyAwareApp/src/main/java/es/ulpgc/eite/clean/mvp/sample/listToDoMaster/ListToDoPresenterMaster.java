@@ -58,12 +58,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
 
         app.startingListToDoScreen(this);
+        checkToolbarColourChanges(app);
 
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
 
-        }
     }
 
     /**
@@ -102,10 +99,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
+        checkToolbarColourChanges(app);
     }
 
 
@@ -120,6 +114,12 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
+    private void checkToolbarColourChanges(Mediator app){
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
+    }
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
