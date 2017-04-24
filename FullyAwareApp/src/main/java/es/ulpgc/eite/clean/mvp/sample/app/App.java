@@ -271,8 +271,15 @@ public class App extends Application implements Mediator, Navigator {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
          newColourString = getColorHex(preferencesToState.toolbarColour);
         }
+
         return newColourString;
     }
+
+    @Override
+    public int getToolbarColourInt() {
+        return preferencesToState.toolbarColour;
+    }
+
 
     @Override
     public boolean checkToolbarChanged() {
