@@ -50,10 +50,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         app.startingListDoneScreen(this);
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
+        checkToolbarColourChanges(app);
     }
 
     /**
@@ -90,10 +87,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
+        checkToolbarColourChanges(app);
     }
 
 
@@ -106,6 +100,14 @@ public class ListDonePresenterMaster extends GenericPresenter
             setItemChecked(Integer.parseInt(posSelected.get(i)), true);
         }
 
+    }
+
+
+    private void checkToolbarColourChanges(Mediator app){
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
 

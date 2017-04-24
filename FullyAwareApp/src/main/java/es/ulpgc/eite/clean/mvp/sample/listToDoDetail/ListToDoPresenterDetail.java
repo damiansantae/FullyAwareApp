@@ -48,7 +48,7 @@ private boolean toolbarVisible;
         // los valores pasados desde el maestro
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
-
+       checkToolbarColourChanges(app);
     }
 
     /**
@@ -67,7 +67,8 @@ private boolean toolbarVisible;
         if(configurationChangeOccurred()) {
             checkToolbarVisibility();
         }
-
+        Mediator app = (Mediator) getView().getApplication();
+        checkToolbarColourChanges(app);
     }
 
 
@@ -196,6 +197,14 @@ public class Observado extends Observable{
         notifyObservers(true);
     }
 
+}
+
+
+private void checkToolbarColourChanges(Mediator app){
+    if (app.checkToolbarChanged() == true){
+        String colour = app.getToolbarColour();
+        getView().toolbarChanged(colour);
+    }
 }
 
 }
