@@ -1,13 +1,13 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPresenter>
     implements ListToDoDetail.PresenterToModel {
 
-  private TaskToDo taskToDo;
+  private Task Task;
 
 
 
@@ -41,12 +41,12 @@ public class ListToDoModelDetail extends GenericModel<ListToDoDetail.ModelToPres
 
 
 
-  public void setTaskToDo(TaskToDo selectedItem) {
-    this.taskToDo = selectedItem;
+  public void setTask(Task selectedItem) {
+    this.Task = selectedItem;
 
   }
 
-  public TaskToDo getTaskToDo() {
-    return taskToDo;
+  public Task getTask() {
+    return Task;
   }
 }

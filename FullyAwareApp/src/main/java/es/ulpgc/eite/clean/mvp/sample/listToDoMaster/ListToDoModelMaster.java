@@ -7,7 +7,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;
 
 
@@ -99,7 +99,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   */
 
   @Override
-  public void deleteItem(TaskToDo item) {
+  public void deleteItem(Task item) {
     if (getItemsFromDatabase().contains(item)){
       //items.remove(item);
       deleteDatabaseItem(item);
@@ -195,32 +195,32 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   public void addInitialTasks(){
     //Request realm instance
 
-    TaskToDo taskToDo1 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
-    TaskToDo taskToDo2 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
-    TaskToDo taskToDo3 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
-    TaskToDo taskToDo4 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
-    TaskToDo taskToDo5 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
-    TaskToDo taskToDo6 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
-    TaskToDo taskToDo7 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
-    TaskToDo taskToDo8 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
-    TaskToDo taskToDo9 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
-    TaskToDo taskToDo10 = new TaskToDo(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
+    Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
+    Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
+    Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
+    Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
+    Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
+    Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
+    Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
+    Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
+    Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
+    Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
 
 
 
 //Insert element
     realmDatabase.beginTransaction();
 
-    realmDatabase.copyToRealm(taskToDo1);
-    realmDatabase.copyToRealm(taskToDo2);
-    realmDatabase.copyToRealm(taskToDo3);
-    realmDatabase.copyToRealm(taskToDo4);
-    realmDatabase.copyToRealm(taskToDo5);
-    realmDatabase.copyToRealm(taskToDo6);
-    realmDatabase.copyToRealm(taskToDo7);
-    realmDatabase.copyToRealm(taskToDo8);
-    realmDatabase.copyToRealm(taskToDo9);
-    realmDatabase.copyToRealm(taskToDo10);
+    realmDatabase.copyToRealm(Task1);
+    realmDatabase.copyToRealm(Task2);
+    realmDatabase.copyToRealm(Task3);
+    realmDatabase.copyToRealm(Task4);
+    realmDatabase.copyToRealm(Task5);
+    realmDatabase.copyToRealm(Task6);
+    realmDatabase.copyToRealm(Task7);
+    realmDatabase.copyToRealm(Task8);
+    realmDatabase.copyToRealm(Task9);
+    realmDatabase.copyToRealm(Task10);
 
     realmDatabase.commitTransaction();
   }
@@ -230,7 +230,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.where(TaskToDo.class).beginsWith("title", "Titulo")
+        realm.where(Task.class).beginsWith("title", "Titulo")
                 .findAll()
                 .deleteAllFromRealm();
         ;
@@ -239,17 +239,17 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   }
 
   private void deleteAllDatabaseItems(){
-    for(TaskToDo item: getItemsFromDatabase()){
+    for(Task item: getItemsFromDatabase()){
       deleteDatabaseItem(item);
     }
   }
 
-  private void deleteDatabaseItem(TaskToDo item) {
+  private void deleteDatabaseItem(Task item) {
     final String id = item.getTaskId();
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.where(TaskToDo.class).equalTo("taskId", id)
+        realm.where(Task.class).equalTo("taskId", id)
                 .findAll()
                 .deleteAllFromRealm();
                 ;
@@ -287,7 +287,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
       // Open a transaction to store items into the realmDatabase
       realmDatabase.beginTransaction();
       try {
-        realmDatabase.createAllFromJson(TaskToDo.class, stream);
+        realmDatabase.createAllFromJson(Task.class, stream);
         realmDatabase.commitTransaction();
       } catch (IOException error) {
         Log.d(TAG, "error=" +  error);
@@ -306,17 +306,17 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
 
 
 
-  private List<TaskToDo> getItemsFromDatabase(){
+  private List<Task> getItemsFromDatabase(){
     if(usingWrapper) {
       return getItemsFromDatabaseWrapper();
     }
 
-    return realmDatabase.where(TaskToDo.class).findAll();
+    return realmDatabase.where(Task.class).findAll();
   }
 
-  private List<TaskToDo> getItemsFromDatabaseWrapper(){
+  private List<Task> getItemsFromDatabaseWrapper(){
     Log.d(TAG, "calling getItemsFromDatabaseWrapper() method");
-    List<TaskToDo> dbItems = realmDatabase.where(TaskToDo.class).findAll();
+    List<Task> dbItems = realmDatabase.where(Task.class).findAll();
 
     Log.d(TAG, "items=" +  dbItems);
     return dbItems;
@@ -355,7 +355,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.createObjectFromJson(TaskToDo.class, json);
+        realm.createObjectFromJson(Task.class, json);
       }
     });
   }*/

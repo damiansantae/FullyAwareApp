@@ -5,7 +5,7 @@ import android.content.Context;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 /**
  * Created by Luis on 12/11/16.
@@ -76,7 +76,8 @@ public interface AddTask {
   interface PresenterToModel extends Model<ModelToPresenter> {
 
 
-    void addTaskToDo(TaskToDo taskToDo);
+    void addTask(Task Task);
+
   }
 
   /**

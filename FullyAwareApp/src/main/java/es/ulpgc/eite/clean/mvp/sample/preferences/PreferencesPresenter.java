@@ -11,19 +11,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.content.Intent;
-import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 
 
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,10 +28,8 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
-
-import static es.ulpgc.eite.clean.mvp.sample.R.id.toolbar;
 
 public class PreferencesPresenter extends GenericPresenter
     <Preferences.PresenterToView, Preferences.PresenterToModel, Preferences.ModelToPresenter, PreferencesModel>
@@ -167,7 +160,7 @@ public class PreferencesPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    TaskRepository.getInstance().saveTask(new TaskToDo(R.drawable.bg_controll_plane,title,description,deadline));
+    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline));
     Navigator app = (Navigator)getView().getApplication();
     //app.goToListToDoScreen(this);
     Context context = getApplicationContext();

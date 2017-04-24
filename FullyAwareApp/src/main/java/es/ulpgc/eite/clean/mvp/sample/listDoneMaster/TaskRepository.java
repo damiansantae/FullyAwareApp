@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class TaskRepository {
     private static TaskRepository repository = new TaskRepository();
-    private HashMap<String, TaskDone> tasks = new HashMap<>();
+    private HashMap<String, Task> tasks = new HashMap<>();
 
     public static TaskRepository getInstance() {
         return repository;
     }
 
     private TaskRepository() {
-        saveTask(new TaskDone(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017"));
+        saveTask(new Task(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017"));
     }
 
-    public void saveTask(TaskDone TaskDone) {
-        tasks.put(String.valueOf(TaskDone.getTaskId()), TaskDone);
+    public void saveTask(Task Task) {
+        tasks.put(String.valueOf(Task.getTaskId()), Task);
     }
 
-    public ArrayList<TaskDone> getTasks() {
+    public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    public void deleteTask(TaskDone TaskDone){
-        tasks.remove(String.valueOf(TaskDone.getTaskId()));
+    public void deleteTask(Task Task){
+        tasks.remove(String.valueOf(Task.getTaskId()));
     }
 
-    public TaskDone taskDone(TaskDone TaskDone){
-        return tasks.get(String.valueOf(TaskDone.getTaskId()));
+    public Task Task(Task Task){
+        return tasks.get(String.valueOf(Task.getTaskId()));
     }
 }

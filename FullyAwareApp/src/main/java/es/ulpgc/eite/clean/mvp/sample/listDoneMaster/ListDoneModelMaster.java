@@ -7,7 +7,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 import io.realm.Realm;
 
@@ -103,7 +103,7 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
   */
 
     @Override
-    public void deleteItem(TaskDone item) {
+    public void deleteItem(Task item) {
         if (getItemsFromDatabase().contains(item)){
             //items.remove(item);
             deleteDatabaseItem(item);
@@ -200,48 +200,48 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
     public void addInitialTasks(){
         //Request realm instance
 
-        TaskDone TaskDone1 = new TaskDone(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
-        TaskDone TaskDone2 = new TaskDone(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
-        TaskDone TaskDone3 = new TaskDone(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
-        TaskDone TaskDone4 = new TaskDone(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
-        TaskDone TaskDone5 = new TaskDone(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
-        TaskDone TaskDone6 = new TaskDone(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
-        TaskDone TaskDone7 = new TaskDone(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
-        TaskDone TaskDone8 = new TaskDone(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
-        TaskDone TaskDone9 = new TaskDone(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
-        TaskDone TaskDone10 = new TaskDone(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
+        Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
+        Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
+        Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
+        Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
+        Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
+        Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
+        Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
+        Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
+        Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
+        Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
 
 
 
 //Insert element
         realmDatabase.beginTransaction();
 
-        realmDatabase.copyToRealm(TaskDone1);
-        realmDatabase.copyToRealm(TaskDone2);
-        realmDatabase.copyToRealm(TaskDone3);
-        realmDatabase.copyToRealm(TaskDone4);
-        realmDatabase.copyToRealm(TaskDone5);
-        realmDatabase.copyToRealm(TaskDone6);
-        realmDatabase.copyToRealm(TaskDone7);
-        realmDatabase.copyToRealm(TaskDone8);
-        realmDatabase.copyToRealm(TaskDone9);
-        realmDatabase.copyToRealm(TaskDone10);
+        realmDatabase.copyToRealm(Task1);
+        realmDatabase.copyToRealm(Task2);
+        realmDatabase.copyToRealm(Task3);
+        realmDatabase.copyToRealm(Task4);
+        realmDatabase.copyToRealm(Task5);
+        realmDatabase.copyToRealm(Task6);
+        realmDatabase.copyToRealm(Task7);
+        realmDatabase.copyToRealm(Task8);
+        realmDatabase.copyToRealm(Task9);
+        realmDatabase.copyToRealm(Task10);
 
         realmDatabase.commitTransaction();
     }
 
     private void deleteAllDatabaseItems(){
-        for(TaskDone item: getItemsFromDatabase()){
+        for(Task item: getItemsFromDatabase()){
             deleteDatabaseItem(item);
         }
     }
 
-    private void deleteDatabaseItem(TaskDone item) {
+    private void deleteDatabaseItem(Task item) {
         final String id = item.getTaskId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(TaskDone.class).equalTo("id", id)
+                realm.where(Task.class).equalTo("id", id)
                         .findAll()
                         .deleteAllFromRealm();
                 ;
@@ -279,7 +279,7 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
       // Open a transaction to store items into the realmDatabase
       realmDatabase.beginTransaction();
       try {
-        realmDatabase.createAllFromJson(TaskDone.class, stream);
+        realmDatabase.createAllFromJson(Task.class, stream);
         realmDatabase.commitTransaction();
       } catch (IOException error) {
         Log.d(TAG, "error=" +  error);
@@ -298,17 +298,17 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
 
 
 
-    private List<TaskDone> getItemsFromDatabase(){
+    private List<Task> getItemsFromDatabase(){
         if(usingWrapper) {
             return getItemsFromDatabaseWrapper();
         }
 
-        return realmDatabase.where(TaskDone.class).findAll();
+        return realmDatabase.where(Task.class).findAll();
     }
 
-    private List<TaskDone> getItemsFromDatabaseWrapper(){
+    private List<Task> getItemsFromDatabaseWrapper(){
         Log.d(TAG, "calling getItemsFromDatabaseWrapper() method");
-        List<TaskDone> dbItems = realmDatabase.where(TaskDone.class).findAll();
+        List<Task> dbItems = realmDatabase.where(Task.class).findAll();
 
         Log.d(TAG, "items=" +  dbItems);
         return dbItems;
@@ -347,7 +347,7 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.createObjectFromJson(TaskDone.class, json);
+        realm.createObjectFromJson(Task.class, json);
       }
     });
   }*/

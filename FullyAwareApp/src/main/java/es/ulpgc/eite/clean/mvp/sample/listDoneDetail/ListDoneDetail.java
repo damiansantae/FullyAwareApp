@@ -3,7 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 
 public interface ListDoneDetail {
@@ -20,7 +20,7 @@ public interface ListDoneDetail {
     void setAdapter(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
     void setToolbarVisibility(boolean b);
-    void setItem(TaskDone selectedItem);
+    void setItem(Task selectedItem);
 
     void onScreenStarted();
   }
@@ -30,7 +30,7 @@ public interface ListDoneDetail {
    */
   interface DetailToMaster {
     void destroyView();
-    TaskDone getTaskToDelete();
+    Task getTaskToDelete();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ public interface ListDoneDetail {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-    TaskDone getTask();
+    Task getTask();
 
     void onDeleteActionClicked();
   }
@@ -62,8 +62,8 @@ public interface ListDoneDetail {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void setTaskDone(TaskDone selectedItem);
-    TaskDone getTaskDone();
+    void setTask(Task selectedItem);
+    Task getTask();
   }
 
   /**

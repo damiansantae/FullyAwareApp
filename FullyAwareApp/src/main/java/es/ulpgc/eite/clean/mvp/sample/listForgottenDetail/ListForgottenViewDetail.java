@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenViewDetail
         extends GenericActivity<ListForgottenDetail.PresenterToView, ListForgottenDetail.ViewToPresenter, ListForgottenPresenterDetail>
         implements ListForgottenDetail.PresenterToView {
 
     private Toolbar toolbar;
-    private TaskForgotten taskForgotten;
+    private Task task;
     private CollapsingToolbarLayout toolbarLayout;
     private AppBarLayout appbarLayout;
 
@@ -74,15 +74,15 @@ public class ListForgottenViewDetail
     protected void onResume() {
         super.onResume(ListForgottenPresenterDetail.class, this);
 
-        taskForgotten = getPresenter().getTask();
+        task = getPresenter().getTask();
 
-        if (toolbarLayout != null && taskForgotten != null) {
-            toolbarLayout.setTitle(taskForgotten.getTitle());
+        if (toolbarLayout != null && task != null) {
+            toolbarLayout.setTitle(task.getTitle());
         }
 
         // Show the dummy content as text in a TextView.
-        if (taskForgotten != null) {
-            ((TextView) findViewById(R.id.task_description)).setText(taskForgotten.getDescription());
+        if (task != null) {
+            ((TextView) findViewById(R.id.task_description)).setText(task.getDescription());
         }
     }
 

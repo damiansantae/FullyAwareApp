@@ -12,9 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -27,7 +25,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -109,7 +107,7 @@ public class ListToDoViewMaster
 
 
                 Log.d("error msg", "Click Simple");
-               /* TaskToDo currentTask = adapter.getTaskToDo(position);
+               /* Task currentTask = adapter.getTask(position);
                 Toast toast = Toast.makeText(getBaseContext(), currentTask.getTaskTitle(), Toast.LENGTH_SHORT);
                 toast.show();*/
 
@@ -275,7 +273,7 @@ public class ListToDoViewMaster
 
     //TODO:Este metodo no hace nada aqui, es para la RecyclerView
     @Override
-    public void setRecyclerAdapterContent(List<TaskToDo> items) {
+    public void setRecyclerAdapterContent(List<Task> items) {
     }
 
     @Override

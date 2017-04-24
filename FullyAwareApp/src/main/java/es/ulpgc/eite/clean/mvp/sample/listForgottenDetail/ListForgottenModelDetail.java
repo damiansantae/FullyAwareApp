@@ -1,13 +1,13 @@
 package es.ulpgc.eite.clean.mvp.sample.listForgottenDetail;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class ListForgottenModelDetail extends GenericModel<ListForgottenDetail.ModelToPresenter>
     implements ListForgottenDetail.PresenterToModel {
 
-  private TaskForgotten taskForgotten;
+  private Task task;
 
 
 
@@ -41,12 +41,12 @@ public class ListForgottenModelDetail extends GenericModel<ListForgottenDetail.M
 
 
 
-  public void setTaskForgotten(TaskForgotten selectedItem) {
-    this.taskForgotten = selectedItem;
+  public void setTask(Task selectedItem) {
+    this.task = selectedItem;
 
   }
 
-  public TaskForgotten getTaskForgotten() {
-    return taskForgotten;
+  public Task getTask() {
+    return task;
   }
 }

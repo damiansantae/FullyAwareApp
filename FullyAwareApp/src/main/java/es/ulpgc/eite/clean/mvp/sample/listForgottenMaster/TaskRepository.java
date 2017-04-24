@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public class TaskRepository {
     private static TaskRepository repository = new TaskRepository();
-    private HashMap<String, TaskForgotten> tasks = new HashMap<>();
+    private HashMap<String, Task> tasks = new HashMap<>();
 
     public static TaskRepository getInstance() {
         return repository;
     }
 
     private TaskRepository() {
-        saveTask(new TaskForgotten(R.drawable.bg_controll_plane,"Tarea olvidada","Descripcion de tarea olvidada","03/04/2017"));
+        saveTask(new Task(R.drawable.bg_controll_plane,"Tarea olvidada","Descripcion de tarea olvidada","03/04/2017"));
     }
 
-    public void saveTask(TaskForgotten TaskForgotten) {
-        tasks.put(String.valueOf(TaskForgotten.getTaskId()), TaskForgotten);
+    public void saveTask(Task Task) {
+        tasks.put(String.valueOf(Task.getTaskId()), Task);
     }
 
-    public ArrayList<TaskForgotten> getTasks() {
+    public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    public void deleteTask(TaskForgotten TaskForgotten){
-        tasks.remove(String.valueOf(TaskForgotten.getTaskId()));
+    public void deleteTask(Task Task){
+        tasks.remove(String.valueOf(Task.getTaskId()));
     }
 
-    public TaskForgotten TaskForgotten(TaskForgotten TaskForgotten){
-        return tasks.get(String.valueOf(TaskForgotten.getTaskId()));
+    public Task Task(Task Task){
+        return tasks.get(String.valueOf(Task.getTaskId()));
     }
 }

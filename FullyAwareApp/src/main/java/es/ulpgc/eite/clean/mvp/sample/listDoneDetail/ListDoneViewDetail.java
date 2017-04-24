@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListDoneViewDetail
         extends GenericActivity<ListDoneDetail.PresenterToView, ListDoneDetail.ViewToPresenter, ListDonePresenterDetail>
         implements ListDoneDetail.PresenterToView {
 
     private Toolbar toolbar;
-    private TaskDone taskDone;
+    private Task Task;
     private CollapsingToolbarLayout toolbarLayout;
     private AppBarLayout appbarLayout;
 
@@ -74,15 +74,15 @@ public class ListDoneViewDetail
     protected void onResume() {
         super.onResume(ListDonePresenterDetail.class, this);
 
-        taskDone = getPresenter().getTask();
+        Task = getPresenter().getTask();
 
-        if (toolbarLayout != null && taskDone != null) {
-            toolbarLayout.setTitle(taskDone.getTitle());
+        if (toolbarLayout != null && Task != null) {
+            toolbarLayout.setTitle(Task.getTitle());
         }
 
         // Show the dummy content as text in a TextView.
-        if (taskDone != null) {
-            ((TextView) findViewById(R.id.task_description)).setText(taskDone.getDescription());
+        if (Task != null) {
+            ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
 
