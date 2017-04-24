@@ -365,7 +365,7 @@ checkSelection2();
 
 itemsSelected.clear();
 checkSelection2();
-
+        checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
     }
 
 
