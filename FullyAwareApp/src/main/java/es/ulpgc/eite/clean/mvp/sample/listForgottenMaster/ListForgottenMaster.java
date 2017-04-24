@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.content.Context;
+import android.view.View;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ public interface ListForgottenMaster {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
     void setTextVisibility(boolean visible);
-
     void setDeleteBtnVisibility(boolean deleteBtnVisibility);
 
   }
@@ -56,19 +56,22 @@ public interface ListForgottenMaster {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
-    void onListClick(int position, Task_Adapter adapter);
-    void onLongListClick(int pos, Task_Adapter adapter);
+
+
     void onBinBtnClick(Task_Adapter adapter);
 
 
 
-    /*
-          @Override
-          public void onLoadItemsTaskFinished(List<Task> items) {
-              getView().setRecyclerAdapterContent(items);
+    void onSwipeMade(int pos, Task_Adapter adapter);
 
-          }*/
+    void onListClick2(View item, int position, ListForgottenViewMaster.TaskRecyclerViewAdapter adapter, Task task);
+
+    void onLongListClick2(View item, int adapterPosition);
+
+
+    boolean isSelected(int adapterPosition);
+
+    void onBinBtnClick2(ListForgottenViewMaster.TaskRecyclerViewAdapter adapter);
   }
 
   /**
@@ -77,17 +80,8 @@ public interface ListForgottenMaster {
   interface PresenterToView extends ContextView {
     void finishScreen();
     void hideToolbar();
-    void hideText();
-    void showText();
-
-
       void hideDeleteBtn();
-
       void showDeleteBtn();
-
-      void setText(String txt);
-    void setLabel(String txt);
-
     boolean isItemListChecked(int pos);
 
     void setItemChecked(int pos, boolean checked);
@@ -100,6 +94,9 @@ public interface ListForgottenMaster {
     void deselect(int i, boolean b);
 
     void toolbarChanged(String colour);
+    void setRecyclerAdapterContent(List<Task> items);
+
+
   }
 
   /**

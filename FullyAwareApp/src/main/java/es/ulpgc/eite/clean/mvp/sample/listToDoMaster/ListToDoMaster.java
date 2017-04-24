@@ -114,7 +114,7 @@ public interface ListToDoMaster {
 
     void deselect(int i, boolean b);
 
-      void setRecyclerAdapterContent(List<Task> items);
+  void setRecyclerAdapterContent(List<Task> items);
 
 
     void toolbarChanged(String colour);
