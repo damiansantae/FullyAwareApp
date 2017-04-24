@@ -8,7 +8,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenPresenterDetail extends GenericPresenter
         <ListForgottenDetail.PresenterToView, ListForgottenDetail.PresenterToModel, ListForgottenDetail.ModelToPresenter, ListForgottenModelDetail>
@@ -94,8 +94,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public TaskForgotten getTask() {
-        return getModel().getTaskForgotten();
+    public Task getTask() {
+        return getModel().getTask();
     }
 
     @Override
@@ -129,8 +129,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public void setItem(TaskForgotten selectedItem) {
-        getModel().setTaskForgotten(selectedItem);
+    public void setItem(Task selectedItem) {
+        getModel().setTask(selectedItem);
 
     }
 
@@ -149,8 +149,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public TaskForgotten getTaskToDelete() {
-        return getModel().getTaskForgotten();
+    public Task getTaskToDelete() {
+        return getModel().getTask();
     }
 
 

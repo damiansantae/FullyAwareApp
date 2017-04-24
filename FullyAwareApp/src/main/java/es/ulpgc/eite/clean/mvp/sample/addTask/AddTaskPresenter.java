@@ -17,8 +17,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.TaskRepository;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
@@ -141,8 +140,8 @@ public class AddTaskPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    TaskToDo newTask = new TaskToDo(R.drawable.bg_controll_plane, title, description, deadline);
-    getModel().addTaskToDo(newTask);
+    Task newTask = new Task(R.drawable.bg_controll_plane, title, description, deadline);
+    getModel().addTask(newTask);
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();

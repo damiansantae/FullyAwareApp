@@ -1,5 +1,5 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
-
+//Prueba
 
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
@@ -30,8 +30,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean doneBtnVisible;
     private boolean textVisible;
     private boolean selectedState;
-    private TaskToDo selectedTaskToDo;
-    private ArrayList<TaskToDo> tasksSelected = new ArrayList<>();
+    private Task selectedTask;
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
 
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
@@ -163,13 +163,13 @@ public class ListToDoPresenterMaster extends GenericPresenter
     //TODO: este método es para la ListView
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
-        TaskToDo currentTaskToDo = adapter.getItem(position);
+        Task currentTask = adapter.getItem(position);
         if (selectedState) {                                //Esta seleccionado algo?
 
             if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
                 setItemChecked(position, false);         //Se deselecciona
                 Log.v("se deselecciona", "pos: " + position);
-                tasksSelected.remove(currentTaskToDo);       //Se elimina del Array de seleccionados
+                tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
                 posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
 
                 checkSelection();                       //Comprobamos si sigue alguno seleccionado
@@ -178,13 +178,13 @@ public class ListToDoPresenterMaster extends GenericPresenter
                 setItemChecked(position, true);          //Lo seleccionamos
                 Log.v("se selecciona", "pos: " + position);
 
-                tasksSelected.add(currentTaskToDo);           //Se añade al array de seleccionados
+                tasksSelected.add(currentTask);           //Se añade al array de seleccionados
                 posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
             }
 
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
-            selectedTaskToDo = adapter.getItem(position);
+            selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
            // app.goToDetailToDoScreen(this, adapter);
         }
@@ -239,14 +239,14 @@ checkSelection2();
     }
 
 
-    private void deselectTask(TaskToDo currentTaskToDo) {
-       tasksSelected.remove(currentTaskToDo);
+    private void deselectTask(Task currentTask) {
+       tasksSelected.remove(currentTask);
     }
 
-    private boolean isTaskSelected(TaskToDo currentTaskToDo) {
+    private boolean isTaskSelected(Task currentTask) {
         boolean result = false;
         for(int i=0;i<tasksSelected.size();i++){
-            if(currentTaskToDo.equals(tasksSelected.get(i)))
+            if(currentTask.equals(tasksSelected.get(i)))
                 result= true;
     }
         return result;
@@ -258,7 +258,7 @@ checkSelection2();
         getView().startSelection();           //iniciamos modo seleccion multiple
 
         Log.v("long click", "pos: " + pos);
-        TaskToDo currentTaskToDo = adapter.getItem(pos);
+        Task currentTask = adapter.getItem(pos);
 
 
 
@@ -266,14 +266,14 @@ checkSelection2();
             setItemChecked(pos, false);          //Se deselecciona
             Log.v("Se deselecciona", "pos: " + pos);
 
-            tasksSelected.remove(currentTaskToDo);       //Se elimina del Array de seleccionados
+            tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
             posSelected.remove(Integer.toString(pos));                  //Se elimina del array de posiciones seleccionadas
             checkSelection();                        //miramos si hay algun seleccionado
         } else {                                      //Si no estaba seleccionado
             setSelectedState(true);                   //actualizamos estado a algo seleccionado
             setItemChecked(pos, true);           //Se selecciona
             Log.v("Se selecciona", "pos: " + pos);
-            tasksSelected.add(currentTaskToDo);           //Se añade al array de seleccionados
+            tasksSelected.add(currentTask);           //Se añade al array de seleccionados
             posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
            checkSelection();
 
@@ -328,7 +328,7 @@ checkSelection2();
     @Override
     public void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
 
-   ArrayList<TaskToDo> selected = getSelectedTasks(adapter);
+   ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             getModel().deleteItem(selected.get(i));
 
@@ -349,8 +349,8 @@ checkSelection2();
 
 
 
-    private ArrayList<TaskToDo> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        ArrayList<TaskToDo> selected = new ArrayList<>();
+    private ArrayList<Task> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
                 selected.add(adapter.getItems().get(i));
@@ -374,7 +374,7 @@ checkSelection2();
         checkDoneBtnVisibility();
     }*/
 
-    TaskToDo currentTaskToDo = adapter.getItem(position);
+    Task currentTask = adapter.getItem(position);
         if (selectedState) {                                //Esta seleccionado algo?
 
             int sizes = posSelected.size();
@@ -393,8 +393,8 @@ checkSelection2();
     } else {                                          //Si no estaba ningun elemento seleccionado
         //Codigo DETALLE
 
-            TaskRepository.getInstance().deleteTask(currentTaskToDo);  //Se elimina la tarea
-            adapter.remove(currentTaskToDo);
+            TaskRepository.getInstance().deleteTask(currentTask);  //Se elimina la tarea
+            adapter.remove(currentTask);
             deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
             checkSelection();
     }
@@ -454,7 +454,7 @@ checkSelection2();
             for (int i = 0; i < size; i++){
 
                 Mediator app = (Mediator) getApplication();
-                app.taskDone(TaskRepository.getInstance().taskDone(tasksSelected.get(i)));
+                app.Task(TaskRepository.getInstance().Task(tasksSelected.get(i)));
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));
                 adapter.remove(tasksSelected.get(i));
             }
@@ -570,12 +570,12 @@ checkSelection2();
     }
 
     @Override
-    public void onErrorDeletingItem(TaskToDo item) {
+    public void onErrorDeletingItem(Task item) {
 
     }
 
-    public TaskToDo getSelectedTaskToDo() {
-        return selectedTaskToDo;
+    public Task getSelectedTask() {
+        return selectedTask;
     }
 
     @Override
@@ -671,7 +671,7 @@ checkSelection2();
     }
 
     @Override
-    public void onLoadItemsTaskFinished(List<TaskToDo> items) {
+    public void onLoadItemsTaskFinished(List<Task> items) {
         getView().setRecyclerAdapterContent(items);
 
     }

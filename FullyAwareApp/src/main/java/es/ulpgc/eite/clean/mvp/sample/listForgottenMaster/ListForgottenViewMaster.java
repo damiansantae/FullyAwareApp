@@ -29,8 +29,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenViewMaster
         extends GenericActivity<ListForgottenMaster.PresenterToView, ListForgottenMaster.ViewToPresenter, ListForgottenPresenterMaster>
@@ -39,7 +38,7 @@ public class ListForgottenViewMaster
     private Toolbar toolbar;
     private Button button;
     private TextView text;
-    private ArrayList<TaskForgotten> tasksSelected = new ArrayList<>();
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<Integer> posSelected = new ArrayList<>();
     private ListView list;
     private FloatingActionButton bin;

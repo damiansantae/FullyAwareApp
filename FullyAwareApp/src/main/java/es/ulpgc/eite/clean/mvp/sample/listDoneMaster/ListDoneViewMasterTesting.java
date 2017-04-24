@@ -29,7 +29,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListDoneViewMasterTesting
         extends GenericActivity<ListDoneMaster.PresenterToView, ListDoneMaster.ViewToPresenter, ListDonePresenterMaster>
@@ -265,7 +265,7 @@ public class ListDoneViewMasterTesting
     }
 
     @Override
-    public void setRecyclerAdapterContent(List<TaskDone> items) {
+    public void setRecyclerAdapterContent(List<Task> items) {
         if(recyclerView != null) {
            TaskRecyclerViewAdapter recyclerAdapter =
                     (TaskRecyclerViewAdapter) recyclerView.getAdapter();
@@ -316,7 +316,7 @@ public class ListDoneViewMasterTesting
     public class TaskRecyclerViewAdapter
             extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
-        private List<TaskDone> items;
+        private List<Task> items;
 
         public TaskRecyclerViewAdapter() {
             items = new ArrayList<>();
@@ -329,7 +329,7 @@ public class ListDoneViewMasterTesting
             return new ViewHolder(view);
         }
 
-        public void setItemList(List<TaskDone> items) {
+        public void setItemList(List<Task> items) {
             this.items = items;
             notifyDataSetChanged();
         }
@@ -339,7 +339,7 @@ public class ListDoneViewMasterTesting
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
             holder.item = items.get(position);
-            holder.tag.setImageResource(items.get(position).getTagId());
+            holder.tag.setImageResource(items.get(position).getSubjectId());
             holder.title.setText(items.get(position).getTitle());
             holder.description.setText(items.get(position).getDescription());
             holder.date.setText(items.get(position).getDate());
@@ -377,7 +377,7 @@ public class ListDoneViewMasterTesting
             public final  TextView description;
             public final    TextView date;
 
-            public TaskDone item;
+            public Task item;
 
             public ViewHolder(View view) {
                 super(view);

@@ -22,7 +22,6 @@ import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaste
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
@@ -77,7 +76,7 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState = new ListDoneState();
         toListDoneState.toolbarVisibility = false;
         toListDoneState.textVisibility = false;
-        toListDoneState.taskToDoDone = null;
+        toListDoneState.TaskDone = null;
 
         toListForgottenState = new ListForgottenState();
         toListForgottenState.toolbarVisibility = false;
@@ -208,8 +207,8 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void taskDone(TaskToDo taskToDoDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase TaskToDo Común
+    public void Task(Task TaskDone) {
+        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
     }
 
     @Override
@@ -404,11 +403,11 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         masterListToDetailToDoState = new DetailToDoState();
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
-        masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
+        masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTask();
         masterListToDetailToDoState.adapter = adapter;
         masterListToDetailToDoState.master = listToDoPresenterMaster;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -420,7 +419,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void backToMasterScreen(ListToDoDetail.DetailToMaster presenter) {
         listToDoDetailToMasterState = new ListToDoStateTask();
-        listToDoDetailToMasterState.taskToDoToDelete = presenter.getTaskToDelete();
+        listToDoDetailToMasterState.TaskToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -430,7 +429,7 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
         masterListToDetailDoneState = new DetailDoneState();
         masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTaskDone();
+        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
 
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listDonePresenterMaster.getManagedContext();
@@ -443,10 +442,10 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         masterListToDetailDoneState = new DetailDoneState();
         masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTaskDone();
+        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
         masterListToDetailDoneState.adapter = adapter;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listDonePresenterMaster.getManagedContext();
@@ -459,7 +458,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void backToMasterScreen(ListDoneDetail.DetailToMaster presenter) {
         listDoneDetailToMasterState = new ListDoneStateTask();
-        listDoneDetailToMasterState.taskDoneToDelete = presenter.getTaskToDelete();
+        listDoneDetailToMasterState.TaskToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -469,7 +468,7 @@ public class App extends Application implements Mediator, Navigator {
     public void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster) {
         masterListToDetailForgottenState = new DetailForgottenState();
         masterListToDetailForgottenState.toolbarVisible = listForgottenPresenterMaster.getToolbarVisibility();
-        masterListToDetailForgottenState.selectedItem = listForgottenPresenterMaster.getSelectedTaskForgotten();
+        masterListToDetailForgottenState.selectedItem = listForgottenPresenterMaster.getSelectedTask();
 
         // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
         Context view = listForgottenPresenterMaster.getManagedContext();
@@ -482,7 +481,7 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void backToMasterScreen(ListForgottenDetail.DetailToMaster presenter) {
         listForgottenDetailToMasterState = new ListForgottenStateTask();
-        listForgottenDetailToMasterState.taskForgottenToDelete = presenter.getTaskToDelete();
+        listForgottenDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
 
         // Al volver al maestro, el detalle debe finalizar
         presenter.destroyView();
@@ -731,7 +730,7 @@ public class App extends Application implements Mediator, Navigator {
         boolean textVisibility;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
-        TaskToDo taskToDoDone;
+        Task TaskDone;
     }
 
     private class ListForgottenState {
@@ -762,7 +761,7 @@ public class App extends Application implements Mediator, Navigator {
 
     private class DetailToDoState {
         boolean toolbarVisible;
-        TaskToDo selectedItem;
+        Task selectedItem;
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -771,7 +770,7 @@ public class App extends Application implements Mediator, Navigator {
 
     private class DetailDoneState {
         boolean toolbarVisible;
-        TaskDone selectedItem;
+        Task selectedItem;
         String subject;
         String date;
         ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -779,7 +778,7 @@ public class App extends Application implements Mediator, Navigator {
 
     private class DetailForgottenState {
         boolean toolbarVisible;
-        TaskForgotten selectedItem;
+        Task selectedItem;
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
@@ -790,15 +789,15 @@ public class App extends Application implements Mediator, Navigator {
      * Estado a actualizar en el maestro en función de la ejecución del detalle
      */
     private class ListToDoStateTask {
-        TaskToDo taskToDoToDelete;
+        Task TaskToDelete;
     }
 
     private class ListDoneStateTask {
-        TaskDone taskDoneToDelete;
+        Task TaskToDelete;
     }
 
     private class ListForgottenStateTask {
-        TaskForgotten taskForgottenToDelete;
+        Task taskToDelete;
     }
 
 }

@@ -12,7 +12,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenPresenterMaster extends GenericPresenter
         <ListForgottenMaster.PresenterToView, ListForgottenMaster.PresenterToModel, ListForgottenMaster.ModelToPresenter, ListForgottenModelMaster>
@@ -26,11 +26,11 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     private boolean doneBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
-    private TaskForgotten taskForgotten;
+    private Task task;
 
-    private TaskForgotten selectedTaskForgotten;
+    private Task selectedTask;
 
-    private ArrayList<TaskForgotten> tasksSelected = new ArrayList<>();
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
 
 
@@ -158,13 +158,13 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
-        TaskForgotten currentTaskForgotten = adapter.getItem(position);
+        Task currentTask = adapter.getItem(position);
         if (listClicked) {                                //Esta seleccionado algo?
 
             if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
                 setItemChecked(position, false);         //Se deselecciona
                 Log.v("se deselecciona", "pos: " + position);
-                tasksSelected.remove(currentTaskForgotten);       //Se elimina del Array de seleccionados
+                tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
                 posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
 
                 checkSelection();                       //Comprobamos si sigue alguno seleccionado
@@ -173,13 +173,13 @@ public class ListForgottenPresenterMaster extends GenericPresenter
                 setItemChecked(position, true);          //Lo seleccionamos
                 Log.v("se selecciona", "pos: " + position);
 
-                tasksSelected.add(currentTaskForgotten);           //Se añade al array de seleccionados
+                tasksSelected.add(currentTask);           //Se añade al array de seleccionados
                 posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
             }
 
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
-            selectedTaskForgotten = adapter.getItem(position);
+            selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
             app.goToDetailScreen(this);
         }
@@ -192,7 +192,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
         getView().startSelection();           //iniciamos modo seleccion multiple
 
         Log.v("long click", "pos: " + pos);
-        TaskForgotten currentTaskForgotten = adapter.getItem(pos);
+        Task currentTask = adapter.getItem(pos);
 
 
 
@@ -200,14 +200,14 @@ public class ListForgottenPresenterMaster extends GenericPresenter
             setItemChecked(pos, false);          //Se deselecciona
             Log.v("Se deselecciona", "pos: " + pos);
 
-            tasksSelected.remove(currentTaskForgotten);       //Se elimina del Array de seleccionados
+            tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
             posSelected.remove(Integer.toString(pos));                  //Se elimina del array de posiciones seleccionadas
             checkSelection();                        //miramos si hay algun seleccionado
         } else {                                      //Si no estaba seleccionado
             setListClicked(true);                   //actualizamos estado a algo seleccionado
             setItemChecked(pos, true);           //Se selecciona
             Log.v("Se selecciona", "pos: " + pos);
-            tasksSelected.add(currentTaskForgotten);           //Se añade al array de seleccionados
+            tasksSelected.add(currentTask);           //Se añade al array de seleccionados
             posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
            checkSelection();
 
@@ -331,8 +331,8 @@ public class ListForgottenPresenterMaster extends GenericPresenter
         return getActivityContext();
     }
 
-    public TaskForgotten getSelectedTaskForgotten() {
-        return selectedTaskForgotten;
+    public Task getSelectedTask() {
+        return selectedTask;
     }
 
     @Override
@@ -404,18 +404,18 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onLoadItemsTaskFinished(List<TaskForgotten> itemsFromDatabase) {
+    public void onLoadItemsTaskFinished(List<Task> itemsFromDatabase) {
 
     }
 
     /*
         @Override
-        public void onLoadItemsTaskFinished(List<taskForgotten> items) {
+        public void onLoadItemsTaskFinished(List<task> items) {
             getView().setRecyclerAdapterContent(items);
 
         }*/
 @Override
-public void onErrorDeletingItem(TaskForgotten item) {
+public void onErrorDeletingItem(Task item) {
 
 }
 

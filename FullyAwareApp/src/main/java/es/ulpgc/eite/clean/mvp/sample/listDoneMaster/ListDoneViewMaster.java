@@ -28,7 +28,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListDoneViewMaster
         extends GenericActivity<ListDoneMaster.PresenterToView, ListDoneMaster.ViewToPresenter, ListDonePresenterMaster>
@@ -178,7 +178,7 @@ public class ListDoneViewMaster
     }
 
     @Override
-    public void setRecyclerAdapterContent(List<TaskDone> items) {
+    public void setRecyclerAdapterContent(List<Task> items) {
 
     }
 

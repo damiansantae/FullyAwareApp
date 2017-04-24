@@ -8,7 +8,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public interface ListToDoMaster {
@@ -38,7 +38,7 @@ public interface ListToDoMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    TaskToDo getSelectedTaskToDo();
+    Task getSelectedTask();
     boolean getToolbarVisibility();
 
       String getTaskDate();
@@ -114,7 +114,7 @@ public interface ListToDoMaster {
 
     void deselect(int i, boolean b);
 
-      void setRecyclerAdapterContent(List<TaskToDo> items);
+      void setRecyclerAdapterContent(List<Task> items);
 
 
     void toolbarChanged(String colour);
@@ -126,7 +126,7 @@ public interface ListToDoMaster {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void deleteItem(TaskToDo item);
+    void deleteItem(Task item);
     void loadItems();
     void reloadItems();
     void setDatabaseValidity(boolean valid);
@@ -141,8 +141,8 @@ public interface ListToDoMaster {
    */
   interface ModelToPresenter {
     Context getManagedContext();
-    void onErrorDeletingItem(TaskToDo item);
-    void onLoadItemsTaskFinished(List<TaskToDo> items);
+    void onErrorDeletingItem(Task item);
+    void onLoadItemsTaskFinished(List<Task> items);
     void onLoadItemsTaskStarted();
   }
 

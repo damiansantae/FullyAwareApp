@@ -12,7 +12,7 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListDonePresenterMaster extends GenericPresenter
         <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
@@ -24,9 +24,9 @@ public class ListDonePresenterMaster extends GenericPresenter
     private boolean textVisible;
     private boolean listClicked;
 
-    private TaskDone selectedTaskDone;
+    private Task selectedTask;
 
-    private ArrayList<TaskDone> tasksSelected = new ArrayList<>();
+    private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
 
 
@@ -150,13 +150,13 @@ public class ListDonePresenterMaster extends GenericPresenter
 //TODO: este método es para la ListView
     @Override
     public void onListClick(int position, Task_Adapter adapter) {
-        TaskDone currentTaskDone = adapter.getItem(position);
+        Task currentTask = adapter.getItem(position);
         if (listClicked) {                                //Esta seleccionado algo?
 
             if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
                 setItemChecked(position, false);         //Se deselecciona
                 Log.v("se deselecciona", "pos: " + position);
-                tasksSelected.remove(currentTaskDone);       //Se elimina del Array de seleccionados
+                tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
                 posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
 
                 checkSelection();                       //Comprobamos si sigue alguno seleccionado
@@ -165,13 +165,13 @@ public class ListDonePresenterMaster extends GenericPresenter
                 setItemChecked(position, true);          //Lo seleccionamos
                 Log.v("se selecciona", "pos: " + position);
 
-                tasksSelected.add(currentTaskDone);           //Se añade al array de seleccionados
+                tasksSelected.add(currentTask);           //Se añade al array de seleccionados
                 posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
             }
 
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
-            selectedTaskDone = adapter.getItem(position);
+            selectedTask = adapter.getItem(position);
             Navigator app = (Navigator) getView().getApplication();
             app.goToDetailScreen(this);
         }
@@ -180,21 +180,21 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onListClick2(TaskDone item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        TaskDone currentTaskDone = item;
+    public void onListClick2(Task item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        Task currentTask = item;
         if (listClicked) {                                //Esta seleccionado algo?
 
-            if (isTaskSelected(currentTaskDone)) {            //Si el elemento ya estaba seleccionado
-                deselectTask(currentTaskDone);                    //Se deselecciona
+            if (isTaskSelected(currentTask)) {            //Si el elemento ya estaba seleccionado
+                deselectTask(currentTask);                    //Se deselecciona
 
                 //checkSelection();                       //Comprobamos si sigue alguno seleccionado
             } else {                                      //Si no estaba seleccionado
-                tasksSelected.add(currentTaskDone);
+                tasksSelected.add(currentTask);
             }
 
         } else {                                          //Si no estaba ningun elemento seleccionado
             //Codigo DETALLE
-            selectedTaskDone = currentTaskDone;
+            selectedTask = currentTask;
             Navigator app = (Navigator) getView().getApplication();
             app.goToDetailScreen(this,adapter);
         }
@@ -204,14 +204,14 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
     
 
-    private void deselectTask(TaskDone currentTaskDone) {
-        tasksSelected.remove(currentTaskDone);
+    private void deselectTask(Task currentTask) {
+        tasksSelected.remove(currentTask);
     }
 
-    private boolean isTaskSelected(TaskDone currentTaskDone) {
+    private boolean isTaskSelected(Task currentTask) {
         boolean result = false;
         for(int i=0;i<tasksSelected.size();i++){
-            if(currentTaskDone.equals(tasksSelected.get(i)))
+            if(currentTask.equals(tasksSelected.get(i)))
                 result= true;
         }
         return result;
@@ -224,7 +224,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         getView().startSelection();           //iniciamos modo seleccion multiple
 
         Log.v("long click", "pos: " + pos);
-        TaskDone currentTaskDone = adapter.getItem(pos);
+        Task currentTask = adapter.getItem(pos);
 
 
 
@@ -232,14 +232,14 @@ public class ListDonePresenterMaster extends GenericPresenter
             setItemChecked(pos, false);          //Se deselecciona
             Log.v("Se deselecciona", "pos: " + pos);
 
-            tasksSelected.remove(currentTaskDone);       //Se elimina del Array de seleccionados
+            tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
             posSelected.remove(Integer.toString(pos));                  //Se elimina del array de posiciones seleccionadas
             checkSelection();                        //miramos si hay algun seleccionado
         } else {                                      //Si no estaba seleccionado
             setListClicked(true);                   //actualizamos estado a algo seleccionado
             setItemChecked(pos, true);           //Se selecciona
             Log.v("Se selecciona", "pos: " + pos);
-            tasksSelected.add(currentTaskDone);           //Se añade al array de seleccionados
+            tasksSelected.add(currentTask);           //Se añade al array de seleccionados
             posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
            checkSelection();
 
@@ -250,24 +250,24 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     }
     @Override
-    public void onLongListClick2(TaskDone taskToDo) {
+    public void onLongListClick2(Task Task) {
         getView().startSelection();           //iniciamos modo seleccion multiple
 
 
-        TaskDone currentTaskDone = taskToDo;
+        Task currentTask = Task;
 
 
 
-        if (isTaskSelected(currentTaskDone)) {                //Si el elemento ya estaba seleccionado
+        if (isTaskSelected(currentTask)) {                //Si el elemento ya estaba seleccionado
             //Se deselecciona
-            tasksSelected.remove(currentTaskDone);
+            tasksSelected.remove(currentTask);
 
 
             // checkSelection();                        //miramos si hay algun seleccionado
         } else {                                      //Si no estaba seleccionado
             setListClicked(true);                   //actualizamos estado a algo seleccionado
             //Se selecciona
-            tasksSelected.add(currentTaskDone);
+            tasksSelected.add(currentTask);
             //checkSelection();
 
         }
@@ -385,8 +385,8 @@ public class ListDonePresenterMaster extends GenericPresenter
         return getActivityContext();
     }
 
-    public TaskDone getSelectedTaskDone() {
-        return selectedTaskDone;
+    public Task getSelectedTask() {
+        return selectedTask;
     }
 
     @Override
@@ -448,18 +448,18 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onLoadItemsTaskFinished(List<TaskDone> itemsFromDatabase) {
+    public void onLoadItemsTaskFinished(List<Task> itemsFromDatabase) {
         getView().setRecyclerAdapterContent(itemsFromDatabase);
     }
 
     /*
         @Override
-        public void onLoadItemsTaskFinished(List<TaskDone> items) {
+        public void onLoadItemsTaskFinished(List<Task> items) {
             getView().setRecyclerAdapterContent(items);
 
         }*/
 @Override
-public void onErrorDeletingItem(TaskDone item) {
+public void onErrorDeletingItem(Task item) {
 
 }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskDone;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public interface ListDoneMaster {
@@ -37,7 +37,7 @@ public interface ListDoneMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    TaskDone getSelectedTaskDone();
+    Task getSelectedTask();
     boolean getToolbarVisibility();
 
   }
@@ -62,15 +62,15 @@ public interface ListDoneMaster {
     void onLongListClick(int pos, Task_Adapter adapter);
 
     void onBinBtnClick(Task_Adapter adapter);
-    void onListClick2(TaskDone item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void onListClick2(Task item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
-    void onLongListClick2(TaskDone item);
+    void onLongListClick2(Task item);
 
 
 
     /*
           @Override
-          public void onLoadItemsTaskFinished(List<TaskDone> items) {
+          public void onLoadItemsTaskFinished(List<Task> items) {
               getView().setRecyclerAdapterContent(items);
       
           }*/
@@ -99,14 +99,14 @@ public interface ListDoneMaster {
     
 
     void deselect(int i, boolean b);
-    void setRecyclerAdapterContent(List<TaskDone> items);
+    void setRecyclerAdapterContent(List<Task> items);
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void deleteItem(TaskDone item);
+    void deleteItem(Task item);
     void loadItems();
     void reloadItems();
     void setDatabaseValidity(boolean valid);
@@ -121,8 +121,8 @@ public interface ListDoneMaster {
 
     void onLoadItemsTaskStarted();
 
-    void onLoadItemsTaskFinished(List<TaskDone> itemsFromDatabase);
+    void onLoadItemsTaskFinished(List<Task> itemsFromDatabase);
 
-    void onErrorDeletingItem(TaskDone item);
+    void onErrorDeletingItem(Task item);
   }
 }

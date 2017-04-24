@@ -5,32 +5,32 @@ import java.util.UUID;
 import io.realm.RealmObject;
 
 
-public class TaskForgotten extends RealmObject{
+public class Task extends RealmObject{
 
 
     private String taskId;
-    private int tagId;
+    private int subjectId;
     private String date;
     private String title;
     private String description;
 
-    public TaskForgotten(int tagId, String title, String description, String date) {
+    public Task(int tagId, String title, String description, String date) {
         this.taskId= UUID.randomUUID().toString();
-        this.tagId = tagId;
+        this.subjectId = tagId;
         this.date = date;
         this.title = title;
         this.description = description;
     }
-    public TaskForgotten(){
+    public Task(){
 
     }
 
-    public int getTagId() {
-        return tagId;
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setSubjectId(int tagId) {
+        this.subjectId = tagId;
     }
 
     public String getDate() {
@@ -64,9 +64,9 @@ public class TaskForgotten extends RealmObject{
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TaskForgotten){
-            TaskForgotten taskToDo = (TaskForgotten) obj;
-            if(taskToDo.getTaskId() == getTaskId()){
+        if (obj instanceof Task){
+            Task Task = (Task) obj;
+            if(Task.getTaskId() == getTaskId()){
                 return true;
             }
         }

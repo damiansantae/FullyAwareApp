@@ -7,7 +7,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public interface ListForgottenMaster {
@@ -37,7 +37,7 @@ public interface ListForgottenMaster {
    */
    interface MasterListToDetail{
     Context getManagedContext();
-    TaskForgotten getSelectedTaskForgotten();
+    Task getSelectedTask();
     boolean getToolbarVisibility();
 
   }
@@ -65,7 +65,7 @@ public interface ListForgottenMaster {
 
     /*
           @Override
-          public void onLoadItemsTaskFinished(List<TaskForgotten> items) {
+          public void onLoadItemsTaskFinished(List<Task> items) {
               getView().setRecyclerAdapterContent(items);
 
           }*/
@@ -106,7 +106,7 @@ public interface ListForgottenMaster {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void deleteItem(TaskForgotten item);
+    void deleteItem(Task item);
     void loadItems();
     void reloadItems();
     void setDatabaseValidity(boolean valid);
@@ -121,8 +121,8 @@ public interface ListForgottenMaster {
 
     void onLoadItemsTaskStarted();
 
-    void onLoadItemsTaskFinished(List<TaskForgotten> itemsFromDatabase);
+    void onLoadItemsTaskFinished(List<Task> itemsFromDatabase);
 
-    void onErrorDeletingItem(TaskForgotten item);
+    void onErrorDeletingItem(Task item);
   }
 }

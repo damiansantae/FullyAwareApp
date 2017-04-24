@@ -7,7 +7,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;
 
 
@@ -101,7 +101,7 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
   */
 
     @Override
-    public void deleteItem(TaskForgotten item) {
+    public void deleteItem(Task item) {
         if (getItemsFromDatabase().contains(item)){
             //items.remove(item);
             deleteDatabaseItem(item);
@@ -197,48 +197,48 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
     public void addInitialTasks(){
         //Request realm instance
 
-        TaskForgotten TaskForgotten1 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
-        TaskForgotten TaskForgotten2 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
-        TaskForgotten TaskForgotten3 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
-        TaskForgotten TaskForgotten4 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
-        TaskForgotten TaskForgotten5 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
-        TaskForgotten TaskForgotten6 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
-        TaskForgotten TaskForgotten7 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
-        TaskForgotten TaskForgotten8 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
-        TaskForgotten TaskForgotten9 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
-        TaskForgotten TaskForgotten10 = new TaskForgotten(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
+        Task task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
+        Task task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
+        Task task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
+        Task task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
+        Task task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
+        Task task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
+        Task task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
+        Task task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
+        Task task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
+        Task task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
 
 
 
 //Insert element
         realmDatabase.beginTransaction();
 
-        realmDatabase.copyToRealm(TaskForgotten1);
-        realmDatabase.copyToRealm(TaskForgotten2);
-        realmDatabase.copyToRealm(TaskForgotten3);
-        realmDatabase.copyToRealm(TaskForgotten4);
-        realmDatabase.copyToRealm(TaskForgotten5);
-        realmDatabase.copyToRealm(TaskForgotten6);
-        realmDatabase.copyToRealm(TaskForgotten7);
-        realmDatabase.copyToRealm(TaskForgotten8);
-        realmDatabase.copyToRealm(TaskForgotten9);
-        realmDatabase.copyToRealm(TaskForgotten10);
+        realmDatabase.copyToRealm(task1);
+        realmDatabase.copyToRealm(task2);
+        realmDatabase.copyToRealm(task3);
+        realmDatabase.copyToRealm(task4);
+        realmDatabase.copyToRealm(task5);
+        realmDatabase.copyToRealm(task6);
+        realmDatabase.copyToRealm(task7);
+        realmDatabase.copyToRealm(task8);
+        realmDatabase.copyToRealm(task9);
+        realmDatabase.copyToRealm(task10);
 
         realmDatabase.commitTransaction();
     }
 
     private void deleteAllDatabaseItems(){
-        for(TaskForgotten item: getItemsFromDatabase()){
+        for(Task item: getItemsFromDatabase()){
             deleteDatabaseItem(item);
         }
     }
 
-    private void deleteDatabaseItem(TaskForgotten item) {
+    private void deleteDatabaseItem(Task item) {
         final String id = item.getTaskId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(TaskForgotten.class).equalTo("id", id)
+                realm.where(Task.class).equalTo("id", id)
                         .findAll()
                         .deleteAllFromRealm();
                 ;
@@ -276,7 +276,7 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
       // Open a transaction to store items into the realmDatabase
       realmDatabase.beginTransaction();
       try {
-        realmDatabase.createAllFromJson(TaskForgotten.class, stream);
+        realmDatabase.createAllFromJson(Task.class, stream);
         realmDatabase.commitTransaction();
       } catch (IOException error) {
         Log.d(TAG, "error=" +  error);
@@ -295,17 +295,17 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
 
 
 
-    private List<TaskForgotten> getItemsFromDatabase(){
+    private List<Task> getItemsFromDatabase(){
         if(usingWrapper) {
             return getItemsFromDatabaseWrapper();
         }
 
-        return realmDatabase.where(TaskForgotten.class).findAll();
+        return realmDatabase.where(Task.class).findAll();
     }
 
-    private List<TaskForgotten> getItemsFromDatabaseWrapper(){
+    private List<Task> getItemsFromDatabaseWrapper(){
         Log.d(TAG, "calling getItemsFromDatabaseWrapper() method");
-        List<TaskForgotten> dbItems = realmDatabase.where(TaskForgotten.class).findAll();
+        List<Task> dbItems = realmDatabase.where(Task.class).findAll();
 
         Log.d(TAG, "items=" +  dbItems);
         return dbItems;
@@ -344,7 +344,7 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
-        realm.createObjectFromJson(TaskForgotten.class, json);
+        realm.createObjectFromJson(Task.class, json);
       }
     });
   }*/

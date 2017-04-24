@@ -10,9 +10,9 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
@@ -105,8 +105,8 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public TaskToDo getTask() {
-        return getModel().getTaskToDo();
+    public Task getTask() {
+        return getModel().getTask();
     }
 
     @Override
@@ -150,8 +150,8 @@ observado.addObserver(master);
     }
 
     @Override
-    public void setItem(TaskToDo selectedItem) {
-        getModel().setTaskToDo(selectedItem);
+    public void setItem(Task selectedItem) {
+        getModel().setTask(selectedItem);
 
     }
 
@@ -170,8 +170,8 @@ observado.addObserver(master);
     }
 
     @Override
-    public TaskToDo getTaskToDelete() {
-        return getModel().getTaskToDo();
+    public Task getTaskToDelete() {
+        return getModel().getTask();
     }
 
 

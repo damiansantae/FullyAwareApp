@@ -31,7 +31,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoViewMasterTesting
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -318,7 +318,7 @@ public class ListToDoViewMasterTesting
     }
 
     @Override
-    public void setRecyclerAdapterContent(List<TaskToDo> items) {
+    public void setRecyclerAdapterContent(List<Task> items) {
         if (recyclerView != null) {
             TaskRecyclerViewAdapter recyclerAdapter =
                     (TaskRecyclerViewAdapter) recyclerView.getAdapter();
@@ -384,7 +384,7 @@ public class ListToDoViewMasterTesting
     public class TaskRecyclerViewAdapter
             extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
-        private List<TaskToDo> items;
+        private List<Task> items;
 
         public TaskRecyclerViewAdapter() {
             items = new ArrayList<>();
@@ -397,19 +397,19 @@ public class ListToDoViewMasterTesting
             return new ViewHolder(view);
         }
 
-        public void setItemList(List<TaskToDo> items) {
+        public void setItemList(List<Task> items) {
             this.items = items;
             notifyDataSetChanged();
         }
 
 
-    public List<TaskToDo> getItems(){
+    public List<Task> getItems(){
     return this.items;
 }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            TaskToDo task = items.get(position);
+            Task task = items.get(position);
             holder.bindView(task);
 
         }
@@ -426,7 +426,7 @@ public class ListToDoViewMasterTesting
             private TextView description;
             private TextView date;
 
-            public TaskToDo item;
+            public Task item;
 
             public ViewHolder(View view) {
                 super(view);
@@ -439,7 +439,7 @@ public class ListToDoViewMasterTesting
              public String toString() {
                  return super.toString() + " '" + contentView.getText() + "'";
              }*/
-            public void bindView(TaskToDo task) {
+            public void bindView(Task task) {
                 tag = (ImageView) itemView.findViewById(R.id.tag);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);

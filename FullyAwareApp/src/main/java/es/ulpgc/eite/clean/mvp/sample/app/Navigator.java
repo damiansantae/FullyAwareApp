@@ -72,6 +72,7 @@ public interface Navigator {
 
     //Comunicación M/D
 
+
     /***************************************************************
      ******** Navegación direccion Shedule al resto de pantallas */
 

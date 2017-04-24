@@ -3,7 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listForgottenDetail;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
-import es.ulpgc.eite.clean.mvp.sample.app.TaskForgotten;
+import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public interface ListForgottenDetail {
 
@@ -17,7 +17,7 @@ public interface ListForgottenDetail {
    */
   interface MasterListToDetail{
     void setToolbarVisibility(boolean b);
-    void setItem(TaskForgotten selectedItem);
+    void setItem(Task selectedItem);
 
     void onScreenStarted();
   }
@@ -27,7 +27,7 @@ public interface ListForgottenDetail {
    */
   interface DetailToMaster {
     void destroyView();
-    TaskForgotten getTaskToDelete();
+    Task getTaskToDelete();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ public interface ListForgottenDetail {
   interface ViewToPresenter extends Presenter<PresenterToView> {
     void onButtonClicked();
 
-    TaskForgotten getTask();
+    Task getTask();
 
     void onDeleteActionClicked();
   }
@@ -59,8 +59,8 @@ public interface ListForgottenDetail {
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
-    void setTaskForgotten(TaskForgotten selectedItem);
-    TaskForgotten getTaskForgotten();
+    void setTask(Task selectedItem);
+    Task getTask();
   }
 
   /**
