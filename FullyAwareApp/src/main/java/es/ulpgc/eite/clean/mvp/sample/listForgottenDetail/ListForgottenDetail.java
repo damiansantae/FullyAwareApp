@@ -52,7 +52,7 @@ public interface ListForgottenDetail {
     void hideToolbar();
 
 
-
+      void toolbarChanged(String colour);
   }
 
   /**

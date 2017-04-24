@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,7 +44,8 @@ public class ListDoneViewMasterTesting
     enum Direction {LEFT, RIGHT}
 
     private TaskRecyclerViewAdapter adapter;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -120,7 +122,7 @@ public class ListDoneViewMasterTesting
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-
+loadSharePreferences();
     }
 
     /**
@@ -141,6 +143,17 @@ public class ListDoneViewMasterTesting
         getMenuInflater().inflate(R.menu.menu_listtodo_master_done, menu);
         return true;
     }
+
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

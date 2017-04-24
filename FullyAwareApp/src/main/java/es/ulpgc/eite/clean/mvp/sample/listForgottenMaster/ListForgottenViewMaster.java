@@ -49,7 +49,8 @@ public class ListForgottenViewMaster
     private SparseBooleanArray tasksSelected;
 
     private TaskRecyclerViewAdapter adapter;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -126,7 +127,7 @@ public class ListForgottenViewMaster
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
+        loadSharePreferences();
 
     }
 
@@ -151,7 +152,17 @@ public class ListForgottenViewMaster
 
 
     ///
-    
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -62,9 +62,19 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_preferences);
     preferencesListView();
+        loadSharePreferences();
 
     }
 
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
     private void preferencesListView(){
         // Creamos lista de elementos
        prefItems = new String[]{"App Colour","Edit Subjects","Donate","About"};
@@ -205,6 +215,8 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         }
     }
 
+
+
     private void toolbarChanged() {
         getPresenter().toolbarChanged();
     }
@@ -298,6 +310,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     @Override
     protected void onResume() {
         super.onResume(PreferencesPresenter.class, this);
+
     }
 }
 

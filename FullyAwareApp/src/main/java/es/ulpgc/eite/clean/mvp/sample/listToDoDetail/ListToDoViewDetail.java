@@ -1,12 +1,14 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +29,8 @@ public class ListToDoViewDetail
     private Task Task;
     private CollapsingToolbarLayout toolbarLayout;
     private AppBarLayout appbarLayout;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
 
     @Override
@@ -48,10 +51,18 @@ public class ListToDoViewDetail
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
 
-
+loadSharePreferences();
 
     }
-
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
 
     /**
      * Method that initialized MVP objects
