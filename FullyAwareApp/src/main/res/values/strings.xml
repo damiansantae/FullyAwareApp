@@ -7,4 +7,6 @@
     <string name="action_delete">Delete</string>
     <string name="subject">Subject</string>
     <string name="action_recover">Recover</string>
+    <string name="action_done">Done</string>
+    <string name="action_change">Modify task</string>
 </resources>

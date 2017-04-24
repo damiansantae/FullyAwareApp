@@ -181,9 +181,9 @@ public class ListToDoViewMasterTesting
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
 
-        }else if (id ==R.id.menuToDo){
+
+         if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
         }

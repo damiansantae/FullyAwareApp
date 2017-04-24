@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -150,10 +149,7 @@ public class ListDoneViewMasterTesting
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
-            return true;
-
-        }else if (id ==R.id.menuToDo){
+       if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
             Navigator app = (Navigator) getApplication();
