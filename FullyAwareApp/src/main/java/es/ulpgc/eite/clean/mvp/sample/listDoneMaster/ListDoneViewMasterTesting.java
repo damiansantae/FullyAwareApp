@@ -241,6 +241,12 @@ public class ListDoneViewMasterTesting
        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
+    @Override
+    public void setToastDelete() {
+        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
+
+    }
+
 
     @Override
     public void setChoiceMode(int i) {

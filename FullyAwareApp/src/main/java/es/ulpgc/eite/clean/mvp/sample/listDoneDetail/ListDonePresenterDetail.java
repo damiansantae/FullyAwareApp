@@ -3,12 +3,15 @@ package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
 
 import android.util.Log;
 
+import java.util.Observable;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 
 public class ListDonePresenterDetail extends GenericPresenter
@@ -20,6 +23,7 @@ public class ListDonePresenterDetail extends GenericPresenter
 
 private boolean toolbarVisible;
     private ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    private ObservadoDone observado;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -32,6 +36,7 @@ private boolean toolbarVisible;
     @Override
     public void onCreate(ListDoneDetail.PresenterToView view) {
         super.onCreate(ListDoneModelDetail.class, this);
+        observado = new ObservadoDone();
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -109,6 +114,7 @@ private boolean toolbarVisible;
     }
 
 
+
     ///////////////////////////////////////////////////////////////////////////////////
     // To ListForgottenDetail //////////////////////////////////////////////////////////////////////
 
@@ -160,6 +166,11 @@ private boolean toolbarVisible;
         return getModel().getTask();
     }
 
+    @Override
+    public void setMaster(ListDonePresenterMaster master) {
+        observado.addObserver(master);
+
+    }
 
 
 
@@ -180,6 +191,14 @@ private boolean toolbarVisible;
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
+    }
+    public class ObservadoDone extends Observable {
+
+        public void notifyMaster(){
+            setChanged();
+            notifyObservers(true);
+        }
+
     }
 
 
