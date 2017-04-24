@@ -334,6 +334,12 @@ public class ListToDoViewMasterTesting
         toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
     }
 
+    @Override
+    public void setToastDelete() {
+        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
+
+    }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

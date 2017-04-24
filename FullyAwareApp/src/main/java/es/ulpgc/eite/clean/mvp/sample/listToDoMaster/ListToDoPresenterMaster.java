@@ -678,6 +678,10 @@ checkSelection2();
 
     @Override
     public void update(Observable o, Object arg) {
+        if(arg.equals(true))getView().setToastDelete();
+
+
+
 
     }
 }

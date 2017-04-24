@@ -15,7 +15,6 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
@@ -50,6 +49,8 @@ public class App extends Application implements Mediator, Navigator {
     private ListDoneStateTask listDoneDetailToMasterState;
     private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
+
+
 
     @Override
     public void onCreate() {
@@ -97,6 +98,8 @@ public class App extends Application implements Mediator, Navigator {
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
+
+
 
     }
 
@@ -184,9 +187,12 @@ public class App extends Application implements Mediator, Navigator {
             presenter.setToolbarVisibility(masterListToDetailToDoState.toolbarVisible);
             presenter.setItem(masterListToDetailToDoState.selectedItem);
             presenter.setAdapter(masterListToDetailToDoState.adapter);
+            presenter.setMaster((ListToDoPresenterMaster) masterListToDetailToDoState.master);
+
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
+
         masterListToDetailToDoState = null;
         presenter.onScreenStarted();
     }
@@ -400,6 +406,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTaskToDo();
         masterListToDetailToDoState.adapter = adapter;
+        masterListToDetailToDoState.master = listToDoPresenterMaster;
 
         // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTaskToDo().getTagId();
 
@@ -759,6 +766,7 @@ public class App extends Application implements Mediator, Navigator {
         String subject;
         String date;
         ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+        public ListToDoMaster.MasterListToDetail master;
     }
 
     private class DetailDoneState {

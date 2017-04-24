@@ -3,12 +3,15 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.util.Log;
 
+import java.util.Observable;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public class ListToDoPresenterDetail extends GenericPresenter
@@ -20,9 +23,11 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 private boolean toolbarVisible;
     private ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    private ListToDoPresenterMaster master;
 
     private boolean isChanged;
     private final Object MUTEX= new Object();
+    private Observado observado;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -35,6 +40,7 @@ private boolean toolbarVisible;
     @Override
     public void onCreate(ListToDoDetail.PresenterToView view) {
         super.onCreate(ListToDoModelDetail.class, this);
+        observado = new Observado();
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -106,6 +112,7 @@ private boolean toolbarVisible;
     @Override
     public void onDeleteActionClicked() {
        Navigator app = (Navigator) getView().getApplication();
+        observado.notifyMaster();
         app.backToMasterScreen(this);
 
     }
@@ -129,6 +136,11 @@ private boolean toolbarVisible;
     @Override
     public void setAdapter(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         this.adapter=adapter;
+    }
+
+    @Override
+    public void setMaster(ListToDoPresenterMaster master) {
+observado.addObserver(master);
     }
 
 
@@ -177,5 +189,13 @@ private boolean toolbarVisible;
     }
 
 
+public class Observado extends Observable{
+
+    public void notifyMaster(){
+        setChanged();
+        notifyObservers(true);
+    }
+
+}
 
 }

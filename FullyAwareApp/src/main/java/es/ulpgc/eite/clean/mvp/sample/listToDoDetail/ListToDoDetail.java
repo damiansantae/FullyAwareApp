@@ -4,6 +4,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.TaskToDo;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public interface ListToDoDetail {
@@ -23,6 +24,9 @@ public interface ListToDoDetail {
     void onScreenStarted();
 
       void setAdapter(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+
+
+    void setMaster(ListToDoPresenterMaster master);
   }
   /**
    * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
