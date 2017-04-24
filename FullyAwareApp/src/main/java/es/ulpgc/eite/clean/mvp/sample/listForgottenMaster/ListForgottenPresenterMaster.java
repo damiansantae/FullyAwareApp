@@ -8,6 +8,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -18,7 +20,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenPresenterMaster extends GenericPresenter
         <ListForgottenMaster.PresenterToView, ListForgottenMaster.PresenterToModel, ListForgottenMaster.ModelToPresenter, ListForgottenModelMaster>
-        implements ListForgottenMaster.ViewToPresenter, ListForgottenMaster.ModelToPresenter, ListForgottenMaster.ListForgottenTo, ListForgottenMaster.ToListForgotten, ListForgottenMaster.MasterListToDetail, ListForgottenMaster.DetailToMaster {
+        implements ListForgottenMaster.ViewToPresenter, ListForgottenMaster.ModelToPresenter, ListForgottenMaster.ListForgottenTo, ListForgottenMaster.ToListForgotten, ListForgottenMaster.MasterListToDetail, ListForgottenMaster.DetailToMaster,Observer{
 
 
     private boolean toolbarVisible;
@@ -433,4 +435,15 @@ public void onErrorDeletingItem(Task item) {
 
 }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+        if(arg.equals(true)){
+            getView().setToastDelete();
+            getModel().deleteItem(selectedTask);
+
+        }
+
+
+    }
 }

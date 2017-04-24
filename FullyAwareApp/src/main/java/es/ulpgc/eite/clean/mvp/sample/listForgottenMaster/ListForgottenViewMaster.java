@@ -172,11 +172,11 @@ public class ListForgottenViewMaster
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
+       if (id ==R.id.menuToDo){
+            Navigator app = (Navigator) getApplication();
+            app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
 
-        }else if (id ==R.id.menuForgotten){
-
-            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
@@ -188,13 +188,7 @@ public class ListForgottenViewMaster
             app.goToScheduleScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
         }
-        else if (id ==R.id.menuToDo){
-            Navigator app = (Navigator) getApplication();
-            app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
-
-
-        } else if (id ==R.id.menuPreferences) {
+         else if (id ==R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
@@ -262,6 +256,12 @@ public class ListForgottenViewMaster
     @Override
     public void startSelection() {
         // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+    }
+
+    @Override
+    public void setToastDelete() {
+        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
 
     }
 

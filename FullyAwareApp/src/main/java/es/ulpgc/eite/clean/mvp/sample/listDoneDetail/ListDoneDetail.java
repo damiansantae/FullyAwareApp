@@ -4,6 +4,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 
 public interface ListDoneDetail {
@@ -23,6 +24,8 @@ public interface ListDoneDetail {
     void setItem(Task selectedItem);
 
     void onScreenStarted();
+
+      void setMaster(ListDonePresenterMaster master);
   }
   /**
    * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla

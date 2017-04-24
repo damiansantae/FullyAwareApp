@@ -105,6 +105,12 @@ loadSharePreferences();
     if (id == R.id.action_delete) {
         getPresenter().onDeleteActionClicked();
       return true;
+    } else if(id==R.id.action_done){
+        //TODO: codigo para pasar tarea a done
+
+    }else if(id==R.id.action_change){
+        //TODO: ir acitvity modificar tarea
+
     }
 
     return super.onOptionsItemSelected(item);

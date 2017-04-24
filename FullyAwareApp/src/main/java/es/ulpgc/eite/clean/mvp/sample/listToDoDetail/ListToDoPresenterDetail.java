@@ -23,7 +23,7 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 private boolean toolbarVisible;
     private ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
-    private ListToDoPresenterMaster master;
+
 
     private boolean isChanged;
     private final Object MUTEX= new Object();

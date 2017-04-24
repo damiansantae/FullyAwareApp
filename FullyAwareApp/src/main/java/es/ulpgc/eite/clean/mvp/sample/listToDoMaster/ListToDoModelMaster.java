@@ -100,7 +100,9 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
 
   @Override
   public void deleteItem(Task item) {
-    if (getItemsFromDatabase().contains(item)){
+
+    boolean result = getItemsFromDatabase().contains(item);
+    if (getItemsFromDatabase().contains(item)){ //TODO: el problema está aquí, no encuentra el item en la base de datos
       //items.remove(item);
       deleteDatabaseItem(item);
     } else {

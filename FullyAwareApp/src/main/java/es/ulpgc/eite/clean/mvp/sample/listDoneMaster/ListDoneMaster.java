@@ -100,6 +100,8 @@ public interface ListDoneMaster {
 
     void deselect(int i, boolean b);
     void setRecyclerAdapterContent(List<Task> items);
+
+      void setToastDelete();
   }
 
   /**

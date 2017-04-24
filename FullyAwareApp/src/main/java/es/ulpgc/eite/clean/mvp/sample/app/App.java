@@ -15,10 +15,12 @@ import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
@@ -220,10 +222,11 @@ public class App extends Application implements Mediator, Navigator {
             presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
             presenter.setAdapter(masterListToDetailDoneState.adapter);
+            presenter.setMaster((ListDonePresenterMaster) masterListToDetailDoneState.master);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailDoneState = null;
+        masterListToDetailForgottenState = null;
         presenter.onScreenStarted();
     }
 
@@ -233,6 +236,8 @@ public class App extends Application implements Mediator, Navigator {
         if (masterListToDetailForgottenState != null) {
             presenter.setToolbarVisibility(!masterListToDetailForgottenState.toolbarVisible);
             presenter.setItem(masterListToDetailForgottenState.selectedItem);
+            presenter.setAdapter(masterListToDetailForgottenState.adapter);
+            presenter.setMaster((ListForgottenPresenterMaster) masterListToDetailToDoState.master);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente

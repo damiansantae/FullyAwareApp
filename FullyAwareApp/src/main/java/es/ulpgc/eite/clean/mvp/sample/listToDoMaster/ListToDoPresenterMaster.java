@@ -702,7 +702,11 @@ checkSelection2();
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg.equals(true))getView().setToastDelete();
+
+        if(arg.equals(true)){
+            getModel().deleteItem(selectedTask);
+            getView().setToastDelete();
+        }
 
 
 
