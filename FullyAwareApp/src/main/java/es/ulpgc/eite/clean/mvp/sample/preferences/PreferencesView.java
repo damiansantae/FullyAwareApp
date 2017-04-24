@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
@@ -50,6 +52,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     private boolean toolbarColorChanged;
 
     SharedPreferences preferences;
+    public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     List<String> colorPrimaryList;
     List<String> colorPrimaryDarkList;
@@ -169,7 +172,8 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         toolbarColour = preferences.getInt(TOOLBAR_COLOR_KEY, ContextCompat.getColor(this, R.color.colorPrimary));
         colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
-    showColorDialog(this);
+        showColorDialog(this);
+
     }
 
 
@@ -232,10 +236,18 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     @Override
     public void toolbarChanged(String colour) {
+
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
-        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
-        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        int color = (Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour))));
+        getWindow().setStatusBarColor(color);
+        toolbar.setBackgroundColor(color);
+        Mediator app = (Mediator) getApplication();
+        //Log.d("999AQUIIIIIIIII", "ENTRA A TOOLBARCHANGED");
+        //SharedPreferences myprefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        //myprefs.edit().putString(TOOLBAR_COLOR_KEY,app.getToolbarColour());
+        //Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
+        //myprefs.edit().commit();
     }
 
    /* @Override

@@ -45,6 +45,10 @@ public interface Mediator {
     String getToolbarColour();
 
 
+    int getToolbarColourInt();
+
     boolean checkToolbarChanged();
     void startingDetailScreen(ListForgottenDetail.MasterListToDetail presenter);
+
+
 }

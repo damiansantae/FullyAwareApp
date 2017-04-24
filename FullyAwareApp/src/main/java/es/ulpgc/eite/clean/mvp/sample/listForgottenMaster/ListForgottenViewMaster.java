@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -119,6 +120,10 @@ public class ListForgottenViewMaster
         getMenuInflater().inflate(R.menu.menu_listtodo_master_done, menu);
         return true;
     }
+
+
+    ///
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

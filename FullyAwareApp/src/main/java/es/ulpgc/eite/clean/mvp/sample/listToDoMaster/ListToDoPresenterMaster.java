@@ -2,11 +2,13 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //Prueba
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.util.SparseBooleanArray;
 import android.widget.Toast;
-
+import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -18,6 +20,8 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
@@ -35,7 +39,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private ArrayList<String> posSelected = new ArrayList<>();
 
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
-
+    SharedPreferences myprefs;
+    public static final String MY_PREFS = "MyPrefs";
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
 
 
 
@@ -114,10 +120,24 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
+
     private void checkToolbarColourChanges(Mediator app){
+
+        Context context = getApplicationContext();
+        SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+
         if (app.checkToolbarChanged() == true){
+
+            Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
+
+
+            SharedPreferences.Editor editor = myprefs.edit();
+            editor.putString(TOOLBAR_COLOR_KEY, colour);
+            Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
+            editor.commit();
+            Log.d("999AQUIIIIIIIII", ""+ myprefs.getString(TOOLBAR_COLOR_KEY, null));
         }
     }
 
