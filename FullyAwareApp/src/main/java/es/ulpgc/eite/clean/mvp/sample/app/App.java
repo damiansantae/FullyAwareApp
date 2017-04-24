@@ -17,6 +17,7 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
@@ -467,15 +468,19 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster) {
+    public void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster, ListForgottenViewMaster.TaskRecyclerViewAdapter adapter) {
         masterListToDetailForgottenState = new DetailForgottenState();
         masterListToDetailForgottenState.toolbarVisible = listForgottenPresenterMaster.getToolbarVisibility();
         masterListToDetailForgottenState.selectedItem = listForgottenPresenterMaster.getSelectedTask();
+        masterListToDetailForgottenState.adapter = adapter;
+        masterListToDetailForgottenState.master = listForgottenPresenterMaster;
 
-        // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+
+        // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listForgottenPresenterMaster.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewDetail.class));
+            view.startActivity(new Intent(view, ListForgottenViewDetail.class));
         }
     }
 
@@ -776,6 +781,7 @@ public class App extends Application implements Mediator, Navigator {
         String subject;
         String date;
         ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
+        public ListDoneMaster.MasterListToDetail master;
     }
 
     private class DetailForgottenState {
@@ -783,7 +789,8 @@ public class App extends Application implements Mediator, Navigator {
         Task selectedItem;
         String subject;
         String date;
-        ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+        ListForgottenViewMaster.TaskRecyclerViewAdapter adapter;
+        public ListForgottenMaster.MasterListToDetail master;
     }
 
 

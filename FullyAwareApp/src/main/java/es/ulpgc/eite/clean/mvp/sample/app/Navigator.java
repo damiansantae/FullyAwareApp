@@ -49,7 +49,6 @@ public interface Navigator {
 
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
 
-    void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster);
 
     //Comunicación M/D
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
@@ -62,14 +61,8 @@ public interface Navigator {
      ******** Navegación direccion ListForgotten al resto de pantallas y detalle*/
     void goToScheduleScreen(ListForgottenMaster.ListForgottenTo presenter);
     void goToListToDoScreen(ListForgottenMaster.ListForgottenTo presenter);
-
-
-
-
     void goToPreferencesScreen(Schedule.ScheduleTo presenter);
-
-
-    void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter);
+  void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter);
 
     //Comunicación M/D
     void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster, ListForgottenViewMaster.TaskRecyclerViewAdapter adapter);

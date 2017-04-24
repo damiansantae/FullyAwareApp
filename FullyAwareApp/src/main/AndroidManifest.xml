@@ -83,12 +83,6 @@
         </activity>
 
         <activity
-            android:name=".listDoneMaster.ListDoneViewMaster"
-            android:label="FullyAware"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity
             android:name=".listDoneMaster.ListDoneViewMasterTesting"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
