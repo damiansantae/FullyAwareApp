@@ -36,7 +36,7 @@ public class ListToDoViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
+        setContentView(R.layout.activity_task_detail_relative);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +81,8 @@ loadSharePreferences();
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
+            ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
+            ((TextView) findViewById(R.id.subject_txt)).setText(Task.getSubjectId());
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
