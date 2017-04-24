@@ -72,7 +72,7 @@ public interface ListToDoMaster {
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
-      void onListClick2(View item, int position, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+      void onListClick2(View item, int position, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task);
 
     void onLongListClick2(View item, int adapterPosition);
 

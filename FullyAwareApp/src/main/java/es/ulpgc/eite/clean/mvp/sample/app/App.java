@@ -22,6 +22,7 @@ import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaste
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
@@ -404,6 +405,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState = new DetailToDoState();
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTask();
+
         masterListToDetailToDoState.adapter = adapter;
         masterListToDetailToDoState.master = listToDoPresenterMaster;
 

@@ -193,7 +193,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 checkAddBtnVisibility();
     }
     @Override
-    public void onListClick2(View v, int adapterPosition,  ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void onListClick2(View v, int adapterPosition, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -206,6 +206,7 @@ checkAddBtnVisibility();
             }
         }else{
             Navigator app = (Navigator) getView().getApplication();
+            selectedTask=task;
             app.goToDetailScreen(this, adapter);
         }
 checkSelection2();

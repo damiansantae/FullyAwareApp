@@ -439,7 +439,7 @@ public class ListToDoViewMasterTesting
              public String toString() {
                  return super.toString() + " '" + contentView.getText() + "'";
              }*/
-            public void bindView(Task task) {
+            public void bindView(final Task task) {
                 tag = (ImageView) itemView.findViewById(R.id.tag);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);
@@ -455,7 +455,7 @@ public class ListToDoViewMasterTesting
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter);
+                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
 
                     }
                 });
