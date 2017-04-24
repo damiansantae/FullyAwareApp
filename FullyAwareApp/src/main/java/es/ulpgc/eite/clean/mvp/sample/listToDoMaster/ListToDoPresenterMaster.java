@@ -3,12 +3,11 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.util.SparseBooleanArray;
 import android.widget.Toast;
-import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -148,6 +147,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onBackPressed() {
         Log.d(TAG, "calling onBackPressed()");
+
+     super.onDestroy(true);
     }
 
     /**
@@ -314,7 +315,6 @@ checkSelection2();
             setDoneBtnVisibility(true);
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
-
         }
 checkSelection2();
         checkAddBtnVisibility();
@@ -351,7 +351,8 @@ checkSelection2();
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
-            getModel().deleteItem(selected.get(i));
+            Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
+            getModel().deleteDatabaseItem(selected.get(i));
 
         }
 
@@ -359,7 +360,7 @@ checkSelection2();
             if(itemsSelected.get(j)){
                 adapter.notifyItemRemoved(j);
             }
-       
+
         }
 
 itemsSelected.clear();
@@ -469,22 +470,24 @@ checkSelection2();
     }
 
     @Override
-    public void onDoneBtnClick(Task_Adapter adapter) {
-        int size = posSelected.size();
-        if (size !=0){
-            for (int i = 0; i < size; i++){
+    public void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        ArrayList<Task> selected = getSelectedTasks(adapter);
+        for(int i=0;i<selected.size();i++){
+            getModel().deleteItem(selected.get(i));
 
-                Mediator app = (Mediator) getApplication();
-                app.Task(TaskRepository.getInstance().Task(tasksSelected.get(i)));
-                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));
-                adapter.remove(tasksSelected.get(i));
-            }
-            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            checkSelection();
         }
-        checkAddBtnVisibility();
-        checkDeleteBtnVisibility();
-        checkDoneBtnVisibility();
+
+        for(int j=0;j<adapter.getItemCount();j++){
+            if(itemsSelected.get(j)){
+                adapter.notifyItemRemoved(j);
+            }
+
+        }
+
+        itemsSelected.clear();
+        checkSelection2();
+
+
     }
 
 

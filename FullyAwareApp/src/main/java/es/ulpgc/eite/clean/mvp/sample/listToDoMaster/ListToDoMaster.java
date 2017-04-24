@@ -68,7 +68,7 @@ public interface ListToDoMaster {
 
     void onAddBtnClick(Task_Adapter adapter);
 
-    void onDoneBtnClick(Task_Adapter adapter);
+    void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
@@ -134,6 +134,8 @@ public interface ListToDoMaster {
     void addInitialTasks();
 
     void deleteTestItems();
+
+    void deleteDatabaseItem(Task item);
   }
 
   /**

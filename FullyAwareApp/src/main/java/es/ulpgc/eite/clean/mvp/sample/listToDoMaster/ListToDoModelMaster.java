@@ -244,8 +244,10 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     }
   }
 
-  private void deleteDatabaseItem(Task item) {
+  @Override
+  public void deleteDatabaseItem(Task item) {
     final String id = item.getTaskId();
+    Log.d(TAG+ "Item a eliminar", id);
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {
