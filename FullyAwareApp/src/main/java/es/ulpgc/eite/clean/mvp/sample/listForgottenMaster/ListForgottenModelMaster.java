@@ -197,32 +197,32 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
     public void addInitialTasks(){
         //Request realm instance
 
-        Task task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
-        Task task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
-        Task task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
-        Task task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
-        Task task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
-        Task task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
-        Task task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
-        Task task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
-        Task task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
-        Task task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
+        Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1", "ToDo");
+        Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2", "ToDo");
+        Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3", "ToDo");
+        Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4", "ToDo");
+        Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5", "ToDo");
+        Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6", "ToDo");
+        Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7", "ToDo");
+        Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8", "ToDo");
+        Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9", "ToDo");
+        Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10", "ToDo");
 
 
 
 //Insert element
         realmDatabase.beginTransaction();
 
-        realmDatabase.copyToRealm(task1);
-        realmDatabase.copyToRealm(task2);
-        realmDatabase.copyToRealm(task3);
-        realmDatabase.copyToRealm(task4);
-        realmDatabase.copyToRealm(task5);
-        realmDatabase.copyToRealm(task6);
-        realmDatabase.copyToRealm(task7);
-        realmDatabase.copyToRealm(task8);
-        realmDatabase.copyToRealm(task9);
-        realmDatabase.copyToRealm(task10);
+        realmDatabase.copyToRealm(Task1);
+        realmDatabase.copyToRealm(Task2);
+        realmDatabase.copyToRealm(Task3);
+        realmDatabase.copyToRealm(Task4);
+        realmDatabase.copyToRealm(Task5);
+        realmDatabase.copyToRealm(Task6);
+        realmDatabase.copyToRealm(Task7);
+        realmDatabase.copyToRealm(Task8);
+        realmDatabase.copyToRealm(Task9);
+        realmDatabase.copyToRealm(Task10);
 
         realmDatabase.commitTransaction();
     }

@@ -135,7 +135,7 @@ public class ListToDoViewMasterTesting
         done.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        // getPresenter().onDoneBtnClick(adapter);
+                                        getPresenter().onDoneBtnClick(adapter);
                                         // recyclerView.clearChoices();
                                         adapter.notifyDataSetChanged();
                                     }

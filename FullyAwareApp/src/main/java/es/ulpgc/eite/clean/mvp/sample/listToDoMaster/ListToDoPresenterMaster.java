@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //Prueba
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.util.SparseBooleanArray;
@@ -18,6 +19,9 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+
+import static android.content.ContentValues.TAG;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
@@ -35,6 +39,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private ArrayList<String> posSelected = new ArrayList<>();
 
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
+    private DatabaseFacade database;
 
 
 
@@ -56,6 +61,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
+        database = new DatabaseFacade();
 
         app.startingListToDoScreen(this);
         checkToolbarColourChanges(app);
@@ -86,7 +92,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             CheckDoneBtnVisibility();
-            getModel().loadItems();
             if(selectedState) {
                 getView().startSelection();
 
@@ -100,6 +105,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Mediator app = (Mediator) getView().getApplication();
         checkToolbarColourChanges(app);
+        loadItems();
     }
 
 
@@ -331,7 +337,7 @@ checkSelection2();
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
-            getModel().deleteItem(selected.get(i));
+            database.deleteDatabaseItem(selected.get(i));
 
         }
 
@@ -344,6 +350,9 @@ checkSelection2();
 
 itemsSelected.clear();
 checkSelection2();
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
 
     }
 
@@ -414,7 +423,7 @@ checkSelection2();
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
                 adapter.remove(tasksSelected.get(i));
-                getModel().deleteItem(tasksSelected.get(i));
+                database.deleteDatabaseItem(tasksSelected.get(i));
             }
             Context context = getApplicationContext();
             if(size == 1) {
@@ -449,19 +458,22 @@ checkSelection2();
     }
 
     @Override
-    public void onDoneBtnClick(Task_Adapter adapter) {
-        int size = posSelected.size();
-        if (size !=0){
-            for (int i = 0; i < size; i++){
+    public void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        ArrayList<Task> selected = getSelectedTasks(adapter);
+        for(int i=0;i<selected.size();i++){
+            database.setItemStatus(selected.get(i), "Done");
 
-                Mediator app = (Mediator) getApplication();
-                app.Task(TaskRepository.getInstance().Task(tasksSelected.get(i)));
-                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));
-                adapter.remove(tasksSelected.get(i));
-            }
-            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            checkSelection();
         }
+
+        for(int j=0;j<adapter.getItemCount();j++){
+            if(itemsSelected.get(j)){
+                adapter.notifyItemRemoved(j);
+            }
+
+        }
+
+        itemsSelected.clear();
+        checkSelection2();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -527,7 +539,7 @@ checkSelection2();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
-        getModel().loadItems();
+        loadItems();
     }
 
 
@@ -684,5 +696,45 @@ checkSelection2();
 
 
 
+    }
+    public void loadItems() {
+        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
+            startDelayedTask();
+        } else {*/
+            if(!(database.getRunningTask())){
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
+            } else {
+                Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+                onLoadItemsTaskStarted();
+            }
+        //}
+
+    }
+    /*private void startDelayedTask() {
+        Log.d(TAG, "calling startDelayedTask() method");
+        database.setRunningTask(true);
+        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+        onLoadItemsTaskStarted();
+
+        // Mock Hello: A handler to delay the answer
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //setItems();
+                database.setRunningTask(false);
+                database.setValidDatabase(true);
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                //getPresenter().onLoadItemsTaskFinished(items);
+                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+            }
+        }, 0);
+    }*/
+
+    public void reloadItems() {
+        //items = null;
+        database.deleteAllDatabaseItems();
+        database.setValidDatabase(false);
+        loadItems();
     }
 }

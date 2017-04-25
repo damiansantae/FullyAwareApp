@@ -68,7 +68,6 @@ public interface ListToDoMaster {
 
     void onAddBtnClick(Task_Adapter adapter);
 
-    void onDoneBtnClick(Task_Adapter adapter);
 
       void onSwipeMade(int pos, Task_Adapter adapter);
 
@@ -81,6 +80,8 @@ public interface ListToDoMaster {
       boolean isSelected(int adapterPosition);
 
     void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+
+      void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
   }
 
   /**

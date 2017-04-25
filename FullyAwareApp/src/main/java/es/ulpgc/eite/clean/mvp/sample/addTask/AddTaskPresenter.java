@@ -140,7 +140,7 @@ public class AddTaskPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    Task newTask = new Task(R.drawable.bg_controll_plane, title, description, deadline);
+    Task newTask = new Task(R.drawable.bg_controll_plane, title, description, deadline, "ToDo");
     getModel().addTask(newTask);
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
@@ -150,6 +150,8 @@ public class AddTaskPresenter extends GenericPresenter
 
       Toast toast = Toast.makeText(context, text, duration);
       toast.show();
+
+     //TODO onDestroy(false);
 
   }
 

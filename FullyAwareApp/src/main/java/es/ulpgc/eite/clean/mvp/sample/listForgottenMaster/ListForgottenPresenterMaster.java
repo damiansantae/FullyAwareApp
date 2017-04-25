@@ -15,6 +15,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class ListForgottenPresenterMaster extends GenericPresenter
         <ListForgottenMaster.PresenterToView, ListForgottenMaster.PresenterToModel, ListForgottenMaster.ModelToPresenter, ListForgottenModelMaster>
@@ -34,6 +35,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
+    private DatabaseFacade database;
 
 
 
@@ -54,6 +56,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
+        database = new DatabaseFacade();
         app.startingListForgottenScreen(this);
         if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
@@ -83,6 +86,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
             checkDeleteBtnVisibility();
 
+
             if(listClicked) {
                 getView().startSelection();
 
@@ -99,6 +103,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
+        loadItems();
     }
 
 
@@ -235,7 +240,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
-            getModel().deleteItem(selected.get(i));
+            database.deleteDatabaseItem(selected.get(i));
 
         }
 
@@ -321,6 +326,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     //checkTextVisibility();*/
 
         checkDeleteBtnVisibility();
+        loadItems();
     }
 
 
@@ -419,7 +425,48 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
     @Override
     public void onLoadItemsTaskFinished(List<Task> itemsFromDatabase) {
+        getView().setRecyclerAdapterContent(itemsFromDatabase);
+    }
+    public void loadItems() {
+        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
+            startDelayedTask();
+        } else {*/
+        if(!(database.getRunningTask())){
+            Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+            onLoadItemsTaskFinished(database.getForgottenItemsFromDatabase());
+        } else {
+            Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+            onLoadItemsTaskStarted();
+        }
+        //}
 
+    }
+    /*private void startDelayedTask() {
+        Log.d(TAG, "calling startDelayedTask() method");
+        database.setRunningTask(true);
+        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+        onLoadItemsTaskStarted();
+
+        // Mock Hello: A handler to delay the answer
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //setItems();
+                database.setRunningTask(false);
+                database.setValidDatabase(true);
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                //getPresenter().onLoadItemsTaskFinished(items);
+                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+            }
+        }, 0);
+    }*/
+
+    public void reloadItems() {
+        //items = null;
+
+        database.deleteAllDatabaseItems();
+        database.setValidDatabase(false);
+        loadItems();
     }
 
     /*
