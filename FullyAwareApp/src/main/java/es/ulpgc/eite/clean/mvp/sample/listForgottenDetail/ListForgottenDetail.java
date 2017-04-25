@@ -4,6 +4,8 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenPresenterMaster;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 
 public interface ListForgottenDetail {
 
@@ -20,6 +22,9 @@ public interface ListForgottenDetail {
     void setItem(Task selectedItem);
 
     void onScreenStarted();
+    void setMaster(ListForgottenPresenterMaster master);
+
+      void setAdapter(ListForgottenViewMaster.TaskRecyclerViewAdapter adapter);
   }
   /**
    * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
@@ -52,7 +57,7 @@ public interface ListForgottenDetail {
     void hideToolbar();
 
 
-
+      void toolbarChanged(String colour);
   }
 
   /**

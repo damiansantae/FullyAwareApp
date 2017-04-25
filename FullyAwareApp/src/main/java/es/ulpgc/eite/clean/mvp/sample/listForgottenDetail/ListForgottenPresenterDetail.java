@@ -3,12 +3,16 @@ package es.ulpgc.eite.clean.mvp.sample.listForgottenDetail;
 
 import android.util.Log;
 
+import java.util.Observable;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenPresenterMaster;
+import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 
 public class ListForgottenPresenterDetail extends GenericPresenter
         <ListForgottenDetail.PresenterToView, ListForgottenDetail.PresenterToModel, ListForgottenDetail.ModelToPresenter, ListForgottenModelDetail>
@@ -18,6 +22,8 @@ public class ListForgottenPresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
+private ObservadoForgotten observado;
+    private ListForgottenViewMaster.TaskRecyclerViewAdapter adapter;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -30,6 +36,7 @@ private boolean toolbarVisible;
     @Override
     public void onCreate(ListForgottenDetail.PresenterToView view) {
         super.onCreate(ListForgottenModelDetail.class, this);
+        observado = new ObservadoForgotten();
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -120,7 +127,11 @@ private boolean toolbarVisible;
 
     }
 
+    @Override
+    public void setMaster(ListForgottenPresenterMaster master) {
+        observado.addObserver(master);
 
+    }
 
 
     @Override
@@ -132,6 +143,10 @@ private boolean toolbarVisible;
     public void setItem(Task selectedItem) {
         getModel().setTask(selectedItem);
 
+    }
+    @Override
+    public void setAdapter(ListForgottenViewMaster.TaskRecyclerViewAdapter adapter) {
+        this.adapter=adapter;
     }
 
 
@@ -168,5 +183,13 @@ private boolean toolbarVisible;
     }
 
 
+    public class ObservadoForgotten extends Observable {
+
+        public void notifyMaster(){
+            setChanged();
+            notifyObservers(true);
+        }
+
+    }
 
 }

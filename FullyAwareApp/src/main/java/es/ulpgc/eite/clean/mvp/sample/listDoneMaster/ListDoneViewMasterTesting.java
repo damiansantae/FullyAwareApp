@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,7 +44,8 @@ public class ListDoneViewMasterTesting
     enum Direction {LEFT, RIGHT}
 
     private TaskRecyclerViewAdapter adapter;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -120,7 +122,7 @@ public class ListDoneViewMasterTesting
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-
+loadSharePreferences();
     }
 
     /**
@@ -142,6 +144,17 @@ public class ListDoneViewMasterTesting
         return true;
     }
 
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -150,10 +163,7 @@ public class ListDoneViewMasterTesting
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
-            return true;
-
-        }else if (id ==R.id.menuToDo){
+       if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
             Navigator app = (Navigator) getApplication();
@@ -245,6 +255,12 @@ public class ListDoneViewMasterTesting
        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
+    @Override
+    public void setToastDelete() {
+        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
+
+    }
+
 
     @Override
     public void setChoiceMode(int i) {

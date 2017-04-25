@@ -2,7 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //Prueba
 
 import android.content.Context;
-import android.os.Handler;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.util.SparseBooleanArray;
@@ -23,6 +23,8 @@ import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.content.ContentValues.TAG;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
         implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
@@ -41,6 +43,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
 
+    SharedPreferences myprefs;
+    public static final String MY_PREFS = "MyPrefs";
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
 
 
 
@@ -120,10 +125,24 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
+
     private void checkToolbarColourChanges(Mediator app){
+
+        Context context = getApplicationContext();
+        SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+
         if (app.checkToolbarChanged() == true){
+
+            Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
+
+
+            SharedPreferences.Editor editor = myprefs.edit();
+            editor.putString(TOOLBAR_COLOR_KEY, colour);
+            Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
+            editor.commit();
+            Log.d("999AQUIIIIIIIII", ""+ myprefs.getString(TOOLBAR_COLOR_KEY, null));
         }
     }
 
@@ -134,6 +153,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onBackPressed() {
         Log.d(TAG, "calling onBackPressed()");
+
+     super.onDestroy(true);
     }
 
     /**
@@ -338,6 +359,8 @@ checkSelection2();
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
+            Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
+
 
         }
 
@@ -345,7 +368,7 @@ checkSelection2();
             if(itemsSelected.get(j)){
                 adapter.notifyItemRemoved(j);
             }
-       
+
         }
 
 itemsSelected.clear();
@@ -691,7 +714,11 @@ checkSelection2();
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg.equals(true))getView().setToastDelete();
+
+        if(arg.equals(true)){
+            database.deleteDatabaseItem(selectedTask);
+            getView().setToastDelete();
+        }
 
 
 

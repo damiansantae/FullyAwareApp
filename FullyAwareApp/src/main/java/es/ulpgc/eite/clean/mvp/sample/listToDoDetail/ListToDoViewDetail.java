@@ -1,12 +1,14 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +29,14 @@ public class ListToDoViewDetail
     private Task Task;
     private CollapsingToolbarLayout toolbarLayout;
     private AppBarLayout appbarLayout;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
+        setContentView(R.layout.activity_task_detail_relative);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,10 +51,18 @@ public class ListToDoViewDetail
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
 
-
+loadSharePreferences();
 
     }
-
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
 
     /**
      * Method that initialized MVP objects
@@ -70,6 +81,8 @@ public class ListToDoViewDetail
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
+            ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
+            ((TextView) findViewById(R.id.subject_txt)).setText(Task.getSubjectId());
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
@@ -94,6 +107,12 @@ public class ListToDoViewDetail
     if (id == R.id.action_delete) {
         getPresenter().onDeleteActionClicked();
       return true;
+    } else if(id==R.id.action_done){
+        //TODO: codigo para pasar tarea a done
+
+    }else if(id==R.id.action_change){
+        //TODO: ir acitvity modificar tarea
+
     }
 
     return super.onOptionsItemSelected(item);

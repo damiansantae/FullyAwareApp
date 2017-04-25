@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.intro.WelcomeActivity;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 public class SplashScreen extends Activity {
@@ -29,7 +30,7 @@ public class SplashScreen extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                // Intent i = new Intent(SplashScreen.this, ListToDoViewMaster.class);
-                 Intent i = new Intent(SplashScreen.this, ListToDoViewMasterTesting.class);
+                 Intent i = new Intent(SplashScreen.this, WelcomeActivity.class);
                 startActivity(i);
 
                 // close this activity

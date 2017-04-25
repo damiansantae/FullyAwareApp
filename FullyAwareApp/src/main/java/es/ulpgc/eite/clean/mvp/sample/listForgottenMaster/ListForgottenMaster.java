@@ -97,6 +97,7 @@ public interface ListForgottenMaster {
     void setRecyclerAdapterContent(List<Task> items);
 
 
+      void setToastDelete();
   }
 
   /**

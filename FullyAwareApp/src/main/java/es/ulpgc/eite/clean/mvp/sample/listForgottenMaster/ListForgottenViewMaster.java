@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,8 @@ public class ListForgottenViewMaster
     private SparseBooleanArray tasksSelected;
 
     private TaskRecyclerViewAdapter adapter;
-
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -125,7 +127,7 @@ public class ListForgottenViewMaster
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
+        loadSharePreferences();
 
     }
 
@@ -148,6 +150,20 @@ public class ListForgottenViewMaster
         return true;
     }
 
+
+    ///
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -156,11 +172,11 @@ public class ListForgottenViewMaster
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
+       if (id ==R.id.menuToDo){
+            Navigator app = (Navigator) getApplication();
+            app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
 
-        }else if (id ==R.id.menuForgotten){
-
-            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
         }
         else if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
@@ -172,13 +188,7 @@ public class ListForgottenViewMaster
             app.goToScheduleScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
         }
-        else if (id ==R.id.menuToDo){
-            Navigator app = (Navigator) getApplication();
-            app.goToListToDoScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
-
-
-        } else if (id ==R.id.menuPreferences) {
+         else if (id ==R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListForgottenMaster.ListForgottenTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
@@ -246,6 +256,12 @@ public class ListForgottenViewMaster
     @Override
     public void startSelection() {
         // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+    }
+
+    @Override
+    public void setToastDelete() {
+        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
 
     }
 

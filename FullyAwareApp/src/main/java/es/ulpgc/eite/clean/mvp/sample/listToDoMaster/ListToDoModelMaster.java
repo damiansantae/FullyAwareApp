@@ -100,7 +100,9 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
 
   @Override
   public void deleteItem(Task item) {
-    if (getItemsFromDatabase().contains(item)){
+
+    boolean result = getItemsFromDatabase().contains(item);
+    if (getItemsFromDatabase().contains(item)){ //TODO: el problema está aquí, no encuentra el item en la base de datos
       //items.remove(item);
       deleteDatabaseItem(item);
     } else {
@@ -244,8 +246,10 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     }
   }
 
-  private void deleteDatabaseItem(Task item) {
+  @Override
+  public void deleteDatabaseItem(Task item) {
     final String id = item.getTaskId();
+    Log.d(TAG+ "Item a eliminar", id);
     realmDatabase.executeTransaction(new Realm.Transaction() {
       @Override
       public void execute(Realm realm) {

@@ -1,10 +1,13 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -47,10 +50,13 @@ public class ListToDoViewMasterTesting
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT}
-
+    private SharedPreferences prefs;
     private SparseBooleanArray tasksSelected;
 
     private TaskRecyclerViewAdapter adapter;
+    SharedPreferences preferences;
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
 
 
     /**
@@ -150,8 +156,21 @@ public class ListToDoViewMasterTesting
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        //////////////////////////
+        loadSharePreferences();
 
 
+
+    }
+
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, ""+ colour );
+        if (colour != null){
+            toolbarChanged(colour);
+        }
     }
 
     /**
@@ -181,9 +200,9 @@ public class ListToDoViewMasterTesting
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete) {
 
-        }else if (id ==R.id.menuToDo){
+
+         if (id ==R.id.menuToDo){
 
             Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
         }

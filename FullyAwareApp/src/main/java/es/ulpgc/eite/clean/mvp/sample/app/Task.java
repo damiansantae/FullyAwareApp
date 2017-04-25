@@ -17,7 +17,7 @@ public class Task extends RealmObject{
 
     public Task(int tagId, String title, String description, String date, String status) {
         this.taskId= UUID.randomUUID().toString();
-        this.subjectId = tagId;
+        this.subjectId = subjectId;
         this.date = date;
         this.title = title;
         this.description = description;
@@ -58,6 +58,7 @@ public class Task extends RealmObject{
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public String getTaskId() {
         return taskId;

@@ -7,4 +7,27 @@
     <string name="action_delete">Delete</string>
     <string name="subject">Subject</string>
     <string name="action_recover">Recover</string>
+    <string name="action_done">Done</string>
+    <string name="action_change">Modify task</string>
+
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Welcome to FullyAware!</string>
+    <string name="slide_1_desc">The easiest way to manage your duties and your life!</string>
+
+    <string name="slide_2_title">Reminder</string>
+    <string name="slide_2_desc">FullyAware reminds for you all the things you have to do!</string>
+
+    <string name="slide_3_title">Easy to use</string>
+    <string name="slide_3_desc">Just add your duties and check the ones you have done!</string>
+
+    <string name="slide_4_title">Customizable</string>
+    <string name="slide_4_desc">Add your own subjects and schedules or change the App Colour!</string>
+
+    <string name="play_again_desc">A</string>
+    <string name="play_again">A</string>
 </resources>
