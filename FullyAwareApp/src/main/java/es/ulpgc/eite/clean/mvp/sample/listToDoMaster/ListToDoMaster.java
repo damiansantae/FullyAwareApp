@@ -81,6 +81,7 @@ public interface ListToDoMaster {
       boolean isSelected(int adapterPosition);
 
     void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+
   }
 
   /**

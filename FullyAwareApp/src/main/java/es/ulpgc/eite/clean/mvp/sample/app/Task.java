@@ -13,13 +13,15 @@ public class Task extends RealmObject{
     private String date;
     private String title;
     private String description;
+    private String status;
 
-    public Task(int subjectId, String title, String description, String date) {
+    public Task(int tagId, String title, String description, String date, String status) {
         this.taskId= UUID.randomUUID().toString();
         this.subjectId = subjectId;
         this.date = date;
         this.title = title;
         this.description = description;
+        this.status = status;
     }
     public Task(){
 
@@ -60,6 +62,14 @@ public class Task extends RealmObject{
 
     public String getTaskId() {
         return taskId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 
     @Override

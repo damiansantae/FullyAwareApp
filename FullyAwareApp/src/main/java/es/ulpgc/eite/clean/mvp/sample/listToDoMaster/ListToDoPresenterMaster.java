@@ -19,6 +19,9 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+
+import static android.content.ContentValues.TAG;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -41,6 +44,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private ArrayList<String> posSelected = new ArrayList<>();
 
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
+    private DatabaseFacade database;
+
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
@@ -64,6 +69,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
+        database = new DatabaseFacade();
 
         app.startingListToDoScreen(this);
         checkToolbarColourChanges(app);
@@ -94,7 +100,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             CheckDoneBtnVisibility();
-            getModel().loadItems();
             if(selectedState) {
                 getView().startSelection();
 
@@ -108,6 +113,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Mediator app = (Mediator) getView().getApplication();
         checkToolbarColourChanges(app);
+        loadItems();
     }
 
 
@@ -318,6 +324,7 @@ checkSelection2();
             setDoneBtnVisibility(true);
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
+
         }
 checkSelection2();
         checkAddBtnVisibility();
@@ -354,8 +361,9 @@ checkSelection2();
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
+            database.deleteDatabaseItem(selected.get(i));
             Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
-            getModel().deleteDatabaseItem(selected.get(i));
+
 
         }
 
@@ -368,7 +376,10 @@ checkSelection2();
 
 itemsSelected.clear();
 checkSelection2();
-        checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
+
     }
 
 
@@ -438,7 +449,7 @@ checkSelection2();
             for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
                 TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
                 adapter.remove(tasksSelected.get(i));
-                getModel().deleteItem(tasksSelected.get(i));
+                database.deleteDatabaseItem(tasksSelected.get(i));
             }
             Context context = getApplicationContext();
             if(size == 1) {
@@ -476,7 +487,7 @@ checkSelection2();
     public void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
-            getModel().deleteItem(selected.get(i));
+            database.setItemStatus(selected.get(i), "Done");
 
         }
 
@@ -489,8 +500,9 @@ checkSelection2();
 
         itemsSelected.clear();
         checkSelection2();
-
-
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
     }
 
 
@@ -553,7 +565,7 @@ checkSelection2();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
-        getModel().loadItems();
+        loadItems();
     }
 
 
@@ -707,9 +719,49 @@ checkSelection2();
     public void update(Observable o, Object arg) {
 
         if(arg.equals(true)){
-            getModel().deleteItem(selectedTask);
+            database.deleteDatabaseItem(selectedTask);
             getView().setToastDelete();
         }
 
+    }
+    public void loadItems() {
+        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
+            startDelayedTask();
+        } else {*/
+            if(!(database.getRunningTask())){
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
+            } else {
+                Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+                onLoadItemsTaskStarted();
+            }
+        //}
+
+    }
+    /*private void startDelayedTask() {
+        Log.d(TAG, "calling startDelayedTask() method");
+        database.setRunningTask(true);
+        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+        onLoadItemsTaskStarted();
+
+        // Mock Hello: A handler to delay the answer
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //setItems();
+                database.setRunningTask(false);
+                database.setValidDatabase(true);
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                //getPresenter().onLoadItemsTaskFinished(items);
+                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+            }
+        }, 0);
+    }*/
+
+    public void reloadItems() {
+        //items = null;
+        database.deleteAllDatabaseItems();
+        database.setValidDatabase(false);
+        loadItems();
     }
 }

@@ -200,16 +200,16 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
     public void addInitialTasks(){
         //Request realm instance
 
-        Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1");
-        Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2");
-        Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3");
-        Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4");
-        Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5");
-        Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6");
-        Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7");
-        Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8");
-        Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9");
-        Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10");
+        Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1", "ToDo");
+        Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2", "ToDo");
+        Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3", "ToDo");
+        Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4", "ToDo");
+        Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5", "ToDo");
+        Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6", "ToDo");
+        Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7", "ToDo");
+        Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8", "ToDo");
+        Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9", "ToDo");
+        Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10", "ToDo");
 
 
 

@@ -15,6 +15,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class ListDonePresenterMaster extends GenericPresenter
         <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
@@ -30,6 +31,8 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
+
+    private DatabaseFacade database;
 
 
 
@@ -51,6 +54,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
+        database = new DatabaseFacade();
         app.startingListDoneScreen(this);
         checkToolbarColourChanges(app);
     }
@@ -90,6 +94,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
         Mediator app = (Mediator) getView().getApplication();
         checkToolbarColourChanges(app);
+        loadItems();
     }
 
 
@@ -355,6 +360,7 @@ public class ListDonePresenterMaster extends GenericPresenter
     //checkTextVisibility();*/
 
         checkDeleteBtnVisibility();
+        loadItems();
     }
 
 
@@ -462,6 +468,46 @@ public class ListDonePresenterMaster extends GenericPresenter
             getView().setRecyclerAdapterContent(items);
 
         }*/
+    public void loadItems() {
+        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
+            startDelayedTask();
+        } else {*/
+        if(!(database.getRunningTask())){
+            Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+            onLoadItemsTaskFinished(database.getDoneItemsFromDatabase());
+        } else {
+            Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+            onLoadItemsTaskStarted();
+        }
+        //}
+
+    }
+    /*private void startDelayedTask() {
+        Log.d(TAG, "calling startDelayedTask() method");
+        database.setRunningTask(true);
+        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+        onLoadItemsTaskStarted();
+
+        // Mock Hello: A handler to delay the answer
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //setItems();
+                database.setRunningTask(false);
+                database.setValidDatabase(true);
+                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                //getPresenter().onLoadItemsTaskFinished(items);
+                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+            }
+        }, 0);
+    }*/
+
+    public void reloadItems() {
+        //items = null;
+        database.deleteAllDatabaseItems();
+        database.setValidDatabase(false);
+        loadItems();
+    }
 @Override
 public void onErrorDeletingItem(Task item) {
 

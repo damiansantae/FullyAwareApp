@@ -160,7 +160,7 @@ public class PreferencesPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline));
+    TaskRepository.getInstance().saveTask(new Task(R.drawable.bg_controll_plane,title,description,deadline, "ToDo"));
     Navigator app = (Navigator)getView().getApplication();
     //app.goToListToDoScreen(this);
     Context context = getApplicationContext();
