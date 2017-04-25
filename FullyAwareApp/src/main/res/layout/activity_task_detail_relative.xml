@@ -68,8 +68,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:id="@+id/subject_txt"
+            android:id="@+id/subject_from_detail"
             android:padding="16dp"
             android:text="Subject"
             android:textSize="16dp"
@@ -86,8 +85,7 @@
             android:text="xx-xx-xxxx"
             android:textSize="16dp"
             style="?android:attr/textAppearanceLarge"
-
-            android:layout_below="@+id/subject_txt"
+            android:layout_below="@+id/subject_from_detail"
            />
 
 

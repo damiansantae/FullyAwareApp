@@ -4,8 +4,8 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,8 +20,6 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
-
-import static android.content.ContentValues.TAG;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -562,6 +560,7 @@ checkSelection2();
     }
     //checkToolbarVisibility();
     //checkTextVisibility();*/
+   //database.addInitialTasks();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

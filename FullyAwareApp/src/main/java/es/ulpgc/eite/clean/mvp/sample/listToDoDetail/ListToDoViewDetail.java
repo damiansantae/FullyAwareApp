@@ -82,7 +82,7 @@ loadSharePreferences();
         // Show the dummy content as text in a TextView.
         if (Task != null) {
             ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
-            ((TextView) findViewById(R.id.subject_txt)).setText(Task.getSubjectId());
+//            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getSubjectId());
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
