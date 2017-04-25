@@ -82,7 +82,6 @@ public interface ListToDoMaster {
 
     void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
-      void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
   }
 
   /**
