@@ -23,8 +23,11 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
-        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter, ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo, ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
+        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel,
+                ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
+        implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter,
+        ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo,
+        ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
 
 
     private boolean toolbarVisible;
@@ -707,9 +710,6 @@ checkSelection2();
             getModel().deleteItem(selectedTask);
             getView().setToastDelete();
         }
-
-
-
 
     }
 }

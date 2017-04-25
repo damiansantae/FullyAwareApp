@@ -190,9 +190,9 @@ observado.addObserver(master);
     }
 
 
-public class Observado extends Observable{
+private class Observado extends Observable{
 
-    public void notifyMaster(){
+    private void notifyMaster(){
         setChanged();
         notifyObservers(true);
     }
