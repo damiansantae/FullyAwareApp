@@ -43,6 +43,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
+    int counter=0;
 
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
@@ -551,7 +552,14 @@ checkSelection2();
       getView().setLabel(getModel().getLabel());
     }
    */
-   database.addInitialTasks();
+
+
+
+        if(counter==0){
+            database.addInitialTasks();
+            counter++;
+        }
+
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
