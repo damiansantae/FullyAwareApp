@@ -560,9 +560,8 @@ checkSelection2();
    /* if(isViewRunning()) {
       getView().setLabel(getModel().getLabel());
     }
-    //checkToolbarVisibility();
-    //checkTextVisibility();*/
-   database.addInitialTasks();
+   */
+   //database.addInitialTasks();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

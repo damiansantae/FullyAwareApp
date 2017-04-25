@@ -36,7 +36,7 @@ public class ListForgottenViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail_done);
+        setContentView(R.layout.activity_task_detail_relative);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,21 +49,6 @@ public class ListForgottenViewDetail
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
-
-
-   /* text = (TextView) findViewById(R.id.text);
-
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-
-    button = (Button) findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        getPresenter().onButtonClicked();
-      }
-    });
-*/
 
 
     loadSharePreferences();
@@ -97,6 +82,8 @@ public class ListForgottenViewDetail
 
         // Show the dummy content as text in a TextView.
         if (task != null) {
+            ((TextView) findViewById(R.id.date_txt)).setText(task.getDate());
+//            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getSubjectId());
             ((TextView) findViewById(R.id.task_description)).setText(task.getDescription());
         }
     }
@@ -119,7 +106,9 @@ public class ListForgottenViewDetail
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_delete) {
-      return true;
+        getPresenter().onDeleteActionClicked();
+        return true;
+
     }
 
     return super.onOptionsItemSelected(item);

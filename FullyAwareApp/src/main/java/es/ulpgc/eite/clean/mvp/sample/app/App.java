@@ -226,7 +226,7 @@ public class App extends Application implements Mediator, Navigator {
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailForgottenState = null;
+        masterListToDetailDoneState = null;
         presenter.onScreenStarted();
     }
 
@@ -237,7 +237,7 @@ public class App extends Application implements Mediator, Navigator {
             presenter.setToolbarVisibility(!masterListToDetailForgottenState.toolbarVisible);
             presenter.setItem(masterListToDetailForgottenState.selectedItem);
             presenter.setAdapter(masterListToDetailForgottenState.adapter);
-            presenter.setMaster((ListForgottenPresenterMaster) masterListToDetailToDoState.master);
+            presenter.setMaster((ListForgottenPresenterMaster) masterListToDetailForgottenState.master);
         }
 
         // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente

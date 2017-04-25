@@ -495,7 +495,7 @@ public void onErrorDeletingItem(Task item) {
 
         if(arg.equals(true)){
             getView().setToastDelete();
-            getModel().deleteItem(selectedTask);
+           database.deleteDatabaseItem(selectedTask);
 
         }
 
