@@ -215,13 +215,17 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     public void onLongListClick2(View v, int adapterPosition) {
         if(!selectedState){
             selectedState =true;
-            setDeleteBtnVisibility(true);
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
 
         }
+
         checkSelection();
+
         checkDeleteBtnVisibility();
+
+
+
 
     }
 
@@ -278,22 +282,26 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     }
 
     private void checkSelection() {
-        boolean somethingSelected = false;
-        for (int i = 0; i <= itemsSelected.size(); i++) {
-            if (itemsSelected.get(i)){
+        boolean somethingSelected= false;
+        for(int i = 0; i < itemsSelected.size(); i++) {
+            int key = itemsSelected.keyAt(i);
+            // get the object by the key.
+            Object obj = itemsSelected.get(key);
+            if(obj.equals(true)){
                 somethingSelected=true;
                 break;
-
             }
 
+
         }
-        if(!somethingSelected){
-            selectedState = false;
-            setDeleteBtnVisibility(false);
 
-        }else{
+        if(somethingSelected){
+
             setDeleteBtnVisibility(true);
+        }else{
 
+            setDeleteBtnVisibility(false);
+            selectedState=false;
         }
 
 

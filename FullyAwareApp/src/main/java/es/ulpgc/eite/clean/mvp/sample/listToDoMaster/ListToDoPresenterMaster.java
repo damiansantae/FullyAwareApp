@@ -562,7 +562,7 @@ checkSelection2();
     }
     //checkToolbarVisibility();
     //checkTextVisibility();*/
-   //database.addInitialTasks();
+   database.addInitialTasks();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
