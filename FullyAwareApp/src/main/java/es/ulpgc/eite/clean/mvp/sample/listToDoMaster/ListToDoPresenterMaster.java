@@ -243,27 +243,31 @@ checkSelection2();
     }
 
     private void checkSelection2() {
-        boolean somethingSelected = false;
-        for (int i = 0; i <= itemsSelected.size(); i++) {
-            if (itemsSelected.get(i)){
+        boolean somethingSelected= false;
+        for(int i = 0; i < itemsSelected.size(); i++) {
+            int key = itemsSelected.keyAt(i);
+            // get the object by the key.
+            Object obj = itemsSelected.get(key);
+            if(obj.equals(true)){
                 somethingSelected=true;
                 break;
-
             }
 
-        }
-        if(!somethingSelected){
-            selectedState = false;
-            setAddBtnVisibility(true);
-            setDeleteBtnVisibility(false);
-            setDoneBtnVisibility(false);
-
-        }else{
-            setAddBtnVisibility(false);
-            setDeleteBtnVisibility(true);
-            setDoneBtnVisibility(true);
 
         }
+
+       if(somethingSelected){
+           setAddBtnVisibility(false);
+           setDoneBtnVisibility(true);
+           setDeleteBtnVisibility(true);
+       }else{
+           setAddBtnVisibility(true);
+           setDoneBtnVisibility(false);
+           setDeleteBtnVisibility(false);
+           selectedState=false;
+       }
+
+
 
     }
 
@@ -317,13 +321,11 @@ checkSelection2();
     public void onLongListClick2(View v, int adapterPosition) {
         if(!selectedState){
             selectedState =true;
-            setAddBtnVisibility(false);
-            setDeleteBtnVisibility(true);
-            setDoneBtnVisibility(true);
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
 
         }
+
 checkSelection2();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -360,17 +362,17 @@ checkSelection2();
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
-            Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
+          //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
 
 
         }
 
-        for(int j=0;j<adapter.getItemCount();j++){
+       /* for(int j=0;j<adapter.getItemCount();j++){
             if(itemsSelected.get(j)){
                 adapter.notifyItemRemoved(j);
             }
 
-        }
+        }*/
 
 itemsSelected.clear();
 checkSelection2();

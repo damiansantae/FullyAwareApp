@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -202,11 +200,7 @@ public class ListToDoViewMasterTesting
         //noinspection SimplifiableIfStatement
 
 
-         if (id ==R.id.menuToDo){
-
-            Toast.makeText(getApplicationContext(),"ToDo",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menuDone){
+          if (id ==R.id.menuDone){
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
@@ -475,6 +469,7 @@ public class ListToDoViewMasterTesting
                     @Override
                     public void onClick(View v) {
                         getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        adapter.notifyDataSetChanged();
 
                     }
                 });
