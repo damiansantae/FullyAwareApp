@@ -41,7 +41,6 @@ public interface ListToDoMaster {
     Task getSelectedTask();
     boolean getToolbarVisibility();
 
-      String getTaskDate();
   }
   /**
    * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla

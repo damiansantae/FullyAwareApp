@@ -3,6 +3,8 @@ package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,15 @@ public class ListDonePresenterMaster extends GenericPresenter
     private boolean deleteBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
+    private boolean selectedState;
+
 
     private Task selectedTask;
 
     private ArrayList<Task> tasksSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
+
+    private SparseBooleanArray itemsSelected =new SparseBooleanArray();
 
     private DatabaseFacade database;
 
@@ -145,70 +151,26 @@ public class ListDonePresenterMaster extends GenericPresenter
     ///////////////////////////////////////////////////////////////////////////////////
     // View To Presenter /////////////////////////////////////////////////////////////
 
-    /*@Override
-    public void onButtonClicked() {
-        Log.d(TAG, "calling onButtonClicked()");
-        if (isViewRunning()) {
-            getModel().onChangeMsgByBtnClicked();
-            getView().setText(getModel().getText());
-            textVisible = true;
-            buttonClicked = true;
-        }
-        checkTextVisibility();
-    }*/
-//TODO: este método es para la ListView
-    @Override
-    public void onListClick(int position, Task_Adapter adapter) {
-        Task currentTask = adapter.getItem(position);
-        if (listClicked) {                                //Esta seleccionado algo?
-
-            if (isItemListChecked(position)) {            //Si el elemento ya estaba seleccionado
-                setItemChecked(position, false);         //Se deselecciona
-                Log.v("se deselecciona", "pos: " + position);
-                tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
-                posSelected.remove(Integer.toString(position));                  //Se elimina del array de posiciones seleccionadas
-
-                checkSelection();                       //Comprobamos si sigue alguno seleccionado
-            } else {                                      //Si no estaba seleccionado
-
-                setItemChecked(position, true);          //Lo seleccionamos
-                Log.v("se selecciona", "pos: " + position);
-
-                tasksSelected.add(currentTask);           //Se añade al array de seleccionados
-                posSelected.add(Integer.toString(position));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)
-            }
-
-        } else {                                          //Si no estaba ningun elemento seleccionado
-            //Codigo DETALLE
-            selectedTask = adapter.getItem(position);
-            Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailScreen(this);
-        }
-        checkDeleteBtnVisibility();
-
-    }
 
     @Override
-    public void onListClick2(Task item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        Task currentTask = item;
-        if (listClicked) {                                //Esta seleccionado algo?
+    public void onListClick2(View v, int adapterPosition, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task) {
+        if(selectedState){
+            if(!v.isSelected()){
+                v.setSelected(true);
+                itemsSelected.put(adapterPosition,true);
 
-            if (isTaskSelected(currentTask)) {            //Si el elemento ya estaba seleccionado
-                deselectTask(currentTask);                    //Se deselecciona
+            }else{
+                v.setSelected(false);
+                itemsSelected.put(adapterPosition,false);
 
-                //checkSelection();                       //Comprobamos si sigue alguno seleccionado
-            } else {                                      //Si no estaba seleccionado
-                tasksSelected.add(currentTask);
             }
-
-        } else {                                          //Si no estaba ningun elemento seleccionado
-            //Codigo DETALLE
-            selectedTask = currentTask;
+        }else{
             Navigator app = (Navigator) getView().getApplication();
-            app.goToDetailScreen(this,adapter);
+            selectedTask=task;
+            app.goToDetailScreen(this, adapter);
         }
-        checkDeleteBtnVisibility();
-        
+        checkSelection();
+      checkDeleteBtnVisibility();
 
     }
     
@@ -228,82 +190,59 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
 
+
     @Override
-    public void onLongListClick(int pos, Task_Adapter adapter) {
-        getView().startSelection();           //iniciamos modo seleccion multiple
-
-        Log.v("long click", "pos: " + pos);
-        Task currentTask = adapter.getItem(pos);
-
-
-
-        if (isItemListChecked(pos)) {                //Si el elemento ya estaba seleccionado
-            setItemChecked(pos, false);          //Se deselecciona
-            Log.v("Se deselecciona", "pos: " + pos);
-
-            tasksSelected.remove(currentTask);       //Se elimina del Array de seleccionados
-            posSelected.remove(Integer.toString(pos));                  //Se elimina del array de posiciones seleccionadas
-            checkSelection();                        //miramos si hay algun seleccionado
-        } else {                                      //Si no estaba seleccionado
-            setListClicked(true);                   //actualizamos estado a algo seleccionado
-            setItemChecked(pos, true);           //Se selecciona
-            Log.v("Se selecciona", "pos: " + pos);
-            tasksSelected.add(currentTask);           //Se añade al array de seleccionados
-            posSelected.add(Integer.toString(pos));                     //Se añade al array de posiciones seleccionadas (Para poder eliminarlas tras el borrado)+
-           checkSelection();
+    public void onLongListClick2(View v, int adapterPosition) {
+        if(!selectedState){
+            selectedState =true;
+            v.setSelected(true);
+            itemsSelected.put(adapterPosition,true);
 
         }
 
+        checkSelection();
         checkDeleteBtnVisibility();
+
+
 
 
     }
     @Override
-    public void onLongListClick2(Task Task) {
-        getView().startSelection();           //iniciamos modo seleccion multiple
+    public boolean isSelected(int adapterPosition) {
+        boolean result = false;
+        if(itemsSelected.size()!=0) {
 
-
-        Task currentTask = Task;
-
-
-
-        if (isTaskSelected(currentTask)) {                //Si el elemento ya estaba seleccionado
-            //Se deselecciona
-            tasksSelected.remove(currentTask);
-
-
-            // checkSelection();                        //miramos si hay algun seleccionado
-        } else {                                      //Si no estaba seleccionado
-            setListClicked(true);                   //actualizamos estado a algo seleccionado
-            //Se selecciona
-            tasksSelected.add(currentTask);
-            //checkSelection();
-
-        }
-        checkDeleteBtnVisibility();
-
-    }
-
-    @Override
-    public void onBinBtnClick(Task_Adapter adapter) {
-        int size = posSelected.size();
-        if (size != 0) {                                //Si el buffer de tareas seleccionadas no es nulo
-            for (int i = 0; i < size; i++) {            //Lo recorremos para elminarlas
-                TaskRepository.getInstance().deleteTask(tasksSelected.get(i));  //Se elimina la tarea
-                adapter.remove(tasksSelected.get(i));
-
+            if (itemsSelected.get(adapterPosition)) {
+                result = true;
             }
-
-            deselectAll();                              //Deseleccionamos los index de las posiciones eliminadas
-            checkSelection();
-
         }
+        return result;
+    }
+
+    @Override
+    public void onBinBtnClick2(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+
+        ArrayList<Task> selected = getSelectedTasks(adapter);
+        for(int i=0;i<selected.size();i++){
+            database.deleteDatabaseItem(selected.get(i));
+            //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
+        }
+        itemsSelected.clear();
+        checkSelection();
 
         checkDeleteBtnVisibility();
 
 
     }
-
+    private ArrayList<Task> getSelectedTasks(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+        ArrayList<Task> selected = new ArrayList<>();
+        for(int i=0;i<adapter.getItemCount();i++){
+            if(itemsSelected.get(i)){
+                selected.add(adapter.getItems().get(i));
+            }
+        }
+        return selected;
+    }
 
 
 
@@ -318,16 +257,26 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     private void checkSelection() {
-        if (posSelected.size() == 0) {                   //Si no hay nada seleccionado
-            setListClicked(false);                      //Cambiamos estado a nada seleccionado
-          // getView().setChoiceMode(0);                 //Cambiamos modo de seleccionamiento a nulo
+        boolean somethingSelected= false;
+        for(int i = 0; i < itemsSelected.size(); i++) {
+            int key = itemsSelected.keyAt(i);
+            // get the object by the key.
+            Object obj = itemsSelected.get(key);
+            if(obj.equals(true)){
+                somethingSelected=true;
+                break;
+            }
 
-            deleteBtnVisible=false;
 
-        } else {                                          //Si hay algo seleccionado
-            getView().setChoiceMode(2);                 //Cambiamos modo a seleccion multiple
-            deleteBtnVisible=true;
+        }
 
+        if(somethingSelected){
+
+            setDeleteBtnVisibility(true);
+        }else{
+
+            setDeleteBtnVisibility(false);
+            selectedState=false;
         }
     }
 
@@ -516,7 +465,8 @@ public void onErrorDeletingItem(Task item) {
     @Override
     public void update(Observable o, Object arg) {
         if(arg.equals(true)){
-            getModel().deleteItem(selectedTask);
+            database.deleteDatabaseItem(selectedTask);
+
             getView().setToastDelete();
         }
 

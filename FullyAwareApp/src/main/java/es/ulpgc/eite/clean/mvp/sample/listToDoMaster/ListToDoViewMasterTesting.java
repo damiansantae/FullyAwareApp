@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,8 +38,6 @@ public class ListToDoViewMasterTesting
         implements ListToDoMaster.PresenterToView {
 
     private Toolbar toolbar;
-    private Button button;
-    private TextView text;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
     private FloatingActionButton add;
@@ -410,7 +407,7 @@ public class ListToDoViewMasterTesting
             return new ViewHolder(view);
         }
 
-        public void setItemList(List<Task> items) {
+        private void setItemList(List<Task> items) {
             this.items = items;
             notifyDataSetChanged();
         }

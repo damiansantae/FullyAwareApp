@@ -51,20 +51,6 @@ public class ListDoneViewDetail
         appbarLayout.setExpanded(true);
 
 
-   /* text = (TextView) findViewById(R.id.text);
-
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-
-    button = (Button) findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        getPresenter().onButtonClicked();
-      }
-    });
-*/
-
 
 loadSharePreferences();
 

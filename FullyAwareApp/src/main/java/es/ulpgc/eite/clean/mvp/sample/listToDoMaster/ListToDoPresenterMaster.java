@@ -363,17 +363,7 @@ checkSelection2();
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
           //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
-
-
         }
-
-       /* for(int j=0;j<adapter.getItemCount();j++){
-            if(itemsSelected.get(j)){
-                adapter.notifyItemRemoved(j);
-            }
-
-        }*/
-
 itemsSelected.clear();
 checkSelection2();
         checkAddBtnVisibility();
@@ -622,10 +612,7 @@ checkSelection2();
         return toolbarVisible;
     }
 
-    @Override
-    public String getTaskDate() {
-        return null;
-    }
+
 
     @Override
     public void destroyView() {

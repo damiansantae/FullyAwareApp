@@ -47,6 +47,7 @@ public class ListDoneViewMasterTesting
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
 
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -106,7 +107,7 @@ public class ListDoneViewMasterTesting
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
-
+                                       getPresenter().onBinBtnClick2(adapter);
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -345,40 +346,22 @@ loadSharePreferences();
             return new ViewHolder(view);
         }
 
-        public void setItemList(List<Task> items) {
+        private void setItemList(List<Task> items) {
             this.items = items;
             notifyDataSetChanged();
+        }
+
+        public List<Task> getItems(){
+            return this.items;
         }
 
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
-            holder.item = items.get(position);
-            holder.tag.setImageResource(items.get(position).getSubjectId());
-            holder.title.setText(items.get(position).getTitle());
-            holder.description.setText(items.get(position).getDescription());
-            holder.date.setText(items.get(position).getDate());
+            Task task = items.get(position);
+            holder.bindView(task);
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getPresenter().onListClick2(holder.item, adapter);
-                    holder.itemView.setSelected(true);
-
-                    adapter.notifyDataSetChanged();
-                  //  getPresenter().onItemClicked(holder.item);
-                }
-            });
-            holder.itemView.setLongClickable(true);
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    getPresenter().onLongListClick2(holder.item);
-                    return true;
-                }
-            });
         }
 
         @Override
@@ -387,29 +370,58 @@ loadSharePreferences();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View itemView;
-            public final ImageView tag;
-            public final  TextView title;
-            public final  TextView description;
-            public final    TextView date;
+            private final View itemView;
+          private ImageView tag;
+            private  TextView title;
+            private TextView description;
+            private   TextView date;
 
             public Task item;
 
-            public ViewHolder(View view) {
+            private ViewHolder(View view) {
                 super(view);
-                view.setClickable(true);
+
                 itemView = view;
-                tag = (ImageView) view.findViewById(R.id.tag);
-                title = (TextView) view.findViewById(R.id.title);
-                description = (TextView) view.findViewById(R.id.description);
-                date = (TextView) view.findViewById(R.id.date);
 
             }
 
-       /* @Override
-        public String toString() {
-            return super.toString() + " '" + contentView.getText() + "'";
-        }*/
+            /* @Override
+             public String toString() {
+                 return super.toString() + " '" + contentView.getText() + "'";
+             }*/
+            public void bindView(final Task task) {
+                tag = (ImageView) itemView.findViewById(R.id.tag);
+                title = (TextView) itemView.findViewById(R.id.title);
+                description = (TextView) itemView.findViewById(R.id.description);
+                date = (TextView) itemView.findViewById(R.id.date);
+
+                tag.setImageResource(task.getSubjectId());
+                title.setText(task.getTitle());
+                description.setText(task.getDescription());
+                date.setText(task.getDate());
+
+                //Selecciona si estaba seleccionado
+                itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                });
+                itemView.setLongClickable(true);
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        getPresenter().onLongListClick2(v,getAdapterPosition());
+
+                        return true;
+                    }
+                });
+
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
 
 import android.content.Context;
+import android.view.View;
 
 import java.util.List;
 
@@ -57,23 +58,16 @@ public interface ListDoneMaster {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
-    void onListClick(int position, Task_Adapter adapter);
 
-    void onLongListClick(int pos, Task_Adapter adapter);
+    void onListClick2(View item, int position, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task);
 
-    void onBinBtnClick(Task_Adapter adapter);
-    void onListClick2(Task item, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void onLongListClick2(View item, int adapterPosition);
 
-    void onLongListClick2(Task item);
+    boolean isSelected(int adapterPosition);
+
+    void onBinBtnClick2(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
 
-
-    /*
-          @Override
-          public void onLoadItemsTaskFinished(List<Task> items) {
-              getView().setRecyclerAdapterContent(items);
-      
-          }*/
   }
 
   /**
