@@ -110,7 +110,9 @@ private boolean toolbarVisible;
     @Override
     public void onDeleteActionClicked() {
         Navigator app = (Navigator) getView().getApplication();
+        observado.notifyMaster();
         app.backToMasterScreen(this);
+
     }
 
 

@@ -459,7 +459,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
         masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
         masterListToDetailDoneState.adapter = adapter;
-
+masterListToDetailDoneState.master=listDonePresenterMaster;
         // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro

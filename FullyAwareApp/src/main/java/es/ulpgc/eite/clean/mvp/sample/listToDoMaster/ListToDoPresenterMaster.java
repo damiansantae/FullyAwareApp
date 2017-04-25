@@ -551,7 +551,7 @@ checkSelection2();
       getView().setLabel(getModel().getLabel());
     }
    */
-   //database.addInitialTasks();
+   database.addInitialTasks();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

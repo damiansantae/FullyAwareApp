@@ -36,7 +36,7 @@ public class ListDoneViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail_done);
+        setContentView(R.layout.activity_task_detail_relative);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,6 +82,8 @@ loadSharePreferences();
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
+            ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
+//            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getSubjectId());
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
@@ -104,7 +106,9 @@ loadSharePreferences();
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_delete) {
-      return true;
+        getPresenter().onDeleteActionClicked();
+
+        return true;
     }
 
     return super.onOptionsItemSelected(item);
