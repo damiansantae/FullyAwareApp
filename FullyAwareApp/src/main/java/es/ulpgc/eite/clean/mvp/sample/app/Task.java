@@ -3,36 +3,46 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 public class Task extends RealmObject{
 
-
+    @PrimaryKey
     private String taskId;
-    private int subjectId;
+    private Subject subject;
     private String date;
     private String title;
     private String description;
     private String status;
 
-    public Task(int tagId, String title, String description, String date, String status) {
+    public Task(Subject subject, String title, String description, String date, String status) {
         this.taskId= UUID.randomUUID().toString();
-        this.subjectId = subjectId;
+        this.subject = subject;
         this.date = date;
         this.title = title;
         this.description = description;
         this.status = status;
     }
+
+    public Task(String title, String description, String date, String status){
+        this.taskId= UUID.randomUUID().toString();
+        this.date = date;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
     public Task(){
 
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setSubjectId(int tagId) {
-        this.subjectId = tagId;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public String getDate() {

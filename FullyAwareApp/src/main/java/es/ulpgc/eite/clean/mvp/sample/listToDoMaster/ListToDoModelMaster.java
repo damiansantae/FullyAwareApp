@@ -197,16 +197,16 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   public void addInitialTasks(){
     //Request realm instance
 
-    Task Task1 = new Task(R.drawable.bg_controll_plane,"Titulo1","Descripcion1","Fecha1", "ToDo");
-    Task Task2 = new Task(R.drawable.bg_controll_plane,"Titulo2","Descripcion2","Fecha2", "ToDo");
-    Task Task3 = new Task(R.drawable.bg_controll_plane,"Titulo3","Descripcion3","Fecha3", "ToDo");
-    Task Task4 = new Task(R.drawable.bg_controll_plane,"Titulo4","Descripcion4","Fecha4", "ToDo");
-    Task Task5 = new Task(R.drawable.bg_controll_plane,"Titulo5","Descripcion5","Fecha5", "ToDo");
-    Task Task6 = new Task(R.drawable.bg_controll_plane,"Titulo6","Descripcion6","Fecha6", "ToDo");
-    Task Task7 = new Task(R.drawable.bg_controll_plane,"Titulo7","Descripcion7","Fecha7", "ToDo");
-    Task Task8 = new Task(R.drawable.bg_controll_plane,"Titulo8","Descripcion8","Fecha8", "ToDo");
-    Task Task9 = new Task(R.drawable.bg_controll_plane,"Titulo9","Descripcion9","Fecha9", "ToDo");
-    Task Task10 = new Task(R.drawable.bg_controll_plane,"Titulo10","Descripcion10","Fecha10", "ToDo");
+    Task Task1 = new Task("Titulo1","Descripcion1","Fecha1", "ToDo");
+    Task Task2 = new Task("Titulo2","Descripcion2","Fecha2", "ToDo");
+    Task Task3 = new Task("Titulo3","Descripcion3","Fecha3", "ToDo");
+    Task Task4 = new Task("Titulo4","Descripcion4","Fecha4", "ToDo");
+    Task Task5 = new Task("Titulo5","Descripcion5","Fecha5", "ToDo");
+    Task Task6 = new Task("Titulo6","Descripcion6","Fecha6", "ToDo");
+    Task Task7 = new Task("Titulo7","Descripcion7","Fecha7", "ToDo");
+    Task Task8 = new Task("Titulo8","Descripcion8","Fecha8", "ToDo");
+    Task Task9 = new Task("Titulo9","Descripcion9","Fecha9", "ToDo");
+    Task Task10 = new Task("Titulo10","Descripcion10","Fecha10", "ToDo");
 
 
 

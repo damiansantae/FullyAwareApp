@@ -555,10 +555,10 @@ checkSelection2();
 
 
 
-        if(counter==0){
+        /*if(counter==0){
             database.addInitialTasks();
             counter++;
-        }
+        }*/
 
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();

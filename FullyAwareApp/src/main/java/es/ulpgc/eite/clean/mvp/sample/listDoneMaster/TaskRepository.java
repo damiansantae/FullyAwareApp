@@ -16,7 +16,7 @@ public class TaskRepository {
     }
 
     private TaskRepository() {
-        saveTask(new Task(R.drawable.bg_controll_plane,"Tarea hecha","Descripcion de tarea hecha","03/04/2017", "Done"));
+        saveTask(new Task("Tarea hecha","Descripcion de tarea hecha","03/04/2017", "Done"));
     }
 
     public void saveTask(Task Task) {

@@ -455,7 +455,7 @@ public class ListToDoViewMasterTesting
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
 
-                tag.setImageResource(task.getSubjectId());
+                //tag.setImageResource(task.getSubject());
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());

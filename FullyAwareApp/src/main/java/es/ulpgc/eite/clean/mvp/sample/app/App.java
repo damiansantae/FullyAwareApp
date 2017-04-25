@@ -30,6 +30,7 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.Module;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
 import io.realm.Realm;
@@ -64,6 +65,7 @@ public class App extends Application implements Mediator, Navigator {
                 .name("tasks.realm")
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
+                //.setModules(new Module());
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         startService(new Intent(this, NotificationService.class));
