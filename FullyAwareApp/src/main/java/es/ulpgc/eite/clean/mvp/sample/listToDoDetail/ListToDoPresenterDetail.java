@@ -112,12 +112,18 @@ private boolean toolbarVisible;
 
     @Override
     public void onDeleteActionClicked() {
-       Navigator app = (Navigator) getView().getApplication();
-        observado.notifyMaster();
+        Navigator app = (Navigator) getView().getApplication();
+        observado.notifyDeleteMaster();
         app.backToMasterScreen(this);
 
     }
+    @Override
+    public void onDoneActionClicked() {
+        Navigator app = (Navigator) getView().getApplication();
+        observado.notifyDoneMaster();
+        app.backToMasterScreen(this);
 
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
     // To ListDoneDetail //////////////////////////////////////////////////////////////////////
@@ -192,9 +198,13 @@ observado.addObserver(master);
 
 private class Observado extends Observable{
 
-    private void notifyMaster(){
+    private void notifyDeleteMaster(){
         setChanged();
-        notifyObservers(true);
+        notifyObservers("delete");
+    }
+    private void notifyDoneMaster(){
+        setChanged();
+        notifyObservers("done");
     }
 
 }

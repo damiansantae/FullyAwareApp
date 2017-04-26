@@ -108,7 +108,7 @@ loadSharePreferences();
         getPresenter().onDeleteActionClicked();
       return true;
     } else if(id==R.id.action_done){
-        //TODO: codigo para pasar tarea a done
+        getPresenter().onDoneActionClicked();
 
     }else if(id==R.id.action_change){
         //TODO: ir acitvity modificar tarea
