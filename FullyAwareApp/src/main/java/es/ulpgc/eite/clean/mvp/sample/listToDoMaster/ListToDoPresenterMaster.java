@@ -556,7 +556,7 @@ checkSelection2();
 
 
         /*if(counter==0){
-            database.addInitialTasks();
+            database.addInitialSubjects();
             counter++;
         }*/
 
@@ -724,10 +724,10 @@ checkSelection2();
             startDelayedTask();
         } else {*/
             if(!(database.getRunningTask())){
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
                 onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
             } else {
-                Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+                Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
                 onLoadItemsTaskStarted();
             }
         //}
@@ -736,8 +736,8 @@ checkSelection2();
     /*private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
         database.setRunningTask(true);
-        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
-        onLoadItemsTaskStarted();
+        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
+        onLoadItemsSubjectStarted();
 
         // Mock Hello: A handler to delay the answer
         new Handler().postDelayed(new Runnable() {
@@ -746,9 +746,9 @@ checkSelection2();
                 //setItems();
                 database.setRunningTask(false);
                 database.setValidDatabase(true);
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-                //getPresenter().onLoadItemsTaskFinished(items);
-                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+                //getPresenter().onLoadItemsSubjectsFinished(items);
+                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
             }
         }, 0);
     }*/

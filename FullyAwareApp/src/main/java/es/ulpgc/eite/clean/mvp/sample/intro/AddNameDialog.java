@@ -39,19 +39,19 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
   }
 
   private void initComponents(View view) {
-    etUserName = (EditText) view.findViewById(R.id.et_subject_name_1);
+    etUserName = (EditText) view.findViewById(R.id.et_user_name);
     etUserName.requestFocus();
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    btAddName = (Button) view.findViewById(R.id.bt_add_name);
+    btAddName = (Button) view.findViewById(R.id.bt_add_user);
     btAddName.setOnClickListener(this);
   }
 
   @Override
   public void onClick(View v) {
     switch (v.getId()) {
-      case R.id.bt_add_name: {
+      case R.id.bt_add_user: {
         if (isUniversityInfoValid())
-          listener.onAddUniversityClickListener(etUserName.getText().toString());
+          listener.onAddUserNameClickListener(etUserName.getText().toString());
         break;
       }
     }
@@ -67,6 +67,6 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
 
   public interface OnAddUniversityClickListener {
 
-    void onAddUniversityClickListener(String universityName);
+    void onAddUserNameClickListener(String universityName);
   }
 }

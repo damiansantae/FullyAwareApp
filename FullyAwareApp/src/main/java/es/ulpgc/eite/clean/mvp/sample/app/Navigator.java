@@ -8,6 +8,9 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
@@ -32,6 +35,8 @@ public interface Navigator {
     void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter);
 
     void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter);
+
+    void goToScheduleScreen(ListSubject.ListSubjectTo presenter);
 
     //Comunicación M/D
     void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
@@ -90,4 +95,17 @@ public interface Navigator {
 
 
     void goToChangeColourDialog(PreferencesPresenter preferencesPresenter);
+
+    void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter);
+
+
+    /*******************************************************************
+     ******** Navegación direccion Subjects al resto de pantallas*/
+
+    void goToListToDoScreen(ListSubject.ListSubjectTo presenter);
+    void goToListSubjectScreen(ListSubjectPresenter presenter);
+    void goToListDoneScreen(ListSubject.ListSubjectTo presenter);
+    void goToListForgottenScreen(ListSubject.ListSubjectTo presenter);
+    void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
+    void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
 }

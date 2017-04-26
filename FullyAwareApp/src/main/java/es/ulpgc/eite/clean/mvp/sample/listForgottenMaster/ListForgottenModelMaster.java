@@ -66,10 +66,10 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
             startDelayedTask();
         } else {
             if(!runningTask){
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
                 getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
             } else {
-                Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+                Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
                 getPresenter().onLoadItemsTaskStarted();
             }
         }
@@ -79,11 +79,11 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
       startDelayedTask();
     } else {
       if(!runningTask){
-        Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-        getPresenter().onLoadItemsTaskFinished(items);
+        Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+        getPresenter().onLoadItemsSubjectsFinished(items);
       } else {
-        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
-        getPresenter().onLoadItemsTaskStarted();
+        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
+        getPresenter().onLoadItemsSubjectStarted();
       }
     }
     */
@@ -172,7 +172,7 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
     private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
         runningTask = true;
-        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
         getPresenter().onLoadItemsTaskStarted();
 
         // Mock Hello: A handler to delay the answer
@@ -182,8 +182,8 @@ public class ListForgottenModelMaster extends GenericModel<ListForgottenMaster.M
                 //setItems();
                 runningTask = false;
                 validDatabase = true;
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-                //getPresenter().onLoadItemsTaskFinished(items);
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+                //getPresenter().onLoadItemsSubjectsFinished(items);
                 getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
             }
         }, 5000);

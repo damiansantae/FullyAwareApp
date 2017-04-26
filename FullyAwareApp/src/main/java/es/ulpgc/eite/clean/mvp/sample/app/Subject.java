@@ -12,6 +12,7 @@ public class Subject extends RealmObject {
     private String name;
     private String subjectId;
     private String timeTable;
+    private String description;
 
     public Subject (String name, String timeTable){
         this.name = name;
@@ -45,5 +46,9 @@ public class Subject extends RealmObject {
 
     public void setTimeTable(String timeTable){
         this.timeTable = timeTable;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

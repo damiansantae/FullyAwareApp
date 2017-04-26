@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.listDoneMaster;
+package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 
 import android.content.Context;
@@ -16,28 +16,25 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
-public class ListDonePresenterMaster extends GenericPresenter
-        <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
-        implements ListDoneMaster.ViewToPresenter, ListDoneMaster.ModelToPresenter, ListDoneMaster.ListDoneTo, ListDoneMaster.ToListDone, ListDoneMaster.MasterListToDetail, ListDoneMaster.DetailToMaster, Observer {
+public class ListSubjectPresenter extends GenericPresenter
+        <ListSubject.PresenterToView, ListSubject.PresenterToModel, ListSubject.ModelToPresenter, ListSubjectModel>
+        implements ListSubject.ViewToPresenter, ListSubject.ModelToPresenter, ListSubject.ListSubjectTo, ListSubject.ToListSubject{
 
 
     private boolean toolbarVisible;
     private boolean deleteBtnVisible;
     private boolean textVisible;
     private boolean listClicked;
+    private Subject subject;
+    private Subject selectedSubject;
     private boolean selectedState;
-
-
-    private Task selectedTask;
-
-    private ArrayList<Task> tasksSelected = new ArrayList<>();
+    private ArrayList<Subject> subjectsSelected = new ArrayList<>();
     private ArrayList<String> posSelected = new ArrayList<>();
-
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
-
     private DatabaseFacade database;
 
 
@@ -52,17 +49,19 @@ public class ListDonePresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onCreate(ListDoneMaster.PresenterToView view) {
-        super.onCreate(ListDoneModelMaster.class, this);
+    public void onCreate(ListSubject.PresenterToView view) {
+        super.onCreate(ListSubjectModel.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
-
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         database = new DatabaseFacade();
-        app.startingListDoneScreen(this);
-        checkToolbarColourChanges(app);
+        app.startingListSubjectScreen(this);
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     /**
@@ -73,33 +72,24 @@ public class ListDonePresenterMaster extends GenericPresenter
      * @param view The current VIEW instance
      */
     @Override
-    public void onResume(ListDoneMaster.PresenterToView view) {
+    public void onResume(ListSubject.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
-
-
-           // checkToolbarVisibility();
-            //checkTextVisibility();
-
-
             checkDeleteBtnVisibility();
 
             if(listClicked) {
                 getView().startSelection();
-
                 onCheckItems();
             }
-
-//            if (buttonClicked) {
-//                getView().setText(getModel().getText());
-//            }
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
+        if (app.checkToolbarChanged() == true){
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
         loadItems();
     }
 
@@ -113,14 +103,6 @@ public class ListDonePresenterMaster extends GenericPresenter
             setItemChecked(Integer.parseInt(posSelected.get(i)), true);
         }
 
-    }
-
-
-    private void checkToolbarColourChanges(Mediator app){
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
     }
 
 
@@ -151,9 +133,23 @@ public class ListDonePresenterMaster extends GenericPresenter
     ///////////////////////////////////////////////////////////////////////////////////
     // View To Presenter /////////////////////////////////////////////////////////////
 
+    /*@Override
+    public void onButtonClicked() {
+        Log.d(TAG, "calling onButtonClicked()");
+        if (isViewRunning()) {
+            getModel().onChangeMsgByBtnClicked();
+            getView().setText(getModel().getText());
+            textVisible = true;
+            buttonClicked = true;
+        }
+        checkTextVisibility();
+    }*/
+
+
+
 
     @Override
-    public void onListClick2(View v, int adapterPosition, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task) {
+    public void onListClick2(View v, int adapterPosition, ListSubjectView.SubjectRecyclerViewAdapter adapter, Subject subject) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -166,30 +162,13 @@ public class ListDonePresenterMaster extends GenericPresenter
             }
         }else{
             Navigator app = (Navigator) getView().getApplication();
-            selectedTask=task;
+            selectedSubject = subject;
             app.goToDetailScreen(this, adapter);
         }
         checkSelection();
-      checkDeleteBtnVisibility();
+       checkDeleteBtnVisibility();
 
     }
-    
-
-    private void deselectTask(Task currentTask) {
-        tasksSelected.remove(currentTask);
-    }
-
-    private boolean isTaskSelected(Task currentTask) {
-        boolean result = false;
-        for(int i=0;i<tasksSelected.size();i++){
-            if(currentTask.equals(tasksSelected.get(i)))
-                result= true;
-        }
-        return result;
-
-    }
-
-
 
     @Override
     public void onLongListClick2(View v, int adapterPosition) {
@@ -201,12 +180,14 @@ public class ListDonePresenterMaster extends GenericPresenter
         }
 
         checkSelection();
+
         checkDeleteBtnVisibility();
 
 
 
 
     }
+
     @Override
     public boolean isSelected(int adapterPosition) {
         boolean result = false;
@@ -220,12 +201,11 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onBinBtnClick2(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick2(ListSubjectView.SubjectRecyclerViewAdapter adapter) {
 
-        ArrayList<Task> selected = getSelectedTasks(adapter);
+        ArrayList<Subject> selected = getSelectedSubjects(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
-            //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
         }
         itemsSelected.clear();
         checkSelection();
@@ -234,8 +214,8 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
     }
-    private ArrayList<Task> getSelectedTasks(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        ArrayList<Task> selected = new ArrayList<>();
+    private ArrayList<Subject> getSelectedSubjects(ListSubjectView.SubjectRecyclerViewAdapter adapter) {
+        ArrayList<Subject> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
                 selected.add(adapter.getItems().get(i));
@@ -244,8 +224,6 @@ public class ListDonePresenterMaster extends GenericPresenter
         return selected;
     }
 
-
-
     private void deselectAll() {
 
         for (int k = 0; k < posSelected.size(); k++) {
@@ -253,7 +231,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         }
 
         posSelected.clear();
-        tasksSelected.clear();
+        subjectsSelected.clear();
     }
 
     private void checkSelection() {
@@ -278,6 +256,8 @@ public class ListDonePresenterMaster extends GenericPresenter
             setDeleteBtnVisibility(false);
             selectedState=false;
         }
+
+
     }
 
     private void setItemChecked(int pos, boolean checked) {
@@ -344,8 +324,8 @@ public class ListDonePresenterMaster extends GenericPresenter
         return getActivityContext();
     }
 
-    public Task getSelectedTask() {
-        return selectedTask;
+    public Subject getSelectedSubject() {
+        return selectedSubject;
     }
 
     @Override
@@ -381,7 +361,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             }
         }
     }
-    
+
 
 
     private void checkDeleteBtnVisibility() {
@@ -401,36 +381,30 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onLoadItemsTaskStarted() {
+    public void onLoadItemsSubjectStarted() {
         checkToolbarVisibility();
-
     }
 
     @Override
-    public void onLoadItemsTaskFinished(List<Task> itemsFromDatabase) {
+    public void onLoadItemsSubjectFinished(List<Subject> itemsFromDatabase) {
         getView().setRecyclerAdapterContent(itemsFromDatabase);
     }
-
-    /*
-        @Override
-        public void onLoadItemsSubjectsFinished(List<Task> items) {
-            getView().setRecyclerAdapterContent(items);
-
-        }*/
     public void loadItems() {
         /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
             startDelayedTask();
         } else {*/
         if(!(database.getRunningTask())){
             Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-            onLoadItemsTaskFinished(database.getDoneItemsFromDatabase());
+          //  onLoadItemsSubjectFinished(database.getForgottenItemsFromDatabase());
         } else {
             Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-            onLoadItemsTaskStarted();
+            onLoadItemsSubjectStarted();
         }
         //}
 
     }
+
+
     /*private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
         database.setRunningTask(true);
@@ -453,24 +427,21 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     public void reloadItems() {
         //items = null;
+
         database.deleteAllDatabaseItems();
         database.setValidDatabase(false);
         loadItems();
     }
+
+    /*
+        @Override
+        public void onLoadItemsSubjectsFinished(List<subject> items) {
+            getView().setRecyclerAdapterContent(items);
+
+        }*/
 @Override
-public void onErrorDeletingItem(Task item) {
+public void onErrorDeletingItem(Subject item) {
 
 }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if(arg.equals(true)){
-            database.deleteDatabaseItem(selectedTask);
-
-            getView().setToastDelete();
-        }
-
-
-
-    }
 }

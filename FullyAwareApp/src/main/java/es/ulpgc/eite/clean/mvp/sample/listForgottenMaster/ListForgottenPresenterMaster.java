@@ -437,10 +437,10 @@ public class ListForgottenPresenterMaster extends GenericPresenter
             startDelayedTask();
         } else {*/
         if(!(database.getRunningTask())){
-            Log.d(TAG, "calling onLoadItemsTaskFinished() method");
+            Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
             onLoadItemsTaskFinished(database.getForgottenItemsFromDatabase());
         } else {
-            Log.d(TAG, "calling onLoadItemsTaskStarted() method");
+            Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
             onLoadItemsTaskStarted();
         }
         //}
@@ -449,8 +449,8 @@ public class ListForgottenPresenterMaster extends GenericPresenter
     /*private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
         database.setRunningTask(true);
-        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
-        onLoadItemsTaskStarted();
+        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
+        onLoadItemsSubjectStarted();
 
         // Mock Hello: A handler to delay the answer
         new Handler().postDelayed(new Runnable() {
@@ -459,9 +459,9 @@ public class ListForgottenPresenterMaster extends GenericPresenter
                 //setItems();
                 database.setRunningTask(false);
                 database.setValidDatabase(true);
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-                //getPresenter().onLoadItemsTaskFinished(items);
-                onLoadItemsTaskFinished(database.getItemsFromDatabase());
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+                //getPresenter().onLoadItemsSubjectsFinished(items);
+                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
             }
         }, 0);
     }*/
@@ -476,7 +476,7 @@ public class ListForgottenPresenterMaster extends GenericPresenter
 
     /*
         @Override
-        public void onLoadItemsTaskFinished(List<task> items) {
+        public void onLoadItemsSubjectsFinished(List<task> items) {
             getView().setRecyclerAdapterContent(items);
 
         }*/

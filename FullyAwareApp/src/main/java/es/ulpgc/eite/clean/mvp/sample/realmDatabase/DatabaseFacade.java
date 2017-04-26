@@ -49,11 +49,11 @@ public class DatabaseFacade {
             startDelayedTask();
         } else {
             if (!runningTask) {
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-                getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+                getPresenter().onLoadItemsSubjectsFinished(getItemsFromDatabase());
             } else {
-                Log.d(TAG, "calling onLoadItemsTaskStarted() method");
-                getPresenter().onLoadItemsTaskStarted();
+                Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
+                getPresenter().onLoadItemsSubjectStarted();
             }
         }
 
@@ -110,8 +110,8 @@ public class DatabaseFacade {
     /*private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
         runningTask = true;
-        Log.d(TAG, "calling onLoadItemsTaskStarted() method");
-        getPresenter().onLoadItemsTaskStarted();
+        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
+        getPresenter().onLoadItemsSubjectStarted();
 
         // Mock Hello: A handler to delay the answer
         new Handler().postDelayed(new Runnable() {
@@ -120,9 +120,9 @@ public class DatabaseFacade {
                 //setItems();
                 runningTask = false;
                 validDatabase = true;
-                Log.d(TAG, "calling onLoadItemsTaskFinished() method");
-                //getPresenter().onLoadItemsTaskFinished(items);
-                getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
+                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
+                //getPresenter().onLoadItemsSubjectsFinished(items);
+                getPresenter().onLoadItemsSubjectsFinished(getItemsFromDatabase());
             }
         }, 0);
     }*/
@@ -227,8 +227,11 @@ public class DatabaseFacade {
             return getItemsFromDatabaseWrapper();
         }
 
+
         return realmDatabase.where(Task.class).equalTo("status", "Forgotten").findAll();
     }
+
+
 
     private List<Task> getItemsFromDatabaseWrapper(){
         Log.d(TAG, "calling getItemsFromDatabaseWrapper() method");

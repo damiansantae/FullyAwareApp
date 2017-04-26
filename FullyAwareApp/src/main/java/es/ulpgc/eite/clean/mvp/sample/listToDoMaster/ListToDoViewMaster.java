@@ -1,8 +1,8 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 //public  abstract class ListToDoViewMaster
-//        extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
-//        implements ListToDoMaster.PresenterToView {
+//        extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectsPresenter>
+//        implements ListSubject.PresenterToView {
 //
 //    private Toolbar toolbar;
 //    private ListView list;
@@ -13,7 +13,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //    static final int DELTA = 50;
 //    enum Direction {LEFT, RIGHT}
 //
-//    private Task_Adapter adapter;
+//    private Subject_Adapter adapter;
 //    /**
 //     * ATTENTION: This was auto-generated to implement the App Indexing API.
 //     * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -31,7 +31,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //        done= (FloatingActionButton) findViewById(R.id.floatingDoneButton);
 //        ///////////////////////////////////////////////////////////////////
 //        list = (ListView) findViewById(R.id.list);
-//        adapter = new Task_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
+//        adapter = new Subject_Adapter(this, R.layout.item_list, TaskRepository.getInstance().getTasks());
 //       list.setAdapter(adapter);
 //
 //
@@ -147,7 +147,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //    @SuppressLint("MissingSuperCall")
 //    @Override
 //    protected void onResume() {
-//        super.onResume(ListToDoPresenterMaster.class, this);
+//        super.onResume(ListSubjectsPresenter.class, this);
 //    }
 //
 //
@@ -175,7 +175,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //        }
 //        else if (id ==R.id.menuDone){
 //            Navigator app = (Navigator) getApplication();
-//            app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
+//            app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
 //            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
 //            Log.d("error msg", "PULSADO");
 //        }
@@ -186,11 +186,11 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //        }
 //        else if (id ==R.id.menuForgotten){
 //            Navigator app = (Navigator) getApplication();
-//            app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
+//            app.goToListForgottenScreen((ListSubject.ListSubjectTo) getPresenter());
 //            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
 //        } else if (id ==R.id.menuPreferences) {
 //           // Navigator app = (Navigator) getApplication();
-//           // app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+//           // app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());
 //            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
 //
 //        }

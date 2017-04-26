@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 /**
@@ -21,22 +20,16 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-    public class WelcomeActivity extends AppCompatActivity {
+import static java.lang.Thread.sleep;
+
+public class WelcomeActivity extends AppCompatActivity {
 
         private ViewPager viewPager;
         private MyViewPagerAdapter myViewPagerAdapter;
@@ -54,7 +47,7 @@ import android.widget.TextView;
             prefManager = new PrefManager(this);
             if (!prefManager.isFirstTimeLaunch()) {
                 launchHomeScreen();
-              //finish();
+                finish();
             }
 
 
@@ -93,7 +86,8 @@ import android.widget.TextView;
             btnSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    launchHomeScreen();
+                    //launchHomeScreen();
+                    showAddUserNameDialog();
                 }
             });
 
@@ -107,8 +101,8 @@ import android.widget.TextView;
                         // move to next screen
                         viewPager.setCurrentItem(current);
                     } else {
-                     //   showAddUniversityDialog();
-                       // launchHomeScreen();
+                       //launchHomeScreen();
+                    showAddUserNameDialog();
                     }
                 }
             });
@@ -222,18 +216,19 @@ import android.widget.TextView;
         }
 
 
-       /* private void showAddUniversityDialog() {
+       public void showAddUserNameDialog() {
             final AddNameDialog dialog = new AddNameDialog();
             dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
             dialog.setListener(new AddNameDialog.OnAddUniversityClickListener() {
 
                 @Override
-                public void onAddUniversityClickListener(String universityName) {
+                public void onAddUserNameClickListener(String universityName) {
                     dialog.dismiss();
+                    launchHomeScreen();
                     // presenter.addUniversity(universityName);
                     // presenter.getAllUniversities();
                 }
             });
-        }*/
+        }
     }
 

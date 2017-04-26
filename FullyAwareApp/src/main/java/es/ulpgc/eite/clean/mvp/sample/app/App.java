@@ -22,6 +22,9 @@ import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenViewDetai
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -247,6 +250,11 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
+    @Override
+    public void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
+
+    }
+
 
     /////////////////TOOLBAR CHANGES METHODS
     @Override
@@ -414,6 +422,41 @@ public class App extends Application implements Mediator, Navigator {
         }
     }
 
+    @Override
+    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
+
+    }
+
+    @Override
+    public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
+
+    }
+
+    @Override
+    public void goToListSubjectScreen(ListSubjectPresenter presenter) {
+
+    }
+
+    @Override
+    public void goToListDoneScreen(ListSubject.ListSubjectTo presenter) {
+
+    }
+
+    @Override
+    public void goToListForgottenScreen(ListSubject.ListSubjectTo presenter) {
+
+    }
+
+    @Override
+    public void goToPreferencesScreen(ListSubject.ListSubjectTo presenter) {
+
+    }
+
+    @Override
+    public void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter) {
+
+    }
+
 
     @Override
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
@@ -424,7 +467,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState.adapter = adapter;
         masterListToDetailToDoState.master = listToDoPresenterMaster;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -462,7 +505,7 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
         masterListToDetailDoneState.adapter = adapter;
 masterListToDetailDoneState.master=listDonePresenterMaster;
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listDonePresenterMaster.getManagedContext();
@@ -489,7 +532,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         masterListToDetailForgottenState.adapter = adapter;
         masterListToDetailForgottenState.master = listForgottenPresenterMaster;
 
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedTask().getTagId();
+        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listForgottenPresenterMaster.getManagedContext();
@@ -553,6 +596,11 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
             view.startActivity(new Intent(view, ScheduleView.class));
 
         }
+    }
+
+    @Override
+    public void goToScheduleScreen(ListSubject.ListSubjectTo presenter) {
+
     }
 
     @Override
