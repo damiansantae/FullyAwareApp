@@ -107,7 +107,7 @@ import android.widget.TextView;
                         // move to next screen
                         viewPager.setCurrentItem(current);
                     } else {
-                        showAddUniversityDialog();
+                     //   showAddUniversityDialog();
                        // launchHomeScreen();
                     }
                 }
@@ -222,7 +222,7 @@ import android.widget.TextView;
         }
 
 
-        private void showAddUniversityDialog() {
+       /* private void showAddUniversityDialog() {
             final AddNameDialog dialog = new AddNameDialog();
             dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
             dialog.setListener(new AddNameDialog.OnAddUniversityClickListener() {
@@ -234,6 +234,6 @@ import android.widget.TextView;
                     // presenter.getAllUniversities();
                 }
             });
-        }
+        }*/
     }
 
