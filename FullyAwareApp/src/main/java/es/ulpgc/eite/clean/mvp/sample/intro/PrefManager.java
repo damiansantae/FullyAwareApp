@@ -7,29 +7,25 @@ import android.content.SharedPreferences;
  * Created by jordivilchez on 25/4/17.
  */
 
-
-import android.content.Context;
-import android.content.SharedPreferences;
-
-    /**
-     * Created by Lincoln on 05/05/16.
-     */
     public class PrefManager {
         SharedPreferences pref;
         SharedPreferences.Editor editor;
         Context _context;
 
+
         // shared pref mode
         int PRIVATE_MODE = 0;
 
         // Shared preferences file name
-        private static final String PREF_NAME = "androidhive-welcome";
+        private static final String APP_PREF = "androidhive-welcome";
 
         private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
+        private static final String USER_NAME = "userName";
+
         public PrefManager(Context context) {
             this._context = context;
-            pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+            pref = _context.getSharedPreferences(APP_PREF, PRIVATE_MODE);
             editor = pref.edit();
         }
 
@@ -42,5 +38,13 @@ import android.content.SharedPreferences;
             return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
         }
 
+        public void setUserName(String userName) {
+            editor.putString(USER_NAME,userName);
+            editor.commit();
+        }
+
+        public String getUserName(){
+            return pref.getString(USER_NAME, "User Name");
+        }
     }
 

@@ -50,6 +50,8 @@ public interface ListSubject {
     void onBinBtnClick2(ListSubjectView.SubjectRecyclerViewAdapter adapter);
 
     boolean getToolbarVisibility();
+
+      void onAddUserBtnClicked(String userName);
   }
 
   /**
@@ -80,6 +82,10 @@ public interface ListSubject {
     void setRecyclerAdapterContent(List<Subject> items);
 
       void setToastDelete();
+
+    void showAddUserNameDialog();
+
+      void showAddSubjectsDialog();
   }
 
   /**

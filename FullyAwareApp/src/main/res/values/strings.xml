@@ -33,6 +33,17 @@
 
     <string name="add_name">Please add your name</string>
     <string name="hint_name">Name</string>
-
+    <string name="hint_subject">Subject</string>
     <string name="add_subjects">Please add your dialy subjects</string>
+
+    <string name="day_1">M</string>
+    <string name="day_2">T</string>
+    <string name="day_3">W</string>
+    <string name="day_4">T</string>
+    <string name="day_5">F</string>
+    <string name="day_6">S</string>
+    <string name="day_7">S</string>
+    <string name="add_subject">Add Subject</string>
+
+
 </resources>

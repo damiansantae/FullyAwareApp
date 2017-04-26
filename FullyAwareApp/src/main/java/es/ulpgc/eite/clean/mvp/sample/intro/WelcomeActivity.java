@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 
 /**
@@ -86,8 +87,7 @@ public class WelcomeActivity extends AppCompatActivity {
             btnSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //launchHomeScreen();
-                    showAddUserNameDialog();
+                   launchSubjectScreen();
                 }
             });
 
@@ -101,8 +101,8 @@ public class WelcomeActivity extends AppCompatActivity {
                         // move to next screen
                         viewPager.setCurrentItem(current);
                     } else {
-                       //launchHomeScreen();
-                    showAddUserNameDialog();
+                        launchSubjectScreen();
+
                     }
                 }
             });
@@ -137,7 +137,14 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
-        //  viewpager change listener
+        private void launchSubjectScreen() {
+       //prefManager.setFirstTimeLaunch(false);
+        startActivity(new Intent(WelcomeActivity.this, ListSubjectView.class));
+        finish();
+    }
+
+
+    //  viewpager change listener
         ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -216,19 +223,5 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
 
-       public void showAddUserNameDialog() {
-            final AddNameDialog dialog = new AddNameDialog();
-            dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
-            dialog.setListener(new AddNameDialog.OnAddUniversityClickListener() {
-
-                @Override
-                public void onAddUserNameClickListener(String universityName) {
-                    dialog.dismiss();
-                    launchHomeScreen();
-                    // presenter.addUniversity(universityName);
-                    // presenter.getAllUniversities();
-                }
-            });
-        }
     }
 

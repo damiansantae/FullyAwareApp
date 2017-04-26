@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.intro;
+package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,15 +12,13 @@ import android.widget.EditText;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 
-/**
- * Created by roma on 05.11.15.
- */
+
 public class AddNameDialog extends DialogFragment implements View.OnClickListener {
 
   private EditText etUserName;
   private Button btAddName;
 
-  private OnAddUniversityClickListener listener;
+  private OnAddUserClickListener listener;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
   }
 
   private void initComponents(View view) {
-    etUserName = (EditText) view.findViewById(R.id.et_user_name);
+    etUserName = (EditText) view.findViewById(R.id.et_subject_name);
     etUserName.requestFocus();
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     btAddName = (Button) view.findViewById(R.id.bt_add_user);
@@ -50,23 +48,23 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.bt_add_user: {
-        if (isUniversityInfoValid())
+        if (isUserInfoValid())
           listener.onAddUserNameClickListener(etUserName.getText().toString());
         break;
       }
     }
   }
 
-  private boolean isUniversityInfoValid() {
+  private boolean isUserInfoValid() {
     return !etUserName.getText().toString().isEmpty();
   }
 
-  public void setListener(OnAddUniversityClickListener listener) {
+  public void setListener(OnAddUserClickListener listener) {
     this.listener = listener;
   }
 
-  public interface OnAddUniversityClickListener {
+  public interface OnAddUserClickListener {
 
-    void onAddUserNameClickListener(String universityName);
+    void onAddUserNameClickListener(String userName);
   }
 }

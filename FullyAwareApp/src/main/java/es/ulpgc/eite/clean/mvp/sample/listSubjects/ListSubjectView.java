@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +31,10 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
+import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
@@ -41,13 +44,11 @@ public class ListSubjectView
 
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
-;
+    int counterSubject = 0;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT}
-
     private SparseBooleanArray subjectsSelected;
-
     private SubjectRecyclerViewAdapter adapter;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
@@ -61,7 +62,7 @@ public class ListSubjectView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listforgotten);
+        setContentView(R.layout.activity_listsubject);
 
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
@@ -81,6 +82,11 @@ public class ListSubjectView
         setSupportActionBar(toolbar);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         loadSharePreferences();
+        Mediator mediator = (Mediator) getApplication();
+
+
+
+
     }
 
     /**
@@ -324,10 +330,7 @@ public class ListSubjectView
 
             }
 
-            /* @Override
-             public String toString() {
-                 return super.toString() + " '" + contentView.getText() + "'";
-             }*/
+
             public void bindView(final Subject subject) {
                 tag = (ImageView) itemView.findViewById(R.id.tag);
                 title = (TextView) itemView.findViewById(R.id.title);
@@ -364,6 +367,57 @@ public class ListSubjectView
 
 
     }
+
+    @Override
+    public void showAddUserNameDialog() {
+        final AddNameDialog dialog = new AddNameDialog();
+        dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+        dialog.setListener(new AddNameDialog.OnAddUserClickListener() {
+
+            @Override
+            public void onAddUserNameClickListener(String userName) {
+                getPresenter().onAddUserBtnClicked(userName);
+                dialog.dismiss();
+                showAddSubjectsDialog();
+            }
+        });
+    }
+
+
+
+    @Override
+    public void showAddSubjectsDialog() {
+        final AddSubjectDialog dialog = new AddSubjectDialog();
+        dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+        dialog.setListener(new AddSubjectDialog.OnAddSubjectClickListener() {
+            @Override
+            public void onAddSubjectClickListener(String p4rueba) {
+
+                if (counterSubject == 0){
+                    dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
+                    counterSubject++;
+
+                } else if (counterSubject==1 && dialog.getView().findViewById(R.id.time_2).getVisibility() == View.VISIBLE){
+                    dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
+                    counterSubject++;
+
+            } else if (counterSubject==2 && dialog.getView().findViewById(R.id.time_3).getVisibility() == View.VISIBLE) {
+                dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
+                counterSubject++;
+            } else if(counterSubject==3 && dialog.getView().findViewById(R.id.time_4).getVisibility() == View.VISIBLE) {
+                    dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
+                    counterSubject++;
+                } else {
+
+                }
+            }
+
+        });
+    }
+
+
+
+
 }
 
 

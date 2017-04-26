@@ -18,6 +18,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class ListSubjectPresenter extends GenericPresenter
@@ -36,7 +37,7 @@ public class ListSubjectPresenter extends GenericPresenter
     private ArrayList<String> posSelected = new ArrayList<>();
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
-
+    private PrefManager prefManager;
 
 
 
@@ -62,6 +63,15 @@ public class ListSubjectPresenter extends GenericPresenter
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
+
+        prefManager = new PrefManager(getView().getActivityContext());
+
+        Log.d(TAG,""+prefManager.isFirstTimeLaunch());
+        if (prefManager.isFirstTimeLaunch()) {
+            getView().showAddUserNameDialog();
+            prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once.
+        }
+
     }
 
     /**
@@ -334,6 +344,13 @@ public class ListSubjectPresenter extends GenericPresenter
     }
 
     @Override
+    public void onAddUserBtnClicked(String userName) {
+        prefManager.setUserName(userName);
+        Log.d("TAG", "añadido con éxito el usuario");
+        Log.d("TAG", prefManager.getUserName());
+    }
+
+    @Override
     public void destroyView() {
         if (isViewRunning()) {
             getView().finishScreen();
@@ -403,7 +420,6 @@ public class ListSubjectPresenter extends GenericPresenter
         //}
 
     }
-
 
     /*private void startDelayedTask() {
         Log.d(TAG, "calling startDelayedTask() method");
