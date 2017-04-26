@@ -50,7 +50,7 @@
         android:clickable="true"
         app:backgroundTint="@color/flatBlue"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/plus_white_symbol" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingDoneButton"
@@ -62,6 +62,6 @@
         android:clickable="true"
         app:backgroundTint="@color/flatBlue"
         app:fabSize="normal"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
+        app:srcCompat="@drawable/checked" />
 
 </RelativeLayout>
