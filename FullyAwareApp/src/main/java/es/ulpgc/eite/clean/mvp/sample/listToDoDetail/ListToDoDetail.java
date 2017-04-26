@@ -49,6 +49,8 @@ public interface ListToDoDetail {
     Task getTask();
 
     void onDeleteActionClicked();
+
+      void onDoneActionClicked();
   }
 
   /**

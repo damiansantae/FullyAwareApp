@@ -555,10 +555,10 @@ checkSelection2();
 
 
 
-        /*if(counter==0){
-            database.addInitialSubjects();
+        if(counter==0){
+            database.addInitialTasks();
             counter++;
-        }*/
+        }
 
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -713,9 +713,11 @@ checkSelection2();
     @Override
     public void update(Observable o, Object arg) {
 
-        if(arg.equals(true)){
+        if(arg.equals("delete")){
             database.deleteDatabaseItem(selectedTask);
             getView().setToastDelete();
+        }else if(arg.equals("done")){
+            database.setItemStatus(selectedTask, "Done");
         }
 
     }
