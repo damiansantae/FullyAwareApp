@@ -54,8 +54,10 @@ import android.widget.TextView;
             prefManager = new PrefManager(this);
             if (!prefManager.isFirstTimeLaunch()) {
                 launchHomeScreen();
-                finish();
+              //finish();
             }
+
+
 
             // Making notification bar transparent
             if (Build.VERSION.SDK_INT >= 21) {
@@ -105,7 +107,8 @@ import android.widget.TextView;
                         // move to next screen
                         viewPager.setCurrentItem(current);
                     } else {
-                        launchHomeScreen();
+                        showAddUniversityDialog();
+                       // launchHomeScreen();
                     }
                 }
             });
@@ -216,6 +219,21 @@ import android.widget.TextView;
                 View view = (View) object;
                 container.removeView(view);
             }
+        }
+
+
+        private void showAddUniversityDialog() {
+            final AddNameDialog dialog = new AddNameDialog();
+            dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+            dialog.setListener(new AddNameDialog.OnAddUniversityClickListener() {
+
+                @Override
+                public void onAddUniversityClickListener(String universityName) {
+                    dialog.dismiss();
+                    // presenter.addUniversity(universityName);
+                    // presenter.getAllUniversities();
+                }
+            });
         }
     }
 

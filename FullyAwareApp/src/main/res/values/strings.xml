@@ -30,4 +30,9 @@
 
     <string name="play_again_desc">A</string>
     <string name="play_again">A</string>
+
+    <string name="add_name">Please add your name</string>
+    <string name="hint_name">Name</string>
+
+    <string name="add_subjects">Please add your dialy subjects</string>
 </resources>
