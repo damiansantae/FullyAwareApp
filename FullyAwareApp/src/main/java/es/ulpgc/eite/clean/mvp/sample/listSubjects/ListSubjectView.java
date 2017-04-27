@@ -15,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -33,6 +36,7 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
+import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
@@ -44,8 +48,15 @@ public class ListSubjectView
     int counterSubject;
     private SparseBooleanArray subjectsSelected;
     private SubjectRecyclerViewAdapter adapter;
+    private PrefManager prefManager;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
+    private String time1;
+    private String time2;
+    private String time3;
+    private String time4;
+    private String time5;
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -374,9 +385,184 @@ public class ListSubjectView
         });
     }
 
-    private int getCounterSubject(){
+    public int getCounterSubject(){
         return this.counterSubject;
     }
+
+    @Override
+    public void setTimeTextHour(int i, String txt) {
+        if (i==1){
+            time1 = txt;
+        } else if (i==2){
+            time2= txt;
+        } else if(i==3){
+            time3 = txt;
+        } else if (i==4){
+            time4 = txt;
+        } else if (i==5){
+            time5 = txt;
+        }
+
+    }
+
+
+
+    private void findCheckBoxesChecked(AddSubjectDialog dialog) {
+        prefManager = new PrefManager(dialog.getContext());
+        int counterSubject = prefManager.getCounterSubject();
+        Log.d("CHECK COUNTER", "" + counterSubject);
+        Log.d("CHECK SELECTION TAG", "ENTRA AL METODO");
+
+        //All the layouts that contains the information, ya tu sabe.
+        LinearLayout l1 = (LinearLayout) dialog.getView().findViewById(R.id.time_1);
+        LinearLayout l2 = (LinearLayout) dialog.getView().findViewById(R.id.time_2);
+        LinearLayout l3 = (LinearLayout) dialog.getView().findViewById(R.id.time_3);
+        LinearLayout l4 = (LinearLayout) dialog.getView().findViewById(R.id.time_4);
+        LinearLayout l5 = (LinearLayout) dialog.getView().findViewById(R.id.time_5);
+
+        //Checkboxes for l1 hour space.
+        CheckBox c1l1 = (CheckBox) l1.findViewById(R.id.cb_monday);
+        CheckBox c2l1 = (CheckBox) l1.findViewById(R.id.cb_tuesday);
+        CheckBox c3l1 = (CheckBox) l1.findViewById(R.id.cb_wednesday);
+        CheckBox c4l1 = (CheckBox) l1.findViewById(R.id.cb_thursday);
+        CheckBox c5l1 = (CheckBox) l1.findViewById(R.id.cb_friday);
+        CheckBox c6l1 = (CheckBox) l1.findViewById(R.id.cb_saturday);
+        CheckBox c7l1 = (CheckBox) l1.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l2 hour space.
+        CheckBox c1l2 = (CheckBox) l2.findViewById(R.id.cb_monday);
+        CheckBox c2l2 = (CheckBox) l2.findViewById(R.id.cb_tuesday);
+        CheckBox c3l2 = (CheckBox) l2.findViewById(R.id.cb_wednesday);
+        CheckBox c4l2 = (CheckBox) l2.findViewById(R.id.cb_thursday);
+        CheckBox c5l2 = (CheckBox) l2.findViewById(R.id.cb_friday);
+        CheckBox c6l2 = (CheckBox) l2.findViewById(R.id.cb_saturday);
+        CheckBox c7l2 = (CheckBox) l2.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l3 hour space.
+        CheckBox c1l3 = (CheckBox) l3.findViewById(R.id.cb_monday);
+        CheckBox c2l3 = (CheckBox) l3.findViewById(R.id.cb_tuesday);
+        CheckBox c3l3 = (CheckBox) l3.findViewById(R.id.cb_wednesday);
+        CheckBox c4l3 = (CheckBox) l3.findViewById(R.id.cb_thursday);
+        CheckBox c5l3 = (CheckBox) l3.findViewById(R.id.cb_friday);
+        CheckBox c6l3 = (CheckBox) l3.findViewById(R.id.cb_saturday);
+        CheckBox c7l3 = (CheckBox) l3.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l4 hour space.
+        CheckBox c1l4 = (CheckBox) l4.findViewById(R.id.cb_monday);
+        CheckBox c2l4 = (CheckBox) l4.findViewById(R.id.cb_tuesday);
+        CheckBox c3l4 = (CheckBox) l4.findViewById(R.id.cb_wednesday);
+        CheckBox c4l4 = (CheckBox) l4.findViewById(R.id.cb_thursday);
+        CheckBox c5l4 = (CheckBox) l4.findViewById(R.id.cb_friday);
+        CheckBox c6l4 = (CheckBox) l4.findViewById(R.id.cb_saturday);
+        CheckBox c7l4 = (CheckBox) l4.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l5 hour space.
+        CheckBox c1l5 = (CheckBox) l5.findViewById(R.id.cb_monday);
+        CheckBox c2l5 = (CheckBox) l5.findViewById(R.id.cb_tuesday);
+        CheckBox c3l5 = (CheckBox) l5.findViewById(R.id.cb_wednesday);
+        CheckBox c4l5 = (CheckBox) l5.findViewById(R.id.cb_thursday);
+        CheckBox c5l5 = (CheckBox) l5.findViewById(R.id.cb_friday);
+        CheckBox c6l5 = (CheckBox) l5.findViewById(R.id.cb_saturday);
+        CheckBox c7l5 = (CheckBox) l5.findViewById(R.id.cb_sunday);
+
+
+        HashMap<String,String> daysChecked = new HashMap<String,String>();
+
+        if (counterSubject == 0) {
+            if (c1l1.isChecked()) {
+                daysChecked.put("M1","Monday");
+            } else if (c2l1.isChecked()) {
+                daysChecked.put("T1","Tuesday");
+            } else if (c3l1.isChecked()) {
+                daysChecked.put("W1","Wednesday");
+            } else if (c4l1.isChecked()) {
+                daysChecked.put("X1","Thursday");
+            } else if (c5l1.isChecked()) {
+                daysChecked.put("F1","Friday");
+            } else if (c6l1.isChecked()) {
+                daysChecked.put("S1","Saturday");
+            } else if (c7l1.isChecked()) {
+                daysChecked.put("Sn1","Sunday");
+            }
+        }
+
+
+
+;
+      /*
+        if (counterSubject == 1) {
+            if (c1l2.isChecked()) {
+                daysChecked.add("Monday");
+            } else if (c2l2.isChecked()) {
+                daysChecked.add("Tuesdar");
+            } else if (c3l2.isChecked()) {
+                daysChecked.add("Wednesday");
+            } else if (c4l2.isChecked()) {
+                daysChecked.add("Thursday");
+            } else if (c5l3.isChecked()) {
+                daysChecked.add("Friday");
+            } else if (c6l4.isChecked()) {
+                daysChecked.add("Saturday");
+            } else if (c7l5.isChecked()) {
+                daysChecked.add("Sunday");
+            }
+        }
+        if (counterSubject == 2) {
+            if (c1l3.isChecked()) {
+                daysChecked.add("Monday");
+            } else if (c2l3.isChecked()) {
+                daysChecked.add("Tuesday");
+            } else if (c3l3.isChecked()) {
+                daysChecked.add("Wednesday");
+            } else if (c4l3.isChecked()) {
+                daysChecked.add("Thursday");
+            } else if (c5l3.isChecked()) {
+                daysChecked.add("Friday");
+            } else if (c6l3.isChecked()) {
+                daysChecked.add("Saturday");
+            } else if (c7l3.isChecked()) {
+                daysChecked.add("Sunday");
+            }
+        }
+        if (counterSubject == 3) {
+            if (c1l4.isChecked()) {
+                daysChecked.add("Monday");
+            } else if (c2l4.isChecked()) {
+                daysChecked.add("Tuesdar");
+            } else if (c3l4.isChecked()) {
+                daysChecked.add("Wednesday");
+            } else if (c4l4.isChecked()) {
+                daysChecked.add("Thursday");
+            } else if (c5l4.isChecked()) {
+                daysChecked.add("Friday");
+            } else if (c6l4.isChecked()) {
+                daysChecked.add("Saturday");
+            } else if (c7l4.isChecked()) {
+                daysChecked.add("Sunday");
+            }
+        }
+        if (counterSubject == 4) {
+            if (c1l5.isChecked()) {
+                daysChecked.add("Monday");
+            } else if (c2l5.isChecked()) {
+                daysChecked.add("Tuesdar");
+            } else if (c3l5.isChecked()) {
+                daysChecked.add("Wednesday");
+            } else if (c4l5.isChecked()) {
+                daysChecked.add("Thursday");
+            } else if (c5l5.isChecked()) {
+                daysChecked.add("Friday");
+            } else if (c6l5.isChecked()) {
+                daysChecked.add("Saturday");
+            } else if (c7l5.isChecked()) {
+                daysChecked.add("Sunday");
+            }
+        }*/
+
+        //TODO:RECOGER HORAS DEL PICKER Y AÑADIRLAS A LOS ARRAY
+
+    }
+
 
 
     @Override
@@ -384,67 +570,83 @@ public class ListSubjectView
         final AddSubjectDialog dialog = new AddSubjectDialog();
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
         counterSubject =0;
-        Log.d("COUNTER TAG PRUEBA", "" + counterSubject);
+        prefManager = new PrefManager(this);
+        prefManager.setCounterSubject(counterSubject);
+        if (!prefManager.isFirstTimeLaunch()) {
+            prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once
+        }
+
+
         dialog.setListener(new AddSubjectDialog.OnAddSubjectClickListener() {
             @Override
             public void onAddSubjectClickListener(String label) {
                 Log.d("COUNTER TAG", ""+label);
 
-
-              if (label.equals(getPresenter().getLabelFloatingAdd())){ //Boton Floating Add Pulsado
+        //Boton Floating Add Pulsado
+              if (label.equals(getPresenter().getLabelFloatingAdd())){
+                  Log.d("ADD HOUR BUTTON TAG", "BUTTON ADD HOUR CLICKED");
                     if (counterSubject == 0){
                         dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
                         dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.VISIBLE);
-                        counterSubject++;
+                        prefManager.setCounterSubject(counterSubject++);
 
                     } else if (counterSubject==1){
                         dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
-                        counterSubject++;
+                        prefManager.setCounterSubject(counterSubject++);
 
                     } else if (counterSubject==2) {
                         dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
-                        counterSubject++;
+                        prefManager.setCounterSubject(counterSubject++);
 
                     } else if(counterSubject==3) {
                         dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
-                        counterSubject++;
                         dialog.getView().findViewById(R.id.fb_add).setVisibility(View.INVISIBLE);
-                    } else {
-                    //TODO:Toast de aviso que no se puede añadir mas horarios.
+                        prefManager.setCounterSubject(counterSubject++);
                     }
-
                 }
 
+        //Boton Floating Delete Pulsado
                 if (label.equals(getPresenter().getLabelFloatingDelete())){
-                    Log.d("DELETE BUTTON TAG", "ENTRA AL BOTON");
+                    Log.d("DELETE HOUR BUTTON TAG", "BUTTON DELETE HOUR CLICKED");
                     if (counterSubject == 4){
                         dialog.getView().findViewById(R.id.time_5).setVisibility(View.GONE);
-                        counterSubject--;
                         dialog.getView().findViewById(R.id.fb_add).setVisibility(View.VISIBLE);
+                        prefManager.setCounterSubject(counterSubject--);
+
                     } else if (counterSubject==3){
                         dialog.getView().findViewById(R.id.time_4).setVisibility(View.GONE);
-                        counterSubject--;
+                        prefManager.setCounterSubject(counterSubject--);
 
                     } else if (counterSubject==2) {
                         dialog.getView().findViewById(R.id.time_3).setVisibility(View.GONE);
-                        counterSubject--;
+                        prefManager.setCounterSubject(counterSubject--);
 
                     } else if(counterSubject==1) {
                         dialog.getView().findViewById(R.id.time_2).setVisibility(View.GONE);
-                        counterSubject--;
                         dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.INVISIBLE);
-                    } else {
-                        //TODO:Toast de aviso que no se puede añadir mas horarios.
+                        prefManager.setCounterSubject(counterSubject--);
                     }
+                }
+
+        //Boton AddSubject Pulsado
+                if (label.equals((getPresenter().getLabelBtnAddSubject()))){
+                    Log.d("ADD SUBJECT BUTTON TAG", "BUTTON ADD SUBJECT CLICKED");
+                    findCheckBoxesChecked(dialog);
+                    //findHours();
+                }
+
+
+
 
 
                 }
 
-                }
+            @Override
+            public void onAddSubjectClickListener(int i) {
+                    getPresenter().onSelectTimeBtnClicked(i);
+            }
 
 
-
-
-    });
+        });
 }
 }

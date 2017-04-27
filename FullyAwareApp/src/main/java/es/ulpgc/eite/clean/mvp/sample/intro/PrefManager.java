@@ -23,6 +23,10 @@ import android.content.SharedPreferences;
 
         private static final String USER_NAME = "userName";
 
+        private static final String COUNTER_SUBJECT = "counterSubject";
+
+        private int counterSubject = 0;
+
         public PrefManager(Context context) {
             this._context = context;
             pref = _context.getSharedPreferences(APP_PREF, PRIVATE_MODE);
@@ -46,5 +50,14 @@ import android.content.SharedPreferences;
         public String getUserName(){
             return pref.getString(USER_NAME, "User Name");
         }
+
+        public void setCounterSubject(int counterSubject) {
+            editor.putInt(COUNTER_SUBJECT, counterSubject);
+            editor.commit();
     }
+
+    public int getCounterSubject() {
+            return pref.getInt(COUNTER_SUBJECT, 0);
+    }
+}
 

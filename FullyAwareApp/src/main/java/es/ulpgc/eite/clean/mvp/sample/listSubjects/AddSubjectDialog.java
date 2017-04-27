@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 
 
 public class AddSubjectDialog extends DialogFragment implements View.OnClickListener {
@@ -22,24 +23,33 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
   private Button btAddSubject;
   private FloatingActionButton floatingButtonAdd;
   private FloatingActionButton floatingButtonDelete;
+  private Button btHour1;
+  private Button btHour2;
+  private Button btHour3;
+  private Button btHour4;
+  private Button btHour5;
   private OnAddSubjectClickListener listener;
   private String floatingAdd;
   private String floatingDelete;
-
+  private String buttonAddSubject;
+  private String buttonHour;
+  private String buttonFinish;
+  private PrefManager prefManager;
 
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setStyle(DialogFragment.STYLE_NORMAL, R.style.AlertDialogStyle);
-      setFloatingButtonsLabels();
+    setButtonsLabels();
   }
 
-    private void setFloatingButtonsLabels() {
-    this.floatingAdd = getResources().getString(R.string.floatingAdd_label);
-    this.floatingDelete = getResources().getString(R.string.floatingDelete_label);
-        Log.d("LABEL TAG", floatingAdd);
-        Log.d("LABEL TAG", floatingDelete);
+    private void setButtonsLabels() {
+    this.floatingAdd = "floatingAdd";
+    this.floatingDelete = "floatingDelete";
+    this.buttonAddSubject = "buttonAddSubject";
+    this.buttonHour = "buttonHour";
+    this.buttonFinish = "buttonFinish";
     }
 
     @Nullable
@@ -64,6 +74,17 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
     floatingButtonAdd.setOnClickListener(this);
     floatingButtonDelete = (FloatingActionButton) view.findViewById(R.id.fb_delete);
     floatingButtonDelete.setOnClickListener(this);
+    btHour1 = (Button)  view.findViewById(R.id.bt_hour_1);
+    btHour1.setOnClickListener(this);
+    btHour2 = (Button)  view.findViewById(R.id.bt_hour_2);
+    btHour2.setOnClickListener(this);
+    btHour3 = (Button)  view.findViewById(R.id.bt_hour_3);
+    btHour3.setOnClickListener(this);
+    btHour4 = (Button)  view.findViewById(R.id.bt_hour_4);
+    btHour4.setOnClickListener(this);
+    btHour5 = (Button)  view.findViewById(R.id.bt_hour_5);
+    btHour5.setOnClickListener(this);
+
   }
 
   @Override
@@ -77,28 +98,37 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
        listener.onAddSubjectClickListener(floatingDelete);
        Log.d("LABEL TAG",floatingDelete);
    } else if (v.getId() == R.id.bt_add_subject){
-       checkSelections();
+       listener.onAddSubjectClickListener(buttonAddSubject);
+       Log.d("LABEL TAG",buttonAddSubject);
+
+   } else if (v.getId() == R.id.bt_hour_1){
+       listener.onAddSubjectClickListener(1);
+
+   } else if (v.getId() == R.id.bt_hour_2){
+       listener.onAddSubjectClickListener(2);
+
+   } else if (v.getId() == R.id.bt_hour_3){
+       listener.onAddSubjectClickListener(3);
+
+   } else if (v.getId() == R.id.bt_hour_4){
+       listener.onAddSubjectClickListener(4);
+
+   } else if (v.getId() == R.id.bt_hour_5){
+       listener.onAddSubjectClickListener(5);
+
    }
    }
 
-    private void checkSelections() {
-    LinearLayout l1 = (LinearLayout) getView().findViewById(R.id.time_1);
-    LinearLayout l2 = (LinearLayout) getView().findViewById(R.id.time_2);
-    LinearLayout l3 = (LinearLayout) getView().findViewById(R.id.time_3);
-    LinearLayout l4 = (LinearLayout) getView().findViewById(R.id.time_4);
-    LinearLayout l5 = (LinearLayout) getView().findViewById(R.id.time_5);
-
-        //TODO:Pendiente analizar todo el dialog y recoger los datos para crear las Subjects.
-
-
-
-    }
 
 
     private boolean isSubjectInfoValid() {
     return !etSubjectName.getText().toString().isEmpty();
   }
 
+    private boolean isDayInfoValid() {
+
+        return !etSubjectName.getText().toString().isEmpty();
+    }
 
 
   public void setListener(OnAddSubjectClickListener listener) {
@@ -107,6 +137,6 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
 
   public interface OnAddSubjectClickListener {
     void onAddSubjectClickListener(String subject);
-
+    void onAddSubjectClickListener(int i);
   }
 }

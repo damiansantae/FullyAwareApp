@@ -1,12 +1,15 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
@@ -66,15 +69,14 @@ public class ListSubjectPresenter extends GenericPresenter
 
         if (prefManager.isFirstTimeLaunch()) {
             getView().showAddUserNameDialog();
-            prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once.
         }
 
-        setLabelFloatingButton(getView().getActivityContext());
+        setLabelButtons(getView().getActivityContext());
 
     }
 
-    private void setLabelFloatingButton(Context activityContext) {
-        getModel().setLabelFloatingButtons(activityContext);
+    private void setLabelButtons(Context activityContext) {
+        getModel().setLabelButtons();
     }
 
     /**
@@ -362,6 +364,45 @@ public class ListSubjectPresenter extends GenericPresenter
     @Override
     public String getLabelFloatingDelete() {
         return getModel().getLabelFloatingDelete();
+    }
+
+    @Override
+    public String getLabelBtnAddSubject() {
+        return getModel().getLabelBtnAddSubject();
+    }
+
+    @Override
+    public String getLabelBtnHour() {
+        return getModel().getLabelBtnHour();
+    }
+
+    @Override
+    public void onSelectTimeBtnClicked(int i) {
+        final Calendar c = java.util.Calendar.getInstance();
+        int hours = c.get(java.util.Calendar.HOUR_OF_DAY);
+        int minutes = c.get(java.util.Calendar.MINUTE);
+        final int count = i; //TODO:Puede que haya problemas al ser final, verificar
+
+        TimePickerDialog timePicker = new TimePickerDialog(getManagedContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+              if (count==1){
+                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
+              } else if (count==2){
+                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
+              } else if (count==3){
+                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
+              } else if (count==4){
+                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
+              } else if (count==5){
+                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
+              }
+
+
+
+            }
+        }, hours, minutes, false);
+        timePicker.show();
     }
 
 

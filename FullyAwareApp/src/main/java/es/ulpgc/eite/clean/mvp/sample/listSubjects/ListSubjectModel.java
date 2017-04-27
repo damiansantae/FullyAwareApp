@@ -22,6 +22,8 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private boolean usingWrapper;
     private String floatingAddLabel;
     private String floatingDeleteLabel;
+    private String btAddSubjectLabel;
+    private String btHourLabel;
 
     /**
      * Method that recovers a reference to the PRESENTER
@@ -148,14 +150,26 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     }
 
     @Override
-    public void setLabelFloatingButtons(Context activityContext) {
-        this.floatingAddLabel = activityContext.getResources().getString(R.string.floatingAdd_label);
-        this.floatingDeleteLabel = activityContext.getResources().getString(R.string.floatingDelete_label);
+    public void setLabelButtons() {
+        this.floatingAddLabel = "floatingAdd";
+        this.floatingDeleteLabel = "floatingDelete";
+        this.btAddSubjectLabel = "buttonAddSubject";
+        this.btHourLabel = "buttonHour";
     }
 
     @Override
     public String getLabelFloatingDelete() {
         return floatingDeleteLabel;
+    }
+
+    @Override
+    public String getLabelBtnHour() {
+        return btHourLabel;
+    }
+
+    @Override
+    public String getLabelBtnAddSubject() {
+        return btAddSubjectLabel;
     }
 
 

@@ -56,6 +56,12 @@ public interface ListSubject {
     String getLabelFloatingAdd();
 
     String getLabelFloatingDelete();
+
+    String getLabelBtnAddSubject();
+
+    String getLabelBtnHour();
+
+    void onSelectTimeBtnClicked(int i);
   }
 
   /**
@@ -89,7 +95,9 @@ public interface ListSubject {
 
     void showAddUserNameDialog();
 
-      void showAddSubjectsDialog();
+    void setTimeTextHour(int i, String txt);
+
+    void showAddSubjectsDialog();
   }
 
   /**
@@ -104,10 +112,16 @@ public interface ListSubject {
     void addInitialSubjects();
 
     String getLabelFloatingAdd();
-
-    void setLabelFloatingButtons(Context activityContext);
-
     String getLabelFloatingDelete();
+
+    String getLabelBtnHour();
+
+    String getLabelBtnAddSubject();
+
+    void setLabelButtons();
+
+
+
   }
 
   /**

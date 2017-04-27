@@ -43,9 +43,9 @@
     <string name="day_5">F</string>
     <string name="day_6">S</string>
     <string name="day_7">S</string>
+
     <string name="add_subject">Add Subject</string>
-    <string name="floatingAdd_label">floatingAdd</string>
-    <string name="floatingDelete_label">floatingDelete</string>
+
 
 
 </resources>
