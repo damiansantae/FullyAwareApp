@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -79,6 +80,12 @@ public class AddTaskView
       }
     });
 
+    Calendar c = Calendar.getInstance();
+    String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+    String month = String.valueOf(c.get(Calendar.MONTH));
+    String year = String.valueOf(c.get(Calendar.YEAR));
+
+    date.setText(day+"/"+month+"/"+year);
 
   }
 

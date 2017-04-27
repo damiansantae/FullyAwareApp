@@ -9,7 +9,7 @@ public class AutoStart extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //Se ejecuta al iniciar la app
-        context.startService(new Intent(context,NotificationService.class));
+        //context.startService(new Intent(context,NotificationService.class));
 
     }
 }
