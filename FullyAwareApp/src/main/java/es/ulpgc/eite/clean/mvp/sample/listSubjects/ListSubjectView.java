@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,20 +33,15 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
         implements ListSubject.PresenterToView {
 
     private Toolbar toolbar;
-
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
-    int counterSubject = 0;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT}
+    int counterSubject;
     private SparseBooleanArray subjectsSelected;
     private SubjectRecyclerViewAdapter adapter;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
@@ -83,9 +77,6 @@ public class ListSubjectView
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         loadSharePreferences();
         Mediator mediator = (Mediator) getApplication();
-
-
-
 
     }
 
@@ -383,44 +374,77 @@ public class ListSubjectView
         });
     }
 
+    private int getCounterSubject(){
+        return this.counterSubject;
+    }
 
 
     @Override
     public void showAddSubjectsDialog() {
         final AddSubjectDialog dialog = new AddSubjectDialog();
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+        counterSubject =0;
+        Log.d("COUNTER TAG PRUEBA", "" + counterSubject);
         dialog.setListener(new AddSubjectDialog.OnAddSubjectClickListener() {
             @Override
-            public void onAddSubjectClickListener(String p4rueba) {
+            public void onAddSubjectClickListener(String label) {
+                Log.d("COUNTER TAG", ""+label);
 
-                if (counterSubject == 0){
-                    dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
-                    counterSubject++;
 
-                } else if (counterSubject==1 && dialog.getView().findViewById(R.id.time_2).getVisibility() == View.VISIBLE){
-                    dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
-                    counterSubject++;
+              if (label.equals(getPresenter().getLabelFloatingAdd())){ //Boton Floating Add Pulsado
+                    if (counterSubject == 0){
+                        dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
+                        dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.VISIBLE);
+                        counterSubject++;
 
-            } else if (counterSubject==2 && dialog.getView().findViewById(R.id.time_3).getVisibility() == View.VISIBLE) {
-                dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
-                counterSubject++;
-            } else if(counterSubject==3 && dialog.getView().findViewById(R.id.time_4).getVisibility() == View.VISIBLE) {
-                    dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
-                    counterSubject++;
-                } else {
+                    } else if (counterSubject==1){
+                        dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
+                        counterSubject++;
+
+                    } else if (counterSubject==2) {
+                        dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
+                        counterSubject++;
+
+                    } else if(counterSubject==3) {
+                        dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
+                        counterSubject++;
+                        dialog.getView().findViewById(R.id.fb_add).setVisibility(View.INVISIBLE);
+                    } else {
+                    //TODO:Toast de aviso que no se puede añadir mas horarios.
+                    }
 
                 }
-            }
 
-        });
-    }
+                if (label.equals(getPresenter().getLabelFloatingDelete())){
+                    Log.d("DELETE BUTTON TAG", "ENTRA AL BOTON");
+                    if (counterSubject == 4){
+                        dialog.getView().findViewById(R.id.time_5).setVisibility(View.GONE);
+                        counterSubject--;
+                        dialog.getView().findViewById(R.id.fb_add).setVisibility(View.VISIBLE);
+                    } else if (counterSubject==3){
+                        dialog.getView().findViewById(R.id.time_4).setVisibility(View.GONE);
+                        counterSubject--;
+
+                    } else if (counterSubject==2) {
+                        dialog.getView().findViewById(R.id.time_3).setVisibility(View.GONE);
+                        counterSubject--;
+
+                    } else if(counterSubject==1) {
+                        dialog.getView().findViewById(R.id.time_2).setVisibility(View.GONE);
+                        counterSubject--;
+                        dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.INVISIBLE);
+                    } else {
+                        //TODO:Toast de aviso que no se puede añadir mas horarios.
+                    }
+
+
+                }
+
+                }
 
 
 
 
+    });
 }
-
-
-
-
-
+}

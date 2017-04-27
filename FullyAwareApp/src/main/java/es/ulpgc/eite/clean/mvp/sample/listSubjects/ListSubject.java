@@ -51,7 +51,11 @@ public interface ListSubject {
 
     boolean getToolbarVisibility();
 
-      void onAddUserBtnClicked(String userName);
+    void onAddUserBtnClicked(String userName);
+
+    String getLabelFloatingAdd();
+
+    String getLabelFloatingDelete();
   }
 
   /**
@@ -98,6 +102,12 @@ public interface ListSubject {
     void setDatabaseValidity(boolean valid);
     String getErrorMessage();
     void addInitialSubjects();
+
+    String getLabelFloatingAdd();
+
+    void setLabelFloatingButtons(Context activityContext);
+
+    String getLabelFloatingDelete();
   }
 
   /**

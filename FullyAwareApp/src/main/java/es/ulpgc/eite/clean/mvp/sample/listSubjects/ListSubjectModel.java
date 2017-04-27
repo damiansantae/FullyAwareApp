@@ -1,9 +1,10 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
-import android.os.Handler;
+import android.content.Context;
 import android.util.Log;
 import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericModel;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;
@@ -19,7 +20,8 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private boolean validDatabase;
     private String errorMsg;
     private boolean usingWrapper;
-
+    private String floatingAddLabel;
+    private String floatingDeleteLabel;
 
     /**
      * Method that recovers a reference to the PRESENTER
@@ -140,6 +142,23 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         realmDatabase.commitTransaction();
     }
 
+    @Override
+    public String getLabelFloatingAdd() {
+        return this.floatingAddLabel;
+    }
+
+    @Override
+    public void setLabelFloatingButtons(Context activityContext) {
+        this.floatingAddLabel = activityContext.getResources().getString(R.string.floatingAdd_label);
+        this.floatingDeleteLabel = activityContext.getResources().getString(R.string.floatingDelete_label);
+    }
+
+    @Override
+    public String getLabelFloatingDelete() {
+        return floatingDeleteLabel;
+    }
+
+
     private void deleteAllDatabaseItems(){
         for(Subject item: getItemsFromDatabase()){
             deleteDatabaseItem(item);
@@ -174,5 +193,8 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         Log.d(TAG, "items=" +  dbItems);
         return dbItems;
     }
+
+
+
 
 }

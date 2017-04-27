@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="15dp">
 
     <LinearLayout
@@ -43,6 +43,15 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
+
+                    <EditText
+                        android:id="@+id/et_subject_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="Subject"
+                        android:inputType="textPersonName" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,7 +156,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -241,7 +251,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -335,7 +346,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -429,7 +441,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -518,28 +531,40 @@
 
                         </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/et_subject_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:hint="Subject"
-                            android:inputType="textPersonName" />
-
                         <Space
                             android:layout_width="match_parent"
                             android:layout_height="10dp" />
 
                     </LinearLayout>
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fb_add"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        app:fabSize="mini"
-                        app:srcCompat="@android:drawable/ic_input_add" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fb_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            app:fabSize="mini"
+                            app:srcCompat="@android:drawable/ic_input_add" />
+
+                        <Space
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fb_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:visibility="invisible"
+                            app:fabSize="mini"
+                            app:srcCompat="@android:drawable/ic_delete" />
+                    </LinearLayout>
 
                 </LinearLayout>
             </ScrollView>

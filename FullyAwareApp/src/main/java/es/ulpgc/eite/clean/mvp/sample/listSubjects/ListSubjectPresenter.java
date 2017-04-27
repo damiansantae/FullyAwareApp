@@ -8,8 +8,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -17,7 +15,6 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
@@ -65,13 +62,19 @@ public class ListSubjectPresenter extends GenericPresenter
         }
 
         prefManager = new PrefManager(getView().getActivityContext());
-
         Log.d(TAG,""+prefManager.isFirstTimeLaunch());
+
         if (prefManager.isFirstTimeLaunch()) {
             getView().showAddUserNameDialog();
             prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once.
         }
 
+        setLabelFloatingButton(getView().getActivityContext());
+
+    }
+
+    private void setLabelFloatingButton(Context activityContext) {
+        getModel().setLabelFloatingButtons(activityContext);
     }
 
     /**
@@ -102,6 +105,7 @@ public class ListSubjectPresenter extends GenericPresenter
         }
         loadItems();
     }
+
 
 
 
@@ -349,6 +353,17 @@ public class ListSubjectPresenter extends GenericPresenter
         Log.d("TAG", "añadido con éxito el usuario");
         Log.d("TAG", prefManager.getUserName());
     }
+
+    @Override
+    public String getLabelFloatingAdd() {
+        return getModel().getLabelFloatingAdd();
+    }
+
+    @Override
+    public String getLabelFloatingDelete() {
+        return getModel().getLabelFloatingDelete();
+    }
+
 
     @Override
     public void destroyView() {
