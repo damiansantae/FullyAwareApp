@@ -19,6 +19,9 @@ private String timeTableId;
         this.subject=subject;
         this.hour =hour;
     }
+    public TimeTable(){
+
+    }
 
 
     public String getTimeTableId() {
