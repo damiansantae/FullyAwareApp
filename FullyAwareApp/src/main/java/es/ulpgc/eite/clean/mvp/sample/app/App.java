@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.os.Build;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
@@ -33,7 +34,6 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.Module;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
 import io.realm.Realm;
@@ -56,6 +56,8 @@ public class App extends Application implements Mediator, Navigator {
     private ListDoneStateTask listDoneDetailToMasterState;
     private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
+
+
 
 
 
@@ -457,6 +459,11 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void startActivy(Intent intent) {
+        startActivity(intent);
+    }
+
 
     @Override
     public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
@@ -773,6 +780,19 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         }
 
 
+    }
+
+    public void writeTaskIntoCalendar(){
+        Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", cal.getTimeInMillis());
+        intent.putExtra("allDay", false);
+        intent.putExtra("rrule", "FREQ=DAILY");
+        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("title", "A Test Event from android app");
+        startActivity(intent);
     }
 
 

@@ -1,5 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
+import android.content.Intent;
+
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
@@ -108,4 +110,6 @@ public interface Navigator {
     void goToListForgottenScreen(ListSubject.ListSubjectTo presenter);
     void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
     void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
+
+    void startActivy(Intent intent);
 }

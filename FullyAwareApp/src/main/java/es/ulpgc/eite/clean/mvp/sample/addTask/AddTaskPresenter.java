@@ -4,6 +4,8 @@ package es.ulpgc.eite.clean.mvp.sample.addTask;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -14,7 +16,6 @@ import java.util.Calendar;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
@@ -142,6 +143,7 @@ public class AddTaskPresenter extends GenericPresenter
     String deadline = getDeadLine(time,date);
     Task newTask = new Task(title, description, deadline, "ToDo");
     getModel().addTask(newTask);
+     // writeTaskIntoCalendar(title,description);
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
@@ -151,9 +153,30 @@ public class AddTaskPresenter extends GenericPresenter
       Toast toast = Toast.makeText(context, text, duration);
       toast.show();
 
+
      //TODO onDestroy(false);
 
   }
+    public void writeTaskIntoCalendar(String title,String description){
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2017, 0, 19, 7, 30);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2017, 0, 19, 8, 30);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, "Yoga")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+        Navigator app = (Navigator)getView().getApplication();
+        app.startActivy(intent);
+
+
+
+    }
 
     private String getDeadLine(String time, String date) {
         return date +" - "+ time;

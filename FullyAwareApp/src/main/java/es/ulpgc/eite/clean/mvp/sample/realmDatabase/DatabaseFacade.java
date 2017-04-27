@@ -1,22 +1,16 @@
 package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
 
-import android.os.Handler;
 import android.util.Log;
 
 import java.util.List;
 
-import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import io.realm.Realm;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by IvanGlez on 24/04/2017.
- */
 
 public class DatabaseFacade {
 
@@ -132,6 +126,8 @@ public class DatabaseFacade {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
+    /*********************************************************************
+     ********Métodos de prueba para comprobar funcionamiento de database */
     public void addInitialTasks(){
         //Request realm instance
 
@@ -183,6 +179,17 @@ public class DatabaseFacade {
         }
     }
 
+
+
+    /***********************************************************
+     ******** Methods used to work with Task table in database*/
+
+    /**
+     * Method that deletes an specific item from
+     * the database
+     *
+     * @param item Task class
+     */
     public void deleteDatabaseItem(Task item) {
         final String id = item.getTaskId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
@@ -198,6 +205,11 @@ public class DatabaseFacade {
     }
 
 
+    /**
+     * Method that look over database items which
+     * belong to Task table
+     * @return a list with that elements
+     */
     public List<Task> getItemsFromDatabase(){
         if(usingWrapper) {
             return getItemsFromDatabaseWrapper();
@@ -206,6 +218,11 @@ public class DatabaseFacade {
         return realmDatabase.where(Task.class).findAll();
     }
 
+    /**
+     * Method that look over database items which
+     * belong to Task table
+     * @return a list with that elements
+     */
     public List<Task> getToDoItemsFromDatabase(){
         if(usingWrapper) {
             return getItemsFromDatabaseWrapper();
@@ -277,6 +294,11 @@ public class DatabaseFacade {
         });
     }
 
+
+    /*************************************************************
+     ******** Methods used to work with Subject table in database*/
+
+
     public void addSubject(Subject subject) {
         realmDatabase.beginTransaction();
         realmDatabase.copyToRealm(subject);
@@ -326,21 +348,140 @@ public class DatabaseFacade {
                 Subject realmSubject = realm.where(Subject.class).equalTo("subjectId", id)
                         .findFirst();
                 realmSubject.setName(name);
-                ;
+
             }
         });
     }
 
-    public void setSubjectTimeTable(Subject subject, final String timeTable) {
-        final String id = subject.getSubjectId();
+
+
+    /*****************************************************************
+     ******** Methods used to work with TimeTable table in database*/
+
+
+    /**
+     * Method that adds an specific Schedule into
+     * the database
+     *
+     * @param timeTable TimeTable class
+     */
+    public void addTimeTable(TimeTable timeTable) {
+        realmDatabase.beginTransaction();
+        realmDatabase.copyToRealm(timeTable);
+        realmDatabase.commitTransaction();
+    }
+
+
+    /**
+     * Method that deletes an specific schedule from
+     * the database
+     *
+     * @param timeTable TimeTable class
+     */
+    public void deleteDatabaseTimeTable(TimeTable timeTable) {
+        final String id = timeTable.getTimeTableId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Subject realmSubject = realm.where(Subject.class).equalTo("subjectId", id)
-                        .findFirst();
-                realmSubject.setTimeTable(timeTable);
-                ;
+                realm.where(Task.class).equalTo("timeTableId", id)
+                        .findAll()
+                        .deleteAllFromRealm();
+
             }
         });
     }
+
+    /**
+     * This method search in database for TimeTable objects
+     * and return a list with all of them
+     *
+     * @return dbItems, a List with TimeTable objects
+     */
+    private List<TimeTable> getTimeTablesFromDatabaseWrapper(){
+        Log.d(TAG, "calling getTimeTablesFromDatabaseWrapper() method");
+        List<TimeTable> dbItems = realmDatabase.where(TimeTable.class).findAll();
+
+        Log.d(TAG, "items=" +  dbItems);
+        return dbItems;
+    }
+
+
+    public List<TimeTable> getTimeTablesFromDatabase(){
+        if(usingWrapper) {
+            return getTimeTablesFromDatabaseWrapper();
+        }
+
+        return realmDatabase.where(TimeTable.class).findAll();
+    }
+
+
+
+
+
+
+    /**
+     * Method that deletes all items which
+     * belong to TimeTable table
+     */
+    public void deleteAllDatabaseTimeTables(){
+        for(TimeTable item: getTimeTablesFromDatabase()){
+            deleteDatabaseTimeTable(item);
+        }
+    }
+
+
+    /**
+     * Inserts a day into the column day of an specific
+     * TimeTable item
+     */
+    public void setDay(TimeTable timeTable, final String day){
+        final String id = timeTable.getTimeTableId();
+        realmDatabase.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                        .findFirst();
+                realmTimeTable.setDay(day);
+
+            }
+        });
+    }
+
+
+    /**
+     * Inserts an iterval hours into the column hour of an specific
+     * TimeTable item
+     */
+    public void setHour(TimeTable timeTable, final String hour){
+        final String id = timeTable.getTimeTableId();
+        realmDatabase.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                        .findFirst();
+                realmTimeTable.setHour(hour);
+
+            }
+        });
+    }
+
+    /**
+     * Inserts an specific Subject of the table Subject creating
+     * a foreign key into the column subject of a specific TimeTable item
+     */
+    public void setSubject(TimeTable timeTable, final Subject subject){
+        final String id = timeTable.getTimeTableId();
+        realmDatabase.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                        .findFirst();
+                realmTimeTable.setSubject(subject);
+
+            }
+        });
+    }
+
+
+
 }
