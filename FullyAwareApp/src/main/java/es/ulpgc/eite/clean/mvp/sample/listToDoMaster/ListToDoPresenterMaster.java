@@ -555,10 +555,12 @@ checkSelection2();
 
 
 
-        /*if(counter==0){
-            database.addInitialTasks();
-            counter++;
-        }*/
+
+//TODO:Descomentar cuando se instala la app por primera vez y luego comentar
+            //database.createTestingScenario();
+
+
+
 
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();

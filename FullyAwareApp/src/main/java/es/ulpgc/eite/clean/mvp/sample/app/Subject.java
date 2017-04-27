@@ -13,7 +13,7 @@ public class Subject extends RealmObject {
 
 
 
-    public Subject (String name, String timeTable, Integer color){
+    public Subject (String name,  Integer color){
         this.name = name;
         this.subjectId = UUID.randomUUID().toString();
         this.color = color;

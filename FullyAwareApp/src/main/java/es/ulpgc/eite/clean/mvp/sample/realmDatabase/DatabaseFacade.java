@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
@@ -128,24 +129,86 @@ public class DatabaseFacade {
 
     /*********************************************************************
      ********Métodos de prueba para comprobar funcionamiento de database */
-    public void addInitialTasks(){
+
+
+    public void createTestingScenario() {
         //Request realm instance
 
-        Task Task1 = new Task("Titulo1","Descripcion1","Fecha1", "ToDo");
-        Task Task2 = new Task("Titulo2","Descripcion2","Fecha2", "ToDo");
-        Task Task3 = new Task("Titulo3","Descripcion3","Fecha3", "ToDo");
-        Task Task4 = new Task("Titulo4","Descripcion4","Fecha4", "ToDo");
-        Task Task5 = new Task("Titulo5","Descripcion5","Fecha5", "ToDo");
-        Task Task6 = new Task("Titulo6","Descripcion6","Fecha6", "ToDo");
-        Task Task7 = new Task("Titulo7","Descripcion7","Fecha7", "ToDo");
-        Task Task8 = new Task("Titulo8","Descripcion8","Fecha8", "ToDo");
-        Task Task9 = new Task("Titulo9","Descripcion9","Fecha9", "ToDo");
-        Task Task10 = new Task("Titulo10","Descripcion10","Fecha10", "ToDo");
+        Subject diseño = new Subject("Diseño de Aplicaciones", R.color.bg_screen1);
+        Subject aplicaciones = new Subject("Aplicaciones de Red", R.color.bg_screen2);
+        Subject organizacion = new Subject("Organización de Computadores", R.color.bg_screen3);
+        Subject ingles = new Subject("Inglés", R.color.bg_screen4);
+        Subject sistemas = new Subject("Administración de Sistemas", R.color.bg_screen5);
+
+        TimeTable firstTimeMon = new TimeTable("Monday","08:00-10:00",aplicaciones);
+        TimeTable secondTimeMon = new TimeTable("Monday","10:00-12:00",sistemas);
+        TimeTable thirdTimeMon = new TimeTable("Monday","12:00-14:00",sistemas);
+
+        TimeTable firstTimeT = new TimeTable("Tuesday","08:00-10:00",ingles);
+        TimeTable secondTimeT = new TimeTable("Tuesday","10:00-12:00",diseño);
+        TimeTable thirdTimeT = new TimeTable("Tuesday","12:00-14:00",diseño);
+
+        TimeTable firstTimeW = new TimeTable("Wednesday","08:00-10:00",sistemas);
+        TimeTable secondTimeW = new TimeTable("Wednesday","10:00-12:00",organizacion);
+        TimeTable thirdTimeW = new TimeTable("Wednesday","12:00-14:00",organizacion);
+
+        TimeTable firstTimeTh = new TimeTable("Thursday","08:00-10:00",diseño);
+        TimeTable secondTimeTh = new TimeTable("Thursday","10:00-12:00",aplicaciones);
+        TimeTable thirdTimeTh = new TimeTable("Thursday","12:00-14:00",aplicaciones);
+
+        TimeTable firstTimeF = new TimeTable("Friday","08:00-10:00",organizacion);
+        TimeTable secondTimeF = new TimeTable("Friday","10:00-12:00",ingles);
+        TimeTable thirdTimeF = new TimeTable("Friday","12:00-14:00",ingles);
+
+
+
+        Task Task1 = new Task(aplicaciones, "Titulo1","Descripcion1","Fecha1", "ToDo");
+        Task Task2 = new Task(aplicaciones, "Titulo2","Descripcion2","Fecha2", "ToDo");
+        Task Task3 = new Task(sistemas, "Titulo4","Descripcion4","Fecha4", "ToDo");
+        Task Task4 = new Task(ingles,"Titulo5","Descripcion5","Fecha5", "ToDo");
+        Task Task5 = new Task(diseño, "Titulo6","Descripcion6","Fecha6", "ToDo");
+        Task Task6 = new Task(organizacion, "Titulo7","Descripcion7","Fecha7", "ToDo");
+
+
+
+        Task Task11 = new Task(diseño, "Titulo11","Descripcion11","Fecha11", "Done");
+        Task Task12 = new Task(organizacion,"Titulo12","Descripcion12","Fecha12", "Done");
+        Task Task13 = new Task(aplicaciones,"Titulo13","Descripcion13","Fecha13", "Done");
+
+        Task Task14 = new Task(ingles,"Titulo14","Descripcion14","Fecha14", "Forgotten");
+        Task Task15 = new Task(sistemas,"Titulo15","Descripcion15","Fecha15", "Forgotten");
+        Task Task16 = new Task(organizacion,"Titulo16","Descripcion16","Fecha16", "Forgotten");
 
 
 
 //Insert element
         realmDatabase.beginTransaction();
+
+
+        realmDatabase.copyToRealm(diseño);
+        realmDatabase.copyToRealm(aplicaciones);
+        realmDatabase.copyToRealm(organizacion);
+        realmDatabase.copyToRealm(ingles);
+        realmDatabase.copyToRealm(sistemas);
+
+        realmDatabase.copyToRealm(firstTimeMon);
+        realmDatabase.copyToRealm(firstTimeT);
+        realmDatabase.copyToRealm(firstTimeW);
+        realmDatabase.copyToRealm(firstTimeTh);
+        realmDatabase.copyToRealm(firstTimeF);
+
+        realmDatabase.copyToRealm(secondTimeMon);
+        realmDatabase.copyToRealm(secondTimeT);
+        realmDatabase.copyToRealm(secondTimeW);
+        realmDatabase.copyToRealm(secondTimeTh);
+        realmDatabase.copyToRealm(secondTimeF);
+
+        realmDatabase.copyToRealm(thirdTimeMon);
+        realmDatabase.copyToRealm(thirdTimeT);
+        realmDatabase.copyToRealm(thirdTimeW);
+        realmDatabase.copyToRealm(thirdTimeTh);
+        realmDatabase.copyToRealm(thirdTimeF);
+
 
         realmDatabase.copyToRealm(Task1);
         realmDatabase.copyToRealm(Task2);
@@ -153,13 +216,23 @@ public class DatabaseFacade {
         realmDatabase.copyToRealm(Task4);
         realmDatabase.copyToRealm(Task5);
         realmDatabase.copyToRealm(Task6);
-        realmDatabase.copyToRealm(Task7);
-        realmDatabase.copyToRealm(Task8);
-        realmDatabase.copyToRealm(Task9);
-        realmDatabase.copyToRealm(Task10);
+
+        realmDatabase.copyToRealm(Task11);
+        realmDatabase.copyToRealm(Task12);
+        realmDatabase.copyToRealm(Task13);
+        realmDatabase.copyToRealm(Task14);
+        realmDatabase.copyToRealm(Task15);
+        realmDatabase.copyToRealm(Task16);
+
 
         realmDatabase.commitTransaction();
+
     }
+
+
+
+
+
 
     public void deleteTestItems() {
         realmDatabase.executeTransaction(new Realm.Transaction() {
@@ -494,8 +567,6 @@ public class DatabaseFacade {
             }
         });
     }
-
-
 
 
 
