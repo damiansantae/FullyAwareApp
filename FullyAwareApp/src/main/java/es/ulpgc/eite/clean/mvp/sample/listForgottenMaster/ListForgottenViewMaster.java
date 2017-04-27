@@ -3,6 +3,8 @@ package es.ulpgc.eite.clean.mvp.sample.listForgottenMaster;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +33,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListForgottenViewMaster
@@ -384,6 +387,7 @@ public class ListForgottenViewMaster
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View itemView;
             private ImageView tag;
+            private Subject subject;
             private TextView title;
             private TextView description;
             private TextView date;
@@ -397,20 +401,22 @@ public class ListForgottenViewMaster
 
             }
 
-            /* @Override
-             public String toString() {
-                 return super.toString() + " '" + contentView.getText() + "'";
-             }*/
+
             public void bindView(final Task task) {
+                subject=task.getSubject();
+                Integer color = subject.getColor();
                 tag = (ImageView) itemView.findViewById(R.id.tag);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
 
-                //tag.setImageResource(task.getSubject());
+                Drawable drawable = getDrawable(R.drawable.circle);
+                drawable.setColorFilter(getColor(color), PorterDuff.Mode.SRC_OVER);
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());
+                tag.setImageDrawable(drawable);
+
 
                 //Selecciona si estaba seleccionado
                 itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
@@ -418,6 +424,7 @@ public class ListForgottenViewMaster
                     @Override
                     public void onClick(View v) {
                         getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        adapter.notifyDataSetChanged();
 
                     }
                 });

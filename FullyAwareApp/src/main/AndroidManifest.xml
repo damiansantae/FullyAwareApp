@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logoapp"
@@ -53,22 +55,22 @@
             android:name=".listToDoMaster.ListToDoViewMasterTesting"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-              <action android:name="android.intent.action.MAIN"/>
-              <category android:name="android.intent.category.LAUNCHER"/>
-          </intent-filter>
-        </activity>
+              <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+          </activity>
 
 
 
-        <activity
-            android:name=".schedule.ScheduleView"
-            android:label="FullyAware"
-            android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>
-              <action android:name="android.intent.action.MAIN"/>
-              <category android:name="android.intent.category.LAUNCHER"/>
-          </intent-filter>-->
+          <activity
+              android:name=".schedule.ScheduleView"
+              android:label="FullyAware"
+              android:theme="@style/AppTheme.NoActionBar">
+              <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>-->
         </activity>
 
 

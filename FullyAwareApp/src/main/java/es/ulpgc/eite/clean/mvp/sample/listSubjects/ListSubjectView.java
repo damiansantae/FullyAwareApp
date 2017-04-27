@@ -341,8 +341,8 @@ public class ListSubjectView
 
                 //tag.setImageResource(task.getSubject());
                 title.setText(subject.getName());
-                description.setText(subject.getDescription());
-                date.setText(subject.getTimeTable());
+                //description.setText(subject.getDescription());
+                // date.setText(subject.getTimeTable());
 
                 //Selecciona si estaba seleccionado
                 itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
