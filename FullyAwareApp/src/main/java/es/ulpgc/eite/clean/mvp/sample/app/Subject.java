@@ -8,12 +8,15 @@ import io.realm.RealmObject;
 public class Subject extends RealmObject {
     private String name;
     private String subjectId;
+    private Integer color;
 
 
 
-    public Subject (String name, String timeTable){
+
+    public Subject (String name, String timeTable, Integer color){
         this.name = name;
         this.subjectId = UUID.randomUUID().toString();
+        this.color = color;
     }
 
     public Subject (){
@@ -36,5 +39,11 @@ public class Subject extends RealmObject {
         this.subjectId = subjectId;
     }
 
+    public Integer getColor() {
+        return color;
+    }
 
+    public void setColor(Integer color) {
+        this.color = color;
+    }
 }

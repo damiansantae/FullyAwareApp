@@ -353,6 +353,19 @@ public class DatabaseFacade {
         });
     }
 
+    public void setSubjectColor(Subject subject, final String color) {
+        final String id = subject.getSubjectId();
+        realmDatabase.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Subject realmSubject = realm.where(Subject.class).equalTo("subjectId", id)
+                        .findFirst();
+                realmSubject.setName(color);
+
+            }
+        });
+    }
+
 
 
     /*****************************************************************
@@ -481,6 +494,8 @@ public class DatabaseFacade {
             }
         });
     }
+
+
 
 
 
