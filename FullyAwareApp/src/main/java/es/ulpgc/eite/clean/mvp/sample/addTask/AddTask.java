@@ -68,6 +68,8 @@ public interface AddTask {
     String getTaskSubject();
 
       void toolbarChanged(String colour);
+
+    void onDestroy();
   }
 
   /**
