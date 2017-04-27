@@ -91,6 +91,11 @@ public class AddTaskView
     super.onResume(AddTaskPresenter.class, this);
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+  }
+
   /*
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

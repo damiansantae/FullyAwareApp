@@ -16,9 +16,11 @@ import java.util.Calendar;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
@@ -28,6 +30,7 @@ public class AddTaskPresenter extends GenericPresenter
   private boolean toolbarVisible;
   private boolean buttonClicked;
   private boolean textVisible;
+  private DatabaseFacade database;
 
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -45,6 +48,7 @@ public class AddTaskPresenter extends GenericPresenter
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
+    database = new DatabaseFacade();
     app.startingAddTaskScreen(this);
     if (app.checkToolbarChanged() == true){
       String colour = app.getToolbarColour();
@@ -142,8 +146,7 @@ public class AddTaskPresenter extends GenericPresenter
     String date = getDate();
     String deadline = getDeadLine(time,date);
     Task newTask = new Task(title, description, deadline, "ToDo");
-    getModel().addTask(newTask);
-     // writeTaskIntoCalendar(title,description);
+    database.addTask(newTask);
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
@@ -153,8 +156,7 @@ public class AddTaskPresenter extends GenericPresenter
       Toast toast = Toast.makeText(context, text, duration);
       toast.show();
 
-
-     //TODO onDestroy(false);
+      destroyView();
 
   }
     public void writeTaskIntoCalendar(String title,String description){
