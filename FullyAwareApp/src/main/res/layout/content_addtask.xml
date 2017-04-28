@@ -60,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/title"/>
+            android:id="@+id/title"
+            android:hint="Title"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -80,7 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/description"/>
+            android:id="@+id/description"
+            android:hint="Description"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -147,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:textColor="#000000"/>
 
             <EditText
@@ -154,6 +157,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
+                android:text="08:00"
                 android:textColor="#000000"/>
 
         </LinearLayout>

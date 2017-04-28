@@ -327,7 +327,6 @@ public class App extends Application implements Mediator, Navigator {
             view.startActivity(new Intent(view, DummyView.class));
             presenter.destroyView();
         }
-
     }
 
     @Override

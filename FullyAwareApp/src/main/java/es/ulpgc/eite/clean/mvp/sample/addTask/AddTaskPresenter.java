@@ -17,6 +17,9 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.NotificationPublisher;
+import es.ulpgc.eite.clean.mvp.sample.NotificationService;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
@@ -158,6 +161,8 @@ public class AddTaskPresenter extends GenericPresenter
       Toast toast = Toast.makeText(context, text, duration);
       toast.show();
 
+    //NotificationService.notification(title, deadline, getManagedContext());
+      //NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
       destroyView();
 
   }
@@ -187,11 +192,36 @@ public class AddTaskPresenter extends GenericPresenter
     }
 
     private String getTime() {
-    return getView().getTime();
+      String result = getView().getTime();
+      if(result.indexOf(":") < 2){
+        result = "0" + result;
+      }
+      if(result.length() < 5){
+        result = result.substring(0,2) + ":0" + result.substring(3);
+      }
+      return result;
   }
 
   private String getDate() {
-        return getView().getDate();
+    String monthFinal = "";
+    String result = getView().getDate();;
+    if(result.indexOf("/") < 2){
+      result = "0" + result;
+    }
+    if(result.indexOf("/", 3) < 5){
+      result = result.substring(0,2) + "/0" + result.substring(3);
+    }
+    String month = result.substring(3,5);
+    int monthInt = Integer.parseInt(month);
+    int monthIntFinal = monthInt + 1;
+    if(monthIntFinal < 10){
+      monthFinal = "0" + String.valueOf(monthIntFinal);
+    }else{
+      monthFinal = String.valueOf(monthIntFinal);
+    }
+
+    result = result.substring(0,3) + monthFinal + result.substring(5);
+        return result;
     }
 
     private String getSubject() {

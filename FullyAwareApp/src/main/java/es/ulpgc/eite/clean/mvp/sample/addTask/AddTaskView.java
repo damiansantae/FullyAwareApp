@@ -11,7 +11,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -41,7 +45,6 @@ public class AddTaskView
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_addtask);
-
 
     //TextView
     subjectLabel = (TextView) findViewById(R.id.subjectLabel);
@@ -84,6 +87,12 @@ public class AddTaskView
       }
     });
 
+    Calendar c = Calendar.getInstance();
+    String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+    String month = String.valueOf(c.get(Calendar.MONTH));
+    String year = String.valueOf(c.get(Calendar.YEAR));
+
+    date.setText(day+"/"+month+"/"+year);
 
      subject = (Spinner)findViewById(R.id.subject_spinner);
 
