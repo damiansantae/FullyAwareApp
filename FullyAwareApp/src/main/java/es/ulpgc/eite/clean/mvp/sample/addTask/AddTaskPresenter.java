@@ -12,13 +12,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
@@ -45,6 +46,7 @@ public class AddTaskPresenter extends GenericPresenter
     super.onCreate(AddTaskModel.class, this);
     setView(view);
     Log.d(TAG, "calling onCreate()");
+
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
@@ -210,6 +212,11 @@ public class AddTaskPresenter extends GenericPresenter
   @Override
   public void onScreenStarted() {
     Log.d(TAG, "calling onScreenStarted()");
+
+          if(isViewRunning()) {
+      getView().setSubjectsSpinner();
+    }
+
     checkToolbarVisibility();
   }
 
@@ -277,6 +284,10 @@ public class AddTaskPresenter extends GenericPresenter
 
   }
 
-
+@Override
+  public List<Subject> getSubjects(){
+List<Subject>list =database.getSubjectsFromDatabase();
+  return list;
+}
 
 }

@@ -182,6 +182,7 @@ public class DatabaseFacade {
 
 
 //Insert element
+
         realmDatabase.beginTransaction();
 
 
@@ -190,6 +191,8 @@ public class DatabaseFacade {
         realmDatabase.copyToRealm(organizacion);
         realmDatabase.copyToRealm(ingles);
         realmDatabase.copyToRealm(sistemas);
+
+
 
         realmDatabase.copyToRealm(firstTimeMon);
         realmDatabase.copyToRealm(firstTimeT);
@@ -386,7 +389,7 @@ public class DatabaseFacade {
                 realm.where(Task.class).equalTo("subjectId", id)
                         .findAll()
                         .deleteAllFromRealm();
-                ;
+
             }
         });
     }

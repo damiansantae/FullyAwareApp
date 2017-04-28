@@ -36,11 +36,11 @@
             android:id="@+id/subjectLabel"/>
 
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:id="@+id/subject"/>
+        <Spinner
+            android:id="@+id/subject_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
 
         <Space
             android:layout_width="match_parent"

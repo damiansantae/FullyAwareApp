@@ -70,6 +70,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
         database = new DatabaseFacade();
 
+
+
         app.startingListToDoScreen(this);
         checkToolbarColourChanges(app);
 
@@ -557,7 +559,7 @@ checkSelection2();
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
-            //database.createTestingScenario();
+            database.createTestingScenario();
 
 
 

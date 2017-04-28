@@ -4,15 +4,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 
 public class AddTaskView
     extends GenericActivity<AddTask.PresenterToView, AddTask.ViewToPresenter, AddTaskPresenter>
@@ -25,11 +30,11 @@ public class AddTaskView
   private TextView subjectLabel;
   private TextView titleLabel;
   private TextView descriptionLabel;
-  private EditText subject;
   private EditText title;
   private EditText description ;
   private EditText date;
   private EditText time;
+    private Spinner subject;
 
 
   @Override
@@ -37,13 +42,13 @@ public class AddTaskView
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_addtask);
 
+
     //TextView
     subjectLabel = (TextView) findViewById(R.id.subjectLabel);
     titleLabel = (TextView) findViewById(R.id.titleLabel);
     descriptionLabel = (TextView) findViewById(R.id.descriptionLabel);
 
     //EditText
-    subject = (EditText) findViewById(R.id.subject);
     title = (EditText) findViewById(R.id.title);
     description = (EditText) findViewById(R.id.description);
     date = (EditText) findViewById(R.id.date);
@@ -78,6 +83,9 @@ public class AddTaskView
 
       }
     });
+
+
+     subject = (Spinner)findViewById(R.id.subject_spinner);
 
 
   }
@@ -168,7 +176,21 @@ public class AddTaskView
 
     @Override
     public String getTaskSubject() {
-        return subject.getText().toString();
+        return subject.toString();
+    }
+    @Override
+    public void setSubjectsSpinner(){
+
+        List<Subject> subjects = getPresenter().getSubjects();
+        ArrayList<String> subjectNames= new ArrayList<>();
+
+// Obtenemos un Iterador y recorremos la lista.
+        ListIterator<Subject> iter = subjects.listIterator(subjects.size());
+        while (iter.hasPrevious())
+            subjectNames.add(iter.previous().getName());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subjectNames);
+        subject.setAdapter(adapter);
     }
 
   @Override
