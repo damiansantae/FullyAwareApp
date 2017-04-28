@@ -61,7 +61,11 @@ public interface ListSubject {
 
     String getLabelBtnHour();
 
-    void onSelectTimeBtnClicked(int i);
+    void onSelectTimeBtnClicked(int i, AddHourSubjectDialog dialog);
+
+    void setTimeLabelOnButton(int i,AddHourSubjectDialog dialog);
+
+      void getCheckedBoxes( AddHourSubjectDialog dialog);
   }
 
   /**
@@ -93,11 +97,15 @@ public interface ListSubject {
 
       void setToastDelete();
 
+    void setTimeText(int i, String txt);
+
     void showAddUserNameDialog();
 
-    void setTimeTextHour(int i, String txt);
+    void showAddHourSubjectDialog();
 
     void showAddSubjectsDialog();
+
+    String getTimeText(int i);
   }
 
   /**

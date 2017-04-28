@@ -6,15 +6,20 @@ import android.content.Context;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
@@ -377,36 +382,6 @@ public class ListSubjectPresenter extends GenericPresenter
     }
 
     @Override
-    public void onSelectTimeBtnClicked(int i) {
-        final Calendar c = java.util.Calendar.getInstance();
-        int hours = c.get(java.util.Calendar.HOUR_OF_DAY);
-        int minutes = c.get(java.util.Calendar.MINUTE);
-        final int count = i; //TODO:Puede que haya problemas al ser final, verificar
-
-        TimePickerDialog timePicker = new TimePickerDialog(getManagedContext(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-              if (count==1){
-                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
-              } else if (count==2){
-                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
-              } else if (count==3){
-                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
-              } else if (count==4){
-                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
-              } else if (count==5){
-                  getView().setTimeTextHour(count,hourOfDay+":"+minute);
-              }
-
-
-
-            }
-        }, hours, minutes, false);
-        timePicker.show();
-    }
-
-
-    @Override
     public void destroyView() {
         if (isViewRunning()) {
             getView().finishScreen();
@@ -515,5 +490,204 @@ public class ListSubjectPresenter extends GenericPresenter
 public void onErrorDeletingItem(Subject item) {
 
 }
+
+    @Override
+    public void onSelectTimeBtnClicked(final int index, final AddHourSubjectDialog dialogA) {
+        final Calendar c = Calendar.getInstance();
+        int hours = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePicker = new TimePickerDialog(getManagedContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                getView().setTimeText(index, hourOfDay+":"+minute);
+                setTimeLabelOnButton(index, dialogA);
+            }
+        }, hours, minutes, false);
+        timePicker.show();
+    }
+
+    @Override
+    public void setTimeLabelOnButton(int i, AddHourSubjectDialog dialog) {
+
+        if (i == 0){
+            Button bt_hour1 = (Button)dialog.getView().findViewById(R.id.bt_hour_1);
+            bt_hour1.setText(getView().getTimeText(i));
+        } else if (i == 1){
+            Button bt_hour2 = (Button)dialog.getView().findViewById(R.id.bt_hour_2);
+            bt_hour2.setText(getView().getTimeText(i));
+        } else if (i == 2){
+            Button bt_hour3 = (Button)dialog.getView().findViewById(R.id.bt_hour_3);
+            bt_hour3.setText(getView().getTimeText(i));
+        } else if (i == 3){
+            Button bt_hour4 = (Button)dialog.getView().findViewById(R.id.bt_hour_4);
+            bt_hour4.setText(getView().getTimeText(i));
+        } else if (i == 4){
+            Button bt_hour5 = (Button)dialog.getView().findViewById(R.id.bt_hour_5);
+            bt_hour5.setText(getView().getTimeText(i));
+        }
+
+
+    }
+
+    @Override
+    public void getCheckedBoxes(AddHourSubjectDialog dialog) {
+
+        //All the layouts that contains the information, ya tu sabe.
+        LinearLayout l1 = (LinearLayout) dialog.getView().findViewById(R.id.time_1);
+        LinearLayout l2 = (LinearLayout) dialog.getView().findViewById(R.id.time_2);
+        LinearLayout l3 = (LinearLayout) dialog.getView().findViewById(R.id.time_3);
+        LinearLayout l4 = (LinearLayout) dialog.getView().findViewById(R.id.time_4);
+        LinearLayout l5 = (LinearLayout) dialog.getView().findViewById(R.id.time_5);
+
+        //Checkboxes for l1 hour space.
+        CheckBox c1l1 = (CheckBox) l1.findViewById(R.id.cb_monday);
+        CheckBox c2l1 = (CheckBox) l1.findViewById(R.id.cb_tuesday);
+        CheckBox c3l1 = (CheckBox) l1.findViewById(R.id.cb_wednesday);
+        CheckBox c4l1 = (CheckBox) l1.findViewById(R.id.cb_thursday);
+        CheckBox c5l1 = (CheckBox) l1.findViewById(R.id.cb_friday);
+        CheckBox c6l1 = (CheckBox) l1.findViewById(R.id.cb_saturday);
+        CheckBox c7l1 = (CheckBox) l1.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l2 hour space.
+        CheckBox c1l2 = (CheckBox) l2.findViewById(R.id.cb_monday);
+        CheckBox c2l2 = (CheckBox) l2.findViewById(R.id.cb_tuesday);
+        CheckBox c3l2 = (CheckBox) l2.findViewById(R.id.cb_wednesday);
+        CheckBox c4l2 = (CheckBox) l2.findViewById(R.id.cb_thursday);
+        CheckBox c5l2 = (CheckBox) l2.findViewById(R.id.cb_friday);
+        CheckBox c6l2 = (CheckBox) l2.findViewById(R.id.cb_saturday);
+        CheckBox c7l2 = (CheckBox) l2.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l3 hour space.
+        CheckBox c1l3 = (CheckBox) l3.findViewById(R.id.cb_monday);
+        CheckBox c2l3 = (CheckBox) l3.findViewById(R.id.cb_tuesday);
+        CheckBox c3l3 = (CheckBox) l3.findViewById(R.id.cb_wednesday);
+        CheckBox c4l3 = (CheckBox) l3.findViewById(R.id.cb_thursday);
+        CheckBox c5l3 = (CheckBox) l3.findViewById(R.id.cb_friday);
+        CheckBox c6l3 = (CheckBox) l3.findViewById(R.id.cb_saturday);
+        CheckBox c7l3 = (CheckBox) l3.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l4 hour space.
+        CheckBox c1l4 = (CheckBox) l4.findViewById(R.id.cb_monday);
+        CheckBox c2l4 = (CheckBox) l4.findViewById(R.id.cb_tuesday);
+        CheckBox c3l4 = (CheckBox) l4.findViewById(R.id.cb_wednesday);
+        CheckBox c4l4 = (CheckBox) l4.findViewById(R.id.cb_thursday);
+        CheckBox c5l4 = (CheckBox) l4.findViewById(R.id.cb_friday);
+        CheckBox c6l4 = (CheckBox) l4.findViewById(R.id.cb_saturday);
+        CheckBox c7l4 = (CheckBox) l4.findViewById(R.id.cb_sunday);
+
+        //Checkboxes for l5 hour space.
+        CheckBox c1l5 = (CheckBox) l5.findViewById(R.id.cb_monday);
+        CheckBox c2l5 = (CheckBox) l5.findViewById(R.id.cb_tuesday);
+        CheckBox c3l5 = (CheckBox) l5.findViewById(R.id.cb_wednesday);
+        CheckBox c4l5 = (CheckBox) l5.findViewById(R.id.cb_thursday);
+        CheckBox c5l5 = (CheckBox) l5.findViewById(R.id.cb_friday);
+        CheckBox c6l5 = (CheckBox) l5.findViewById(R.id.cb_saturday);
+        CheckBox c7l5 = (CheckBox) l5.findViewById(R.id.cb_sunday);
+
+        String resultL1= "";
+        String resultL2= "";
+        String resultL3= "";
+        String resultL4= "";
+        String resultL5= "";
+
+      if (c1l1.isChecked())
+            resultL1 = resultL1+"M";
+      if(c2l1.isChecked())
+            resultL1 = resultL1+"T";
+      if (c3l1.isChecked())
+            resultL1 = resultL1+"W";
+      if (c4l1.isChecked())
+            resultL1 = resultL1+"Th";
+      if (c5l1.isChecked())
+            resultL1 = resultL1+"F";
+      if (c6l1.isChecked())
+            resultL1 = resultL1+"S";
+      if (c7l1.isChecked())
+            resultL1 = resultL1 + "Sn";
+
+
+      if (c1l2.isChecked())
+            resultL2 = resultL2+"M";
+      if (c2l2.isChecked())
+            resultL2 = resultL2+"T";
+      if (c3l2.isChecked())
+            resultL2 = resultL2+"W";
+      if (c4l2.isChecked())
+            resultL2 = resultL2+"Th";
+      if (c5l2.isChecked())
+            resultL2 = resultL2+"F";
+      if (c6l2.isChecked())
+            resultL2 = resultL2+"S";
+      if (c7l2.isChecked())
+            resultL2 = resultL2+"Sn";
+
+
+      if (c1l3.isChecked())
+            resultL3 = resultL3+"M";
+      if (c2l3.isChecked())
+            resultL3 = resultL3+"T";
+      if (c3l3.isChecked())
+            resultL3 = resultL3+"W";
+      if (c4l3.isChecked())
+            resultL3 = resultL3+"Th";
+      if (c5l3.isChecked())
+            resultL3 = resultL3+"F";
+      if (c6l3.isChecked())
+            resultL3 = resultL3+"S";
+      if (c7l3.isChecked())
+            resultL3 = resultL3+"Sn";
+
+
+        if (c1l4.isChecked())
+            resultL4 = resultL4+"M";
+     if (c2l4.isChecked())
+            resultL4 = resultL4+"T";
+      if (c3l4.isChecked())
+            resultL4 = resultL4+"W";
+        if (c4l4.isChecked())
+            resultL4 = resultL4+"Th";
+       if (c5l4.isChecked())
+            resultL4 = resultL4+"F";
+       if (c6l4.isChecked())
+            resultL4 = resultL4+"S";
+      if (c7l4.isChecked())
+            resultL4 = resultL4+"Sn";
+
+
+        if (c1l5.isChecked())
+            resultL5 = resultL5+"M";
+       if (c2l5.isChecked())
+            resultL5 = resultL5+"T";
+     if (c3l5.isChecked())
+            resultL5 = resultL5+"W";
+       if (c4l5.isChecked())
+            resultL5 = resultL5+"Th";
+       if (c5l5.isChecked())
+            resultL5 = resultL5+"F";
+        if (c6l5.isChecked())
+            resultL5 = resultL5+"S";
+        if (c7l5.isChecked())
+            resultL5 = resultL5 + "Sn";
+
+
+        Log.d("PRUEBA CBOXES",resultL1);
+        Log.d("PRUEBA CBOXES",resultL2);
+        Log.d("PRUEBA CBOXES",resultL3);
+        Log.d("PRUEBA CBOXES",resultL4);
+        Log.d("PRUEBA CBOXES",resultL5);
+
+
+
+        //TODO:ANALIZAR TODOS LOS CHECKBOX Y PONERLOS DEL TIPO:
+        //1) L1:MJK
+        //2) L2:MJA
+        //3) L3:LWK
+        //4) L4: DSD
+        //5) L5: SD
+        //Y ESTO PARA CADA SUBJECT, ASI QUE SERÁ UN BUCLE QUE LO REPETIRÁ UNA CANTIDAD X COMO NUMERO DE SUBJECTS HAYA.
+
+    }
+
 
 }

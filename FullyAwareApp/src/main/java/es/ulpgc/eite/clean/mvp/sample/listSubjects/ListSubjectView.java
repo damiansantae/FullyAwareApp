@@ -9,15 +9,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
@@ -45,18 +45,19 @@ public class ListSubjectView
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
-    int counterSubject;
-    private SparseBooleanArray subjectsSelected;
     private SubjectRecyclerViewAdapter adapter;
+    int counterSubject;
     private PrefManager prefManager;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
-    private String time1;
-    private String time2;
-    private String time3;
-    private String time4;
-    private String time5;
+    private String[] time;
+    ArrayList<String> indexHours = new ArrayList<String>();
+    ArrayList<String> indexDays = new ArrayList<String>();
+    Map<String,ArrayList<String>> HoursArays = new HashMap<String, ArrayList<String>>();
+    Map<String,ArrayList<String>> DaysArays = new HashMap<String, ArrayList<String>>();
 
+    ArrayList<String> subjectList = new ArrayList<>();
+    int numberOfSubjects;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -88,7 +89,7 @@ public class ListSubjectView
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         loadSharePreferences();
         Mediator mediator = (Mediator) getApplication();
-
+        time = new String[5];
     }
 
     /**
@@ -235,6 +236,11 @@ public class ListSubjectView
         toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
     }
 
+    @Override
+    public void setTimeText(int i, String txt) {
+            time[i] = txt;
+    }
+
 
 
 
@@ -370,6 +376,9 @@ public class ListSubjectView
 
     }
 
+
+
+
     @Override
     public void showAddUserNameDialog() {
         final AddNameDialog dialog = new AddNameDialog();
@@ -389,25 +398,280 @@ public class ListSubjectView
         return this.counterSubject;
     }
 
+
+
     @Override
-    public void setTimeTextHour(int i, String txt) {
-        if (i==1){
-            time1 = txt;
-        } else if (i==2){
-            time2= txt;
-        } else if(i==3){
-            time3 = txt;
-        } else if (i==4){
-            time4 = txt;
-        } else if (i==5){
-            time5 = txt;
+    public void showAddSubjectsDialog() {
+
+        final AddFirstSubjectDialog dialog = new AddFirstSubjectDialog();
+        dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+        numberOfSubjects = 0;
+        dialog.setListener(new AddFirstSubjectDialog.OnAddSubjectClickListener() {
+            @Override
+            public void onAddSubjectClickListener(String label) {
+                EditText etSubjectName = (EditText) dialog.getView().findViewById(R.id.et_subject_name);
+
+                if (label.equals("Finish")){
+
+                    if(numberOfSubjects==0){
+                        dialog.dismiss();
+                    } else{
+                        showAddHourSubjectDialog();
+                        dialog.dismiss();
+                    }
+
+           } else{
+                    switch (numberOfSubjects) {
+
+                        case 0:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_1).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 1:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_2).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 2:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_3).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 3:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_4).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 4:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_5).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 5:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_6).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 6:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_7).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 7:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_8).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 8:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_9).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 9:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_10).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 10:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_11).setVisibility(View.VISIBLE);
+                            numberOfSubjects++;
+                            etSubjectName.setText("");
+                            break;
+
+                        case 11:
+                            subjectList.add(label);
+                            dialog.getView().findViewById(R.id.subject_12).setVisibility(View.VISIBLE);
+                            etSubjectName.setText("");
+                            dialog.getView().findViewById(R.id.bt_add_subject).setVisibility(View.GONE);
+                            break;
+
+                        case 13:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+
+
+    @Override
+    public String getTimeText(int i) {
+        return time[i];
+
+    }
+
+    @Override
+    public void showAddHourSubjectDialog() {
+
+
+        //Bucle que genera los indices del HashMap
+        for (int i=0; i<subjectList.size(); i++){
+         String hours =  "hoursOfSubject"+i;
+         String days = "daysOfSubject"+i;
+         indexHours.add(hours);
+         indexDays.add(days);
+    }
+
+        //Bucle que genera los arrays para cada Asignatura
+        for (int i=0; i<subjectList.size(); i++){
+         HoursArays.put(indexHours.get(i),new ArrayList<String>());
+         DaysArays.put(indexDays.get(i),new ArrayList<String>());
         }
+
+
+
+           final AddHourSubjectDialog dialog = new AddHourSubjectDialog();
+           dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
+           prefManager = new PrefManager(this);
+           if (!prefManager.isFirstTimeLaunch()) {
+               prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once
+               counterSubject = 0;
+           }
+
+           dialog.setListener(new AddHourSubjectDialog.OnAddHourSubjectClickListener() {
+               @Override
+               public void onAddHourSubjectClickListener(String label) {
+                   Log.d("COUNTER TAG", ""+label);
+
+                   //Boton Floating Add Pulsado
+                   if (label.equals(getPresenter().getLabelFloatingAdd())){
+                       Log.d("ADD HOUR BUTTON TAG", "BUTTON ADD HOUR CLICKED");
+                       if (counterSubject == 0){
+                           dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
+                           dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.VISIBLE);
+                           prefManager.setCounterSubject(counterSubject++);
+
+                       } else if (counterSubject==1){
+                           dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
+                           prefManager.setCounterSubject(counterSubject++);
+
+                       } else if (counterSubject==2) {
+                           dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
+                           prefManager.setCounterSubject(counterSubject++);
+
+                       } else if(counterSubject==3) {
+                           dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
+                           dialog.getView().findViewById(R.id.fb_add).setVisibility(View.INVISIBLE);
+                           prefManager.setCounterSubject(counterSubject++);
+                       }
+                   }
+
+                   //Boton Floating Delete Pulsado
+                   if (label.equals(getPresenter().getLabelFloatingDelete())){
+                       Log.d("DELETE HOUR BUTTON TAG", "BUTTON DELETE HOUR CLICKED");
+                       if (counterSubject == 4){
+                           dialog.getView().findViewById(R.id.time_5).setVisibility(View.GONE);
+                           dialog.getView().findViewById(R.id.fb_add).setVisibility(View.VISIBLE);
+                           prefManager.setCounterSubject(counterSubject--);
+
+                           //Por si ha sido modificado por el picker
+                           Button bt5 = (Button)dialog.getView().findViewById(R.id.bt_hour_5);
+                           bt5.setText("HOUR");
+                           setTimeText(4,"");
+
+                       } else if (counterSubject==3){
+                           dialog.getView().findViewById(R.id.time_4).setVisibility(View.GONE);
+                           prefManager.setCounterSubject(counterSubject--);
+
+
+                           //Por si ha sido modificado por el picker
+                           Button bt4 = (Button)dialog.getView().findViewById(R.id.bt_hour_4);
+                           bt4.setText("HOUR");
+                           setTimeText(3,"");
+
+                       } else if (counterSubject==2) {
+                           dialog.getView().findViewById(R.id.time_3).setVisibility(View.GONE);
+                           prefManager.setCounterSubject(counterSubject--);
+
+
+                           //Por si ha sido modificado por el picker
+                           Button bt3 = (Button)dialog.getView().findViewById(R.id.bt_hour_3);
+                           bt3.setText("HOUR");
+                           setTimeText(2,"");
+
+                       } else if(counterSubject==1) {
+                           dialog.getView().findViewById(R.id.time_2).setVisibility(View.GONE);
+                           dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.INVISIBLE);
+                           prefManager.setCounterSubject(counterSubject--);
+
+                           //Por si ha sido modificado por el picker
+                           Button bt2 = (Button)dialog.getView().findViewById(R.id.bt_hour_2);
+                           bt2.setText("HOUR");
+                           setTimeText(1,"");
+
+
+                       }
+                   }
+               }
+
+               @Override
+               public void onAddHourSubjectClickListener(int i) {
+
+                   if (i==5){
+                       Log.d("PRUEBA CONTENIDO",""+time[0]);
+                       Log.d("PRUEBA CONTENIDO",""+time[1]);
+                       Log.d("PRUEBA CONTENIDO",""+time[2]);
+                       Log.d("PRUEBA CONTENIDO",""+time[3]);
+                       Log.d("PRUEBA CONTENIDO",""+time[4]);
+                       getPresenter().getCheckedBoxes(dialog);
+
+
+                   } else{
+                       getPresenter().onSelectTimeBtnClicked(i, dialog);
+                       getPresenter().setTimeLabelOnButton(i,dialog);
+
+                   }
+               }
+
+
+           });
+
+
+
+
+
+
+
+
+
 
     }
 
 
 
-    private void findCheckBoxesChecked(AddSubjectDialog dialog) {
+
+
+
+
+
+/*
+
+    private void findCheckBoxesChecked(AddHourSubjectDialog dialog) {
         prefManager = new PrefManager(dialog.getContext());
         int counterSubject = prefManager.getCounterSubject();
         Log.d("CHECK COUNTER", "" + counterSubject);
@@ -468,7 +732,6 @@ public class ListSubjectView
 
         HashMap<String,String> daysChecked = new HashMap<String,String>();
 
-        if (counterSubject == 0) {
             if (c1l1.isChecked()) {
                 daysChecked.put("M1","Monday");
             } else if (c2l1.isChecked()) {
@@ -484,8 +747,8 @@ public class ListSubjectView
             } else if (c7l1.isChecked()) {
                 daysChecked.put("Sn1","Sunday");
             }
-        }
 
+Log.d("PRUEBAAA", String.valueOf(daysChecked.values()));
 
 
 ;
@@ -565,9 +828,9 @@ public class ListSubjectView
 
 
 
-    @Override
+   /* @Override
     public void showAddSubjectsDialog() {
-        final AddSubjectDialog dialog = new AddSubjectDialog();
+        final AddHourSubjectDialog dialog = new AddHourSubjectDialog();
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
         counterSubject =0;
         prefManager = new PrefManager(this);
@@ -577,9 +840,9 @@ public class ListSubjectView
         }
 
 
-        dialog.setListener(new AddSubjectDialog.OnAddSubjectClickListener() {
+        dialog.setListener(new AddHourSubjectDialog.OnAddHourSubjectClickListener() {
             @Override
-            public void onAddSubjectClickListener(String label) {
+            public void onAddHourSubjectClickListener(String label) {
                 Log.d("COUNTER TAG", ""+label);
 
         //Boton Floating Add Pulsado
@@ -642,11 +905,11 @@ public class ListSubjectView
                 }
 
             @Override
-            public void onAddSubjectClickListener(int i) {
+            public void onAddHourSubjectClickListener(int i) {
                     getPresenter().onSelectTimeBtnClicked(i);
             }
 
 
-        });
-}
-}
+        });*/
+
+

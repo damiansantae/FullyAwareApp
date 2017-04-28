@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 
 
-public class AddSubjectDialog extends DialogFragment implements View.OnClickListener {
+public class AddHourSubjectDialog extends DialogFragment implements View.OnClickListener {
 
-  private EditText etSubjectName;
-  private Button btAddSubject;
+  private TextView subjectName;
+
   private FloatingActionButton floatingButtonAdd;
   private FloatingActionButton floatingButtonDelete;
   private Button btHour1;
@@ -28,10 +28,11 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
   private Button btHour3;
   private Button btHour4;
   private Button btHour5;
-  private OnAddSubjectClickListener listener;
+  private OnAddHourSubjectClickListener listener;
   private String floatingAdd;
   private String floatingDelete;
   private String buttonAddSubject;
+    private Button buttonNext;
   private String buttonHour;
   private String buttonFinish;
   private PrefManager prefManager;
@@ -65,15 +66,18 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
   }
 
   private void initComponents(View view) {
-    etSubjectName = (EditText) view.findViewById(R.id.et_subject_name);
-    etSubjectName.requestFocus();
+    subjectName = (TextView) view.findViewById(R.id.subject_name);
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    btAddSubject = (Button) view.findViewById(R.id.bt_add_subject);
-    btAddSubject.setOnClickListener(this);
+
+    buttonNext = (Button) view.findViewById(R.id.bt_next);
+    buttonNext.setOnClickListener(this);
+
     floatingButtonAdd = (FloatingActionButton) view.findViewById(R.id.fb_add);
     floatingButtonAdd.setOnClickListener(this);
+
     floatingButtonDelete = (FloatingActionButton) view.findViewById(R.id.fb_delete);
     floatingButtonDelete.setOnClickListener(this);
+
     btHour1 = (Button)  view.findViewById(R.id.bt_hour_1);
     btHour1.setOnClickListener(this);
     btHour2 = (Button)  view.findViewById(R.id.bt_hour_2);
@@ -91,52 +95,46 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
   public void onClick(View v) {
 
    if (v.getId() == R.id.fb_add){
-       if (isSubjectInfoValid())
-           listener.onAddSubjectClickListener(floatingAdd);
+           listener.onAddHourSubjectClickListener(floatingAdd);
        Log.d("LABEL TAG",floatingAdd);
+
    } else if(v.getId() == R.id.fb_delete){
-       listener.onAddSubjectClickListener(floatingDelete);
+       listener.onAddHourSubjectClickListener(floatingDelete);
        Log.d("LABEL TAG",floatingDelete);
-   } else if (v.getId() == R.id.bt_add_subject){
-       listener.onAddSubjectClickListener(buttonAddSubject);
-       Log.d("LABEL TAG",buttonAddSubject);
 
    } else if (v.getId() == R.id.bt_hour_1){
-       listener.onAddSubjectClickListener(1);
+       listener.onAddHourSubjectClickListener(0);
 
    } else if (v.getId() == R.id.bt_hour_2){
-       listener.onAddSubjectClickListener(2);
+       listener.onAddHourSubjectClickListener(1);
 
    } else if (v.getId() == R.id.bt_hour_3){
-       listener.onAddSubjectClickListener(3);
+       listener.onAddHourSubjectClickListener(2);
 
    } else if (v.getId() == R.id.bt_hour_4){
-       listener.onAddSubjectClickListener(4);
+       listener.onAddHourSubjectClickListener(3);
 
    } else if (v.getId() == R.id.bt_hour_5){
-       listener.onAddSubjectClickListener(5);
+       listener.onAddHourSubjectClickListener(4);
 
-   }
-   }
+   } else if (v.getId() == R.id.bt_next){
+       listener.onAddHourSubjectClickListener(5);
 
-
-
-    private boolean isSubjectInfoValid() {
-    return !etSubjectName.getText().toString().isEmpty();
-  }
-
-    private boolean isDayInfoValid() {
-
-        return !etSubjectName.getText().toString().isEmpty();
     }
 
 
-  public void setListener(OnAddSubjectClickListener listener) {
+   }
+
+
+
+
+  public void setListener(OnAddHourSubjectClickListener listener) {
     this.listener = listener;
   }
 
-  public interface OnAddSubjectClickListener {
-    void onAddSubjectClickListener(String subject);
-    void onAddSubjectClickListener(int i);
+  public interface OnAddHourSubjectClickListener {
+    void onAddHourSubjectClickListener(String subject);
+    void onAddHourSubjectClickListener(int i);
   }
 }
+
