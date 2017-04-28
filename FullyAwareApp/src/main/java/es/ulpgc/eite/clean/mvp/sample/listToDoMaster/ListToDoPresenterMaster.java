@@ -557,7 +557,7 @@ checkSelection2();
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
-            //database.createTestingScenario();
+            database.createTestingScenario();
 
 
 

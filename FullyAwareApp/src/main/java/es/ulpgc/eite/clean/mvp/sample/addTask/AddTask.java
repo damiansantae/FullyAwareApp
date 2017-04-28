@@ -2,6 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.addTask;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
@@ -44,6 +46,8 @@ public interface AddTask {
     void onAddTaskBtnClicked();
 
     void onLoadItemsTaskStarted();
+
+      ArrayList<String> getSubjectsNamesFromDatabase();
   }
 
   /**

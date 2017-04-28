@@ -4,10 +4,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -31,6 +35,7 @@ public class AddTaskView
   private EditText description ;
   private EditText date;
   private EditText time;
+  private MaterialBetterSpinner spinner;
 
 
   @Override
@@ -49,6 +54,13 @@ public class AddTaskView
     description = (EditText) findViewById(R.id.description);
     date = (EditText) findViewById(R.id.date);
     time = (EditText) findViewById(R.id.time);
+
+    //Spinner
+    spinner = (MaterialBetterSpinner)findViewById(R.id.subject);
+    ArrayList<String> subjects = new ArrayList<>();
+    subjects = getPresenter().getSubjectsNamesFromDatabase();
+    ArrayAdapter<String> content = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subjects);
+    spinner.setAdapter(content);
 
     //Toolbar
     toolbar = (Toolbar) findViewById(R.id.toolbar);

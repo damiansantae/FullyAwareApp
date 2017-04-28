@@ -11,7 +11,9 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -21,6 +23,7 @@ import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
@@ -306,6 +309,15 @@ public class AddTaskPresenter extends GenericPresenter
 
   }
 
+  @Override
+  public ArrayList<String> getSubjectsNamesFromDatabase() {
+    ArrayList<String> subjectsNames = new ArrayList<>();
+    List<Subject> subjects = database.getSubjectsFromDatabase();
+    for(int i=0; i<subjects.size(); i++){
+      subjectsNames.add(subjects.get(i).getName());
+    }
+    return subjectsNames;
+  }
 
 
 }
