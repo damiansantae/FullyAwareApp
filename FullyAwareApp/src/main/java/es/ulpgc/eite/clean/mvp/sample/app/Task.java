@@ -74,6 +74,10 @@ public class Task extends RealmObject{
         return taskId;
     }
 
+    public void setTaskId(String taskId){
+        this.taskId = taskId;
+    }
+
     public String getStatus() {
         return status;
     }

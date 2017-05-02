@@ -8,5 +8,5 @@ import io.realm.annotations.RealmModule;
  * Created by IvanGlez on 25/04/2017.
  */
 @RealmModule(classes = {Subject.class, Task.class})
-public class Module {
+public class ModuleSubjectTask {
 }

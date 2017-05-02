@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
 import android.util.Log;
 
 import java.util.List;
+import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.TimeTable;
@@ -134,7 +135,7 @@ public class DatabaseFacade {
     public void createTestingScenario() {
         //Request realm instance
 
-        Subject diseño = new Subject("Diseño de Aplicaciones", R.color.bg_screen1);
+        /*Subject diseño = new Subject("Diseño de Aplicaciones", R.color.bg_screen1);
         Subject aplicaciones = new Subject("Aplicaciones de Red", R.color.bg_screen2);
         Subject organizacion = new Subject("Organización de Computadores", R.color.bg_screen3);
         Subject ingles = new Subject("Inglés", R.color.bg_screen4);
@@ -177,7 +178,7 @@ public class DatabaseFacade {
 
         Task Task14 = new Task(ingles,"Titulo14","Descripcion14","Fecha14", "Forgotten");
         Task Task15 = new Task(sistemas,"Titulo15","Descripcion15","Fecha15", "Forgotten");
-        Task Task16 = new Task(organizacion,"Titulo16","Descripcion16","Fecha16", "Forgotten");
+        Task Task16 = new Task(organizacion,"Titulo16","Descripcion16","Fecha16", "Forgotten");*/
 
 
 
@@ -185,14 +186,41 @@ public class DatabaseFacade {
 
         realmDatabase.beginTransaction();
 
+        Subject diseño = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
+        diseño.setName("Diseño de Aplicaciones");
+        diseño.setColor(R.color.bg_screen1);
 
-        realmDatabase.copyToRealm(diseño);
-        realmDatabase.copyToRealm(aplicaciones);
-        realmDatabase.copyToRealm(organizacion);
-        realmDatabase.copyToRealm(ingles);
-        realmDatabase.copyToRealm(sistemas);
+        Subject aplicaciones = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
+        aplicaciones.setName("Aplicaciones de Red");
+        aplicaciones.setColor(R.color.bg_screen2);
 
+        TimeTable firstTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+        firstTimeMon.setDay("Monday");
+        firstTimeMon.setHour("8:00-10:00");
+        firstTimeMon.setSubject(diseño);
 
+        TimeTable secondTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+        secondTimeMon.setDay("Monday");
+        secondTimeMon.setHour("10:00-12:00");
+        secondTimeMon.setSubject(aplicaciones);
+
+        Task task1 = realmDatabase.createObject(Task.class, UUID.randomUUID().toString());
+        task1.setTitle("Practica 1");
+        task1.setDescription("Terminar apartado 1");
+        task1.setDate("25/03/2017");
+        task1.setStatus("ToDo");
+        task1.setSubject(diseño);
+
+        Task task2 = realmDatabase.createObject(Task.class, UUID.randomUUID().toString());
+        task2.setTitle("Practica 2");
+        task2.setDescription("Terminar apartado 2");
+        task2.setDate("24/03/2017");
+        task2.setStatus("Done");
+        task2.setSubject(aplicaciones);
+
+        realmDatabase.commitTransaction();
+
+        /*realmDatabase.beginTransaction();
 
         realmDatabase.copyToRealm(firstTimeMon);
         realmDatabase.copyToRealm(firstTimeT);
@@ -228,7 +256,7 @@ public class DatabaseFacade {
         realmDatabase.copyToRealm(Task16);
 
 
-        realmDatabase.commitTransaction();
+        realmDatabase.commitTransaction();*/
 
     }
 
@@ -334,9 +362,14 @@ public class DatabaseFacade {
         return dbItems;
     }
 
-    public void addTask(Task Task) {
+    public void addTask(Subject subject, String title, String description, String date, String status) {
         realmDatabase.beginTransaction();
-        realmDatabase.copyToRealm(Task);
+        Task task = realmDatabase.createObject(Task.class, UUID.randomUUID().toString());
+        task.setSubject(subject);
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setDate(date);
+        task.setStatus(status);
         realmDatabase.commitTransaction();
     }
 
@@ -375,9 +408,11 @@ public class DatabaseFacade {
      ******** Methods used to work with Subject table in database*/
 
 
-    public void addSubject(Subject subject) {
+    public void addSubject(String name, Integer color) {
         realmDatabase.beginTransaction();
-        realmDatabase.copyToRealm(subject);
+        Subject subject = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
+        subject.setName(name);
+        subject.setColor(color);
         realmDatabase.commitTransaction();
     }
 
@@ -452,11 +487,14 @@ public class DatabaseFacade {
      * Method that adds an specific Schedule into
      * the database
      *
-     * @param timeTable TimeTable class
+     * @param
      */
-    public void addTimeTable(TimeTable timeTable) {
+    public void addTimeTable(String day, String hour, Subject subject) {
         realmDatabase.beginTransaction();
-        realmDatabase.copyToRealm(timeTable);
+        TimeTable timeTable = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+        timeTable.setDay(day);
+        timeTable.setHour(hour);
+        timeTable.setSubject(subject);
         realmDatabase.commitTransaction();
     }
 
@@ -572,5 +610,8 @@ public class DatabaseFacade {
     }
 
 
-
+    public Subject getSubject(String subjectName) {
+       Subject subject = realmDatabase.where(Subject.class).findFirst();
+        return subject;
+    }
 }

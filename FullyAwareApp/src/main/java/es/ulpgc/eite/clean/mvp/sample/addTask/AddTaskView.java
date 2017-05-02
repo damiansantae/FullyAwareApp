@@ -34,12 +34,13 @@ public class AddTaskView
   private TextView subjectLabel;
   private TextView titleLabel;
   private TextView descriptionLabel;
+  //private EditText subject;
   private EditText title;
   private EditText description ;
   private EditText date;
   private EditText time;
+  //private MaterialBetterSpinner spinner;
     private Spinner subject;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,18 @@ public class AddTaskView
     descriptionLabel = (TextView) findViewById(R.id.descriptionLabel);
 
     //EditText
+    //subject = (EditText) findViewById(R.id.subject);
     title = (EditText) findViewById(R.id.title);
     description = (EditText) findViewById(R.id.description);
     date = (EditText) findViewById(R.id.date);
     time = (EditText) findViewById(R.id.time);
+
+    //Spinner
+    /*spinner = (MaterialBetterSpinner)findViewById(R.id.subject);
+    ArrayList<String> subjects = new ArrayList<>();
+    subjects = getPresenter().getSubjectsNamesFromDatabase();
+    ArrayAdapter<String> content = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subjects);
+    spinner.setAdapter(content);*/
 
     //Toolbar
     toolbar = (Toolbar) findViewById(R.id.toolbar);
