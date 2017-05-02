@@ -3,10 +3,12 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 public class Subject extends RealmObject {
     private String name;
+    @PrimaryKey
     private String subjectId;
     private Integer color;
 

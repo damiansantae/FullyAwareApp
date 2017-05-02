@@ -4,22 +4,24 @@ import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class TimeTable extends RealmObject{
+public class TimeTable extends RealmObject {
 
-
-private String timeTableId;
+    @PrimaryKey
+    private String timeTableId;
     private Subject subject;
     private String day;
     private String hour;
 
-    public TimeTable (String day, String hour, Subject subject){
+    public TimeTable(String day, String hour, Subject subject) {
         this.timeTableId = UUID.randomUUID().toString();
-        this.day =day;
-        this.subject=subject;
-        this.hour =hour;
+        this.day = day;
+        this.subject = subject;
+        this.hour = hour;
     }
-    public TimeTable(){
+
+    public TimeTable() {
 
     }
 
@@ -27,7 +29,6 @@ private String timeTableId;
     public String getTimeTableId() {
         return timeTableId;
     }
-
 
 
     public Subject getSubject() {
@@ -53,11 +54,6 @@ private String timeTableId;
     public void setHour(String hour) {
         this.hour = hour;
     }
-
-
-
-
-
 
 
 }

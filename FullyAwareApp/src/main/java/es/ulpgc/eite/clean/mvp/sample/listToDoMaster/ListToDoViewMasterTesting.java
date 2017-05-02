@@ -43,13 +43,16 @@ public class ListToDoViewMasterTesting
         implements ListToDoMaster.PresenterToView {
 
     private Toolbar toolbar;
+    private Toolbar downtoolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
     private FloatingActionButton add;
     private FloatingActionButton done;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
+
     enum Direction {LEFT, RIGHT}
+
     private SharedPreferences prefs;
     private SparseBooleanArray tasksSelected;
     private PrefManager prefManager;
@@ -151,14 +154,19 @@ public class ListToDoViewMasterTesting
 
         ////////////////////////////////////////////////////////
 
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        //downtoolbar= (Toolbar) findViewById(R.id.toolbardown);
+        // setSupportActionBar(downtoolbar);
+        //downtoolbar.inflateMenu(R.menu.menu_down_bar);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //////////////////////////
         loadSharePreferences();
-
 
 
     }
@@ -167,8 +175,8 @@ public class ListToDoViewMasterTesting
         Log.d(TAG, "calling loadSharePreferences");
         SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
         String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, ""+ colour );
-        if (colour != null){
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
             toolbarChanged(colour);
         }
     }
@@ -189,6 +197,7 @@ public class ListToDoViewMasterTesting
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listtodo_master_todo, menu);
+
         return true;
     }
 
@@ -202,31 +211,28 @@ public class ListToDoViewMasterTesting
         //noinspection SimplifiableIfStatement
 
 
-          if (id ==R.id.menuDone){
+        if (id == R.id.menuDone) {
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menucalendar){
+            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menucalendar) {
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menuForgotten){
+            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menuForgotten) {
             Navigator app = (Navigator) getApplication();
             app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
 
 
-    } else if (id ==R.id.menuPreferences) {
-        Navigator app = (Navigator) getApplication();
-        app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
-        Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menuPreferences) {
+            Navigator app = (Navigator) getApplication();
+            app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
+            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Pasando a pantalla Preferencias");
 
 
-
-    }
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -270,7 +276,7 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void deselect(int i, boolean b) {
-       //recyclerView.setItemChecked(i,b);
+        //recyclerView.setItemChecked(i,b);
 
     }
 
@@ -304,13 +310,13 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void setItemChecked(int pos, boolean checked) {
-       // recyclerView.setItemChecked(pos, checked);
+        // recyclerView.setItemChecked(pos, checked);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void startSelection() {
-       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
     }
 
@@ -376,7 +382,7 @@ public class ListToDoViewMasterTesting
     public void onStart() {
         super.onStart();
 
-       // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
@@ -418,9 +424,9 @@ public class ListToDoViewMasterTesting
         }
 
 
-    public List<Task> getItems(){
-    return this.items;
-}
+        public List<Task> getItems() {
+            return this.items;
+        }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
@@ -437,6 +443,7 @@ public class ListToDoViewMasterTesting
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View itemView;
             private ImageView tag;
+            private TextView abrv;
             private Subject subject;
             private TextView title;
             private TextView description;
@@ -456,27 +463,30 @@ public class ListToDoViewMasterTesting
                  return super.toString() + " '" + contentView.getText() + "'";
              }*/
             public void bindView(final Task task) {
-                subject=task.getSubject();
-               Integer color = subject.getColor();
-                tag = (ImageView) itemView.findViewById(R.id.tag);
+                subject = task.getSubject();
+                Integer color = subject.getColor();
+                tag = (ImageView) itemView.findViewById(R.id.color_subject);
+                abrv = (TextView) itemView.findViewById(R.id.tag_subjectc);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
 
-             Drawable drawable = getDrawable(R.drawable.circle);
+                Drawable drawable = getDrawable(R.drawable.circle);
                 drawable.setColorFilter(getColor(color), PorterDuff.Mode.SRC_OVER);
+                String abrev = getPresenter().getCases(task);
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());
                 tag.setImageDrawable(drawable);
+                abrv.setText(abrev);
 
 
                 //Selecciona si estaba seleccionado
-              itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
+                itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        getPresenter().onListClick2(itemView, getAdapterPosition(), adapter, task);
                         adapter.notifyDataSetChanged();
 
                     }
@@ -486,7 +496,7 @@ public class ListToDoViewMasterTesting
                     @Override
                     public boolean onLongClick(View v) {
 
-                        getPresenter().onLongListClick2(v,getAdapterPosition());
+                        getPresenter().onLongListClick2(v, getAdapterPosition());
 
                         return true;
                     }
@@ -497,9 +507,6 @@ public class ListToDoViewMasterTesting
 
 
     }
-
-
-
 
 
 }

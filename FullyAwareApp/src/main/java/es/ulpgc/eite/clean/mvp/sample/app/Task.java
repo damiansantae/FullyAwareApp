@@ -10,6 +10,7 @@ public class Task extends RealmObject{
 
     @PrimaryKey
     private String taskId;
+
     private Subject subject;
     private String date;
     private String title;

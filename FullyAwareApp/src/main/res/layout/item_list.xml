@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
     <es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
@@ -12,8 +11,27 @@
     android:background="@drawable/background"
     >
 
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/color_subject"
+        android:layout_alignLeft=""
+        android:layout_alignBottom="@+id/color_subject">
+        <TextView
+            android:id="@+id/tag_subjectc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="DA"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+
+
     <ImageView
-        android:id="@+id/tag"
+        android:id="@+id/color_subject"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
@@ -47,4 +65,5 @@
         android:layout_below="@+id/description"
         android:text="Fecha de entrega"
       />
-    </es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout>
+
+</es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout>

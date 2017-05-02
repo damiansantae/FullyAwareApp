@@ -405,7 +405,7 @@ public class ListForgottenViewMaster
             public void bindView(final Task task) {
                 subject=task.getSubject();
                 Integer color = subject.getColor();
-                tag = (ImageView) itemView.findViewById(R.id.tag);
+                tag = (ImageView) itemView.findViewById(R.id.color_subject);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
