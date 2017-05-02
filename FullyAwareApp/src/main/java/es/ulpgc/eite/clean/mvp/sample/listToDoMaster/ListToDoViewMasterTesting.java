@@ -47,6 +47,7 @@ public class ListToDoViewMasterTesting
     private FloatingActionButton bin;
     private FloatingActionButton add;
     private FloatingActionButton done;
+    private TextView textWhenIsEmpty;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT}
@@ -79,7 +80,7 @@ public class ListToDoViewMasterTesting
         adapter = new TaskRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
-
+        textWhenIsEmpty = (TextView)findViewById(R.id.textWhenIsEmpty);
         /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
 
@@ -266,6 +267,16 @@ public class ListToDoViewMasterTesting
         done.setVisibility(View.VISIBLE);
 
 
+    }
+
+    @Override
+    public void hideTextWhenIsEmpty(){
+        textWhenIsEmpty.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showTextWhenIsEmpty(){
+        textWhenIsEmpty.setVisibility(View.INVISIBLE);
     }
 
     @Override

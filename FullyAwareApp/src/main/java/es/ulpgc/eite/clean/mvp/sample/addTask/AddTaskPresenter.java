@@ -164,7 +164,7 @@ public class AddTaskPresenter extends GenericPresenter
       toast.show();
 
     //NotificationService.notification(title, deadline, getManagedContext());
-      //NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
+      NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
       destroyView();
 
   }

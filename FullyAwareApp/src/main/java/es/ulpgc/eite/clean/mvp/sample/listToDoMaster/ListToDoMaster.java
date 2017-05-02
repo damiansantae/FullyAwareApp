@@ -81,6 +81,7 @@ public interface ListToDoMaster {
 
     void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
+    void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
   }
 
   /**
@@ -111,6 +112,10 @@ public interface ListToDoMaster {
     void hideDoneBtn();
 
     void showDoneBtn();
+
+      void hideTextWhenIsEmpty();
+
+    void showTextWhenIsEmpty();
 
     void deselect(int i, boolean b);
 
