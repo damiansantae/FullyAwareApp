@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/principal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.70"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/label_add_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/add_subjects"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <EditText
+                        android:id="@+id/et_subject_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="Subject"
+                        android:inputType="textPersonName" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/bt_finish"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Finish" />
+
+                        <Button
+                            android:id="@+id/bt_add_subject"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_weight="1"
+                            android:text="@string/add_subject" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/subject_1"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_2"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_3"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_4"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/subject_5"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_6"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_7"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_8"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/subject_9"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_10"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_11"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+                <ImageView
+                    android:id="@+id/subject_12"
+                    android:layout_width="65dp"
+                    android:layout_height="55dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/bg_controll_plane" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

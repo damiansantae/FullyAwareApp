@@ -592,83 +592,83 @@ public void onErrorDeletingItem(Subject item) {
         String resultL5= "";
 
       if (c1l1.isChecked())
-            resultL1 = resultL1+"M";
+            resultL1 = resultL1+"M-";
       if(c2l1.isChecked())
-            resultL1 = resultL1+"T";
+            resultL1 = resultL1+"T-";
       if (c3l1.isChecked())
-            resultL1 = resultL1+"W";
+            resultL1 = resultL1+"W-";
       if (c4l1.isChecked())
-            resultL1 = resultL1+"Th";
+            resultL1 = resultL1+"Th-";
       if (c5l1.isChecked())
-            resultL1 = resultL1+"F";
+            resultL1 = resultL1+"F-";
       if (c6l1.isChecked())
-            resultL1 = resultL1+"S";
+            resultL1 = resultL1+"S-";
       if (c7l1.isChecked())
-            resultL1 = resultL1 + "Sn";
+            resultL1 = resultL1 + "Sn-";
 
 
       if (c1l2.isChecked())
-            resultL2 = resultL2+"M";
+            resultL2 = resultL2+"M-";
       if (c2l2.isChecked())
-            resultL2 = resultL2+"T";
+            resultL2 = resultL2+"T-";
       if (c3l2.isChecked())
-            resultL2 = resultL2+"W";
+            resultL2 = resultL2+"W-";
       if (c4l2.isChecked())
-            resultL2 = resultL2+"Th";
+            resultL2 = resultL2+"Th-";
       if (c5l2.isChecked())
-            resultL2 = resultL2+"F";
+            resultL2 = resultL2+"F-";
       if (c6l2.isChecked())
-            resultL2 = resultL2+"S";
+            resultL2 = resultL2+"S-";
       if (c7l2.isChecked())
-            resultL2 = resultL2+"Sn";
+            resultL2 = resultL2+"Sn-";
 
 
       if (c1l3.isChecked())
-            resultL3 = resultL3+"M";
+            resultL3 = resultL3+"M-";
       if (c2l3.isChecked())
-            resultL3 = resultL3+"T";
+            resultL3 = resultL3+"T-";
       if (c3l3.isChecked())
-            resultL3 = resultL3+"W";
+            resultL3 = resultL3+"W-";
       if (c4l3.isChecked())
-            resultL3 = resultL3+"Th";
+            resultL3 = resultL3+"Th-";
       if (c5l3.isChecked())
-            resultL3 = resultL3+"F";
+            resultL3 = resultL3+"F-";
       if (c6l3.isChecked())
-            resultL3 = resultL3+"S";
+            resultL3 = resultL3+"S-";
       if (c7l3.isChecked())
-            resultL3 = resultL3+"Sn";
+            resultL3 = resultL3+"Sn-";
 
 
         if (c1l4.isChecked())
-            resultL4 = resultL4+"M";
+            resultL4 = resultL4+"M-";
      if (c2l4.isChecked())
-            resultL4 = resultL4+"T";
+            resultL4 = resultL4+"T-";
       if (c3l4.isChecked())
-            resultL4 = resultL4+"W";
+            resultL4 = resultL4+"W-";
         if (c4l4.isChecked())
-            resultL4 = resultL4+"Th";
+            resultL4 = resultL4+"Th-";
        if (c5l4.isChecked())
-            resultL4 = resultL4+"F";
+            resultL4 = resultL4+"F-";
        if (c6l4.isChecked())
-            resultL4 = resultL4+"S";
+            resultL4 = resultL4+"S-";
       if (c7l4.isChecked())
-            resultL4 = resultL4+"Sn";
+            resultL4 = resultL4+"Sn-";
 
 
         if (c1l5.isChecked())
-            resultL5 = resultL5+"M";
+            resultL5 = resultL5+"M-";
        if (c2l5.isChecked())
-            resultL5 = resultL5+"T";
+            resultL5 = resultL5+"T-";
      if (c3l5.isChecked())
-            resultL5 = resultL5+"W";
+            resultL5 = resultL5+"W-";
        if (c4l5.isChecked())
-            resultL5 = resultL5+"Th";
+            resultL5 = resultL5+"Th-";
        if (c5l5.isChecked())
-            resultL5 = resultL5+"F";
+            resultL5 = resultL5+"F-";
         if (c6l5.isChecked())
-            resultL5 = resultL5+"S";
+            resultL5 = resultL5+"S-";
         if (c7l5.isChecked())
-            resultL5 = resultL5 + "Sn";
+            resultL5 = resultL5 + "Sn-";
 
 
         Log.d("PRUEBA CBOXES",resultL1);

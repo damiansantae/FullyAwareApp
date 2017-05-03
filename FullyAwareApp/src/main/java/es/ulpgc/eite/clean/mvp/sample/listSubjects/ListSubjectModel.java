@@ -141,6 +141,8 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         realmDatabase.copyToRealm(subject3);
         realmDatabase.copyToRealm(subject4);
         realmDatabase.copyToRealm(subject5);
+
+
         realmDatabase.commitTransaction();
     }
 
