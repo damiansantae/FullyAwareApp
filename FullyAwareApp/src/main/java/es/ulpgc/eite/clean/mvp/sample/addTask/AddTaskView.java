@@ -194,7 +194,7 @@ public class AddTaskView
 
     @Override
     public String getTaskSubject() {
-        return subject.toString();
+        return subject.getSelectedItem().toString();
     }
     @Override
     public void setSubjectsSpinner(){
