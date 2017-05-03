@@ -153,7 +153,7 @@ public class AddTaskPresenter extends GenericPresenter
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    database.addTask(subject, title, description, date, "ToDo");
+    database.addTask(subject, title, description, deadline, "ToDo");
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();

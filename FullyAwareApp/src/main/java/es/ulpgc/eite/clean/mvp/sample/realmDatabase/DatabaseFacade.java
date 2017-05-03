@@ -611,7 +611,7 @@ public class DatabaseFacade {
 
 
     public Subject getSubject(String subjectName) {
-       Subject subject = realmDatabase.where(Subject.class).findFirst();
+       Subject subject = realmDatabase.where(Subject.class).equalTo("name", subjectName).findFirst();
         return subject;
     }
 }
