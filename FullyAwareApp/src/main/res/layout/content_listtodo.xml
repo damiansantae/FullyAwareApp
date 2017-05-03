@@ -25,6 +25,17 @@
 <!--android:longClickable="true"-->
         <!--android:layout_alignParentStart="true" />-->
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add new tasks to do"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="20dp"
+        android:id="@+id/textWhenIsEmpty"/>
+
     <include layout="@layout/item_recycler_list"/>
 
     <android.support.design.widget.FloatingActionButton

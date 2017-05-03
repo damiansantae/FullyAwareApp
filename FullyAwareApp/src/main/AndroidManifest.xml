@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="es.ulpgc.eite.clean.mvp.sample">
+    package="es.ulpgc.eite.clean.mvp.sample">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
     <application
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@drawable/logoapp"
         android:label="@string/app_name"
-        android:name=".app.App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".intro.WelcomeActivity"
+        <activity
+            android:name=".intro.WelcomeActivity"
             android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.NoActionBar"
-           >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,12 +25,11 @@
         </activity>
 
 
-
         <activity
             android:name=".SplashScreen.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,7 +40,7 @@
             android:name=".listSubjects.ListSubjectView"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -48,17 +48,15 @@
         </activity>
 
 
-
         <activity
             android:name=".listToDoMaster.ListToDoViewMasterTesting"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-              <action android:name="android.intent.action.MAIN"/>
-              <category android:name="android.intent.category.LAUNCHER"/>
-          </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
 
 
         <activity
@@ -76,14 +74,17 @@
             android:name=".addTask.AddTaskView"
             android:label="Add a new task"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 
         <activity
             android:name=".preferences.PreferencesView"
             android:label="Preferences"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".listToDoDetail.ListToDoViewDetail"
@@ -101,30 +102,27 @@
             android:name=".listDoneMaster.ListDoneViewMasterTesting"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
-           <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
 
         </activity>
         <activity
             android:name=".listDoneDetail.ListDoneViewDetail"
             android:label="Detail Done"
             android:parentActivityName=".listDoneMaster.ListDoneViewMasterTesting"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".listForgottenMaster.ListForgottenViewMaster"
             android:label="FullyAware"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".listForgottenDetail.ListForgottenViewDetail"
             android:label="Detail Done"
             android:parentActivityName=".listDoneMaster.ListDoneViewMasterTesting"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".dummy.DummyView"
@@ -143,7 +141,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".NotificationService"> </service>
+        <service android:name=".NotificationService"></service>
 
 
     </application>

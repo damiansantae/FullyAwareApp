@@ -36,6 +36,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean addBtnVisible;
     private boolean doneBtnVisible;
     private boolean textVisible;
+    private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
     private ArrayList<Task> tasksSelected = new ArrayList<>();
@@ -70,6 +71,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
         database = new DatabaseFacade();
 
+
+
         app.startingListToDoScreen(this);
         checkToolbarColourChanges(app);
 
@@ -98,6 +101,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
+            checkTextWhenIsEmptyVisibility();
             CheckDoneBtnVisibility();
             if(selectedState) {
                 getView().startSelection();
@@ -115,6 +119,16 @@ public class ListToDoPresenterMaster extends GenericPresenter
         loadItems();
     }
 
+    private void checkTextWhenIsEmptyVisibility() {
+        Log.d(TAG, "calling checkTextWhenIsEmptyVisibility()");
+        if (isViewRunning()) {
+            if (database.getToDoItemsFromDatabase().size() == 0) {
+                getView().showTextWhenIsEmpty();
+            } else {
+                getView().hideTextWhenIsEmpty();
+            }
+        }
+    }
 
 
     /**
@@ -373,7 +387,22 @@ checkSelection2();
 
     }
 
+    /**
+     * This method calculates 1 or 2 cases depending if the name of the subject
+     * which is liked to the task is a compose name or not. Such as "Electronic Devices",
+     * in this case, it will return "ED"
+     *
+     * @param task is the object Task which is going to extract its case(s)
+     * @return a String compose by 1 or 2 chars
+     */
+    @Override
+    public String getCases(Task task) {
+        String subjectName= task.getSubject().getName();
 
+        return  getModel().calculateCases(subjectName);
+
+
+    }
 
 
     private ArrayList<Task> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
@@ -555,10 +584,12 @@ checkSelection2();
 
 
 
-        if(counter==0){
-            database.addInitialTasks();
-            counter++;
-        }
+
+//TODO:Descomentar cuando se instala la app por primera vez y luego comentar
+           database.createTestingScenario();
+
+
+
 
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -596,7 +627,11 @@ checkSelection2();
 
     }
 
+    @Override
+    public void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility) {
+        this.textWhenIsEmptyVisible = textWhenIsEmptyVisibility;
 
+    }
     ///////////////////////////////////////////////////////////////////////////////////
     // ListToDo To //////////////////////////////////////////////////////////////////////
 

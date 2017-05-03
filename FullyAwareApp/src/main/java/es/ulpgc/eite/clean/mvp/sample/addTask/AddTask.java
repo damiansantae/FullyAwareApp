@@ -2,9 +2,12 @@ package es.ulpgc.eite.clean.mvp.sample.addTask;
 
 import android.content.Context;
 
+import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 /**
@@ -44,6 +47,9 @@ public interface AddTask {
     void onAddTaskBtnClicked();
 
     void onLoadItemsTaskStarted();
+
+      //ArrayList<String> getSubjectsNamesFromDatabase();
+      List<Subject> getSubjects();
   }
 
   /**
@@ -67,7 +73,11 @@ public interface AddTask {
 
     String getTaskSubject();
 
-      void toolbarChanged(String colour);
+    void setSubjectsSpinner();
+
+    void toolbarChanged(String colour);
+
+    void onDestroy();
   }
 
   /**

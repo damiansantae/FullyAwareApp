@@ -10,6 +10,7 @@ public class Task extends RealmObject{
 
     @PrimaryKey
     private String taskId;
+
     private Subject subject;
     private String date;
     private String title;
@@ -72,6 +73,10 @@ public class Task extends RealmObject{
 
     public String getTaskId() {
         return taskId;
+    }
+
+    public void setTaskId(String taskId){
+        this.taskId = taskId;
     }
 
     public String getStatus() {

@@ -81,6 +81,8 @@ public interface ListToDoMaster {
 
     void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
+      String getCases(Task task);
+    void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
   }
 
   /**
@@ -112,6 +114,10 @@ public interface ListToDoMaster {
 
     void showDoneBtn();
 
+      void hideTextWhenIsEmpty();
+
+    void showTextWhenIsEmpty();
+
     void deselect(int i, boolean b);
 
   void setRecyclerAdapterContent(List<Task> items);
@@ -136,6 +142,8 @@ public interface ListToDoMaster {
     void deleteTestItems();
 
     void deleteDatabaseItem(Task item);
+
+    String calculateCases(String subjectName);
   }
 
   /**

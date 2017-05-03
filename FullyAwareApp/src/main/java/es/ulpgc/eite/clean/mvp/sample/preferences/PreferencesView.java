@@ -2,11 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -100,7 +97,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         String[] from = { "imageItem","descriptionItem","prefItem" };
 
         // Ids of views in listview_layout
-        int[] to = { R.id.tag,R.id.description,R.id.title};
+        int[] to = { R.id.color_subject,R.id.description,R.id.title};
 
         // Instantiating an adapter to store each items
         // R.layout.listview_layout defines the layout of each item

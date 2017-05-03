@@ -3,21 +3,22 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by IvanGlez on 25/04/2017.
- */
 
 public class Subject extends RealmObject {
     private String name;
+    @PrimaryKey
     private String subjectId;
-    private String timeTable;
-    private String description;
+    private Integer color;
 
-    public Subject (String name, String timeTable){
+
+
+
+    public Subject (String name,  Integer color){
         this.name = name;
         this.subjectId = UUID.randomUUID().toString();
-        this.timeTable = timeTable;
+        this.color = color;
     }
 
     public Subject (){
@@ -40,15 +41,11 @@ public class Subject extends RealmObject {
         this.subjectId = subjectId;
     }
 
-    public String getTimeTable(){
-        return this.timeTable;
+    public Integer getColor() {
+        return color;
     }
 
-    public void setTimeTable(String timeTable){
-        this.timeTable = timeTable;
-    }
-
-    public String getDescription() {
-        return description;
+    public void setColor(Integer color) {
+        this.color = color;
     }
 }

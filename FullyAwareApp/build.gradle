@@ -31,6 +31,7 @@ dependencies {
     compile project(':CleanMvpLib')
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.github.kizitonwose.colorpreference:core:1.0.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {

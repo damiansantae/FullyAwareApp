@@ -36,12 +36,25 @@
             android:id="@+id/subjectLabel"/>
 
 
-        <EditText
+        <!--<EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:id="@+id/subject"/>
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select a subject"
+            android:textColorHint="#2c3e50"
+            android:layout_alignParentStart="true"
+            />-->
 
+        <Spinner
+            android:id="@+id/subject_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"
@@ -60,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/title"/>
+            android:id="@+id/title"
+            android:hint="Title"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -80,7 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/description"/>
+            android:id="@+id/description"
+            android:hint="Description"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -147,6 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:textColor="#000000"/>
 
             <EditText
@@ -154,6 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
+                android:text="08:00"
                 android:textColor="#000000"/>
 
         </LinearLayout>
