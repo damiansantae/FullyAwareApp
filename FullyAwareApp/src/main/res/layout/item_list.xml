@@ -12,14 +12,30 @@
     android:background="@drawable/background"
     >
 
+
     <ImageView
-        android:id="@+id/tag"
+        android:id="@+id/color_subject"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
 
 
-       />
+        app:srcCompat="@drawable/circle" />
+
+    <RelativeLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tag_subjectc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="DA"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/title"
@@ -47,4 +63,5 @@
         android:layout_below="@+id/description"
         android:text="Fecha de entrega"
       />
-    </es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout>
+
+</es.ulpgc.eite.clean.mvp.sample.listToDoMaster.CheckedRelativeLayout>

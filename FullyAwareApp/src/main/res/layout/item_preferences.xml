@@ -15,7 +15,7 @@
     >
 
     <ImageView
-        android:id="@+id/tag"
+        android:id="@+id/color_subject"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:srcCompat="@drawable/bg_controll_plane" />

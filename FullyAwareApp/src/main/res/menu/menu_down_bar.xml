@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Filter"
+
+        app:showAsAction="always">
+        <menu>
+
+            <item
+                android:id="@+id/filter_subject"
+                android:title="By Subjects" />
+            <item
+                android:id="@+id/filter_recent"
+                android:title="Most recent" />
+            <item
+                android:id="@+id/filter_older"
+                android:title="Older" />
+
+        </menu>
+    </item>
+
+
+
+</menu>

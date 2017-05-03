@@ -334,7 +334,7 @@ public class ListSubjectView
 
 
             public void bindView(final Subject subject) {
-                tag = (ImageView) itemView.findViewById(R.id.tag);
+                tag = (ImageView) itemView.findViewById(R.id.color_subject);
                 title = (TextView) itemView.findViewById(R.id.title);
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);

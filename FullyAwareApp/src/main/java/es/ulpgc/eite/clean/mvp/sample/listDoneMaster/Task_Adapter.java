@@ -59,7 +59,7 @@ public class Task_Adapter extends ArrayAdapter<Task> {
         }
 
         // Referencias UI.
-        ImageView tag = (ImageView) convertView.findViewById(R.id.tag);
+        ImageView tag = (ImageView) convertView.findViewById(R.id.color_subject);
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView description = (TextView) convertView.findViewById(R.id.description);
         TextView date = (TextView) convertView.findViewById(R.id.date);
