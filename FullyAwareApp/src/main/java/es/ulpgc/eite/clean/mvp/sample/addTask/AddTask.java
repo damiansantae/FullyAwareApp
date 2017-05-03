@@ -48,6 +48,7 @@ public interface AddTask {
 
     void onLoadItemsTaskStarted();
 
+      //ArrayList<String> getSubjectsNamesFromDatabase();
       List<Subject> getSubjects();
   }
 

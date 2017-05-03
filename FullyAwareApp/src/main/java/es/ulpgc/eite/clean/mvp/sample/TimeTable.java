@@ -6,29 +6,26 @@ import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class TimeTable extends RealmObject {
+public class TimeTable extends RealmObject{
 
-    @PrimaryKey
-    private String timeTableId;
+@PrimaryKey
+private String timeTableId;
     private Subject subject;
     private String day;
     private String hour;
 
-    public TimeTable(String day, String hour, Subject subject) {
+    public TimeTable (String day, String hour, Subject subject){
         this.timeTableId = UUID.randomUUID().toString();
-        this.day = day;
-        this.subject = subject;
-        this.hour = hour;
+        this.day =day;
+        this.subject=subject;
+        this.hour =hour;
+    }
+    public TimeTable(){
+
     }
 
-    public TimeTable() {
-
-    }
 
 
-    public String getTimeTableId() {
-        return timeTableId;
-    }
 
 
     public Subject getSubject() {
@@ -54,6 +51,19 @@ public class TimeTable extends RealmObject {
     public void setHour(String hour) {
         this.hour = hour;
     }
+
+    public String getTimeTableId() {
+        return timeTableId;
+    }
+
+    public void setTimeTableId(String timeTableId) {
+        this.timeTableId = timeTableId;
+    }
+
+
+
+
+
 
 
 }

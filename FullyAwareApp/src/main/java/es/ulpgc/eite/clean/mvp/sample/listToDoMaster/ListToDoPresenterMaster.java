@@ -36,6 +36,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean addBtnVisible;
     private boolean doneBtnVisible;
     private boolean textVisible;
+    private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
     private ArrayList<Task> tasksSelected = new ArrayList<>();
@@ -100,6 +101,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
+            checkTextWhenIsEmptyVisibility();
             CheckDoneBtnVisibility();
             if(selectedState) {
                 getView().startSelection();
@@ -117,6 +119,16 @@ public class ListToDoPresenterMaster extends GenericPresenter
         loadItems();
     }
 
+    private void checkTextWhenIsEmptyVisibility() {
+        Log.d(TAG, "calling checkTextWhenIsEmptyVisibility()");
+        if (isViewRunning()) {
+            if (database.getToDoItemsFromDatabase().size() == 0) {
+                getView().showTextWhenIsEmpty();
+            } else {
+                getView().hideTextWhenIsEmpty();
+            }
+        }
+    }
 
 
     /**
@@ -615,7 +627,11 @@ checkSelection2();
 
     }
 
+    @Override
+    public void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility) {
+        this.textWhenIsEmptyVisible = textWhenIsEmptyVisibility;
 
+    }
     ///////////////////////////////////////////////////////////////////////////////////
     // ListToDo To //////////////////////////////////////////////////////////////////////
 

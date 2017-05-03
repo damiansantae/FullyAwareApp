@@ -11,8 +11,10 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -146,12 +148,12 @@ public class AddTaskPresenter extends GenericPresenter
   public void onAddTaskBtnClicked() {
     String title = getTitle();
     String description = getDescription();
-    String subject = getSubject();
+    String subjectName = getSubject();
+    Subject subject = database.getSubject(subjectName);
     String time = getTime();
     String date = getDate();
     String deadline = getDeadLine(time,date);
-    Task newTask = new Task(title, description, deadline, "ToDo");
-    database.addTask(newTask);
+    database.addTask(subject, title, description, date, "ToDo");
       Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
@@ -162,7 +164,7 @@ public class AddTaskPresenter extends GenericPresenter
       toast.show();
 
     //NotificationService.notification(title, deadline, getManagedContext());
-      //NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
+      NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
       destroyView();
 
   }
@@ -313,6 +315,16 @@ public class AddTaskPresenter extends GenericPresenter
     checkToolbarVisibility();
 
   }
+
+  /*@Override
+  public ArrayList<String> getSubjectsNamesFromDatabase() {
+    ArrayList<String> subjectsNames = new ArrayList<>();
+    List<Subject> subjects = database.getSubjectsFromDatabase();
+    for(int i=0; i<subjects.size(); i++){
+      subjectsNames.add(subjects.get(i).getName());
+    }
+    return subjectsNames;
+  }*/
 
 @Override
   public List<Subject> getSubjects(){
