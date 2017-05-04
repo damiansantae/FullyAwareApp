@@ -63,7 +63,6 @@ public class AddFirstSubjectDialog extends DialogFragment implements View.OnClic
        if (isSubjectInfoValid())
            listener.onAddSubjectClickListener(etSubjectName.getText().toString());
    } else if(v.getId() == R.id.bt_finish){
-       if (isSubjectInfoValid())
        listener.onAddSubjectClickListener("Finish");
    }
    }

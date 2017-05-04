@@ -51,7 +51,7 @@ import android.content.SharedPreferences;
             return pref.getString(USER_NAME, "User Name");
         }
 
-        public void setCounterSubject(int counterSubject) {
+        public void setHourFrames(int counterSubject) {
             editor.putInt(COUNTER_SUBJECT, counterSubject);
             editor.commit();
     }

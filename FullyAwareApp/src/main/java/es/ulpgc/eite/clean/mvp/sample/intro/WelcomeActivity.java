@@ -138,7 +138,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }
 
         private void launchSubjectScreen() {
-       //prefManager.setFirstTimeLaunch(false);
         startActivity(new Intent(WelcomeActivity.this, ListSubjectView.class));
         finish();
     }

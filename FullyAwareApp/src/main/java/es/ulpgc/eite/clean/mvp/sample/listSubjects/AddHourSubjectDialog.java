@@ -68,6 +68,7 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
   private void initComponents(View view) {
     subjectName = (TextView) view.findViewById(R.id.subject_name);
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    getDialog().setCanceledOnTouchOutside(false);
 
     buttonNext = (Button) view.findViewById(R.id.bt_next);
     buttonNext.setOnClickListener(this);

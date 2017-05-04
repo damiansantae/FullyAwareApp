@@ -13,7 +13,6 @@ import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
@@ -25,6 +24,8 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+
+import static android.view.View.VISIBLE;
 
 public class ListSubjectPresenter extends GenericPresenter
         <ListSubject.PresenterToView, ListSubject.PresenterToModel, ListSubject.ModelToPresenter, ListSubjectModel>
@@ -43,6 +44,13 @@ public class ListSubjectPresenter extends GenericPresenter
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
     private PrefManager prefManager;
+    private String[] time = new String[5];
+    private String[] daysChecked = new String[5];
+    ArrayList<CheckBox> checkboxesL1 = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> checkboxesL2 = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> checkboxesL3 = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> checkboxesL4 = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> checkboxesL5 = new ArrayList<CheckBox>();
 
 
 
@@ -500,7 +508,7 @@ public void onErrorDeletingItem(Subject item) {
         TimePickerDialog timePicker = new TimePickerDialog(getManagedContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                getView().setTimeText(index, hourOfDay+":"+minute);
+                setTimeText(index, hourOfDay+":"+minute);
                 setTimeLabelOnButton(index, dialogA);
             }
         }, hours, minutes, false);
@@ -512,23 +520,139 @@ public void onErrorDeletingItem(Subject item) {
 
         if (i == 0){
             Button bt_hour1 = (Button)dialog.getView().findViewById(R.id.bt_hour_1);
-            bt_hour1.setText(getView().getTimeText(i));
+            bt_hour1.setText(getTimeText(i));
         } else if (i == 1){
             Button bt_hour2 = (Button)dialog.getView().findViewById(R.id.bt_hour_2);
-            bt_hour2.setText(getView().getTimeText(i));
+            bt_hour2.setText(getTimeText(i));
         } else if (i == 2){
             Button bt_hour3 = (Button)dialog.getView().findViewById(R.id.bt_hour_3);
-            bt_hour3.setText(getView().getTimeText(i));
+            bt_hour3.setText(getTimeText(i));
         } else if (i == 3){
             Button bt_hour4 = (Button)dialog.getView().findViewById(R.id.bt_hour_4);
-            bt_hour4.setText(getView().getTimeText(i));
+            bt_hour4.setText(getTimeText(i));
         } else if (i == 4){
             Button bt_hour5 = (Button)dialog.getView().findViewById(R.id.bt_hour_5);
-            bt_hour5.setText(getView().getTimeText(i));
+            bt_hour5.setText(getTimeText(i));
         }
 
 
     }
+
+    @Override
+    public void setTimeText(int i, String txt) {
+        time[i] = txt;
+    }
+
+    @Override
+    public String getTimeText(int i) {
+        return time[i];
+    }
+
+    @Override
+    public String getDaysChecked(int i) {
+        return daysChecked[i]; //TODO: Metodo no utilizado por el momento
+    }
+
+
+    @Override
+public void saveCheckBoxes(AddHourSubjectDialog dialog){
+        LinearLayout l1 = (LinearLayout) dialog.getView().findViewById(R.id.time_1);
+        LinearLayout l2 = (LinearLayout) dialog.getView().findViewById(R.id.time_2);
+        LinearLayout l3 = (LinearLayout) dialog.getView().findViewById(R.id.time_3);
+        LinearLayout l4 = (LinearLayout) dialog.getView().findViewById(R.id.time_4);
+        LinearLayout l5 = (LinearLayout) dialog.getView().findViewById(R.id.time_5);
+
+    //Checkboxes for l1 hour space.
+        CheckBox c1l1 = (CheckBox) l1.findViewById(R.id.cb_monday);
+        CheckBox c2l1 = (CheckBox) l1.findViewById(R.id.cb_tuesday);
+        CheckBox c3l1 = (CheckBox) l1.findViewById(R.id.cb_wednesday);
+        CheckBox c4l1 = (CheckBox) l1.findViewById(R.id.cb_thursday);
+        CheckBox c5l1 = (CheckBox) l1.findViewById(R.id.cb_friday);
+        CheckBox c6l1 = (CheckBox) l1.findViewById(R.id.cb_saturday);
+        CheckBox c7l1 = (CheckBox) l1.findViewById(R.id.cb_sunday);
+
+        checkboxesL1.add(c1l1);
+        checkboxesL1.add(c2l1);
+        checkboxesL1.add(c3l1);
+        checkboxesL1.add(c4l1);
+        checkboxesL1.add(c5l1);
+        checkboxesL1.add(c6l1);
+        checkboxesL1.add(c7l1);
+
+
+    //Checkboxes for l2 hour space.
+        CheckBox c1l2 = (CheckBox) l2.findViewById(R.id.cb_monday);
+        CheckBox c2l2 = (CheckBox) l2.findViewById(R.id.cb_tuesday);
+        CheckBox c3l2 = (CheckBox) l2.findViewById(R.id.cb_wednesday);
+        CheckBox c4l2 = (CheckBox) l2.findViewById(R.id.cb_thursday);
+        CheckBox c5l2 = (CheckBox) l2.findViewById(R.id.cb_friday);
+        CheckBox c6l2 = (CheckBox) l2.findViewById(R.id.cb_saturday);
+        CheckBox c7l2 = (CheckBox) l2.findViewById(R.id.cb_sunday);
+
+        checkboxesL2.add(c1l2);
+        checkboxesL2.add(c2l2);
+        checkboxesL2.add(c3l2);
+        checkboxesL2.add(c4l2);
+        checkboxesL2.add(c5l2);
+        checkboxesL2.add(c6l2);
+        checkboxesL2.add(c7l2);
+
+
+        //Checkboxes for l3 hour space.
+        CheckBox c1l3 = (CheckBox) l3.findViewById(R.id.cb_monday);
+        CheckBox c2l3 = (CheckBox) l3.findViewById(R.id.cb_tuesday);
+        CheckBox c3l3 = (CheckBox) l3.findViewById(R.id.cb_wednesday);
+        CheckBox c4l3 = (CheckBox) l3.findViewById(R.id.cb_thursday);
+        CheckBox c5l3 = (CheckBox) l3.findViewById(R.id.cb_friday);
+        CheckBox c6l3 = (CheckBox) l3.findViewById(R.id.cb_saturday);
+        CheckBox c7l3 = (CheckBox) l3.findViewById(R.id.cb_sunday);
+
+        checkboxesL3.add(c1l3);
+        checkboxesL3.add(c2l3);
+        checkboxesL3.add(c3l3);
+        checkboxesL3.add(c4l3);
+        checkboxesL3.add(c5l3);
+        checkboxesL3.add(c6l3);
+        checkboxesL3.add(c7l3);
+
+        //Checkboxes for l4 hour space.
+        CheckBox c1l4 = (CheckBox) l4.findViewById(R.id.cb_monday);
+        CheckBox c2l4 = (CheckBox) l4.findViewById(R.id.cb_tuesday);
+        CheckBox c3l4 = (CheckBox) l4.findViewById(R.id.cb_wednesday);
+        CheckBox c4l4 = (CheckBox) l4.findViewById(R.id.cb_thursday);
+        CheckBox c5l4 = (CheckBox) l4.findViewById(R.id.cb_friday);
+        CheckBox c6l4 = (CheckBox) l4.findViewById(R.id.cb_saturday);
+        CheckBox c7l4 = (CheckBox) l4.findViewById(R.id.cb_sunday);
+
+        checkboxesL4.add(c1l4);
+        checkboxesL4.add(c2l4);
+        checkboxesL4.add(c3l4);
+        checkboxesL4.add(c4l4);
+        checkboxesL4.add(c5l4);
+        checkboxesL4.add(c6l4);
+        checkboxesL4.add(c7l4);
+
+
+        //Checkboxes for l5 hour space.
+        CheckBox c1l5 = (CheckBox) l5.findViewById(R.id.cb_monday);
+        CheckBox c2l5 = (CheckBox) l5.findViewById(R.id.cb_tuesday);
+        CheckBox c3l5 = (CheckBox) l5.findViewById(R.id.cb_wednesday);
+        CheckBox c4l5 = (CheckBox) l5.findViewById(R.id.cb_thursday);
+        CheckBox c5l5 = (CheckBox) l5.findViewById(R.id.cb_friday);
+        CheckBox c6l5 = (CheckBox) l5.findViewById(R.id.cb_saturday);
+        CheckBox c7l5 = (CheckBox) l5.findViewById(R.id.cb_sunday);
+
+        checkboxesL5.add(c1l5);
+        checkboxesL5.add(c2l5);
+        checkboxesL5.add(c3l5);
+        checkboxesL5.add(c4l5);
+        checkboxesL5.add(c5l5);
+        checkboxesL5.add(c6l5);
+        checkboxesL5.add(c7l5);
+
+    }
+
+
 
     @Override
     public void getCheckedBoxes(AddHourSubjectDialog dialog) {
@@ -540,152 +664,215 @@ public void onErrorDeletingItem(Subject item) {
         LinearLayout l4 = (LinearLayout) dialog.getView().findViewById(R.id.time_4);
         LinearLayout l5 = (LinearLayout) dialog.getView().findViewById(R.id.time_5);
 
-        //Checkboxes for l1 hour space.
-        CheckBox c1l1 = (CheckBox) l1.findViewById(R.id.cb_monday);
-        CheckBox c2l1 = (CheckBox) l1.findViewById(R.id.cb_tuesday);
-        CheckBox c3l1 = (CheckBox) l1.findViewById(R.id.cb_wednesday);
-        CheckBox c4l1 = (CheckBox) l1.findViewById(R.id.cb_thursday);
-        CheckBox c5l1 = (CheckBox) l1.findViewById(R.id.cb_friday);
-        CheckBox c6l1 = (CheckBox) l1.findViewById(R.id.cb_saturday);
-        CheckBox c7l1 = (CheckBox) l1.findViewById(R.id.cb_sunday);
 
-        //Checkboxes for l2 hour space.
-        CheckBox c1l2 = (CheckBox) l2.findViewById(R.id.cb_monday);
-        CheckBox c2l2 = (CheckBox) l2.findViewById(R.id.cb_tuesday);
-        CheckBox c3l2 = (CheckBox) l2.findViewById(R.id.cb_wednesday);
-        CheckBox c4l2 = (CheckBox) l2.findViewById(R.id.cb_thursday);
-        CheckBox c5l2 = (CheckBox) l2.findViewById(R.id.cb_friday);
-        CheckBox c6l2 = (CheckBox) l2.findViewById(R.id.cb_saturday);
-        CheckBox c7l2 = (CheckBox) l2.findViewById(R.id.cb_sunday);
+        if (l1.getVisibility()== VISIBLE)
+            if (checkboxesL1.get(0).isChecked())
+                daysChecked[0] = daysChecked[0] + "M-";
 
-        //Checkboxes for l3 hour space.
-        CheckBox c1l3 = (CheckBox) l3.findViewById(R.id.cb_monday);
-        CheckBox c2l3 = (CheckBox) l3.findViewById(R.id.cb_tuesday);
-        CheckBox c3l3 = (CheckBox) l3.findViewById(R.id.cb_wednesday);
-        CheckBox c4l3 = (CheckBox) l3.findViewById(R.id.cb_thursday);
-        CheckBox c5l3 = (CheckBox) l3.findViewById(R.id.cb_friday);
-        CheckBox c6l3 = (CheckBox) l3.findViewById(R.id.cb_saturday);
-        CheckBox c7l3 = (CheckBox) l3.findViewById(R.id.cb_sunday);
+            if (checkboxesL1.get(1).isChecked())
+                daysChecked[0] = daysChecked[0] + "T-";
 
-        //Checkboxes for l4 hour space.
-        CheckBox c1l4 = (CheckBox) l4.findViewById(R.id.cb_monday);
-        CheckBox c2l4 = (CheckBox) l4.findViewById(R.id.cb_tuesday);
-        CheckBox c3l4 = (CheckBox) l4.findViewById(R.id.cb_wednesday);
-        CheckBox c4l4 = (CheckBox) l4.findViewById(R.id.cb_thursday);
-        CheckBox c5l4 = (CheckBox) l4.findViewById(R.id.cb_friday);
-        CheckBox c6l4 = (CheckBox) l4.findViewById(R.id.cb_saturday);
-        CheckBox c7l4 = (CheckBox) l4.findViewById(R.id.cb_sunday);
+            if (checkboxesL1.get(2).isChecked())
+                daysChecked[0] = daysChecked[0] + "W-";
 
-        //Checkboxes for l5 hour space.
-        CheckBox c1l5 = (CheckBox) l5.findViewById(R.id.cb_monday);
-        CheckBox c2l5 = (CheckBox) l5.findViewById(R.id.cb_tuesday);
-        CheckBox c3l5 = (CheckBox) l5.findViewById(R.id.cb_wednesday);
-        CheckBox c4l5 = (CheckBox) l5.findViewById(R.id.cb_thursday);
-        CheckBox c5l5 = (CheckBox) l5.findViewById(R.id.cb_friday);
-        CheckBox c6l5 = (CheckBox) l5.findViewById(R.id.cb_saturday);
-        CheckBox c7l5 = (CheckBox) l5.findViewById(R.id.cb_sunday);
+            if (checkboxesL1.get(3).isChecked())
+                daysChecked[0] = daysChecked[0]+ "Th-";
 
-        String resultL1= "";
-        String resultL2= "";
-        String resultL3= "";
-        String resultL4= "";
-        String resultL5= "";
+            if (checkboxesL1.get(4).isChecked())
+                daysChecked[0] = daysChecked[0] + "F-";
 
-      if (c1l1.isChecked())
-            resultL1 = resultL1+"M-";
-      if(c2l1.isChecked())
-            resultL1 = resultL1+"T-";
-      if (c3l1.isChecked())
-            resultL1 = resultL1+"W-";
-      if (c4l1.isChecked())
-            resultL1 = resultL1+"Th-";
-      if (c5l1.isChecked())
-            resultL1 = resultL1+"F-";
-      if (c6l1.isChecked())
-            resultL1 = resultL1+"S-";
-      if (c7l1.isChecked())
-            resultL1 = resultL1 + "Sn-";
+            if (checkboxesL1.get(5).isChecked())
+                daysChecked[0] = daysChecked[0]+ "S-";
+
+            if (checkboxesL1.get(6).isChecked())
+                daysChecked[0] = daysChecked[0] + "Sn-";
 
 
-      if (c1l2.isChecked())
-            resultL2 = resultL2+"M-";
-      if (c2l2.isChecked())
-            resultL2 = resultL2+"T-";
-      if (c3l2.isChecked())
-            resultL2 = resultL2+"W-";
-      if (c4l2.isChecked())
-            resultL2 = resultL2+"Th-";
-      if (c5l2.isChecked())
-            resultL2 = resultL2+"F-";
-      if (c6l2.isChecked())
-            resultL2 = resultL2+"S-";
-      if (c7l2.isChecked())
-            resultL2 = resultL2+"Sn-";
+        if (l2.getVisibility()== VISIBLE)
+            if (checkboxesL2.get(0).isChecked())
+                daysChecked[1] = daysChecked[1]  + "M-";
+            if (checkboxesL2.get(1).isChecked())
+                daysChecked[1] = daysChecked[1] + "T-";
+            if (checkboxesL2.get(2).isChecked())
+                daysChecked[1] = daysChecked[1]  + "W-";
+            if (checkboxesL2.get(3).isChecked())
+                daysChecked[1] = daysChecked[1] + "Th-";
+            if (checkboxesL2.get(4).isChecked())
+                daysChecked[1] = daysChecked[1]  + "F-";
+            if (checkboxesL2.get(5).isChecked())
+                daysChecked[1] = daysChecked[1]  + "S-";
+            if (checkboxesL2.get(6).isChecked())
+                daysChecked[1] = daysChecked[1] + "Sn-";
 
 
-      if (c1l3.isChecked())
-            resultL3 = resultL3+"M-";
-      if (c2l3.isChecked())
-            resultL3 = resultL3+"T-";
-      if (c3l3.isChecked())
-            resultL3 = resultL3+"W-";
-      if (c4l3.isChecked())
-            resultL3 = resultL3+"Th-";
-      if (c5l3.isChecked())
-            resultL3 = resultL3+"F-";
-      if (c6l3.isChecked())
-            resultL3 = resultL3+"S-";
-      if (c7l3.isChecked())
-            resultL3 = resultL3+"Sn-";
+        if (l3.getVisibility()== VISIBLE)
+
+            if (checkboxesL3.get(0).isChecked())
+                daysChecked[2] = daysChecked[2]  + "M-";
+            if (checkboxesL3.get(1).isChecked())
+                daysChecked[2] = daysChecked[2]  + "T-";
+            if (checkboxesL3.get(2).isChecked())
+                daysChecked[2] = daysChecked[2] + "W-";
+            if (checkboxesL3.get(3).isChecked())
+                daysChecked[2] = daysChecked[2]  + "Th-";
+            if (checkboxesL3.get(4).isChecked())
+                daysChecked[2] = daysChecked[2]  + "F-";
+            if (checkboxesL3.get(5).isChecked())
+                daysChecked[2] = daysChecked[2]  + "S-";
+            if (checkboxesL3.get(6).isChecked())
+                daysChecked[2] = daysChecked[2]  + "Sn-";
 
 
-        if (c1l4.isChecked())
-            resultL4 = resultL4+"M-";
-     if (c2l4.isChecked())
-            resultL4 = resultL4+"T-";
-      if (c3l4.isChecked())
-            resultL4 = resultL4+"W-";
-        if (c4l4.isChecked())
-            resultL4 = resultL4+"Th-";
-       if (c5l4.isChecked())
-            resultL4 = resultL4+"F-";
-       if (c6l4.isChecked())
-            resultL4 = resultL4+"S-";
-      if (c7l4.isChecked())
-            resultL4 = resultL4+"Sn-";
+        if (l4.getVisibility() == VISIBLE)
+
+            if (checkboxesL4.get(0).isChecked())
+                daysChecked[3] = daysChecked[3] + "M-";
+            if (checkboxesL4.get(1).isChecked())
+                daysChecked[3] = daysChecked[3] + "T-";
+            if (checkboxesL4.get(2).isChecked())
+                daysChecked[3] = daysChecked[3] + "W-";
+            if (checkboxesL4.get(3).isChecked())
+                daysChecked[3] = daysChecked[3] + "Th-";
+            if (checkboxesL4.get(4).isChecked())
+                daysChecked[3] = daysChecked[3] + "F-";
+            if (checkboxesL4.get(5).isChecked())
+                daysChecked[3] = daysChecked[3] + "S-";
+            if (checkboxesL4.get(6).isChecked())
+                daysChecked[3] = daysChecked[3] + "Sn-";
 
 
-        if (c1l5.isChecked())
-            resultL5 = resultL5+"M-";
-       if (c2l5.isChecked())
-            resultL5 = resultL5+"T-";
-     if (c3l5.isChecked())
-            resultL5 = resultL5+"W-";
-       if (c4l5.isChecked())
-            resultL5 = resultL5+"Th-";
-       if (c5l5.isChecked())
-            resultL5 = resultL5+"F-";
-        if (c6l5.isChecked())
-            resultL5 = resultL5+"S-";
-        if (c7l5.isChecked())
-            resultL5 = resultL5 + "Sn-";
+            if (l4.getVisibility() == VISIBLE)
+
+                if (checkboxesL5.get(0).isChecked())
+                    daysChecked[4] = daysChecked[4] + "M-";
+                if (checkboxesL5.get(1).isChecked())
+                    daysChecked[4] = daysChecked[4] + "T-";
+                if (checkboxesL5.get(2).isChecked())
+                    daysChecked[4] = daysChecked[4] + "W-";
+                if (checkboxesL5.get(3).isChecked())
+                    daysChecked[4] = daysChecked[4] + "Th-";
+                if (checkboxesL5.get(4).isChecked())
+                    daysChecked[4] = daysChecked[4] + "F-";
+                if (checkboxesL5.get(5).isChecked())
+                    daysChecked[4] = daysChecked[4] + "S-";
+                if (checkboxesL5.get(6).isChecked())
+                    daysChecked[4] = daysChecked[4] + "Sn-";
 
 
-        Log.d("PRUEBA CBOXES",resultL1);
-        Log.d("PRUEBA CBOXES",resultL2);
-        Log.d("PRUEBA CBOXES",resultL3);
-        Log.d("PRUEBA CBOXES",resultL4);
-        Log.d("PRUEBA CBOXES",resultL5);
+                Log.d("PRUEBA CBOXES", "" + daysChecked[0]);
+                Log.d("PRUEBA CBOXES", "" + daysChecked[1]);
+                Log.d("PRUEBA CBOXES", "" + daysChecked[2]);
+                Log.d("PRUEBA CBOXES", "" + daysChecked[3]);
+                Log.d("PRUEBA CBOXES", "" + daysChecked[4]);
+
+
+                //TODO:ANALIZAR TODOS LOS CHECKBOX Y PONERLOS DEL TIPO:
+                //1) L1:MJK
+                //2) L2:MJA
+                //3) L3:LWK
+                //4) L4: DSD
+                //5) L5: SD
+                //Y ESTO PARA CADA SUBJECT, ASI QUE SERÁ UN BUCLE QUE LO REPETIRÁ UNA CANTIDAD X COMO NUMERO DE SUBJECTS HAYA.
+
+            }
 
 
 
-        //TODO:ANALIZAR TODOS LOS CHECKBOX Y PONERLOS DEL TIPO:
-        //1) L1:MJK
-        //2) L2:MJA
-        //3) L3:LWK
-        //4) L4: DSD
-        //5) L5: SD
-        //Y ESTO PARA CADA SUBJECT, ASI QUE SERÁ UN BUCLE QUE LO REPETIRÁ UNA CANTIDAD X COMO NUMERO DE SUBJECTS HAYA.
+
+    @Override
+    public void getSelectedHours(AddHourSubjectDialog dialog){
+        Log.d("PRUEBA Hourd",""+time[0]);
+        Log.d("PRUEBA Hourd",""+time[1]);
+        Log.d("PRUEBA Hourd",""+time[2]);
+        Log.d("PRUEBA Hourd",""+time[3]);
+        Log.d("PRUEBA Hourd",""+time[4]);
+
+
+    }
+
+    @Override
+    public void uncheckDaysBoxes(AddHourSubjectDialog dialog, int i) {
+
+        Log.d("CHECK BOXES","ENTRA AL METODO");
+        Log.d("CHECK BOXES",""+checkboxesL2.size());
+
+    if (i == 0){
+            for (int x =0; x < checkboxesL1.size(); x++ ){
+                checkboxesL1.get(x).setChecked(false);
+                Log.d("CHECK BOXES","ENTRA AL FOR METODO"+checkboxesL2.get(x).isChecked());
+                daysChecked[0]=""; //TODO:puede pasarse a un metodo de reseteo de valores.
+            }
+
+        } else if (i == 1){
+            for (int x =0; x < checkboxesL2.size(); x++ ){
+                checkboxesL2.get(x).setChecked(false);
+                Log.d("CHECK BOXES","ENTRA AL FOR METODO"+checkboxesL2.get(x).isChecked());
+                daysChecked[1]=""; //TODO:puede pasarse a un metodo de reseteo de valores.
+            }
+
+        } else if (i ==2 ){
+            for (int x =0; x < checkboxesL3.size(); x++ ){
+                checkboxesL3.get(x).setChecked(false);
+                daysChecked[2]=""; //TODO:puede pasarse a un metodo de reseteo de valores.
+            }
+
+        } else if (i ==3 ){
+            for (int x =0; x < checkboxesL4.size(); x++ ){
+                checkboxesL4.get(x).setChecked(false);
+                daysChecked[3]=""; //TODO:puede pasarse a un metodo de reseteo de valores.
+            }
+
+        } else if (i ==4 ){
+            for (int x =0; x < checkboxesL5.size(); x++ ){
+                checkboxesL5.get(x).setChecked(false);
+                daysChecked[4]=""; //TODO:puede pasarse a un metodo de reseteo de valores.
+            }
+
+
+        }
+
+
+
+        }
+
+    @Override
+    public String getFinishLabel() {
+       return getModel().getFinishLabel();
+    }
+
+    @Override
+    public void saveSubject() {
+
+
+    }
+
+    @Override
+    public void transformData() {
+
+        ArrayList<Integer> invalidIndexes = new ArrayList<Integer>();
+
+      for (int i=0; i < time.length; i++){
+        if (getTimeText(i) == null || getTimeText(i).equals("")){
+            invalidIndexes.add(i);
+        } else if (daysChecked[i]==null || daysChecked[i].equals("")){
+            invalidIndexes.add(i);
+        }
+      }
+
+      for (int x=0; x < invalidIndexes.size(); x++){
+          Log.d("INVALID INDEXES", ""+ invalidIndexes.get(x));
+      }
+
+
+     // for (int y=0; y < daysCh )
+
+      //TODO: Bucle que recorra los indices válidos y extraiga los diás en función de las siglas.
+
+
+
+
+
+
 
     }
 

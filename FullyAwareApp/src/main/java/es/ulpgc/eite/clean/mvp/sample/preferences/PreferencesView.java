@@ -76,7 +76,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         // Creamos lista de elementos
        prefItems = new String[]{"App Colour","Edit Subjects","Donate","About"};
        descriptionItems = new String[]{"Change the colour of the App!", "Add subjects or make changes", "To contribute", "All about FullyAware App and xDroidInc"};
-        imageItems = new int[]{
+       imageItems = new int[]{
                 android.R.drawable.ic_menu_edit,
                 android.R.drawable.ic_menu_manage,
                 android.R.drawable.ic_menu_share,
@@ -195,7 +195,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     private void updateStatusBarColor(int newColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
             String newColorString = getColorHex(newColor);
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
             setToolbarColorChanged(true);

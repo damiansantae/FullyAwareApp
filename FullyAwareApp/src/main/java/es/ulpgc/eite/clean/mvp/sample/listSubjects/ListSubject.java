@@ -65,7 +65,25 @@ public interface ListSubject {
 
     void setTimeLabelOnButton(int i,AddHourSubjectDialog dialog);
 
-      void getCheckedBoxes( AddHourSubjectDialog dialog);
+    String getDaysChecked(int i);
+
+    void saveCheckBoxes(AddHourSubjectDialog dialog);
+
+    void getCheckedBoxes(AddHourSubjectDialog dialog);
+
+    void setTimeText(int i, String txt);
+
+    String getTimeText(int i);
+
+    void getSelectedHours(AddHourSubjectDialog dialog);
+
+    void uncheckDaysBoxes(AddHourSubjectDialog dialog, int i);
+
+    String getFinishLabel();
+
+    void saveSubject();
+
+    void transformData();
   }
 
   /**
@@ -97,15 +115,13 @@ public interface ListSubject {
 
       void setToastDelete();
 
-    void setTimeText(int i, String txt);
-
     void showAddUserNameDialog();
 
     void showAddHourSubjectDialog();
 
     void showAddSubjectsDialog();
 
-    String getTimeText(int i);
+
   }
 
   /**
@@ -129,7 +145,7 @@ public interface ListSubject {
     void setLabelButtons();
 
 
-
+    String getFinishLabel();
   }
 
   /**

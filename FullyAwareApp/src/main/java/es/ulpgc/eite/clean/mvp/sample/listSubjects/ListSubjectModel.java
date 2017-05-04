@@ -24,6 +24,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private String floatingDeleteLabel;
     private String btAddSubjectLabel;
     private String btHourLabel;
+    private String finishLabel = "Finish";
 
     /**
      * Method that recovers a reference to the PRESENTER
@@ -157,6 +158,11 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         this.floatingDeleteLabel = "floatingDelete";
         this.btAddSubjectLabel = "buttonAddSubject";
         this.btHourLabel = "buttonHour";
+    }
+
+    @Override
+    public String getFinishLabel() {
+        return this.finishLabel;
     }
 
     @Override
