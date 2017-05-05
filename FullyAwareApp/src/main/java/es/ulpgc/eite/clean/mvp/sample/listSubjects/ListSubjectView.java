@@ -395,12 +395,6 @@ public class ListSubjectView
         });
     }
 
-    public int getHourFrames(){
-        return this.hourFrames;
-    }
-
-
-
     @Override
     public void showAddSubjectsDialog() {
 
@@ -417,7 +411,7 @@ public class ListSubjectView
                     if(numberOfSubjects==0){
                         dialog.dismiss();
                     } else{
-                        showAddHourSubjectDialog();
+                        addingHoursToSubject();
                         dialog.dismiss();
                     }
 
@@ -518,39 +512,33 @@ public class ListSubjectView
         });
     }
 
+    private void addingHoursToSubject() {
 
-
-
-
-    @Override
-    public void showAddHourSubjectDialog() {
-
-
-        //Bucle que genera los indices del HashMap
         for (int i=0; i< subjectList.size(); i++){
-         String hours =  "hoursOfSubject"+i;
-         String days = "daysOfSubject"+i;
-         indexHours.add(hours);
-         indexDays.add(days);
-    }
-
-        //Bucle que genera los arrays para cada Asignatura
-        for (int i=0; i<subjectList.size(); i++){
-         HoursArays.put(indexHours.get(i),new ArrayList<String>());
-         DaysArays.put(indexDays.get(i),new ArrayList<String>());
+            showAddHourSubjectDialog(subjectList.get(i));
         }
 
 
 
+    }
+
+    @Override
+    public void showAddHourSubjectDialog(final String newSubject) {
+
            final AddHourSubjectDialog dialog = new AddHourSubjectDialog();
+
+           Bundle args = new Bundle();
+           args.putString("subjectName", newSubject);
+           dialog.setArguments(args);
+
            dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
            hourFrames = 0;
+           getPresenter().resetDaysChecked();
+           getPresenter().resetSelectedHours();
            prefManager = new PrefManager(this);
            if (!prefManager.isFirstTimeLaunch()) {
                prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once
            }
-
-
 
            dialog.setListener(new AddHourSubjectDialog.OnAddHourSubjectClickListener() {
                @Override
@@ -558,7 +546,6 @@ public class ListSubjectView
 
                    //Boton Floating Add Pulsado
                    if (label.equals(getPresenter().getLabelFloatingAdd())){
-
                        Log.d("ADD HOUR BUTTON TAG", "BUTTON ADD HOUR CLICKED");
                        if (hourFrames == 0){
                            dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
@@ -637,26 +624,41 @@ public class ListSubjectView
                public void onAddHourSubjectClickListener(int i) {
 
                    if (i==5){
-                       getPresenter().saveCheckBoxes(dialog);
                        getPresenter().getCheckedBoxes(dialog);
                        getPresenter().getSelectedHours(dialog);
-                       getPresenter().transformData();
-                       //getPresenter().saveSubject();
+                       getPresenter().transformData(newSubject);
+                       getPresenter().resetDaysChecked();
+                       getPresenter().resetSelectedHours();
+                       dialog.dismiss();
+                   } else if(i==6){
 
-                   } else{
+
+                   } else {
                        getPresenter().onSelectTimeBtnClicked(i, dialog);
-                       getPresenter().setTimeLabelOnButton(i,dialog);
-
+                       getPresenter().setTimeLabelOnButton(i,dialog); //este se puede meter dentro del anterior metodo;
                    }
                }
 
 
            });
-
-
-
     }
 
+
+
+
+    //Bucle que genera los indices del HashMap
+      /*  for (int i=0; i< subjectList.size(); i++){
+         String hours =  "hoursOfSubject"+i;
+         String days = "daysOfSubject"+i;
+         indexHours.add(hours);
+         indexDays.add(days);
+    }
+
+        //Bucle que genera los arrays para cada Asignatura
+        for (int i=0; i<subjectList.size(); i++){
+         HoursArays.put(indexHours.get(i),new ArrayList<String>());
+         DaysArays.put(indexDays.get(i),new ArrayList<String>());
+        }*/
 
 
 

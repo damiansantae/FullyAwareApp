@@ -2,6 +2,8 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.content.Context;
 import android.view.View;
+
+import java.util.ArrayList;
 import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
@@ -67,8 +69,6 @@ public interface ListSubject {
 
     String getDaysChecked(int i);
 
-    void saveCheckBoxes(AddHourSubjectDialog dialog);
-
     void getCheckedBoxes(AddHourSubjectDialog dialog);
 
     void setTimeText(int i, String txt);
@@ -77,13 +77,15 @@ public interface ListSubject {
 
     void getSelectedHours(AddHourSubjectDialog dialog);
 
+    void resetDaysChecked();
+
+    void resetSelectedHours();
+
     void uncheckDaysBoxes(AddHourSubjectDialog dialog, int i);
 
     String getFinishLabel();
 
-    void saveSubject();
-
-    void transformData();
+    void transformData(String subject);
   }
 
   /**
@@ -117,11 +119,10 @@ public interface ListSubject {
 
     void showAddUserNameDialog();
 
-    void showAddHourSubjectDialog();
 
     void showAddSubjectsDialog();
 
-
+    void showAddHourSubjectDialog(String newSubject);
   }
 
   /**
@@ -146,6 +147,11 @@ public interface ListSubject {
 
 
     String getFinishLabel();
+
+    void saveSubject(String subject, ArrayList<String> validDays, ArrayList<String> validHours);
+
+
+    ArrayList<String> getDaysOfWeek();
   }
 
   /**

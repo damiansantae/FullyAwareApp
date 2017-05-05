@@ -47,6 +47,7 @@ public class App extends Application implements Mediator, Navigator {
     private DummyState toDummyState, dummyToState;
     private ListToDoState toListToDoState, listToDoToState;
     private ListDoneState toListDoneState, listDoneToState;
+    private ListSubjectState toListSubjectState, listSubjectToState;
     private ListForgottenState toListForgottenState, listForgottenToState;
     private AddTaskState toAddTaskState, addTaskToState;
     private ScheduleState toScheduleState, scheduleToState;
@@ -111,6 +112,11 @@ public class App extends Application implements Mediator, Navigator {
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
 
+        toListSubjectState = new ListSubjectState();
+        toListSubjectState.toolbarVisibility = true;
+        toListSubjectState.textVisibility = false;
+        toListSubjectState.addBtnVisibility = true;
+        toListSubjectState.deleteBtnVisibility = false;
 
 
     }
@@ -432,6 +438,20 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
+
+        if (listSubjectToState == null) {
+            listSubjectToState = new ListSubjectState();
+        }
+
+        listSubjectToState.toolbarVisibility = true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
+        }
+
+
 
     }
 
@@ -821,6 +841,13 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         boolean addBtnVisibility;
         boolean deleteBtnVisibility;
         Task TaskDone;
+    }
+
+    private class ListSubjectState {
+        boolean toolbarVisibility;
+        boolean textVisibility;
+        boolean addBtnVisibility;
+        boolean deleteBtnVisibility;
     }
 
     private class ListForgottenState {

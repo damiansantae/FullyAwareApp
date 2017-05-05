@@ -2,9 +2,14 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.content.Context;
 import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;
@@ -25,6 +30,18 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private String btAddSubjectLabel;
     private String btHourLabel;
     private String finishLabel = "Finish";
+    private static final ArrayList<String> daysOfWeek = new ArrayList<String>() {{
+        add("Monday");
+        add("Tuesday");
+        add("Wednesday");
+        add("Thursday");
+        add("Friday");
+        add("Saturday");
+        add("Sunday");
+
+    }};
+
+
 
     /**
      * Method that recovers a reference to the PRESENTER
@@ -163,6 +180,39 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     @Override
     public String getFinishLabel() {
         return this.finishLabel;
+    }
+
+    @Override
+    public void saveSubject(String subjectName, ArrayList<String> validDays, ArrayList<String> validHours) {
+        realmDatabase.beginTransaction();
+        Subject subject = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
+        subject.setName(subjectName);
+        subject.setColor(R.color.bg_screen1);
+
+
+        for (int i = 0; i < validDays.size(); i++){
+            for (int x=0; x < daysOfWeek.size(); x++){
+                if (validDays.get(i).contains(daysOfWeek.get(x))){
+                    TimeTable timeTable = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+                    timeTable.setDay(daysOfWeek.get(x));
+                    timeTable.setHour(validHours.get(i));
+                    timeTable.setSubject(subject);
+                    Log.d("DATABASE",""+timeTable.getDay());
+                    Log.d("DATABASE",""+timeTable.getHour());
+                    Log.d("DATABASE",""+timeTable.getSubject().getName());
+                }
+            }
+
+
+        }
+
+        realmDatabase.commitTransaction();
+
+    }
+
+    @Override
+    public ArrayList<String> getDaysOfWeek() {
+        return this.daysOfWeek;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -32,17 +33,19 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
   private String floatingAdd;
   private String floatingDelete;
   private String buttonAddSubject;
-    private Button buttonNext;
+  private Button buttonNext;
   private String buttonHour;
   private String buttonFinish;
   private PrefManager prefManager;
+  private String subject;
 
 
-  @Override
+    @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setStyle(DialogFragment.STYLE_NORMAL, R.style.AlertDialogStyle);
     setButtonsLabels();
+    subject = getArguments().getString("subjectName");
   }
 
     private void setButtonsLabels() {
@@ -66,7 +69,7 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
   }
 
   private void initComponents(View view) {
-    subjectName = (TextView) view.findViewById(R.id.subject_name);
+
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     getDialog().setCanceledOnTouchOutside(false);
 
@@ -90,11 +93,13 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
     btHour5 = (Button)  view.findViewById(R.id.bt_hour_5);
     btHour5.setOnClickListener(this);
 
+      subjectName = (TextView) view.findViewById(R.id.subject_name);
+      setSubjectName(subject);
+
   }
 
   @Override
   public void onClick(View v) {
-
    if (v.getId() == R.id.fb_add){
            listener.onAddHourSubjectClickListener(floatingAdd);
        Log.d("LABEL TAG",floatingAdd);
@@ -121,7 +126,9 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
    } else if (v.getId() == R.id.bt_next){
        listener.onAddHourSubjectClickListener(5);
 
-    }
+    } else {
+
+   }
 
 
    }
@@ -133,7 +140,11 @@ public class AddHourSubjectDialog extends DialogFragment implements View.OnClick
     this.listener = listener;
   }
 
-  public interface OnAddHourSubjectClickListener {
+    public void setSubjectName(String subjectName) {
+        this.subjectName.setText(subjectName);
+    }
+
+    public interface OnAddHourSubjectClickListener {
     void onAddHourSubjectClickListener(String subject);
     void onAddHourSubjectClickListener(int i);
   }
