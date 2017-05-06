@@ -233,6 +233,8 @@ public class ListToDoViewMasterTesting
             Log.d(TAG, "Pasando a pantalla Preferencias");
 
 
+        }else if(id==R.id.filter_icon){
+            getPresenter().subjectFilter();
         }
 
         return super.onOptionsItemSelected(item);
@@ -251,6 +253,7 @@ public class ListToDoViewMasterTesting
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
+
     }
 
 
@@ -352,6 +355,7 @@ public class ListToDoViewMasterTesting
     @Override
     public void setRecyclerAdapterContent(List<Task> items) {
         if (recyclerView != null) {
+
             TaskRecyclerViewAdapter recyclerAdapter =
                     (TaskRecyclerViewAdapter) recyclerView.getAdapter();
             recyclerAdapter.setItemList(items);
@@ -416,6 +420,7 @@ public class ListToDoViewMasterTesting
     public class TaskRecyclerViewAdapter
             extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
+
         private List<Task> items;
 
         public TaskRecyclerViewAdapter() {
@@ -469,10 +474,7 @@ public class ListToDoViewMasterTesting
 
             }
 
-            /* @Override
-             public String toString() {
-                 return super.toString() + " '" + contentView.getText() + "'";
-             }*/
+
             public void bindView(final Task task) {
                 subject = task.getSubject();
                 Integer color = subject.getColor();

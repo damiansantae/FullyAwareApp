@@ -83,6 +83,8 @@ public interface ListToDoMaster {
 
       String getCases(Task task);
     void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
+
+    void subjectFilter();
   }
 
   /**
@@ -144,6 +146,8 @@ public interface ListToDoMaster {
     void deleteDatabaseItem(Task item);
 
     String calculateCases(String subjectName);
+
+    List<Task> orderSubjects();
   }
 
   /**

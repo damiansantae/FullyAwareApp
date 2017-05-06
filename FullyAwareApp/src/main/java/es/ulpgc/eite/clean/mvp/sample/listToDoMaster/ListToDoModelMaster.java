@@ -3,10 +3,13 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 import android.os.Handler;
 import android.util.Log;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
+import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import io.realm.Realm;
 
 
@@ -21,6 +24,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   private boolean validDatabase;
   private String errorMsg;
   private boolean usingWrapper;
+    private DatabaseFacade database;
 
 
   /**
@@ -34,6 +38,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     super.onCreate(presenter);
     realmDatabase = Realm.getDefaultInstance();
     //validDatabase = true;
+      database = new DatabaseFacade();
     errorMsg = "Error deleting item!";
   }
 
@@ -310,6 +315,23 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     return result.toUpperCase();
   }
 
+    @Override
+    public List<Task> orderSubjects() {
+       List<Task> taskFromDatabase= database.getToDoItemsFromDatabase();
+        List<Subject> subjectsFromDatabase = database.getSubjectsFromDatabase();
+        List<Task> orderedList = new LinkedList<>();
+
+        for(Subject subject: subjectsFromDatabase){
+
+            for(int i=0; i<taskFromDatabase.size();i++){
+                Task currentTask = taskFromDatabase.get(i);
+                if (currentTask.getSubject().equals(subject))
+                    orderedList.add(currentTask);
+            }
+        }
+return orderedList;
+
+    }
 
 
     private boolean isOneWord(String word) {

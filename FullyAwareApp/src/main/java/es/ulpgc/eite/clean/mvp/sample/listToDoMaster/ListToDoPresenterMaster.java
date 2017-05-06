@@ -586,7 +586,7 @@ checkSelection2();
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
-           database.createTestingScenario();
+//           database.createTestingScenario();
 
 
 
@@ -631,6 +631,12 @@ checkSelection2();
     public void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility) {
         this.textWhenIsEmptyVisible = textWhenIsEmptyVisibility;
 
+    }
+
+    @Override
+    public void subjectFilter() {
+        List<Task> orderedList = getModel().orderSubjects();
+        getView().setRecyclerAdapterContent(orderedList);
     }
     ///////////////////////////////////////////////////////////////////////////////////
     // ListToDo To //////////////////////////////////////////////////////////////////////

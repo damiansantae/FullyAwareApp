@@ -215,7 +215,7 @@ public class DatabaseFacade {
         task2.setTitle("Practica 2");
         task2.setDescription("Terminar apartado 2");
         task2.setDate("24/03/2017");
-        task2.setStatus("Done");
+        task2.setStatus("ToDo");
         task2.setSubject(aplicaciones);
 
         realmDatabase.commitTransaction();

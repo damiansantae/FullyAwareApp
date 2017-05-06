@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster">
+
+    <item
+        android:id="@+id/filter_icon"
+        android:icon="@drawable/flash"
+        android:title="items_filter"
+        app:showAsAction="always">
+
+    </item>
     <item
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="spinner"
@@ -26,6 +34,7 @@
                 android:title="Preferences" />
         </menu>
     </item>
+
 
 
 
