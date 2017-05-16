@@ -381,6 +381,7 @@ checkSelection2();
         }
 itemsSelected.clear();
 checkSelection2();
+        checkTextWhenIsEmptyVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -586,14 +587,13 @@ checkSelection2();
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
-//           database.createTestingScenario();
-
-
+      database.createTestingScenario();
 
 
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
+        checkTextWhenIsEmptyVisibility();
         loadItems();
     }
 

@@ -280,12 +280,12 @@ public class ListToDoViewMasterTesting
 
     @Override
     public void hideTextWhenIsEmpty(){
-        textWhenIsEmpty.setVisibility(View.VISIBLE);
+        textWhenIsEmpty.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void showTextWhenIsEmpty(){
-        textWhenIsEmpty.setVisibility(View.INVISIBLE);
+        textWhenIsEmpty.setVisibility(View.VISIBLE);
     }
 
     @Override
