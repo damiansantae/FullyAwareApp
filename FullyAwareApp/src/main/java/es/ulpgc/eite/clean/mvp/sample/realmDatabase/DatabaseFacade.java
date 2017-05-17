@@ -188,11 +188,11 @@ public class DatabaseFacade {
 
         Subject diseño = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
         diseño.setName("Diseño de Aplicaciones");
-        diseño.setColor(R.color.bg_screen1);
+        diseño.setColor(R.color.color_lightblue);
 
         Subject aplicaciones = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
         aplicaciones.setName("Aplicaciones de Red");
-        aplicaciones.setColor(R.color.bg_screen2);
+        aplicaciones.setColor(R.color.color_violet);
 
         TimeTable firstTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
         firstTimeMon.setDay("Monday");

@@ -1,17 +1,15 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import io.realm.Realm;
 
 
@@ -22,6 +20,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
 
     private boolean runningTask;
     private Realm realmDatabase;
+    private DatabaseFacade database;
     private boolean validDatabase;
     private String errorMsg;
     private boolean usingWrapper;
@@ -30,6 +29,20 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private String btAddSubjectLabel;
     private String btHourLabel;
     private String finishLabel = "Finish";
+    private static final ArrayList<Integer> listOfColors = new ArrayList<Integer>() {{
+        add(R.color.color_lightblue);
+        add(R.color.color_violet);
+        add(R.color.color_red);
+        add(R.color.color_lightgreen);
+        add(R.color.color_orange);
+        add(R.color.color_bluegreen);
+        add(R.color.color_brown);
+        add(R.color.color_black);
+        add(R.color.color_grey);
+        add(R.color.color_hardblue);
+        add(R.color.color_yellow);
+
+    }};
     private static final ArrayList<String> daysOfWeek = new ArrayList<String>() {{
         add("Monday");
         add("Tuesday");
@@ -53,6 +66,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     public void onCreate(ListSubject.ModelToPresenter presenter) {
         super.onCreate(presenter);
         realmDatabase = Realm.getDefaultInstance();
+        database = new DatabaseFacade();
         //validDatabase = true;
         errorMsg = "Error deleting item!";
     }
@@ -184,13 +198,14 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
 
     @Override
     public void saveSubject(String subjectName, ArrayList<String> validDays, ArrayList<String> validHours) {
-        realmDatabase.beginTransaction();
+       /* realmDatabase.beginTransaction();
         Subject subject = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
         subject.setName(subjectName);
-        subject.setColor(R.color.bg_screen1);
+        subject.setColor(chooseNewColor());*/
+        database.addSubject(subjectName,chooseNewColor());
 
 
-        for (int i = 0; i < validDays.size(); i++){
+     /*   for (int i = 0; i < validDays.size(); i++){
             for (int x=0; x < daysOfWeek.size(); x++){
                 if (validDays.get(i).contains(daysOfWeek.get(x))){
                     TimeTable timeTable = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
@@ -206,8 +221,33 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
 
         }
 
-        realmDatabase.commitTransaction();
+        realmDatabase.commitTransaction();*/
 
+    }
+    /**
+     * This method choose an specific color for a subject which will be
+     * unique
+     *
+     * @return an unique color for a subject
+     */
+    public int chooseNewColor(){
+        List<Subject> subjectsFromDB = database.getSubjectsFromDatabase();
+        Integer currentColor = 0x0;
+        boolean colorFound=false;
+
+        for (Integer color: listOfColors) {
+            if (colorFound)break;                                              //Si se ha encontrado un color no utilizado paramos la busqueda de colores
+            currentColor =color;
+
+            for(int i =0; i<subjectsFromDB.size();i++){                         //Recorremos las asignaturas para ver sus colores
+                if(subjectsFromDB.get(i).getColor().equals(color))break;        //Si el color de una asignatura corresponde con el posible color elegido dejamos de comparar
+                                                                                // con el resto de las asignaturas y pasamos al siguiente color de la lista
+
+                if(i==subjectsFromDB.size()-1)colorFound =true;                    //Si al terminar de recorrer todas las asignaturas no se ha encontrado ningn color igual al actual
+                                                                                //entonces es que hemos encontrado un color
+            }
+        }
+        return currentColor;
     }
 
     @Override

@@ -5,11 +5,22 @@
     <color name="colorAccent">#2c3e50</color>
     <color name="flatBlue">#2c3e50</color>
     <!-- Screens background color-->
-    <color name="bg_screen1">#0099cc</color>
-    <color name="bg_screen2">#aa66cc</color>
-    <color name="bg_screen3">#669900</color>
-    <color name="bg_screen4">#ff8800</color>
-    <color name="bg_screen5">#00d1a4</color>
+    <color name="color_lightblue">#0099cc</color>
+    <color name="color_hardblue">#00587A</color>
+    <color name="color_violet">#aa66cc</color>
+    <color name="color_lightgreen">#669900</color>
+    <color name="color_orange">#ff8800</color>
+    <color name="color_bluegreen">#00d1a4</color>
+    <color name="color_grey">#7D7870</color>
+    <color name="color_red">#E74C3C</color>
+    <color name="color_yellow">#F1C40F</color>
+    <color name="color_brown">#A14C10</color>
+    <color name="color_pink">#BF4A67</color>
+    <color name="color_black">#3B3C3D</color>
+
+
+
+
 
 
     <!-- dots inactive colors -->
