@@ -68,6 +68,7 @@ public interface ListDoneMaster {
     void onBinBtnClick2(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
 
+      String getCases(Task task);
   }
 
   /**
@@ -108,6 +109,44 @@ public interface ListDoneMaster {
     void setDatabaseValidity(boolean valid);
     String getErrorMessage();
     void addInitialTasks();
+
+      /*private void setDatabaseItemsFromJson(){
+            setItemsFromJsonStream("database.json");
+            //setItemsFromJsonObjectArray();
+          }
+
+          private void setItemsFromJsonStream(String filename)  {
+            Log.d(TAG, "calling setItemsFromJsonStream() method");
+
+            usingWrapper = true;
+
+            try {
+
+              // Use streams if you are worried about the size of the JSON whether it was persisted on disk
+              // or received from the network.
+              Context context = getPresenter().getManagedContext();
+              InputStream stream = context.getAssets().open(filename);
+
+              // Open a transaction to store items into the realmDatabase
+              realmDatabase.beginTransaction();
+              try {
+                realmDatabase.createAllFromJson(Task.class, stream);
+                realmDatabase.commitTransaction();
+              } catch (IOException error) {
+                Log.d(TAG, "error=" +  error);
+                // Remember to cancel the transaction if anything goes wrong.
+                realmDatabase.cancelTransaction();
+              } finally {
+                if (stream != null) {
+                  stream.close();
+                }
+              }
+
+            } catch (IOException ex) {
+              Log.d(TAG, "error=" +  ex);
+            }
+          }*/
+      String calculateCases(String subjectName);
   }
 
   /**

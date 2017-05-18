@@ -387,6 +387,7 @@ public class ListForgottenViewMaster
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View itemView;
             private ImageView tag;
+            private TextView abrv;
             private Subject subject;
             private TextView title;
             private TextView description;
@@ -407,15 +408,18 @@ public class ListForgottenViewMaster
                 Integer color = subject.getColor();
                 tag = (ImageView) itemView.findViewById(R.id.color_subject);
                 title = (TextView) itemView.findViewById(R.id.title);
+                abrv = (TextView) itemView.findViewById(R.id.tag_subjectc);
                 description = (TextView) itemView.findViewById(R.id.description);
                 date = (TextView) itemView.findViewById(R.id.date);
 
                 Drawable drawable = getDrawable(R.drawable.circle);
                 drawable.setColorFilter(getColor(color), PorterDuff.Mode.SRC_OVER);
+                String abrev = getPresenter().getCases(task);
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());
                 tag.setImageDrawable(drawable);
+                abrv.setText(abrev);
 
 
                 //Selecciona si estaba seleccionado

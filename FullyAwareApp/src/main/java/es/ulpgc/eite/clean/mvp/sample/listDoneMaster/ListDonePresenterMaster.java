@@ -234,6 +234,15 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
     }
+
+    @Override
+    public String getCases(Task task) {
+        String subjectName= task.getSubject().getName();
+
+        return  getModel().calculateCases(subjectName);
+
+
+    }
     private ArrayList<Task> getSelectedTasks(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){

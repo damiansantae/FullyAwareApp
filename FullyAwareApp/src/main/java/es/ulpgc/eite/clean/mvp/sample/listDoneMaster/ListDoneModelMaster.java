@@ -6,9 +6,7 @@ import android.util.Log;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericModel;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-
 import io.realm.Realm;
 
 
@@ -295,8 +293,75 @@ public class ListDoneModelMaster extends GenericModel<ListDoneMaster.ModelToPres
       Log.d(TAG, "error=" +  ex);
     }
   }*/
+  @Override
+  public String calculateCases(String subjectName) {
+
+      char firstChar = 0;
+      char secondChar;
+      int actualPosition =0;
+      String result;
+      for(int i=0;i<subjectName.length();i++){
+          char currentChar =subjectName.charAt(i);
+          if(currentChar!= ' ') {
+              firstChar = currentChar;
+              actualPosition = i + 1;
+              break;
+          }
+      }
+      if(isOneWord(subjectName)){
+          StringBuilder sb = new StringBuilder();
+          sb.append(firstChar);
+          result = sb.toString().toUpperCase();
+          return  result;
+      }else{
+          int spacePosition =0;
+          for (int j=actualPosition;j<subjectName.length();j++){
+
+              if(subjectName.charAt(j)==' '){
+                  spacePosition=j;
+              }
+
+          }
+          secondChar=subjectName.charAt(spacePosition+1);
+      }
+
+      StringBuilder sb = new StringBuilder();
+      sb.append(firstChar);
+      sb.append(secondChar);
+      result = sb.toString();
+
+      return result.toUpperCase();
+  }
 
 
+    private boolean isOneWord(String word) {
+        int wordCount = 0;
+
+        boolean isWord = false;
+        int endOfLine = word.length() - 1;
+
+        for (int i = 0; i < word.length(); i++) {
+            // if the char is a letter, word = true.
+            if (Character.isLetter(word.charAt(i)) && i != endOfLine) {
+                isWord = true;
+                // if char isn't a letter and there have been letters before,
+                // counter goes up.
+            } else if (!Character.isLetter(word.charAt(i)) && isWord) {
+                wordCount++;
+                isWord = false;
+                // last word of String; if it doesn't end with a non letter, it
+                // wouldn't count without this.
+            } else if (Character.isLetter(word.charAt(i)) && i == endOfLine) {
+                wordCount++;
+            }
+        }
+        if (wordCount==1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
     private List<Task> getItemsFromDatabase(){
         if(usingWrapper) {

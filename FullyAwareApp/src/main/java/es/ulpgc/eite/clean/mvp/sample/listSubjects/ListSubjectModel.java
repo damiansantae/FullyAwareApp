@@ -285,7 +285,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
                 realm.where(Task.class).equalTo("id", id)
                         .findAll()
                         .deleteAllFromRealm();
-                ;
+
             }
         });
     }

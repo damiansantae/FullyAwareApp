@@ -275,6 +275,14 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     */
   }
 
+    /**
+     * This method calculates 1 or 2 cases depending if the name of the subject
+     * which is liked to the task is a compose name or not. Such as "Electronic Devices",
+     * in this case, it will return "ED"
+     *
+     * @param subjectName is the subject name which is going to extract its case(s)
+     * @return a String compose by 1 or 2 chars
+     */
   @Override
   public String calculateCases(String subjectName) {
 
