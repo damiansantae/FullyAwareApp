@@ -36,7 +36,7 @@ public class ListToDoViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail_relative);
+        setContentView(R.layout.activity_task_detail);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,6 +50,7 @@ public class ListToDoViewDetail
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
+
 
 loadSharePreferences();
 
@@ -76,13 +77,17 @@ loadSharePreferences();
         Task = getPresenter().getTask();
 
         if (toolbarLayout != null && Task != null) {
-            toolbarLayout.setTitle(Task.getTitle());
+            toolbarLayout.setTitle(Task.getSubject().getName());
+            appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
+
+
         }
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
+            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getTitle());
             ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
-//            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getSubjectId());
+
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }

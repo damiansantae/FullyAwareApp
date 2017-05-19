@@ -37,22 +37,55 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/item_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@+id/relative_layout">
 
-        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/task_description"
-            android:text="Description"
-            style="?android:attr/textAppearanceLarge"
+        <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textIsSelectable="true" />
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/appbar_layout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/subject_from_detail"
+                android:padding="16dp"
+                android:text="Subject"
+                android:textSize="16dp"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
+                android:id="@+id/date_txt"
+                android:padding="16dp"
+                android:text="xx-xx-xxxx"
+                android:textSize="16dp"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_below="@+id/subject_from_detail"
+                />
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/task_description"
+                android:text="Description"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textIsSelectable="true"
+                android:layout_below="@+id/date_txt"/>
+
+        </RelativeLayout>
+
+
 
     </android.support.v4.widget.NestedScrollView>
 
