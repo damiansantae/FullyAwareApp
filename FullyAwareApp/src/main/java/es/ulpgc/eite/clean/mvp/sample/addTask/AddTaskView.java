@@ -11,9 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -196,6 +193,7 @@ public class AddTaskView
     public String getTaskSubject() {
         return subject.getSelectedItem().toString();
     }
+
     @Override
     public void setSubjectsSpinner(){
 

@@ -11,21 +11,16 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
-import es.ulpgc.eite.clean.mvp.sample.NotificationPublisher;
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class AddTaskPresenter extends GenericPresenter
@@ -78,6 +73,7 @@ public class AddTaskPresenter extends GenericPresenter
     if(configurationChangeOccurred()) {
 
       checkToolbarVisibility();
+      getView().setSubjectsSpinner();
     }
 
     Mediator app = (Mediator) getView().getApplication();

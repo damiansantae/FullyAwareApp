@@ -34,6 +34,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -92,40 +93,6 @@ public class ListToDoViewMasterTesting
         recyclerView.setAdapter(adapter);
 
         textWhenIsEmpty = (TextView)findViewById(R.id.textWhenIsEmpty);
-        /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
-
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        historicX = event.getX();
-                        historicY = event.getY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (event.getX() - historicX < -DELTA) {
-                            int posicion = 0;
-                            getPresenter().onSwipeMade(posicion, adapter);
-                            adapter.notifyDataSetChanged();
-                            Log.d("error msg", "SWIPE MODE");
-                            return true;
-                        }
-                        else if (event.getX() - historicX > DELTA) {
-                //Swipe hacia el otro lado;
-                            return true;
-                        }
-                        break;
-
-                    default:
-                        return false;
-                }
-                return false;
-            }
-        });*/
-
 
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
@@ -424,16 +391,27 @@ public class ListToDoViewMasterTesting
     }
 
     private void initSwipe(){
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.Callback callback =new ItemTouchHelper.Callback() {
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return true;
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.ANIMATION_TYPE_DRAG;
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
+               return false;
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAdapterPosition();
                 Task currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
 
                 if (direction == ItemTouchHelper.LEFT){
@@ -446,7 +424,6 @@ public class ListToDoViewMasterTesting
                     adapter.notifyDataSetChanged();
                 }
             }
-
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
@@ -476,19 +453,23 @@ public class ListToDoViewMasterTesting
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
+
 
 
     ///////////////////////////////////////////////////////////////
 
 
     public class TaskRecyclerViewAdapter
-            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder>
+    {
 
 
         private List<Task> items;
+
 
         public TaskRecyclerViewAdapter() {
             items = new ArrayList<>();
@@ -521,6 +502,21 @@ public class ListToDoViewMasterTesting
         @Override
         public int getItemCount() {
             return items.size();
+        }
+
+
+        public boolean onItemMove(int fromPosition, int toPosition) {
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    Collections.swap(getItems(), i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    Collections.swap(getItems(), i, i - 1);
+                }
+            }
+            notifyItemMoved(fromPosition, toPosition);
+            return true;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

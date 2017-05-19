@@ -12,5 +12,7 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting"
     android:longClickable="true"
+
     tools:listitem="@layout/item_list"/>
+
 
