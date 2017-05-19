@@ -85,6 +85,10 @@ public interface ListToDoMaster {
     void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
 
     void subjectFilter();
+
+    void swipeLeft(Task currentTask);
+
+    void swipeRight(Task currentTask);
   }
 
   /**

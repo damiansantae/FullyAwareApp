@@ -631,6 +631,19 @@ checkSelection2();
         List<Task> orderedList = getModel().orderSubjects();
         getView().setRecyclerAdapterContent(orderedList);
     }
+
+    @Override
+    public void swipeLeft(Task currentTask) {
+        database.deleteDatabaseItem(currentTask);
+    }
+
+    @Override
+    public void swipeRight(Task currentTask) {
+        database.setItemStatus(currentTask, "Done");
+
+    }
+
+
     ///////////////////////////////////////////////////////////////////////////////////
     // ListToDo To //////////////////////////////////////////////////////////////////////
 

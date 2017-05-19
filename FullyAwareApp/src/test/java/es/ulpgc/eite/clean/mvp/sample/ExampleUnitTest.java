@@ -40,4 +40,7 @@ public class ExampleUnitTest {
         assertEquals("E", modelMaster.calculateCases("english"));
     }
 
+
+
+
 }
