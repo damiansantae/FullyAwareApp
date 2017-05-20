@@ -78,6 +78,8 @@ public class ListToDoViewMasterTesting
      */
     private GoogleApiClient client;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +94,7 @@ public class ListToDoViewMasterTesting
         adapter = new TaskRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
-        textWhenIsEmpty = (TextView)findViewById(R.id.textWhenIsEmpty);
+        textWhenIsEmpty = (TextView) findViewById(R.id.textWhenIsEmpty);
 
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
@@ -133,10 +135,6 @@ public class ListToDoViewMasterTesting
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        //downtoolbar= (Toolbar) findViewById(R.id.toolbardown);
-        // setSupportActionBar(downtoolbar);
         //downtoolbar.inflateMenu(R.menu.menu_down_bar);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -209,13 +207,12 @@ public class ListToDoViewMasterTesting
             Log.d(TAG, "Pasando a pantalla Preferencias");
 
 
-        }else if(id==R.id.filter_icon){
+        } else if (id == R.id.filter_icon) {
             getPresenter().subjectFilter();
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -256,12 +253,12 @@ public class ListToDoViewMasterTesting
     }
 
     @Override
-    public void hideTextWhenIsEmpty(){
+    public void hideTextWhenIsEmpty() {
         textWhenIsEmpty.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void showTextWhenIsEmpty(){
+    public void showTextWhenIsEmpty() {
         textWhenIsEmpty.setVisibility(View.VISIBLE);
     }
 
@@ -311,23 +308,6 @@ public class ListToDoViewMasterTesting
 
     }
 
-    @Override
-    public void setChoiceMode(int i) {
-       /* if (i == 0) {               //Modo de seleccion nulo
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-            recyclerView.invalidateViews();
-
-        } else if (i == 1) {             //Modo de seleccion unico
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-
-        } else if (i == 2) {             ///Modo de seleccion multiple
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-
-        } else {
-            Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
-        }*/
-    }
 
     @Override
     public void setRecyclerAdapterContent(List<Task> items) {
@@ -390,8 +370,8 @@ public class ListToDoViewMasterTesting
         client.disconnect();
     }
 
-    private void initSwipe(){
-        ItemTouchHelper.Callback callback =new ItemTouchHelper.Callback() {
+    private void initSwipe() {
+        ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
 
             @Override
             public boolean isItemViewSwipeEnabled() {
@@ -407,14 +387,16 @@ public class ListToDoViewMasterTesting
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-               return false;
+                return false;
             }
+
+
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 Task currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
 
-                if (direction == ItemTouchHelper.LEFT){
+                if (direction == ItemTouchHelper.LEFT) {
                     getPresenter().swipeLeft(currentTask);
                     adapter.notifyDataSetChanged();
 
@@ -424,30 +406,31 @@ public class ListToDoViewMasterTesting
                     adapter.notifyDataSetChanged();
                 }
             }
+
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
                 Bitmap icon;
-                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
 
                     View itemView = viewHolder.itemView;
                     float height = (float) itemView.getBottom() - (float) itemView.getTop();
                     float width = height / 3;
 
-                    if(dX > 0){
-                        paint.setColor(Color.parseColor("#388E3C"));
-                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
-                        c.drawRect(background,paint);
+                    if (dX > 0) {
+                        paint.setColor(Color.parseColor("#2ecc71"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
+                        c.drawRect(background, paint);
                         icon = BitmapFactory.decodeResource(getResources(), R.drawable.checkmark_white);
-                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
-                        c.drawBitmap(icon,null,icon_dest,paint);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width, (float) itemView.getTop() + width, (float) itemView.getLeft() + 2 * width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, paint);
                     } else {
-                        paint.setColor(Color.parseColor("#D32F2F"));
-                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
-                        c.drawRect(background,paint);
+                        paint.setColor(Color.parseColor("#e74c3c"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background, paint);
                         icon = BitmapFactory.decodeResource(getResources(), R.drawable.garbage);
-                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
-                        c.drawBitmap(icon,null,icon_dest,paint);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, paint);
                     }
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -459,13 +442,11 @@ public class ListToDoViewMasterTesting
     }
 
 
-
     ///////////////////////////////////////////////////////////////
 
 
     public class TaskRecyclerViewAdapter
-            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder>
-    {
+            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
 
         private List<Task> items;
@@ -583,6 +564,7 @@ public class ListToDoViewMasterTesting
 
 
     }
+
 
 
 }

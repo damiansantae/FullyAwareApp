@@ -57,19 +57,9 @@ public interface ListToDoMaster {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-//    void onButtonClicked();
-
-    void onListClick(int position, Task_Adapter adapter);
-
-    void onLongListClick(int pos, Task_Adapter adapter);
-
-    void onBinBtnClick(Task_Adapter adapter);
-
-    void onAddBtnClick(Task_Adapter adapter);
 
     void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
 
-      void onSwipeMade(int pos, Task_Adapter adapter);
 
       void onListClick2(View item, int position, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task);
 
@@ -112,7 +102,6 @@ public interface ListToDoMaster {
 
     void startSelection();
 
-    void setChoiceMode(int i);
 
       void hideAddBtn();
 
