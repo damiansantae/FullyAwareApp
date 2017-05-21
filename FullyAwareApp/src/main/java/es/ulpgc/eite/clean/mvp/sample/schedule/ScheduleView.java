@@ -1,20 +1,18 @@
 package es.ulpgc.eite.clean.mvp.sample.schedule;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -27,15 +25,21 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.OnStartDragListener;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.RecyclerListAdapter;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.SimpleItemTouchHelperCallback;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 
 
 public class ScheduleView
         extends GenericActivity<Schedule.PresenterToView, Schedule.ViewToPresenter, SchedulePresenter>
-        implements Schedule.PresenterToView {
+        implements Schedule.PresenterToView, OnStartDragListener {
 
     private Toolbar toolbar;
+    private ItemTouchHelper mItemTouchHelper;
+    private RecyclerView recyclerView;
 
+    private RecyclerListAdapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -58,12 +62,28 @@ public class ScheduleView
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         loadSharePreferences();
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.item_grid);
+        adapter = new RecyclerListAdapter(this, this);
+        recyclerView.setAdapter(adapter);
+
+        final int spanCount = 7;
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        recyclerView.setLayoutManager(layoutManager);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
 
     }
 
-    public class ImageAdapter extends BaseAdapter {
+   /* public class ImageAdapter extends BaseAdapter {
         private Context mContext;
 
         public ImageAdapter(Context c) {
@@ -108,7 +128,7 @@ public class ScheduleView
                 R.drawable.bg_controll_plane, R.drawable.bgfull,
                 R.drawable.checkmark_black, R.drawable.logoapp
         };
-    }
+    }*/
 
     /**
      * Method that initialized MVP objects

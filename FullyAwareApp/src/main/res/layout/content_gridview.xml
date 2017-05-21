@@ -1,26 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_gridview"
+    android:id="@+id/relative_grid_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView"
-    tools:showIn="@layout/shedule_table"
-    android:padding="50dp">
+    tools:showIn="@layout/shedule_table">
 
+<android.support.v7.widget.RecyclerView
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="90dp"
-        android:numColumns="7"
-        android:stretchMode="columnWidth"
-        />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_grid"
+    android:name="es.ulpgc.eite.clean.mvp.masterdetail.ItemListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutManager="LinearLayoutManager"
+    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView"
+    android:longClickable="true"
 
+    tools:listitem="@layout/item_schedule"/>
 
-
-</RelativeLayout>
+    </RelativeLayout>
