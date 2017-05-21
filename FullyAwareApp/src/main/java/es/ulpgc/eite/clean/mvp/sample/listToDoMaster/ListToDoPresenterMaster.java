@@ -406,10 +406,10 @@ checkSelection2();
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
-   /* if(isViewRunning()) {
-      getView().setLabel(getModel().getLabel());
+    if(isViewRunning()) {
+  getView().initSwipe();
+        getView().initDialog();
     }
-   */
 
 
 

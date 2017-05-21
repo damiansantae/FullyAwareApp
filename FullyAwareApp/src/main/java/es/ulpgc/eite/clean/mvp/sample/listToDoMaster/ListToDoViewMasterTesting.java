@@ -1,6 +1,8 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -69,9 +71,10 @@ public class ListToDoViewMasterTesting
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
     private WelcomeActivity welcome;
+    private Task currentTask;
 
     private Paint paint = new Paint();
-
+    private View view;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -79,7 +82,7 @@ public class ListToDoViewMasterTesting
     private GoogleApiClient client;
 
 
-
+    private AlertDialog.Builder alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -370,7 +373,8 @@ public class ListToDoViewMasterTesting
         client.disconnect();
     }
 
-    private void initSwipe() {
+    @Override
+    public void initSwipe() {
         ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
 
             @Override
@@ -394,16 +398,20 @@ public class ListToDoViewMasterTesting
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Task currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
+                currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
 
                 if (direction == ItemTouchHelper.LEFT) {
-                    getPresenter().swipeLeft(currentTask);
+
+                    getPresenter().swipeRight(currentTask);
                     adapter.notifyDataSetChanged();
 
 
                 } else {
-                    getPresenter().swipeRight(currentTask);
+                    removeView();
+                    alertDialog.setTitle("Do you want to delete this task permanently?");
+                    alertDialog.show();
                     adapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -441,6 +449,36 @@ public class ListToDoViewMasterTesting
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    @Override
+    public void initDialog(){
+        alertDialog = new AlertDialog.Builder(this);
+        view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog,null);
+        alertDialog.setView(view);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getPresenter().swipeLeft(currentTask);
+                adapter.notifyDataSetChanged();
+                    dialog.dismiss();
+
+
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+
+    }
+    private void removeView(){
+        if(view.getParent()!=null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////
 
