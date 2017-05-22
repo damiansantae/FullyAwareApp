@@ -395,18 +395,19 @@ public class ListToDoViewMasterTesting
             }
 
 
-
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
 
-                if (direction == ItemTouchHelper.LEFT) {
-
+                if (direction == 32) {
+                    Log.d(TAG, "Swipe left");
                     getPresenter().swipeRight(currentTask);
                     adapter.notifyDataSetChanged();
 
 
-                } else {
+                } else if (direction == 16){
+                    Log.d(TAG, "Swipe right");
+
                     removeView();
                     alertDialog.setTitle("Do you want to delete this task permanently?");
                     alertDialog.show();
