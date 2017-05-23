@@ -121,6 +121,10 @@ public interface ListToDoMaster {
     void toolbarChanged(String colour);
 
     void setToastDelete();
+
+      void initSwipe();
+
+    void initDialog();
   }
 
   /**
