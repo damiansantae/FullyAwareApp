@@ -1,11 +1,21 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
+import android.Manifest;
 import android.app.Application;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.util.Calendar;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
+
+import java.util.Date;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -59,9 +69,6 @@ public class App extends Application implements Mediator, Navigator {
     private ListDoneStateTask listDoneDetailToMasterState;
     private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
-
-
-
 
 
     @Override
@@ -146,6 +153,26 @@ public class App extends Application implements Mediator, Navigator {
         }
         presenter.onScreenStarted();
     }
+
+    /*public void getUserCalendar() {
+        Cursor cur = null;
+        ContentResolver cr = getContentResolver();
+        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+        String selection = "(" + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?)";
+        String[] selectionArgs = new String[]{"com.google"};
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
+    }*/
+
 
     @Override
     public void startingListDoneScreen(ListDoneMaster.ToListDone presenter) {
@@ -642,6 +669,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         Context view = presenter.getManagedContext();
         if (view != null) {
             //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            presenter.destroyView();
             view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
         }
 
@@ -658,7 +686,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         Context view = presenter.getManagedContext();
         if (view != null) {
             view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
-
+            presenter.destroyView();
             //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
@@ -674,6 +702,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         Context view = presenter.getManagedContext();
 
         if (view != null) {
+            presenter.destroyView();
             view.startActivity(new Intent(view, ScheduleView.class));
 
         }
@@ -692,6 +721,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
+            presenter.destroyView();
             view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
         }
 
@@ -706,6 +736,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
+            presenter.destroyView();
             view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
 
             //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
@@ -724,6 +755,7 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         Context view = presenter.getManagedContext();
 
         if (view != null) {
+            presenter.destroyView();
             view.startActivity(new Intent(view, ListForgottenViewMaster.class));
 
         }

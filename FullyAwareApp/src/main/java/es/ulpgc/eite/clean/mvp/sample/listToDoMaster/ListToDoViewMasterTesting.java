@@ -336,6 +336,16 @@ public class ListToDoViewMasterTesting
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        /*if (backPressed) {
+            super.onBackPressed();
+        }else{
+            backPressed = true;
+        }*/
+
+    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

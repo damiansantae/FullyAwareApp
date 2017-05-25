@@ -75,39 +75,6 @@ public class ListForgottenViewMaster
         recyclerView.setAdapter(adapter);
 
 
-        /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
-
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        historicX = event.getX();
-                        historicY = event.getY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (event.getX() - historicX < -DELTA) {
-                            int posicion = 0;
-                            getPresenter().onSwipeMade(posicion, adapter);
-                            adapter.notifyDataSetChanged();
-                            Log.d("error msg", "SWIPE MODE");
-                            return true;
-                        }
-                        else if (event.getX() - historicX > DELTA) {
-                //Swipe hacia el otro lado;
-                            return true;
-                        }
-                        break;
-
-                    default:
-                        return false;
-                }
-                return false;
-            }
-        });*/
 
 
         bin.setOnClickListener(new View.OnClickListener() {

@@ -295,6 +295,7 @@ public class AddTaskPresenter extends GenericPresenter
     values2.put(CalendarContract.Reminders.EVENT_ID, eventID);
     values2.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_DEFAULT);
     cr2.insert(CalendarContract.Reminders.CONTENT_URI, values);*/
+
   }
 
 

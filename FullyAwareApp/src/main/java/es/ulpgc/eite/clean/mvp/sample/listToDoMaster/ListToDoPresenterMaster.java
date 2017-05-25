@@ -169,7 +169,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     public void onBackPressed() {
         Log.d(TAG, "calling onBackPressed()");
 
-     super.onDestroy(true);
+     ///super.onDestroy(true);
+
     }
 
     /**
