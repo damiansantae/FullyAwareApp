@@ -1,8 +1,12 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 //Prueba
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -48,6 +52,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+
+    private static final int READ_CALENDAR_PERMISSIONS_REQUEST = 1;
+    private static final int WRITE_CALENDAR_PERMISSIONS_REQUEST = 2;
 
 
 
@@ -413,6 +420,7 @@ checkSelection2();
     }
 
 
+
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
       //database.createTestingScenario();
 
@@ -422,9 +430,68 @@ checkSelection2();
         checkDoneBtnVisibility();
         checkTextWhenIsEmptyVisibility();
         loadItems();
+        requestUserPermissions();
     }
 
+    public void requestUserPermissions(){
+        if ((ContextCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.WRITE_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED)) {
 
+
+            ActivityCompat.requestPermissions((Activity)getView(),
+                    new String[]{android.Manifest.permission.READ_CALENDAR},
+                    READ_CALENDAR_PERMISSIONS_REQUEST);
+
+            ActivityCompat.requestPermissions((Activity)getView(),
+                    new String[]{android.Manifest.permission.WRITE_CALENDAR},
+                    WRITE_CALENDAR_PERMISSIONS_REQUEST);
+
+        }
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case READ_CALENDAR_PERMISSIONS_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            case WRITE_CALENDAR_PERMISSIONS_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
     @Override
     public void setToolbarVisibility(boolean visible) {
