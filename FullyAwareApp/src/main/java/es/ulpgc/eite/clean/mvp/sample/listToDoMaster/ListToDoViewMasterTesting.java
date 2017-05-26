@@ -415,6 +415,7 @@ public class ListToDoViewMasterTesting
                     adapter.notifyDataSetChanged();
 
 
+
                 } else if (direction == 16){
                     Log.d(TAG, "Swipe right");
 

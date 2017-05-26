@@ -1,21 +1,11 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
-import android.Manifest;
 import android.app.Application;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.util.Calendar;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.CalendarContract;
-import android.support.v4.app.ActivityCompat;
-
-import java.util.Date;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -950,5 +940,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
     private class ListForgottenStateTask {
         Task taskToDelete;
     }
+
 
 }

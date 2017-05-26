@@ -176,8 +176,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
     public void onBackPressed() {
         Log.d(TAG, "calling onBackPressed()");
 
-     ///super.onDestroy(true);
-
     }
 
     /**
@@ -536,12 +534,14 @@ checkSelection2();
     @Override
     public void swipeLeft(Task currentTask) {
         database.deleteDatabaseItem(currentTask);
+        checkTextWhenIsEmptyVisibility();
+
     }
 
     @Override
     public void swipeRight(Task currentTask) {
         database.setItemStatus(currentTask, "Done");
-
+        checkTextWhenIsEmptyVisibility();
     }
 
 

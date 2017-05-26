@@ -25,6 +25,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   private String errorMsg;
   private boolean usingWrapper;
     private DatabaseFacade database;
+    private boolean isChangingConfiguration;
 
 
   /**
@@ -50,7 +51,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
    */
   @Override
   public void onDestroy(boolean isChangingConfiguration) {
-
+this.isChangingConfiguration=isChangingConfiguration;
   }
 
   /////////////////////////////////////////////////////////////////////////////////////

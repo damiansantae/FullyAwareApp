@@ -1,7 +1,6 @@
 package es.ulpgc.eite.clean.mvp.sample.addTask;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
@@ -13,8 +12,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -24,25 +21,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.UUID;
-import java.util.jar.Manifest;
-
-//import me.everything.providers.android.calendar.Calendar;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
-import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.App;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import me.everything.providers.android.calendar.CalendarProvider;
 
-import static android.support.v4.content.PermissionChecker.checkPermission;
-import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+//import me.everything.providers.android.calendar.Calendar;
 
 public class AddTaskPresenter extends GenericPresenter
     <AddTask.PresenterToView, AddTask.PresenterToModel, AddTask.ModelToPresenter, AddTaskModel>
@@ -67,7 +57,6 @@ public class AddTaskPresenter extends GenericPresenter
     super.onCreate(AddTaskModel.class, this);
     setView(view);
     Log.d(TAG, "calling onCreate()");
-
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
