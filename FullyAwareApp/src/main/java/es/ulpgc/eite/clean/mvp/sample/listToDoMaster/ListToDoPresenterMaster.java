@@ -12,6 +12,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -418,6 +419,7 @@ checkSelection2();
         getView().initDialog();
     }
 
+    //isTaskForgotten(database.getItemsFromDatabase().get(0).getDate());
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
@@ -708,5 +710,64 @@ checkSelection2();
         database.deleteAllDatabaseItems();
         database.setValidDatabase(false);
         loadItems();
+    }
+
+    @Override
+    public boolean isTaskForgotten(String deadline){
+        boolean isTaskForgotten = false;
+
+        String day = deadline.substring(0, 2);
+        int intDay = Integer.parseInt(day);
+
+        String month = deadline.substring(3, 5);
+        int intMonth = Integer.parseInt(month)-1;
+
+        String year = deadline.substring(6, 10);
+        int intYear = Integer.parseInt(year)-1900;
+
+        String hour = deadline.substring(13, 15);
+        int intHour = Integer.parseInt(hour);
+
+        String minutes = deadline.substring(16);
+        int intMinutes = Integer.parseInt(minutes);
+
+        Date deadlineDate = new Date(intYear, intMonth, intDay, intHour, intMinutes);
+
+        Date currentDate = new Date();
+
+        if(currentDate.after(deadlineDate)){
+            isTaskForgotten = true;
+        }
+        return isTaskForgotten;
+    }
+
+    public void checkForgottenTasks(){
+        List<Task> tasks = database.getToDoItemsFromDatabase();
+        for(int i = 0; i < tasks.size(); i++){
+            String deadline = tasks.get(i).getDate();
+
+            String day = deadline.substring(0, 2);
+            int intDay = Integer.parseInt(day);
+
+            String month = deadline.substring(3, 5);
+            int intMonth = Integer.parseInt(month)-1;
+
+            String year = deadline.substring(6, 10);
+            int intYear = Integer.parseInt(year)-1900;
+
+            String hour = deadline.substring(13, 15);
+            int intHour = Integer.parseInt(hour);
+
+            String minutes = deadline.substring(16);
+            int intMinutes = Integer.parseInt(minutes);
+
+            Date deadlineDate = new Date(intYear, intMonth, intDay, intHour, intMinutes);
+
+            Date currentDate = new Date();
+
+            if(currentDate.after(deadlineDate)){
+                tasks.get(i);
+            }
+        }
     }
 }

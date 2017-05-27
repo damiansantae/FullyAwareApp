@@ -161,7 +161,8 @@ public class AddTaskPresenter extends GenericPresenter
     String deadline = getDeadLine(time,date);
     database.addTask(subject, title, description, deadline, "ToDo");
     addEvent(title, subjectName, deadline);
-      Navigator app = (Navigator)getView().getApplication();
+      //writeTaskIntoCalendar(title, description);
+    Navigator app = (Navigator)getView().getApplication();
       app.goToListToDoScreen(this);
       Context context = getApplicationContext();
       CharSequence text = "Task added";
@@ -235,7 +236,7 @@ public class AddTaskPresenter extends GenericPresenter
     int intMonth = Integer.parseInt(month)-1;
 
     String year = deadline.substring(6, 10);
-    int intYear = Integer.parseInt(year)-1;
+    int intYear = Integer.parseInt(year)-1900;
 
     String hour = deadline.substring(13, 15);
     int intHour = Integer.parseInt(hour);

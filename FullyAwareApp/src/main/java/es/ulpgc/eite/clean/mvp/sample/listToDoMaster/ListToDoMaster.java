@@ -79,6 +79,8 @@ public interface ListToDoMaster {
     void swipeLeft(Task currentTask);
 
     void swipeRight(Task currentTask);
+
+    boolean isTaskForgotten(String deadline);
   }
 
   /**
