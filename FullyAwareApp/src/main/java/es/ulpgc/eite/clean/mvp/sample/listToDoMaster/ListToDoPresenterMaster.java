@@ -712,7 +712,10 @@ checkSelection2();
         loadItems();
     }
 
-    public void isTaskForgotten(String deadline){
+    @Override
+    public boolean isTaskForgotten(String deadline){
+        boolean isTaskForgotten = false;
+
         String day = deadline.substring(0, 2);
         int intDay = Integer.parseInt(day);
 
@@ -733,9 +736,38 @@ checkSelection2();
         Date currentDate = new Date();
 
         if(currentDate.after(deadlineDate)){
-            //Add an "X" icon to the list item
-            Log.d("svh", "sfgh");
-            int x = 5;
+            isTaskForgotten = true;
+        }
+        return isTaskForgotten;
+    }
+
+    public void checkForgottenTasks(){
+        List<Task> tasks = database.getToDoItemsFromDatabase();
+        for(int i = 0; i < tasks.size(); i++){
+            String deadline = tasks.get(i).getDate();
+
+            String day = deadline.substring(0, 2);
+            int intDay = Integer.parseInt(day);
+
+            String month = deadline.substring(3, 5);
+            int intMonth = Integer.parseInt(month)-1;
+
+            String year = deadline.substring(6, 10);
+            int intYear = Integer.parseInt(year)-1900;
+
+            String hour = deadline.substring(13, 15);
+            int intHour = Integer.parseInt(hour);
+
+            String minutes = deadline.substring(16);
+            int intMinutes = Integer.parseInt(minutes);
+
+            Date deadlineDate = new Date(intYear, intMonth, intDay, intHour, intMinutes);
+
+            Date currentDate = new Date();
+
+            if(currentDate.after(deadlineDate)){
+                tasks.get(i);
+            }
         }
     }
 }

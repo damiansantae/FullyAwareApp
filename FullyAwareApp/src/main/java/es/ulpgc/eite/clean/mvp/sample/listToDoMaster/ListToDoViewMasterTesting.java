@@ -584,6 +584,9 @@ public class ListToDoViewMasterTesting
                 title.setText(task.getTitle());
                 description.setText(task.getDescription());
                 date.setText(task.getDate());
+                if(getPresenter().isTaskForgotten(task.getDate())){
+                    date.setTextColor(Color.RED);
+                }
                 tag.setImageDrawable(drawable);
                 abrv.setText(abrev);
 
