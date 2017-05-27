@@ -1,10 +1,19 @@
 package es.ulpgc.eite.clean.mvp.sample.intro;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,23 +21,6 @@ import android.widget.TextView;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
-
-/**
- * Created by jordivilchez on 25/4/17.
- */
-
-
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
-import android.text.Html;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-
-import static java.lang.Thread.sleep;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -42,6 +34,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
             super.onCreate(savedInstanceState);
             this.requestWindowFeature(Window.FEATURE_NO_TITLE);
             // Checking for first time launch - before calling setContentView()

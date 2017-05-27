@@ -6,6 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import junit.framework.TestCase;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,29 +17,20 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 @RunWith(AndroidJUnit4.class)
 public class RealmUnitTests extends TestCase {
 
 
-
-    Realm realmDatabase;
-    DatabaseFacade databaseFacade = new DatabaseFacade();
+    DatabaseFacade databaseFacade;
 
     @Before
     public void setUp() throws Exception {
 
-        RealmConfiguration config = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
-       realmDatabase = Realm.getInstance(config);
+      databaseFacade = new DatabaseFacade();
 
     }
 
-    @Test
-    public void databaseIsEmptyInitially() throws IOException {
-        assertTrue(realmDatabase.isEmpty());
-    }
 
     /*******************************************************************
      ******** Action Add Tests *************************************/
@@ -74,12 +66,42 @@ public class RealmUnitTests extends TestCase {
 
     @Test
     public void deleteATask () throws IOException{
+
         databaseFacade.addTask(null, "titulo", "descripcion", "29/08/2017", "ToDo");
         Task task = databaseFacade.getToDoItemsFromDatabase().get(0);               //Extraemos el objeto Task que acabamos de añadir
                                                                                     //para eliminarlo
         databaseFacade.deleteDatabaseItem(task);
         List<Task> tasks = databaseFacade.getItemsFromDatabase();
-        assertFalse(tasks.size()==0);                                                //Como solo había una Task la lista de Task debe estar vacía
+        assertEquals(0,tasks.size());                                                //Como solo había una Task la lista de Task debe estar vacía
+    }
+
+    /*******************************************************************
+     ******** Action Check Tests *************************************/
+
+
+    @Test
+    public void checkTaskStatus () throws IOException{
+
+        databaseFacade.addTask(null, "titulo", "descripcion", "29/08/2017", "ToDo");            //Añadimos una tarea a tabla Task con status To-Do
+        databaseFacade.addTask(null, "titulo2", "descripcion2", "29/08/2017", "Done");          //Añadimos una tarea a tabla Task con status Done
+        databaseFacade.addTask(null, "titulo3", "descripcion3", "29/08/2017", "Forgotten");     //Añadimos una tarea a tabla Task con status Forgotten
+
+        List<Task> toDoTasks = databaseFacade.getToDoItemsFromDatabase();
+        List<Task> DoneTasks = databaseFacade.getDoneItemsFromDatabase();
+        List<Task> ForgottenTasks = databaseFacade.getForgottenItemsFromDatabase();
+        List<Task> allTasks = databaseFacade.getItemsFromDatabase();
+
+        assertEquals(1,toDoTasks.size());
+        assertEquals(1,DoneTasks.size());
+        assertEquals(1,ForgottenTasks.size());
+        assertEquals(3,allTasks.size());
+
+    }
+
+    @After                                  //Esta rutina se ejecuta depués de cada test unitario
+    public void deleteTestBD() {
+    databaseFacade.deleteAllDatabaseItems();
+
     }
 
 

@@ -22,6 +22,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -421,8 +422,7 @@ checkSelection2();
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
       //database.createTestingScenario();
-
-
+        ListSubjectModel subjectAssistant = new ListSubjectModel();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

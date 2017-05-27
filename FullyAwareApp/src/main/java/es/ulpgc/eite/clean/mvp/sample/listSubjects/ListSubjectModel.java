@@ -29,6 +29,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     private String btAddSubjectLabel;
     private String btHourLabel;
     private String finishLabel = "Finish";
+
     private static final ArrayList<Integer> listOfColors = new ArrayList<Integer>() {{
         add(R.color.color_lightblue);
         add(R.color.color_violet);
@@ -68,6 +69,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         realmDatabase = Realm.getDefaultInstance();
         database = new DatabaseFacade();
         //validDatabase = true;
+        saveSubject("Other",null,null);
         errorMsg = "Error deleting item!";
     }
 

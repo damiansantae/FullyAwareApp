@@ -21,6 +21,7 @@ public class ExampleInstrumentedTest {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getTargetContext();
 
-    assertEquals("es.ulpgc.eite.clean.mvp.dummy", appContext.getPackageName());
+    assertEquals("es.xdroid.fullyaware", appContext.getPackageName());
   }
+
 }

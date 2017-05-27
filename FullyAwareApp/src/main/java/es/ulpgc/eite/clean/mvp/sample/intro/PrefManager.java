@@ -3,9 +3,6 @@ package es.ulpgc.eite.clean.mvp.sample.intro;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by jordivilchez on 25/4/17.
- */
 
     public class PrefManager {
         SharedPreferences pref;
