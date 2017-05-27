@@ -421,7 +421,7 @@ public class DatabaseFacade {
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(Task.class).equalTo("subjectId", id)
+                realm.where(Subject.class).equalTo("subjectId", id)
                         .findAll()
                         .deleteAllFromRealm();
 
