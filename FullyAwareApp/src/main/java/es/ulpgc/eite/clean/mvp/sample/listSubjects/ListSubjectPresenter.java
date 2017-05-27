@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +22,7 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.view.View.VISIBLE;

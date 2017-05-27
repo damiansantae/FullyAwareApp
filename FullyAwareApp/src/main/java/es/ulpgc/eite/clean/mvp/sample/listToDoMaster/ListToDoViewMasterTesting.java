@@ -44,8 +44,8 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.intro.WelcomeActivity;
+import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.EspressoTest.WelcomeActivity;
 
 public class ListToDoViewMasterTesting
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>

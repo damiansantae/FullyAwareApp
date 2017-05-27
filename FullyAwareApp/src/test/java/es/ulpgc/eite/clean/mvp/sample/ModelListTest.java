@@ -36,7 +36,4 @@ public class ModelListTest {
         assertEquals("E", modelMaster.calculateCases("english"));
     }
 
-
-
-
 }

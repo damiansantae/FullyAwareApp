@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.intro;
+package es.ulpgc.eite.clean.mvp.sample.EspressoTest;
 
 import android.content.Context;
 import android.content.Intent;

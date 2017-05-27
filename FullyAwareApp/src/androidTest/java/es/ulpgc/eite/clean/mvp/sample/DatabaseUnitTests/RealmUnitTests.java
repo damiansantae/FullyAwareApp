@@ -44,7 +44,7 @@ public class RealmUnitTests extends TestCase {
 
     @Test
     public void checkIsEmptyAfterAddTask() throws IOException {
-        databaseFacade.addTask(null,"title","escription","24/03/2017","ToDo");
+        databaseFacade.addTask(null,"title","description","24/03/2017","ToDo");
         assertFalse(databaseFacade.getItemsFromDatabase().size()==0);
     }
 
@@ -74,6 +74,7 @@ public class RealmUnitTests extends TestCase {
         List<Task> tasks = databaseFacade.getItemsFromDatabase();
         assertEquals(0,tasks.size());                                                //Como solo había una Task la lista de Task debe estar vacía
     }
+
 
     /*******************************************************************
      ******** Action Check Tests *************************************/

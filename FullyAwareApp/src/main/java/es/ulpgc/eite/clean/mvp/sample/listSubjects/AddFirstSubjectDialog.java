@@ -2,9 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.intro.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
 
 
 public class AddFirstSubjectDialog extends DialogFragment implements View.OnClickListener {
