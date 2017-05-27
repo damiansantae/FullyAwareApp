@@ -4,8 +4,6 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -21,8 +19,6 @@ public interface Mediator {
     void startingListDoneScreen(ListDoneMaster.ToListDone presenter);
     
     void startingAddTaskScreen(AddTask.ToAddTask presenter);
-
-    void startingListForgottenScreen(ListForgottenMaster.ToListForgotten presenter);
 
     void startingPreferencesScreen(Preferences.ToPreferences presenter);
     
@@ -41,8 +37,7 @@ public interface Mediator {
     int getToolbarColourInt();
 
     boolean checkToolbarChanged();
-    
-    void startingDetailScreen(ListForgottenDetail.MasterListToDetail presenter);
+
 
     void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter);
 }

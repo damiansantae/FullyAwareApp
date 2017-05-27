@@ -18,11 +18,6 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenDetail;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenDetail.ListForgottenViewDetail;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenMaster;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenPresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listForgottenMaster.ListForgottenViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
@@ -54,7 +49,6 @@ public class App extends Application implements Mediator, Navigator {
 
     private DetailToDoState masterListToDetailToDoState;
     private DetailDoneState masterListToDetailDoneState;
-    private DetailForgottenState masterListToDetailForgottenState;
     private ListToDoStateTask listToDoDetailToMasterState;
     private ListDoneStateTask listDoneDetailToMasterState;
     private ListForgottenStateTask listForgottenDetailToMasterState;
@@ -188,17 +182,6 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void startingListForgottenScreen(ListForgottenMaster.ToListForgotten presenter) {
-        if (toListForgottenState != null) {
-            presenter.setToolbarVisibility(toListForgottenState.toolbarVisibility);
-            presenter.setTextVisibility(toListForgottenState.textVisibility);
-            presenter.setDeleteBtnVisibility(toListForgottenState.deleteBtnVisibility);
-
-        }
-        presenter.onScreenStarted();
-    }
-
-    @Override
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
         if (toPreferencesState != null) {
             presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
@@ -262,20 +245,6 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
-    @Override
-    public void startingDetailScreen(ListForgottenDetail.MasterListToDetail presenter) {
-
-        if (masterListToDetailForgottenState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailForgottenState.toolbarVisible);
-            presenter.setItem(masterListToDetailForgottenState.selectedItem);
-            presenter.setAdapter(masterListToDetailForgottenState.adapter);
-            presenter.setMaster((ListForgottenPresenterMaster) masterListToDetailForgottenState.master);
-        }
-
-        // Una vez fijado el estado inicial, el detalle puede iniciarse normalmente
-        masterListToDetailForgottenState = null;
-        presenter.onScreenStarted();
-    }
 
     @Override
     public void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
@@ -401,27 +370,6 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
-    @Override
-    public void goToPreferencesScreen(ListForgottenMaster.ListForgottenTo presenter) {
-
-        if (preferencesToState == null) {
-            preferencesToState = new PreferencesState();
-        }
-        preferencesToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, PreferencesView.class));
-
-        }
-
-    }
-
-
-
-
-
-
 
     @Override
     public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
@@ -482,10 +430,6 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
-    @Override
-    public void goToListForgottenScreen(ListSubject.ListSubjectTo presenter) {
-
-    }
 
     @Override
     public void goToPreferencesScreen(ListSubject.ListSubjectTo presenter) {
@@ -569,32 +513,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         presenter.destroyView();
     }
 
-    @Override
-    public void goToDetailScreen(ListForgottenMaster.MasterListToDetail listForgottenPresenterMaster, ListForgottenViewMaster.TaskRecyclerViewAdapter adapter) {
-        masterListToDetailForgottenState = new DetailForgottenState();
-        masterListToDetailForgottenState.toolbarVisible = listForgottenPresenterMaster.getToolbarVisibility();
-        masterListToDetailForgottenState.selectedItem = listForgottenPresenterMaster.getSelectedTask();
-        masterListToDetailForgottenState.adapter = adapter;
-        masterListToDetailForgottenState.master = listForgottenPresenterMaster;
-
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
-
-        // Arrancamos la pantalla del detalle sin finalizar la del maestro
-        Context view = listForgottenPresenterMaster.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenViewDetail.class));
-        }
-    }
-
-
-    @Override
-    public void backToMasterScreen(ListForgottenDetail.DetailToMaster presenter) {
-        listForgottenDetailToMasterState = new ListForgottenStateTask();
-        listForgottenDetailToMasterState.taskToDelete = presenter.getTaskToDelete();
-
-        // Al volver al maestro, el detalle debe finalizar
-        presenter.destroyView();
-    }
 
     @Override
     public void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter) {
@@ -614,20 +532,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
 
     }
 
-    @Override
-    public void goToListForgottenScreen(ListToDoMaster.ListToDoTo presenter) {
-        if (listForgottenToState == null) {
-            listForgottenToState = new ListForgottenState();
-        }
-        listForgottenToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
-
-        }
-
-    }
 
     @Override
     public void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter) {
@@ -647,58 +551,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
     public void goToScheduleScreen(ListSubject.ListSubjectTo presenter) {
 
     }
-
-    @Override
-    public void goToListToDoScreen(ListForgottenMaster.ListForgottenTo presenter) {
-        if (listToDoToState == null) {
-            listToDoToState = new ListToDoState();
-
-        }
-        listToDoToState.toolbarVisibility = true;
-
-        Context view = presenter.getManagedContext();
-        if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
-            presenter.destroyView();
-            view.startActivity(new Intent(view, ListToDoViewMasterTesting.class));
-        }
-
-
-    }
-
-    @Override
-    public void goToListDoneScreen(ListForgottenMaster.ListForgottenTo presenter) {
-        if (listDoneToState == null) {
-            listDoneToState = new ListDoneState();
-        }
-        listDoneToState.toolbarVisibility = true;
-
-        Context view = presenter.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
-            presenter.destroyView();
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
-        }
-
-
-    }
-
-    @Override
-    public void goToScheduleScreen(ListForgottenMaster.ListForgottenTo presenter) {
-        if (scheduleToState == null) {
-            scheduleToState = new ScheduleState();
-        }
-        scheduleToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            presenter.destroyView();
-            view.startActivity(new Intent(view, ScheduleView.class));
-
-        }
-
-    }
-
 
 
     @Override
@@ -736,42 +588,12 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
 
     }
 
-    @Override
-    public void goToListForgottenScreen(Schedule.ScheduleTo presenter) {
-        if (listForgottenToState == null) {
-            listForgottenToState = new ListForgottenState();
-        }
-        listForgottenToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            presenter.destroyView();
-            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
-
-        }
-
-    }
 
     @Override
     public void goToPreferencesScreen(Preferences.PreferencesTo presenter) {
         //TODO: borrar metodo de la interfaz.
     }
 
-    @Override
-    public void goToListForgottenScreen(ListDoneMaster.ListDoneTo presenter) {
-        if (listForgottenToState == null) {
-            listForgottenToState = new ListForgottenState();
-        }
-        listForgottenToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ListForgottenViewMaster.class));
-
-        }
-
-
-    }
 
     @Override
     public void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter) {
@@ -914,15 +736,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         String date;
         ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
         public ListDoneMaster.MasterListToDetail master;
-    }
-
-    private class DetailForgottenState {
-        boolean toolbarVisible;
-        Task selectedItem;
-        String subject;
-        String date;
-        ListForgottenViewMaster.TaskRecyclerViewAdapter adapter;
-        public ListForgottenMaster.MasterListToDetail master;
     }
 
 

@@ -179,12 +179,6 @@ loadSharePreferences();
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListDoneMaster.ListDoneTo) getPresenter());
 
-        }
-        else if (id ==R.id.menuForgotten){
-            Navigator app = (Navigator) getApplication();
-            app.goToListForgottenScreen((ListDoneMaster.ListDoneTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
-
     } else if (id ==R.id.menuPreferences) {
         Navigator app = (Navigator) getApplication();
         app.goToPreferencesScreen((ListDoneMaster.ListDoneTo) getPresenter());

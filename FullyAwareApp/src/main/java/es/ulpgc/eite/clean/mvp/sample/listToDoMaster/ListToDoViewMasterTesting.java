@@ -197,12 +197,6 @@ public class ListToDoViewMasterTesting
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menuForgotten) {
-            Navigator app = (Navigator) getApplication();
-            app.goToListForgottenScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Forgotten", Toast.LENGTH_SHORT).show();
-
-
         } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());

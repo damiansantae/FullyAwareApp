@@ -168,12 +168,7 @@ public class ScheduleView
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((Schedule.ScheduleTo) getPresenter());
             Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-        }
 
-        else if (id ==R.id.menuForgotten){
-            Navigator app = (Navigator) getApplication();
-            app.goToListForgottenScreen((Schedule.ScheduleTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Forgotten",Toast.LENGTH_SHORT).show();
            } else if (id ==R.id.menuPreferences) {
         Navigator app = (Navigator) getApplication();
         app.goToPreferencesScreen((Schedule.ScheduleTo) getPresenter());
