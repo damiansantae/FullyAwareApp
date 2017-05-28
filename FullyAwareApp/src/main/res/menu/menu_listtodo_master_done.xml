@@ -12,10 +12,6 @@
                 android:icon="@android:drawable/checkbox_off_background"
                 android:title="To Do" />
             <item
-                android:id="@+id/menuForgotten"
-                android:icon="@android:drawable/ic_menu_close_clear_cancel"
-                android:title="Forgotten" />
-            <item
                 android:id="@+id/menucalendar"
                 android:icon="@android:drawable/ic_menu_today"
                 android:title="Calendar" />

@@ -13,6 +13,7 @@ import java.util.Observer;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
@@ -203,7 +204,7 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onBinBtnClick(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick(TaskRecyclerViewAdapter adapter) {
 
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
@@ -231,7 +232,7 @@ public class ListDonePresenterMaster extends GenericPresenter
      * @param adapter the recyclerView adapter
      * @return a list of Tasks which are selected
      */
-    private ArrayList<Task> getSelectedTasks(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
+    private ArrayList<Task> getSelectedTasks(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){

@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,17 +60,18 @@ public class ListToDoViewMaster
     private FloatingActionButton add;
     private FloatingActionButton done;
     private TextView textWhenIsEmpty;
-    private SharedPreferences prefs;
-    private SparseBooleanArray tasksSelected;
-    private PrefManager prefManager;
-    private TaskRecyclerViewAdapter adapter;
-    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    public static final String MY_PREFS = "MyPrefs";
-
     private Task currentTask;
-
     private Paint paint = new Paint();
     private View view;
+    private TaskRecyclerViewAdapter adapter;
+
+    //TODO: JORDI ESTOS ATRIBUTOS PARA QUE SON????????
+    private SharedPreferences prefs;
+    private PrefManager prefManager;
+    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+    public static final String MY_PREFS = "MyPrefs";
+    //TODO: JORDI ESTOS ATRIBUTOS PARA QUE SON????????
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -79,11 +79,14 @@ public class ListToDoViewMaster
     private GoogleApiClient client;
     private AlertDialog.Builder alertDialog;
 
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // App's life cycle methods and Auto-generated////////////////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listtodo);
-
         ////////////////////////////////////////////////////////////
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         add = (FloatingActionButton) findViewById(R.id.floatingAddButton);
@@ -121,9 +124,7 @@ public class ListToDoViewMaster
 
                                 }
         );
-
         ////////////////////////////////////////////////////////
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -134,7 +135,6 @@ public class ListToDoViewMaster
         //////////////////////////
         loadSharePreferences();
     }
-
 
 
     /**
@@ -148,8 +148,48 @@ public class ListToDoViewMaster
     }
 
 
+
     /**
-     * Method that inflate toolbar with items
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("ListForgottenView Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Toolbar actions  //////////////////////////////////////////////////////////////
+    /**
+     * Method that inflates toolbar with items
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -299,42 +339,6 @@ public class ListToDoViewMaster
 getPresenter().onBtnBackPressed();
     }
 
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("ListForgottenView Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 
     @Override
     public void initSwipe() {

@@ -8,6 +8,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
@@ -140,7 +141,7 @@ public interface ListDoneMaster {
          *
          * @param adapter the recyclerView adapter
          */
-        void onBinBtnClick(ListDoneViewMaster.TaskRecyclerViewAdapter adapter);
+        void onBinBtnClick(TaskRecyclerViewAdapter adapter);
 
         /**
          * This method build a bridge between View and Model in order to obtain
