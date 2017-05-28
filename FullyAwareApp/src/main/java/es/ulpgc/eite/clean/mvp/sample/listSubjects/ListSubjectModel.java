@@ -90,24 +90,6 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     /////////////////////////////////////////////////////////////////////////////////////
     // Presenter To Model //////////////////////////////////////////////////////////////
 
-    /**
-     * Llamado para recuperar los elementos a mostrar en la lista.
-     * Si el contenido ya ha sido fijado antes, se notificará inmediatamente al presentador y,
-     * sino es el caso, la notificación se realizará al finalizar la tarea que fija este contenido
-     */
-    @Override
-    public void loadItems() {
-        if (!validDatabase && !runningTask) {
-        } else {
-            if (!runningTask) {
-                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-                getPresenter().onLoadItemsSubjectFinished(getItemsFromDatabase());
-            } else {
-                Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-                getPresenter().onLoadItemsSubjectStarted();
-            }
-        }
-    }
 
     @Override
     public void deleteItem(Subject item) {
@@ -123,12 +105,6 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
      * Llamado para recuperar los elementos iniciales de la lista.
      * En este caso siempre se llamará a la tarea asíncrona
      */
-    @Override
-    public void reloadItems() {
-        deleteAllDatabaseItems();
-        validDatabase = false;
-        loadItems();
-    }
 
     @Override
     public void setDatabaseValidity(boolean valid) {

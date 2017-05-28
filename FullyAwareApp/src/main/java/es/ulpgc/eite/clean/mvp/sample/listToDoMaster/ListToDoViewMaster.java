@@ -61,7 +61,7 @@ public class ListToDoViewMaster
     private FloatingActionButton done;
     private TextView textWhenIsEmpty;
     private Task currentTask;
-    private Paint paint = new Paint();
+    private Paint paint;
     private View view;
     private TaskRecyclerViewAdapter adapter;
 
@@ -367,14 +367,14 @@ getPresenter().onBtnBackPressed();
                 currentTask = adapter.getItems().get(viewHolder.getAdapterPosition());
 
                 if (direction == 32) {
-                    Log.d(TAG, "Swipe left");
+                    Log.d(TAG, "Swipe right");
                     getPresenter().swipeRight(currentTask);
                     adapter.notifyDataSetChanged();
 
 
 
                 } else if (direction == 16){
-                    Log.d(TAG, "Swipe right");
+                    Log.d(TAG, "Swipe left");
 
                     initDialog();
                     alertDialog.setTitle("Do you want to delete this task permanently?");
@@ -386,6 +386,9 @@ getPresenter().onBtnBackPressed();
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if(paint==null){
+                    paint=new Paint();
+                }
 
                 Bitmap icon;
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {

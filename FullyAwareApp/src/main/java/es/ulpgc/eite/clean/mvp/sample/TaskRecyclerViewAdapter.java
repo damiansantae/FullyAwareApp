@@ -38,7 +38,7 @@ public class TaskRecyclerViewAdapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list, parent, false);
+                .inflate(R.layout.task_list, parent, false);
         return new ViewHolder(view);
     }
 
