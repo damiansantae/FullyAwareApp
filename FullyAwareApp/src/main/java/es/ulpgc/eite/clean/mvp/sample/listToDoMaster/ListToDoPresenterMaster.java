@@ -25,7 +25,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -75,10 +77,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         database =DatabaseFacade.getInstance();
 
 
-
         app.startingListToDoScreen(this);
-        checkToolbarColourChanges(app);
-
+        app.loadSharePreferences((ListToDoViewMaster) getView());
 
     }
 
@@ -95,9 +95,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
-
-
+            Mediator app = (Mediator) getView().getApplication();
+            app.loadSharePreferences((ListToDoViewMaster) getView());
            checkToolbarVisibility();
             checkAddBtnVisibility();
             
@@ -112,7 +111,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListToDoViewMaster) getView());
         loadItems();
     }
 
@@ -127,29 +126,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
     }
 
-
-
-
-
-    private void checkToolbarColourChanges(Mediator app){
-
-        Context context = getApplicationContext();
-        SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-
-        if (app.checkToolbarChanged() == true){
-
-            Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-
-
-            SharedPreferences.Editor editor = myprefs.edit();
-            editor.putString(TOOLBAR_COLOR_KEY, colour);
-            Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
-            editor.commit();
-            Log.d("999AQUIIIIIIIII", ""+ myprefs.getString(TOOLBAR_COLOR_KEY, null));
-        }
-    }
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
@@ -690,5 +666,10 @@ checkSelection();
                 tasks.get(i);
             }
         }
+    }
+
+    public int getToolbarColour() {
+        PrefManager prefManager = new PrefManager(getActivityContext());
+        return prefManager.getToolbarColour();
     }
 }

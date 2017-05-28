@@ -14,6 +14,7 @@ public class PrefManager {
         private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
         private static final String USER_NAME = "userName";
         private static final String COUNTER_SUBJECT = "counterSubject";
+        private static final String TOOLBAR_COLOUR = "toolbar-coulour";
 
     /**
      * Public constructor of PrefManager Class
@@ -65,6 +66,24 @@ public class PrefManager {
         public String getUserName(){
             return pref.getString(USER_NAME, "User Name");
         }
+
+    /**
+     * Method that sets toolbar colour of the app. String colour is stored on SharedPreferences.
+     *  @param colour String
+     */
+        public void setToolbarColour(int colour){
+            editor.putInt(TOOLBAR_COLOUR, colour);
+            editor.commit();
+        }
+
+    /**
+     * Method that returns the toolbar colour value.
+     * It returns the toolbar colour to apply changes in other activities.
+     *  @return TOOLBAR_COLOUR -> value stored on SharedPreferences.
+     */
+    public int getToolbarColour(){
+        return pref.getInt(TOOLBAR_COLOUR, 0);
+    }
 
 }
 

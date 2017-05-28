@@ -33,6 +33,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
@@ -49,6 +50,8 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     private boolean toolbarColorChanged;
 
     SharedPreferences preferences;
+    private PrefManager prefManager;
+
     public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     List<String> colorPrimaryList;
@@ -59,20 +62,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         preferencesListView();
-        loadSharePreferences();
+        prefManager = new PrefManager(getActivityContext());
     }
 
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
+
     private void preferencesListView(){
-        // Creamos lista de elementos
+        // Create list elements
        prefItems = new String[]{"App Colour","Edit Subjects","Donate","About"};
        descriptionItems = new String[]{"Change the colour of the App!", "Add subjects or make changes", "To contribute", "All about FullyAware App and xDroidInc"};
        imageItems = new int[]{
@@ -175,7 +170,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         showColorDialog(this);
-
     }
 
 
@@ -194,23 +188,16 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
             setToolbarColorChanged(true);
             setNewToolbarColor(newColor);
-            toolbarChanged();
         } else {
             Context context = getApplicationContext();
             CharSequence text = "Sistema Operativo no compatible";
             int duration = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
 
         }
     }
 
-
-
-    private void toolbarChanged() {
-        getPresenter().toolbarChanged();
-    }
 
     @Override
     public String getColorHex(int color) {
@@ -222,7 +209,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         View view = findViewById(Integer.parseInt(tag));
             toolbar.setBackgroundColor(newColor);
             toolbarColour = newColor;
-            preferences.edit().putInt(TOOLBAR_COLOR_KEY, newColor).apply();
+            prefManager.setToolbarColour(newColor);
             //change the status bar color
             updateStatusBarColor(newColor);
         }
@@ -245,7 +232,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         int color = (Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour))));
         getWindow().setStatusBarColor(color);
         toolbar.setBackgroundColor(color);
-        Mediator app = (Mediator) getApplication();
     }
 
 

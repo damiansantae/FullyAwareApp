@@ -64,11 +64,12 @@ public class PreferencesPresenter extends GenericPresenter
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
-   app.startingPreferencesScreen(this);
+    app.startingPreferencesScreen(this);
       if (app.checkToolbarChanged() == true){
           String colour = app.getToolbarColour();
           getView().toolbarChanged(colour);
       }
+      app.loadSharePreferences((PreferencesView) getView());
   }
 
   /**
@@ -86,6 +87,8 @@ public class PreferencesPresenter extends GenericPresenter
     if(configurationChangeOccurred()) {
 
       checkToolbarVisibility();
+      Mediator app = (Mediator) getView().getApplication();
+      app.loadSharePreferences((PreferencesView) getView());
     }
 
       Mediator app = (Mediator) getView().getApplication();
@@ -93,6 +96,7 @@ public class PreferencesPresenter extends GenericPresenter
           String colour = app.getToolbarColour();
           getView().toolbarChanged(colour);
       }
+
   }
 
   /**
@@ -180,7 +184,6 @@ public class PreferencesPresenter extends GenericPresenter
       Navigator app = (Navigator) getView().getApplication();
       if (position==0){
         getView().onChangeColourDialog(getView());
-
       } else if (position ==1){
          //app.goToEditSubjects();
       } else if (position==2){

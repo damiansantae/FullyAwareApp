@@ -74,7 +74,7 @@ public interface Preferences {
 
     String getTaskSubject();
 
-      void onChangeColourDialog(PresenterToView view);
+    void onChangeColourDialog(PresenterToView view);
 
     String getColorHex(int color);
 

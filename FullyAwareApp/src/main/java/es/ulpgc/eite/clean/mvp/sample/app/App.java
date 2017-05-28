@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.util.Log;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -33,6 +34,7 @@ import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTask;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTimeTable;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -240,6 +242,51 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void loadSharePreferences(PreferencesView view) {
+            PrefManager prefManager = new PrefManager(view.getActivityContext());
+            int colour = prefManager.getToolbarColour();
+            if (colour != 0) {
+                toolbarColourChanged((PreferencesPresenter) view.getPresenter());
+                view.toolbarChanged(getColorHex(colour));
+            }
+    }
+
+    @Override
+    public void loadSharePreferences(ListToDoViewMaster view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    @Override
+    public void loadSharePreferences(ListDoneViewMasterTesting view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListDonePresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    private void toolbarColourChanged(ListDonePresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
+
+    private void toolbarColourChanged(ListToDoPresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
 
     /////////////////TOOLBAR CHANGES METHODS
     @Override

@@ -22,7 +22,7 @@ public class AddFirstSubjectDialog extends DialogFragment implements View.OnClic
   private Button btAddSubject;
   private PrefManager prefManager;
   private EditText etSubjectName;
-    private OnAddSubjectClickListener listener;
+  private OnAddSubjectClickListener listener;
 
 
   @Override
@@ -71,11 +71,6 @@ public class AddFirstSubjectDialog extends DialogFragment implements View.OnClic
     private boolean isSubjectInfoValid() {
     return !etSubjectName.getText().toString().isEmpty();
   }
-
-    private boolean isDayInfoValid() {
-
-        return !etSubjectName.getText().toString().isEmpty();
-    }
 
 
   public void setListener(OnAddSubjectClickListener listener) {

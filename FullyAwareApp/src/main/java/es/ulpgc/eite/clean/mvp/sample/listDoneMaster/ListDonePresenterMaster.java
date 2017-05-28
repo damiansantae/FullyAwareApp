@@ -17,7 +17,9 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 public class ListDonePresenterMaster extends GenericPresenter
         <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
@@ -55,7 +57,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
         database =DatabaseFacade.getInstance();
         app.startingListDoneScreen(this);
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListDoneViewMasterTesting) getView());
     }
 
     /**
@@ -71,13 +73,8 @@ public class ListDonePresenterMaster extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
-
-
-           // checkToolbarVisibility();
-            //checkTextVisibility();
-
-
+            Mediator app = (Mediator) getView().getApplication();
+            app.loadSharePreferences((ListDoneViewMasterTesting) getView());
             checkDeleteBtnVisibility();
 
 
@@ -86,20 +83,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 //                getView().setText(getModel().getText());
 //            }
         }
-
-        Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
         loadItems();
-    }
-
-
-
-
-    private void checkToolbarColourChanges(Mediator app){
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
     }
 
 
@@ -393,5 +377,10 @@ public void onErrorDeletingItem(Task item) {
 
 
 
+    }
+
+    public int getToolbarColour() {
+        PrefManager prefManager = new PrefManager(getActivityContext());
+        return prefManager.getToolbarColour();
     }
 }
