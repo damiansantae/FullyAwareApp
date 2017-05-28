@@ -37,7 +37,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
 
-  private Toolbar toolbar;
+    private Toolbar toolbar;
     private String [] prefItems;
     private String [] descriptionItems;
     private int[] imageItems;
@@ -56,11 +56,10 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_preferences);
-    preferencesListView();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_preferences);
+        preferencesListView();
         loadSharePreferences();
-
     }
 
     private void loadSharePreferences() {
@@ -128,22 +127,18 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     @Override
     public void finishScreen() {
-
     }
 
     @Override
     public void hideToolbar() {
-
     }
 
     @Override
     public void setDateText(String txt) {
-
     }
 
     @Override
     public void setTimeText(String txt) {
-
     }
 
     @Override
@@ -251,19 +246,8 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         getWindow().setStatusBarColor(color);
         toolbar.setBackgroundColor(color);
         Mediator app = (Mediator) getApplication();
-        //Log.d("999AQUIIIIIIIII", "ENTRA A TOOLBARCHANGED");
-        //SharedPreferences myprefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        //myprefs.edit().putString(TOOLBAR_COLOR_KEY,app.getToolbarColour());
-        //Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
-        //myprefs.edit().commit();
     }
 
-   /* @Override
-    public void launchBrowser(AlertDialog alertDialog) {
-        Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("www.github.com/xDroidInc"));
-        startActivity(intent);
-        alertDialog.dismiss();
-    }*/
 
 
     @Override
@@ -309,55 +293,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     }
 }
-
-        //Creamos el adapter
-       //ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.title, prefItems);
-        //ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<String>(this, R.layout.item_preferences, R.id.description, descriptionItems);
-       // ArrayAdapter<ImageView> imageItemAdapter = new ArrayAdapter<ImageView>(this, R.layout.item_preferences, R.id.tag, imageItems);
-
-        //Lo enlazamos al layout
-
-
-
-       // list.setAdapter(itemAdapter);
-        //list.setAdapter(descriptionAdapter);
-
-        //list.setAdapter(imageItemAdapter);
-
-
-
-
-
-
-
-  /*
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_dummy, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
-  }
-  */
-
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Presenter To View /////////////////////////////////////////////////////////////
-
 
 
 

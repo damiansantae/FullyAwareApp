@@ -122,7 +122,6 @@ public interface ListSubject {
 
     void showAddSubjectsDialog();
 
-    void showAddHourSubjectDialog(String newSubject);
   }
 
   /**

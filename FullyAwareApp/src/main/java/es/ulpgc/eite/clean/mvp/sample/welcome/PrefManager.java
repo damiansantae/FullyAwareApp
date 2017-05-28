@@ -4,40 +4,50 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-    public class PrefManager {
+public class PrefManager {
+
         SharedPreferences pref;
         SharedPreferences.Editor editor;
         Context _context;
-
-
-        // shared pref mode
         int PRIVATE_MODE = 0;
-
-        // Shared preferences file name
         private static final String APP_PREF = "androidhive-welcome";
-
         private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
-
         private static final String USER_NAME = "userName";
-
         private static final String COUNTER_SUBJECT = "counterSubject";
 
-        private int counterSubject = 0;
-
+    /**
+     * Public constructor of PrefManager Class
+     * It receives the actual context.
+     *
+     * @param context Context context
+     */
         public PrefManager(Context context) {
             this._context = context;
             pref = _context.getSharedPreferences(APP_PREF, PRIVATE_MODE);
             editor = pref.edit();
         }
 
+    /**
+     * Method that sets value of isFirstTime boolean
+     * isFirstTime boolean specifies if the app is being launched
+     * for the first time. It is stored on a SharedPreferences object
+     * @param isFirstTime boolean
+     */
         public void setFirstTimeLaunch(boolean isFirstTime) {
             editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
             editor.commit();
         }
 
+    /**
+     * Method that returns isFirstTime boolean
+     * isFirstTime boolean specifies if the app is being launched for the first time
+     * It returns the value stored on SharedPreferences -> IS_FIRST_TIME_LAUNCH
+     */
         public boolean isFirstTimeLaunch() {
             return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
         }
+
+
 
         public void setUserName(String userName) {
             editor.putString(USER_NAME,userName);

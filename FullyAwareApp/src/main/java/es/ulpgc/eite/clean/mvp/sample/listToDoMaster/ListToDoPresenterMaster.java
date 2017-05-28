@@ -30,11 +30,10 @@ import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel,
-                ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
+        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
         implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter,
         ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo,
-        ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
+        ListToDoMaster.MasterListToDetail, Observer{
 
 
     private boolean toolbarVisible;
