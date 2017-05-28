@@ -6,9 +6,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 
-/**
- * Created by Luis on 12/11/16.
- */
+
 
 public interface Dummy {
 

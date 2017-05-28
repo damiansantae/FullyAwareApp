@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -126,7 +126,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         private void launchHomeScreen() {
             prefManager.setFirstTimeLaunch(false);
-            startActivity(new Intent(WelcomeActivity.this, ListToDoViewMasterTesting.class));
+            startActivity(new Intent(WelcomeActivity.this, ListToDoViewMaster.class));
             finish();
         }
 

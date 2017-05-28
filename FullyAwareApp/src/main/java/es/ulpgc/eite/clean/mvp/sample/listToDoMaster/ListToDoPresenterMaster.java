@@ -77,7 +77,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database = new DatabaseFacade();
+        database =DatabaseFacade.getInstance();
 
 
 
@@ -212,7 +212,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     @Override
-    public void onListClick2(View v, int adapterPosition, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task) {
+    public void onListClick2(View v, int adapterPosition, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -311,7 +311,7 @@ checkSelection2();
     }
 
     @Override
-    public void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
@@ -338,7 +338,7 @@ checkSelection2();
     }
 
 
-    private ArrayList<Task> getSelectedTasks(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    private ArrayList<Task> getSelectedTasks(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
@@ -358,7 +358,7 @@ checkSelection2();
     }
 
     @Override
-    public void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.setItemStatus(selected.get(i), "Done");
@@ -655,9 +655,19 @@ checkSelection2();
     }
 
     @Override
+    public void confirmBackPressed() {
+        getView().confirmBackPressed();
+    }
+
+    @Override
+    public void delayedTaskToBackStarted() {
+
+        getView().showToastBackConfirmation(getModel().getToastBackConfirmation());
+    }
+
+    @Override
     public void onLoadItemsTaskFinished(List<Task> items) {
         getView().setRecyclerAdapterContent(items);
-
     }
 
     @Override
@@ -672,41 +682,11 @@ checkSelection2();
 
     }
     public void loadItems() {
-        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
-            startDelayedTask();
-        } else {*/
-            if(!(database.getRunningTask())){
-                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
                 onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
-            } else {
-                Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-                onLoadItemsTaskStarted();
             }
-        //}
 
-    }
-    /*private void startDelayedTask() {
-        Log.d(TAG, "calling startDelayedTask() method");
-        database.setRunningTask(true);
-        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-        onLoadItemsSubjectStarted();
-
-        // Mock Hello: A handler to delay the answer
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //setItems();
-                database.setRunningTask(false);
-                database.setValidDatabase(true);
-                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-                //getPresenter().onLoadItemsSubjectsFinished(items);
-                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
-            }
-        }, 0);
-    }*/
 
     public void reloadItems() {
-        //items = null;
         database.deleteAllDatabaseItems();
         database.setValidDatabase(false);
         loadItems();
@@ -739,6 +719,11 @@ checkSelection2();
             isTaskForgotten = true;
         }
         return isTaskForgotten;
+    }
+
+    @Override
+    public void onBtnBackPressed() {
+        getModel().startBackPressed();
     }
 
     public void checkForgottenTasks(){

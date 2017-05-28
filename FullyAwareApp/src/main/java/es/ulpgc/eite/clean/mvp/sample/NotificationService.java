@@ -9,15 +9,12 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import es.ulpgc.eite.clean.mvp.sample.app.App;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public class NotificationService extends Service {
     private static AlarmManager alarmMgr;
@@ -77,10 +74,10 @@ public class NotificationService extends Service {
                 .setContentText(content)
                 .setSmallIcon(R.drawable.logofully);
 
-        Intent resultIntent = new Intent(context, ListToDoViewMasterTesting.class);
+        Intent resultIntent = new Intent(context, ListToDoViewMaster.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(ListToDoViewMasterTesting.class);
+        stackBuilder.addParentStack(ListToDoViewMaster.class);
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =

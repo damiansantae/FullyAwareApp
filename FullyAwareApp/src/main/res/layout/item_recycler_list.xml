@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting"
+    tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster"
     android:longClickable="true"
 
     tools:listitem="@layout/item_list"/>

@@ -59,7 +59,7 @@ public class actionsWithListTest {
     @Before
     public void setUp() throws Exception {
 
-        databaseFacade = new DatabaseFacade();
+        databaseFacade =DatabaseFacade.getInstance();
     }
 
     @Test

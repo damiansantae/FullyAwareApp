@@ -26,6 +26,9 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   private boolean usingWrapper;
     private DatabaseFacade database;
     private boolean isChangingConfiguration;
+    private boolean taskRunning;
+    private boolean taskFinished;
+    private String toastBackConfirmation;
 
 
   /**
@@ -38,9 +41,9 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
   public void onCreate(ListToDoMaster.ModelToPresenter presenter) {
     super.onCreate(presenter);
     realmDatabase = Realm.getDefaultInstance();
-    //validDatabase = true;
-      database = new DatabaseFacade();
+      database =DatabaseFacade.getInstance();
     errorMsg = "Error deleting item!";
+      toastBackConfirmation ="Press back again to close the FullyAware application";
   }
 
   /**
@@ -77,37 +80,18 @@ this.isChangingConfiguration=isChangingConfiguration;
       }
     }
 
-    /*
-    if(items == null && !runningTask) {
-      startDelayedTask();
-    } else {
-      if(!runningTask){
-        Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-        getPresenter().onLoadItemsSubjectsFinished(items);
-      } else {
-        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-        getPresenter().onLoadItemsSubjectStarted();
-      }
-    }
-    */
   }
 
-  /*
-  @Override
-  public void deleteItem(ModelItem item) {
-    if (items.contains(item)){
-      items.remove(item);
-    } else {
-      getPresenter().onErrorDeletingItem(item);
-    }
-  }
-  */
+@Override
+public String getToastBackConfirmation(){
+    return toastBackConfirmation;
+}
 
   @Override
   public void deleteItem(Task item) {
 
     boolean result = getItemsFromDatabase().contains(item);
-    if (getItemsFromDatabase().contains(item)){ //TODO: el problema está aquí, no encuentra el item en la base de datos
+    if (getItemsFromDatabase().contains(item)){
       //items.remove(item);
       deleteDatabaseItem(item);
     } else {
@@ -115,6 +99,32 @@ this.isChangingConfiguration=isChangingConfiguration;
     }
   }
 
+
+    @Override
+    public void startBackPressed() {
+        if(taskRunning){
+getPresenter().confirmBackPressed();
+        }
+
+         else {
+            taskRunning = true;
+            startDelayedTimer();
+        }
+    }
+
+    private void startDelayedTimer() {
+        getPresenter().delayedTaskToBackStarted();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(taskRunning) {
+                    taskRunning = false;
+                }
+
+            }
+        }, 5000);
+
+    }
   /**
    * Llamado para recuperar los elementos iniciales de la lista.
    * En este caso siempre se llamará a la tarea asíncrona
@@ -176,22 +186,21 @@ this.isChangingConfiguration=isChangingConfiguration;
    */
   private void startDelayedTask() {
     Log.d(TAG, "calling startDelayedTask() method");
-    runningTask = true;
+      runningTask = true;
     Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
     getPresenter().onLoadItemsTaskStarted();
 
-    // Mock Hello: A handler to delay the answer
     new Handler().postDelayed(new Runnable() {
       @Override
       public void run() {
         //setItems();
         runningTask = false;
-        validDatabase = true;
+
         Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-        //getPresenter().onLoadItemsSubjectsFinished(items);
+
         getPresenter().onLoadItemsTaskFinished(getItemsFromDatabase());
       }
-    }, 0);
+    }, 2000);
   }
 
 

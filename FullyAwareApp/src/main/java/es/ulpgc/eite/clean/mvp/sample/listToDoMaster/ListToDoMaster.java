@@ -58,10 +58,10 @@ public interface ListToDoMaster {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
-    void onDoneBtnClick(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
 
 
-      void onListClick2(View item, int position, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task);
+      void onListClick2(View item, int position, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task);
 
     void onLongListClick2(View item, int adapterPosition);
 
@@ -69,7 +69,7 @@ public interface ListToDoMaster {
 
       boolean isSelected(int adapterPosition);
 
-    void onBinBtnClick2(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
 
       String getCases(Task task);
     void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
@@ -81,6 +81,8 @@ public interface ListToDoMaster {
     void swipeRight(Task currentTask);
 
     boolean isTaskForgotten(String deadline);
+
+    void onBtnBackPressed();
   }
 
   /**
@@ -124,17 +126,26 @@ public interface ListToDoMaster {
 
     void setToastDelete();
 
-      void initSwipe();
+    void confirmBackPressed();
+
+    void initSwipe();
 
     void initDialog();
+
+    void showToastBackConfirmation(String toastBackConfirmation);
   }
 
   /**
    * Methods offered to MODEL to communicate with PRESENTER
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
+    String getToastBackConfirmation();
+
     void deleteItem(Task item);
     void loadItems();
+
+    void startBackPressed();
+
     void reloadItems();
     void setDatabaseValidity(boolean valid);
     String getErrorMessage();
@@ -157,6 +168,10 @@ public interface ListToDoMaster {
     void onErrorDeletingItem(Task item);
     void onLoadItemsTaskFinished(List<Task> items);
     void onLoadItemsTaskStarted();
+
+    void confirmBackPressed();
+
+    void delayedTaskToBackStarted();
   }
 
 

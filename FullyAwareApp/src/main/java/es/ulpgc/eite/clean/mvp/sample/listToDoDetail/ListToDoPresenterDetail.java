@@ -11,7 +11,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 
 public class ListToDoPresenterDetail extends GenericPresenter
@@ -22,7 +22,7 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
-    private ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter;
+    private ListToDoViewMaster.TaskRecyclerViewAdapter adapter;
 
 
     private boolean isChanged;
@@ -141,7 +141,7 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public void setAdapter(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void setAdapter(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
         this.adapter=adapter;
     }
 

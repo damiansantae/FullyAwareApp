@@ -68,7 +68,7 @@ public class ListSubjectPresenter extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database = new DatabaseFacade();
+        database =DatabaseFacade.getInstance();
         app.startingListSubjectScreen(this);
         if (app.checkToolbarChanged() == true) {
             String colour = app.getToolbarColour();

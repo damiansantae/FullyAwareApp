@@ -12,7 +12,7 @@ import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
@@ -34,7 +34,7 @@ public interface Navigator {
     void goToScheduleScreen(ListSubject.ListSubjectTo presenter);
 
     //Comunicación M/D
-    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
 
     void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
 

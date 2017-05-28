@@ -5,7 +5,7 @@ import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public interface ListToDoDetail {
 
@@ -23,7 +23,7 @@ public interface ListToDoDetail {
 
     void onScreenStarted();
 
-      void setAdapter(ListToDoViewMasterTesting.TaskRecyclerViewAdapter adapter);
+      void setAdapter(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
 
 
     void setMaster(ListToDoPresenterMaster master);

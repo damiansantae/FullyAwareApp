@@ -47,7 +47,7 @@ public class NavigationFromToDoTests {
     @Before
     public void setUp() throws Exception {
 
-        databaseFacade = new DatabaseFacade();
+        databaseFacade = DatabaseFacade.getInstance();
         databaseFacade.deleteAllDatabaseItems();
 
     }

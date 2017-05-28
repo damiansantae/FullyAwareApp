@@ -53,7 +53,7 @@
             -->
         </activity>
         <activity
-            android:name=".listToDoMaster.ListToDoViewMasterTesting"
+            android:name=".listToDoMaster.ListToDoViewMaster"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -80,7 +80,7 @@
         <activity
             android:name=".listToDoDetail.ListToDoViewDetail"
             android:label="Detail To Do"
-            android:parentActivityName=".listToDoMaster.ListToDoViewMasterTesting"
+            android:parentActivityName=".listToDoMaster.ListToDoViewMaster"
             android:theme="@style/AppTheme.NoActionBar">
 
             <!--

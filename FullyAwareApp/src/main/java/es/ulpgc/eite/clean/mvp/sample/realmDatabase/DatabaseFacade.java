@@ -25,7 +25,14 @@ public class DatabaseFacade {
     private String errorMsg;
     private boolean usingWrapper;
 
-    public DatabaseFacade(){
+    private static DatabaseFacade databaseFacade = new DatabaseFacade();
+
+
+    public static DatabaseFacade getInstance() {
+        return databaseFacade;
+    }
+
+    private DatabaseFacade(){
         realmDatabase = Realm.getDefaultInstance();
         runningTask = false;
         validDatabase = true;

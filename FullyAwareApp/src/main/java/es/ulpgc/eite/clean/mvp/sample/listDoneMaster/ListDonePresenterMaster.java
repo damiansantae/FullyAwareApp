@@ -60,7 +60,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database = new DatabaseFacade();
+        database =DatabaseFacade.getInstance();
         app.startingListDoneScreen(this);
         checkToolbarColourChanges(app);
     }

@@ -27,7 +27,7 @@ public class RealmUnitTests extends TestCase {
     @Before
     public void setUp() throws Exception {
 
-      databaseFacade = new DatabaseFacade();
+        databaseFacade =DatabaseFacade.getInstance();
 
     }
 

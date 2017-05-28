@@ -60,7 +60,7 @@ public class AddTaskPresenter extends GenericPresenter
 
     Log.d(TAG, "calling startingDummyScreen()");
     Mediator app = (Mediator) getView().getApplication();
-    database = new DatabaseFacade();
+    database =DatabaseFacade.getInstance();
     app.startingAddTaskScreen(this);
     if (app.checkToolbarChanged() == true){
       String colour = app.getToolbarColour();
