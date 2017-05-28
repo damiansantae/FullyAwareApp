@@ -88,8 +88,6 @@ public class ListDoneViewMaster
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-        loadSharePreferences();
     }
 
     /**
@@ -237,14 +235,4 @@ public class ListDoneViewMaster
         }
     }
 
-
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
 }
