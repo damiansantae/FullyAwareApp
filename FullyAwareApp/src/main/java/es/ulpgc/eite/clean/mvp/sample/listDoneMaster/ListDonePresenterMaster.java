@@ -29,15 +29,8 @@ public class ListDonePresenterMaster extends GenericPresenter
     private boolean textVisible;
     private boolean listClicked;
     private boolean selectedState;
-
-
     private Task selectedTask;
-
-    private ArrayList<Task> tasksSelected = new ArrayList<>();
-    private ArrayList<String> posSelected = new ArrayList<>();
-
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
-
     private DatabaseFacade database;
 
 
@@ -158,12 +151,6 @@ public class ListDonePresenterMaster extends GenericPresenter
       checkDeleteBtnVisibility();
 
     }
-    
-
-    private void deselectTask(Task currentTask) {
-        tasksSelected.remove(currentTask);
-    }
-
 
 
     @Override

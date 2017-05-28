@@ -210,12 +210,12 @@ public class ListToDoPresenterMaster extends GenericPresenter
             selectedTask=task;
             app.goToDetailScreen(this);
         }
-checkSelection2();
+checkSelection();
         checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
 
     }
 
-    private void checkSelection2() {
+    private void checkSelection() {
         boolean somethingSelected= false;
         for(int i = 0; i < itemsSelected.size(); i++) {
             int key = itemsSelected.keyAt(i);
@@ -225,7 +225,6 @@ checkSelection2();
                 somethingSelected=true;
                 break;
             }
-
 
         }
 
@@ -254,7 +253,7 @@ checkSelection2();
             itemsSelected.put(adapterPosition,true);
         }
 
-checkSelection2();
+        checkSelection();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -283,10 +282,9 @@ checkSelection2();
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
-          //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
         }
 itemsSelected.clear();
-checkSelection2();
+checkSelection();
         checkTextWhenIsEmptyVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -340,7 +338,7 @@ checkSelection2();
         }
 
         itemsSelected.clear();
-        checkSelection2();
+        checkSelection();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();

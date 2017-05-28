@@ -37,34 +37,37 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
-import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
+/**
+ * View of a task to do list. It can click on a specific task to see its details,
+ * make a swipe on it in order to delete or passing it to Done list.
+ * Also it can multiselect several tasks to delete or done simultaneously
+ * @version 1.0, 28/05/2017
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ */
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
         implements ListToDoMaster.PresenterToView {
 
     private Toolbar toolbar;
-    private Toolbar downtoolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
     private FloatingActionButton add;
     private FloatingActionButton done;
     private TextView textWhenIsEmpty;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
     private SharedPreferences prefs;
     private SparseBooleanArray tasksSelected;
     private PrefManager prefManager;
     private TaskRecyclerViewAdapter adapter;
-    SharedPreferences preferences;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
-    private WelcomeActivity welcome;
+
     private Task currentTask;
 
     private Paint paint = new Paint();
@@ -74,9 +77,8 @@ public class ListToDoViewMaster
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-
-
     private AlertDialog.Builder alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +96,7 @@ public class ListToDoViewMaster
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       // getPresenter().onBinBtnClick(adapter);
                                        getPresenter().onBinBtnClick(adapter);
-
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -108,8 +108,6 @@ public class ListToDoViewMaster
                                    public void onClick(View v) {
 
                                        getPresenter().onAddBtnClick();
-
-                                       //adapter.notifyDataSetChanged();
                                    }
 
                                }
@@ -118,7 +116,6 @@ public class ListToDoViewMaster
                                     @Override
                                     public void onClick(View v) {
                                         getPresenter().onDoneBtnClick(adapter);
-                                        // recyclerView.clearChoices();
                                         adapter.notifyDataSetChanged();
                                     }
 
@@ -136,20 +133,11 @@ public class ListToDoViewMaster
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //////////////////////////
         loadSharePreferences();
-
         initSwipe();
 
     }
 
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
+
 
     /**
      * Method that initialized MVP objects
@@ -162,22 +150,23 @@ public class ListToDoViewMaster
     }
 
 
-    //Este metodo sirve para inflar el menu en la action bar
+    /**
+     * Method that inflate toolbar with items
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listtodo_master_todo, menu);
-
         return true;
     }
 
+
+    /**
+     * Method that handle the selection of an specific toolbar's item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
+        int id = item.getItemId();
 
         if (id == R.id.menuDone) {
             Navigator app = (Navigator) getApplication();
@@ -191,7 +180,7 @@ public class ListToDoViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "Pasando a pantalla Preferencias");
+            Log.d(TAG, "Going to Preferences");
 
 
         } else if (id == R.id.filter_icon) {
@@ -205,6 +194,7 @@ public class ListToDoViewMaster
     ///////////////////////////////////////////////////////////////////////////////////
     // Presenter To View /////////////////////////////////////////////////////////////
 
+
     @Override
     public void finishScreen() {
         finish();
@@ -214,7 +204,6 @@ public class ListToDoViewMaster
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
-
     }
 
 
@@ -228,15 +217,11 @@ public class ListToDoViewMaster
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
-
-
     }
 
     @Override
     public void showDoneBtn() {
         done.setVisibility(View.VISIBLE);
-
-
     }
 
     @Override
@@ -248,7 +233,6 @@ public class ListToDoViewMaster
     public void showTextWhenIsEmpty() {
         textWhenIsEmpty.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override
@@ -268,10 +252,7 @@ public class ListToDoViewMaster
     @Override
     public void showDeleteBtn() {
         bin.setVisibility(View.VISIBLE);
-
-
     }
-
 
 
 
@@ -434,8 +415,6 @@ getPresenter().onBtnBackPressed();
                 getPresenter().swipeLeft(currentTask);
                 adapter.notifyDataSetChanged();
                     dialog.dismiss();
-
-
             }
         });
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -467,7 +446,6 @@ getPresenter().onBtnBackPressed();
 
         ImageView   img=new ImageView(this);
 
-
         // give the drawable resource for the ImageView
         img.setImageResource(R.drawable.back);
 
@@ -488,6 +466,19 @@ getPresenter().onBtnBackPressed();
     }
 
     /**
+     * This method load on this Activity saved preferences such as toolbarColor
+     */
+    private void loadSharePreferences() {
+        Log.d(TAG, "calling loadSharePreferences");
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
+        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
+        Log.d(TAG, "" + colour);
+        if (colour != null) {
+            toolbarChanged(colour);
+        }
+    }
+
+    /**
      * This method delete the Parent View of a view.
      * For example, when a dialog view is showed
      */
@@ -496,11 +487,6 @@ getPresenter().onBtnBackPressed();
             ((ViewGroup) view.getParent()).removeView(view);
         }
     }
-
-    ///////////////////////////////////////////////////////////////
-
-
-
 
 
 }

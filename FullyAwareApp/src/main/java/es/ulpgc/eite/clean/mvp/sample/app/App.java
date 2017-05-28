@@ -43,7 +43,6 @@ public class App extends Application implements Mediator, Navigator {
     private ListToDoState toListToDoState, listToDoToState;
     private ListDoneState toListDoneState, listDoneToState;
     private ListSubjectState toListSubjectState, listSubjectToState;
-    private ListForgottenState toListForgottenState, listForgottenToState;
     private AddTaskState toAddTaskState, addTaskToState;
     private ScheduleState toScheduleState, scheduleToState;
 
@@ -51,7 +50,6 @@ public class App extends Application implements Mediator, Navigator {
     private DetailDoneState masterListToDetailDoneState;
     private ListToDoStateTask listToDoDetailToMasterState;
     private ListDoneStateTask listDoneDetailToMasterState;
-    private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
 
 
@@ -82,11 +80,6 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState.toolbarVisibility = false;
         toListDoneState.textVisibility = false;
         toListDoneState.TaskDone = null;
-
-        toListForgottenState = new ListForgottenState();
-        toListForgottenState.toolbarVisibility = false;
-        toListForgottenState.textVisibility = false;
-        toListForgottenState.deleteBtnVisibility = false;
 
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
@@ -132,8 +125,6 @@ public class App extends Application implements Mediator, Navigator {
             presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
             presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
-
-
         }
         presenter.onScreenStarted();
     }

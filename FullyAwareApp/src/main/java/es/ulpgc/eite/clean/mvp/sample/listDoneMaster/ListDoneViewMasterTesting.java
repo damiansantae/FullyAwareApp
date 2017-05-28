@@ -42,10 +42,6 @@ public class ListDoneViewMasterTesting
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT}
-
     private TaskRecyclerViewAdapter adapter;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
