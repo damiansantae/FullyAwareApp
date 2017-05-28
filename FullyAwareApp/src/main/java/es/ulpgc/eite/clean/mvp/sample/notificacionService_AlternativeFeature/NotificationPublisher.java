@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.NotificacionService_AlternativeFeature;
+package es.ulpgc.eite.clean.mvp.sample.notificacionService_AlternativeFeature;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

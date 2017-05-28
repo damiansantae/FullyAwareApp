@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 public class ListSubjectPresenter extends GenericPresenter
         <ListSubject.PresenterToView, ListSubject.PresenterToModel, ListSubject.ModelToPresenter, ListSubjectModel>

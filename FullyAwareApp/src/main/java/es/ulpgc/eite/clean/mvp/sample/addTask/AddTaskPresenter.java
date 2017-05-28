@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 
 public class AddTaskPresenter extends GenericPresenter
@@ -161,9 +161,9 @@ public class AddTaskPresenter extends GenericPresenter
     //getModel().addEvent(title, subjectName, deadline, getApplicationContext());
 
     //  The Intent to start the app Calendar is obtained, and then is used by startActivity()
-   // Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
-   // Navigator app = (Navigator) getView().getApplication();
-   // app.startActivy(intent);
+    Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
+    Navigator app = (Navigator) getView().getApplication();
+    app.startActivy(intent);
 
     Context context = getApplicationContext();
     CharSequence text = "Task added";
@@ -339,6 +339,10 @@ public class AddTaskPresenter extends GenericPresenter
     return list;
 }
 
-
+  public void goToCalendar(String title, String description, String deadline, String subjectName){
+    Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
+    Navigator app = (Navigator) getView().getApplication();
+    app.startActivy(intent);
+  }
 
 }

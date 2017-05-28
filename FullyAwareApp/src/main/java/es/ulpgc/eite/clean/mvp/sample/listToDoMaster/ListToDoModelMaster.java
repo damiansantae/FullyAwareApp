@@ -9,7 +9,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import io.realm.Realm;
 
 /**

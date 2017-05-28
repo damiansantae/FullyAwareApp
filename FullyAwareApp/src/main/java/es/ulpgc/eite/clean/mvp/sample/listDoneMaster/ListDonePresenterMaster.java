@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
