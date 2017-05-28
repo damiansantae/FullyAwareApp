@@ -14,6 +14,11 @@ import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 public interface Mediator {
     void startingDummyScreen(Dummy.ToDummy presenter);
 
+    /**
+     * This method gives variables states saved in the Mediator to the ListToDo
+     * Presenter it is called when Presenter is need to be created
+     * @param presenter the Presenter which needs to be created
+     */
     void startingListToDoScreen(ListToDoMaster.ToListToDo presenter);
 
     void startingListDoneScreen(ListDoneMaster.ToListDone presenter);

@@ -24,28 +24,35 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Presenter of a task done list. It can click on a specific task to see its details,
+ * Also it can multiselect several tasks to delete or done simultaneously
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel,
                 ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
         implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter,
         ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo,
-        ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
+        ListToDoMaster.MasterListToDetail, Observer {
 
 
     private boolean toolbarVisible;
     private boolean deleteBtnVisible;
     private boolean addBtnVisible;
     private boolean doneBtnVisible;
-    private boolean textVisible;
     private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
-    private SparseBooleanArray itemsSelected =new SparseBooleanArray();
+    private SparseBooleanArray itemsSelected = new SparseBooleanArray();
     private DatabaseFacade database;
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
@@ -53,8 +60,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     private static final int READ_CALENDAR_PERMISSIONS_REQUEST = 1;
     private static final int WRITE_CALENDAR_PERMISSIONS_REQUEST = 2;
-
-
 
 
     /**
@@ -73,8 +78,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database =DatabaseFacade.getInstance();
-
+        database = DatabaseFacade.getInstance();
 
 
         app.startingListToDoScreen(this);
@@ -95,21 +99,14 @@ public class ListToDoPresenterMaster extends GenericPresenter
         setView(view);
         Log.d(TAG, "calling onResume()");
 
-        if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
+        if (configurationChangeOccurred()) {        //if screen rotation
 
-
-           checkToolbarVisibility();
+            checkToolbarVisibility();
             checkAddBtnVisibility();
-            
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             checkTextWhenIsEmptyVisibility();
-            CheckDoneBtnVisibility();
-
-//            if (buttonClicked) {
-//                getView().setText(getModel().getText());
-//            }
+            checkDoneBtnVisibility();
         }
 
         Mediator app = (Mediator) getView().getApplication();
@@ -117,6 +114,10 @@ public class ListToDoPresenterMaster extends GenericPresenter
         loadItems();
     }
 
+    /**
+     * Method that look if there is a task to do in database
+     * and configure inform text visibility on View agree of that
+     */
     private void checkTextWhenIsEmptyVisibility() {
         Log.d(TAG, "calling checkTextWhenIsEmptyVisibility()");
         if (isViewRunning()) {
@@ -129,15 +130,13 @@ public class ListToDoPresenterMaster extends GenericPresenter
     }
 
 
-
-
-
-    private void checkToolbarColourChanges(Mediator app){
+    //TODO: JORDI COMENTA ESTE METODO
+    private void checkToolbarColourChanges(Mediator app) {
 
         Context context = getApplicationContext();
         SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
 
-        if (app.checkToolbarChanged() == true){
+        if (app.checkToolbarChanged() == true) {
 
             Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
             String colour = app.getToolbarColour();
@@ -146,9 +145,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
             SharedPreferences.Editor editor = myprefs.edit();
             editor.putString(TOOLBAR_COLOR_KEY, colour);
-            Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
+            Log.d("999AQUIIIIIIIII", "" + app.getToolbarColour());
             editor.commit();
-            Log.d("999AQUIIIIIIIII", ""+ myprefs.getString(TOOLBAR_COLOR_KEY, null));
+            Log.d("999AQUIIIIIIIII", "" + myprefs.getString(TOOLBAR_COLOR_KEY, null));
         }
     }
 
@@ -180,77 +179,71 @@ public class ListToDoPresenterMaster extends GenericPresenter
     ///////////////////////////////////////////////////////////////////////////////////
     // View To Presenter /////////////////////////////////////////////////////////////
 
-    /*@Override
-    public void onButtonClicked() {
-        Log.d(TAG, "calling onButtonClicked()");
-        if (isViewRunning()) {
-            getModel().onChangeMsgByBtnClicked();
-            getView().setText(getModel().getText());
-            textVisible = true;
-            buttonClicked = true;
-        }
-        checkTextVisibility();
-    }*/
-
 
     @Override
     public void onListClick(View v, int adapterPosition, Task task) {
-        if(selectedState){
-            if(!v.isSelected()){
+        if (selectedState) {                                            //If there is a selected state (some task selected)
+            if (!v.isSelected()) {                                      //If the task is not selected, then select it
                 v.setSelected(true);
-                itemsSelected.put(adapterPosition,true);
+                itemsSelected.put(adapterPosition, true);               //insert position of this task in a table
 
-            }else{
+            } else {                                                    //If not, then deselect it
                 v.setSelected(false);
-                itemsSelected.put(adapterPosition,false);
+                itemsSelected.put(adapterPosition, false);              //delete position of this task in a table
 
             }
-        }else{
+        } else {                                                        //if there is not selected state, then go to task detail
             Navigator app = (Navigator) getView().getApplication();
-            selectedTask=task;
+            selectedTask = task;
             app.goToDetailScreen(this);
         }
-checkSelection();
-        checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
+
+        checkSelection();
+        checkAddBtnVisibility();
+        checkDoneBtnVisibility();
+        checkDeleteBtnVisibility();
 
     }
 
+    /**
+     * Method that order view to show or hide view items as buttons
+     * according of the selected state
+     */
     private void checkSelection() {
-        boolean somethingSelected= false;
-        for(int i = 0; i < itemsSelected.size(); i++) {
+        boolean somethingSelected = false;
+        for (int i = 0; i < itemsSelected.size(); i++) {
             int key = itemsSelected.keyAt(i);
             // get the object by the key.
             Object obj = itemsSelected.get(key);
-            if(obj.equals(true)){
-                somethingSelected=true;
+            if (obj.equals(true)) {
+                somethingSelected = true;
                 break;
             }
 
         }
 
-       if(somethingSelected){
-           setAddBtnVisibility(false);
-           setDoneBtnVisibility(true);
-           setDeleteBtnVisibility(true);
-       }else{
-           setAddBtnVisibility(true);
-           setDoneBtnVisibility(false);
-           setDeleteBtnVisibility(false);
-           selectedState=false;
-       }
-
+        if (somethingSelected) {
+            setAddBtnVisibility(false);
+            setDoneBtnVisibility(true);
+            setDeleteBtnVisibility(true);
+        } else {
+            setAddBtnVisibility(true);
+            setDoneBtnVisibility(false);
+            setDeleteBtnVisibility(false);
+            selectedState = false;
+        }
 
 
     }
 
 
-
     @Override
     public void onLongListClick(View v, int adapterPosition) {
-        if(!selectedState){
-            selectedState =true;
+    if (!selectedState) {                           //If there is no selected state (no task selected), then
+                                                    //start selected stated and selected the task
+            selectedState = true;
             v.setSelected(true);
-            itemsSelected.put(adapterPosition,true);
+            itemsSelected.put(adapterPosition, true);
         }
 
         checkSelection();
@@ -259,15 +252,13 @@ checkSelection();
         checkDoneBtnVisibility();
 
 
-
-
     }
 
 
     @Override
     public boolean isSelected(int adapterPosition) {
         boolean result = false;
-        if(itemsSelected.size()!=0) {
+        if (itemsSelected.size() != 0) {
 
             if (itemsSelected.get(adapterPosition)) {
                 result = true;
@@ -276,15 +267,17 @@ checkSelection();
         return result;
     }
 
+
     @Override
     public void onBinBtnClick(TaskRecyclerViewAdapter adapter) {
 
-   ArrayList<Task> selected = getSelectedTasks(adapter);
-        for(int i=0;i<selected.size();i++){
+        ArrayList<Task> selected = getSelectedTasks(adapter);
+
+        for (int i = 0; i < selected.size(); i++) {
             database.deleteDatabaseItem(selected.get(i));
         }
-itemsSelected.clear();
-checkSelection();
+        itemsSelected.clear();
+        checkSelection();
         checkTextWhenIsEmptyVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -295,18 +288,22 @@ checkSelection();
 
     @Override
     public String getCases(Task task) {
-        String subjectName= task.getSubject().getName();
-
-        return  getModel().calculateCases(subjectName);
+        String subjectName = task.getSubject().getName();
+        return getModel().calculateCases(subjectName);
 
 
     }
 
-
+    /**
+     * This method looks for the tasks in the selected table which has
+     * his field on true (selected)
+     * @param adapter  the recyclerView adapter
+     * @return a list of Tasks which are selected
+     */
     private ArrayList<Task> getSelectedTasks(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
-        for(int i=0;i<adapter.getItemCount();i++){
-            if(itemsSelected.get(i)){
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (itemsSelected.get(i)) {
                 selected.add(adapter.getItems().get(i));
             }
         }
@@ -314,24 +311,22 @@ checkSelection();
     }
 
 
-
-
     @Override
     public void onAddBtnClick() {
-        Navigator app = (Navigator)getView().getApplication();
+        Navigator app = (Navigator) getView().getApplication();
         app.goToAddTaskScreen(this);
     }
+
 
     @Override
     public void onDoneBtnClick(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
-        for(int i=0;i<selected.size();i++){
+        for (int i = 0; i < selected.size(); i++) {
             database.setItemStatus(selected.get(i), "Done");
-
         }
 
-        for(int j=0;j<adapter.getItemCount();j++){
-            if(itemsSelected.get(j)){
+        for (int j = 0; j < adapter.getItemCount(); j++) {
+            if (itemsSelected.get(j)) {
                 adapter.notifyItemRemoved(j);
             }
 
@@ -345,27 +340,16 @@ checkSelection();
     }
 
 
-
-
-
-
     ///////////////////////////////////////////////////////////////////////////////////
     // To ListDoTo //////////////////////////////////////////////////////////////////////
+
 
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
-    if(isViewRunning()) {
-  getView().initSwipe();
-        getView().initDialog();
-    }
-
-    //isTaskForgotten(database.getItemsFromDatabase().get(0).getDate());
-
-
-//TODO:Descomentar cuando se instala la app por primera vez y luego comentar
-      //database.createTestingScenario();
-        ListSubjectModel subjectAssistant = new ListSubjectModel();
+        if (isViewRunning()) {
+            getView().initSwipe();
+        }
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -374,7 +358,8 @@ checkSelection();
         requestUserPermissions();
     }
 
-    public void requestUserPermissions(){
+//TODO: IVAN COMENTA ESTE METODO
+    public void requestUserPermissions() {
         if ((ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.READ_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -382,18 +367,18 @@ checkSelection();
                 != PackageManager.PERMISSION_GRANTED)) {
 
 
-            ActivityCompat.requestPermissions((Activity)getView(),
+            ActivityCompat.requestPermissions((Activity) getView(),
                     new String[]{android.Manifest.permission.READ_CALENDAR},
                     READ_CALENDAR_PERMISSIONS_REQUEST);
 
-            ActivityCompat.requestPermissions((Activity)getView(),
+            ActivityCompat.requestPermissions((Activity) getView(),
                     new String[]{android.Manifest.permission.WRITE_CALENDAR},
                     WRITE_CALENDAR_PERMISSIONS_REQUEST);
 
         }
 
     }
-
+    //TODO: IVAN COMENTA ESTE METODO
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -439,29 +424,24 @@ checkSelection();
         toolbarVisible = visible;
     }
 
-    @Override
-    public void setTextVisibility(boolean visible) {
-        textVisible = visible;
-    }
 
     @Override
     public void setAddBtnVisibility(boolean addBtnVisibility) {
-        addBtnVisible=addBtnVisibility;
+        addBtnVisible = addBtnVisibility;
 
     }
 
     @Override
     public void setDeleteBtnVisibility(boolean deleteBtnVisibility) {
-        deleteBtnVisible=deleteBtnVisibility;
+        deleteBtnVisible = deleteBtnVisibility;
 
     }
 
     @Override
     public void setDoneBtnVisibility(boolean doneBtnVisibility) {
-        doneBtnVisible=doneBtnVisibility;
+        doneBtnVisible = doneBtnVisibility;
 
     }
-
 
 
     @Override
@@ -508,7 +488,6 @@ checkSelection();
     }
 
 
-
     @Override
     public void destroyView() {
         if (isViewRunning()) {
@@ -516,23 +495,20 @@ checkSelection();
         }
     }
 
-    @Override
-    public boolean isToolbarVisible() {
+    /**
+     * Getter of the toolbar visibility state
+     * @return boolean: true if toolbar state is visible else false
+     */
+    private boolean isToolbarVisible() {
         return toolbarVisible;
     }
-
-    @Override
-    public boolean isTextVisible() {
-        return textVisible;
-    }
-
 
     ///////////////////////////////////////////////////////////////////////////////////
 
     private void checkToolbarVisibility() {
         Log.d(TAG, "calling checkToolbarVisibility()");
         if (isViewRunning()) {
-            if (!toolbarVisible) {
+            if (!isToolbarVisible()) {
                 getView().hideToolbar();
             }
         }
@@ -549,6 +525,7 @@ checkSelection();
             }
         }
     }
+
     private void checkDeleteBtnVisibility() {
         Log.d(TAG, "calling checkDeleteBtnVisibility()");
         if (isViewRunning()) {
@@ -559,6 +536,7 @@ checkSelection();
             }
         }
     }
+
     private void checkDoneBtnVisibility() {
         Log.d(TAG, "calling checkDoneBtnVisibility()");
         if (isViewRunning()) {
@@ -569,16 +547,7 @@ checkSelection();
             }
         }
     }
-    private void CheckDoneBtnVisibility() {
-        Log.d(TAG, "calling checkDoneBtnVisibility()");
-        if (isViewRunning()) {
-            if (!doneBtnVisible) {
-                getView().hideDoneBtn();
-            } else {
-                getView().showDoneBtn();
-            }
-        }
-    }
+
 
     public void setSelectedState(boolean selectedState) {
         this.selectedState = selectedState;
@@ -610,17 +579,18 @@ checkSelection();
     @Override
     public void update(Observable o, Object arg) {
 
-        if(arg.equals("delete")){
+        if (arg.equals("delete")) {
             database.deleteDatabaseItem(selectedTask);
-            getView().setToastDelete();
-        }else if(arg.equals("done")){
+            getView().showToastDelete();
+        } else if (arg.equals("done")) {
             database.setItemStatus(selectedTask, "Done");
         }
 
     }
+
     public void loadItems() {
-                onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
-            }
+        onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
+    }
 
 
     public void reloadItems() {
@@ -630,32 +600,10 @@ checkSelection();
     }
 
     @Override
-    public boolean isTaskForgotten(String deadline){
-        boolean isTaskForgotten = false;
+    public boolean isTaskForgotten(String deadline) {
 
-        String day = deadline.substring(0, 2);
-        int intDay = Integer.parseInt(day);
+       return getModel().compareDateWithCurrent(deadline);
 
-        String month = deadline.substring(3, 5);
-        int intMonth = Integer.parseInt(month)-1;
-
-        String year = deadline.substring(6, 10);
-        int intYear = Integer.parseInt(year)-1900;
-
-        String hour = deadline.substring(13, 15);
-        int intHour = Integer.parseInt(hour);
-
-        String minutes = deadline.substring(16);
-        int intMinutes = Integer.parseInt(minutes);
-
-        Date deadlineDate = new Date(intYear, intMonth, intDay, intHour, intMinutes);
-
-        Date currentDate = new Date();
-
-        if(currentDate.after(deadlineDate)){
-            isTaskForgotten = true;
-        }
-        return isTaskForgotten;
     }
 
     @Override
@@ -663,19 +611,19 @@ checkSelection();
         getModel().startBackPressed();
     }
 
-    public void checkForgottenTasks(){
+    public void checkForgottenTasks() {
         List<Task> tasks = database.getToDoItemsFromDatabase();
-        for(int i = 0; i < tasks.size(); i++){
+        for (int i = 0; i < tasks.size(); i++) {
             String deadline = tasks.get(i).getDate();
 
             String day = deadline.substring(0, 2);
             int intDay = Integer.parseInt(day);
 
             String month = deadline.substring(3, 5);
-            int intMonth = Integer.parseInt(month)-1;
+            int intMonth = Integer.parseInt(month) - 1;
 
             String year = deadline.substring(6, 10);
-            int intYear = Integer.parseInt(year)-1900;
+            int intYear = Integer.parseInt(year) - 1900;
 
             String hour = deadline.substring(13, 15);
             int intHour = Integer.parseInt(hour);
@@ -687,7 +635,7 @@ checkSelection();
 
             Date currentDate = new Date();
 
-            if(currentDate.after(deadlineDate)){
+            if (currentDate.after(deadlineDate)) {
                 tasks.get(i);
             }
         }

@@ -15,178 +15,344 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 public interface ListToDoMaster {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // State /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    // State /////////////////////////////////////////////////////////////////////////
 
     /**
      * Interface which provides state passing to listToDo MVP
      */
-  interface ToListToDo {
-        /**
-         *This method is called when
-         */
-    void onScreenStarted();
+    interface ToListToDo {
 
         /**
+         * Method which is called after the share of state variables from Mediator.
+         * This method establish on the View the current state.
          *
-         * @param visible
+         * @see es.ulpgc.eite.clean.mvp.sample.app.App#startingListToDoScreen(ListToDoMaster.ToListToDo)
          */
-    void setToolbarVisibility(boolean visible);
+        void onScreenStarted();
 
         /**
+         * Method that change state of toolbar visibility
          *
-         * @param visible
+         * @param visible: true toolbar will be visible else it will be invisible
          */
-    void setTextVisibility(boolean visible);
+        void setToolbarVisibility(boolean visible);
 
         /**
+         * Method that change state of add button visibility
          *
-         * @param addBtnVisibility
+         * @param addBtnVisibility: true add button will be visible else it will be invisible
          */
-    void setAddBtnVisibility(boolean addBtnVisibility);
+        void setAddBtnVisibility(boolean addBtnVisibility);
 
         /**
+         * Method that change state of delete button visibility
          *
-         * @param deleteBtnVisibility
+         * @param deleteBtnVisibility: true delete button will be visible else it will be invisible
          */
-    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+        void setDeleteBtnVisibility(boolean deleteBtnVisibility);
 
         /**
+         * Method that change state of done button visibility
          *
-         * @param deleteBtnVisibility
+         * @param doneBtnVisibility: true done button will be visible else it will be invisible
          */
-    void setDoneBtnVisibility(boolean deleteBtnVisibility);
-  }
+        void setDoneBtnVisibility(boolean doneBtnVisibility);
+    }
 
-  interface ListToDoTo {
-    Context getManagedContext();
-    void destroyView();
-    boolean isToolbarVisible();
-    boolean isTextVisible();
-  }
-  /**
-   * Interface which allows to start detail screen and recover all data needed to
-   * start the initial state that it will be passed to the detail screen after started
-   */
-   interface MasterListToDetail{
-    Context getManagedContext();
-    Task getSelectedTask();
-    boolean getToolbarVisibility();
+    interface ListToDoTo {
+        /**
+         * Method that provides current context
+         *
+         * @return Context: the current activity context
+         */
+        Context getManagedContext();
 
-  }
+        /**
+         * Method that notify the associated View to finish himself if it exists
+         */
+        void destroyView();
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Screen ////////////////////////////////////////////////////////////////////////
+    }
 
-  /**
-   * Methods offered to VIEW to communicate with PRESENTER
-   */
-  interface ViewToPresenter extends Presenter<PresenterToView> {
+    /**
+     * Interface which allows to start detail screen and recover all data needed to
+     * start the initial state that it will be passed to the detail screen after started
+     */
+    interface MasterListToDetail {
+        /**
+         * Method that provides current context
+         *
+         * @return Context: the current activity context
+         */
+        Context getManagedContext();
 
-    void onDoneBtnClick(TaskRecyclerViewAdapter adapter);
+        /**
+         * Method that provides the object Task which has been clicked
+         *
+         * @return Task: the task which is going to show its detail
+         */
+        Task getSelectedTask();
 
+        /**
+         * @return boolean: true if toolbar presenter state is visible else false
+         */
+        boolean getToolbarVisibility();
 
-      void onListClick(View item, int position, Task task);
+    }
 
-    void onLongListClick(View item, int adapterPosition);
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Screen ////////////////////////////////////////////////////////////////////////
 
-      void onAddBtnClick();
+    /**
+     * Methods offered to VIEW to communicate with PRESENTER
+     */
+    interface ViewToPresenter extends Presenter<PresenterToView> {
 
-      boolean isSelected(int adapterPosition);
+        /**
+         * Method that look for selected tasks and after it change them state
+         * to done
+         *
+         * @param adapter the recyclerView adapter
+         */
+        void onDoneBtnClick(TaskRecyclerViewAdapter adapter);
 
-    void onBinBtnClick(TaskRecyclerViewAdapter adapter);
+        /**
+         * Method that that interprets a click on a specific item of the recyclerView
+         * according to if there is a state of task selection or not, this current item was already
+         * selected or not.
+         *
+         * @param item      the view of the row clicked on the recyclerView
+         * @param position: position of the task which has been clicked
+         * @param task:     Task which has been clicked
+         */
+        void onListClick(View item, int position, Task task);
 
-      String getCases(Task task);
+        /**
+         * Method that interpret a long click on a specific item of the recyclerView
+         *
+         * @param item             the view of the row clicked on the recyclerView
+         * @param adapterPosition: position of the task which has been clicked
+         */
+        void onLongListClick(View item, int adapterPosition);
 
-    void subjectFilter();
+        /**
+         * This method is called when the floating btn add is clicked.
+         * It communicate with Navigator to go to Add Task Activity
+         */
+        void onAddBtnClick();
 
-    void swipeLeft(Task currentTask);
+        /**
+         * This method check if a task is selected searching it by his recyclerView
+         * position in a table
+         *
+         * @param adapterPosition the item position in the recyclerView we are asking for
+         * @return true if a task is selected else false
+         */
+        boolean isSelected(int adapterPosition);
 
-    void swipeRight(Task currentTask);
+        /**
+         * This method delete one or more specific tasks
+         *
+         * @param adapter the recyclerView adapter
+         */
+        void onBinBtnClick(TaskRecyclerViewAdapter adapter);
 
-    boolean isTaskForgotten(String deadline);
+        /**
+         * This method build a bridge between View and Model in order to obtain
+         * the cases of an specific String with a specific pattern
+         *
+         * @param task the specific object which is going to be subjected to the calculation
+         * @return to the View a specific case(s) with a specific format
+         */
+        String getCases(Task task);
 
-    void onBtnBackPressed();
-  }
+        /**
+         * Method that build a communication bridge between View-Model
+         * to order the items in the recycler view according to its Subject
+         *
+         * @see ListToDoModelMaster#orderSubjects()
+         */
+        void subjectFilter();
 
-  /**
-   * Required VIEW methods available to PRESENTER
-   */
-  interface PresenterToView extends ContextView {
-    void finishScreen();
-    void hideToolbar();
+        /**
+         * Method that deletes the task where swipe is occurred. It communicates with
+         * database facade in order to do that.
+         *
+         * @param currentTask: Task where swipe is occurred
+         * @see es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade
+         */
+        void swipeLeft(Task currentTask);
 
-      void showAddBtn();
+        /**
+         * Method that change current task status "to-do" to "done" . It communicates with
+         * database facade in order to do that
+         *
+         * @param currentTask: Task where swipe is occurred
+         * @see es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade
+         */
+        void swipeRight(Task currentTask);
 
-      void hideDeleteBtn();
+        /**
+         * Method that build a communication bridge between View-Model
+         * to know if a deadline of a tasks is elder thant current one
+         *
+         * @param deadline: String that show deadline of a specific task
+         * @return boolean: true if current date is greater than deadline else false
+         */
+        boolean isTaskForgotten(String deadline);
 
-      void showDeleteBtn();
+        void onBtnBackPressed();
+    }
 
-      void hideAddBtn();
+    /**
+     * Required VIEW methods available to PRESENTER
+     */
+    interface PresenterToView extends ContextView {
+        /**
+         * This method is called generally by Presenter in order to finish this
+         * Activity (View)
+         */
+        void finishScreen();
 
-    void hideDoneBtn();
+        /**
+         * Method that turns toolbar visibility to GONE
+         */
+        void hideToolbar();
 
-    void showDoneBtn();
+        /**
+         * Method that turns Add Button to visible
+         */
+        void showAddBtn();
 
-      void hideTextWhenIsEmpty();
+        /**
+         * Method that turns Delete Button to invisible
+         */
+        void hideDeleteBtn();
 
-    void showTextWhenIsEmpty();
+        /**
+         * Method that turns Delete Button to visible
+         */
+        void showDeleteBtn();
 
+        /**
+         * Method that turns Add Button to invisible
+         */
+        void hideAddBtn();
 
-  void setRecyclerAdapterContent(List<Task> items);
+        /**
+         * Method that turns Done Button to invisible
+         */
+        void hideDoneBtn();
 
+        /**
+         * Method that turns Done Button to visible
+         */
+        void showDoneBtn();
 
-    void toolbarChanged(String colour);
+        /**
+         * Method that turns inform text list empty to invisible
+         */
+        void hideTextWhenIsEmpty();
 
-    void setToastDelete();
+        /**
+         * Method that turns inform text list empty to visible
+         */
+        void showTextWhenIsEmpty();
 
-    void confirmBackPressed();
+        /**
+         * This method load an specific list of Task into an adapter to inflate a
+         * recycler view
+         *
+         * @param items: a list of task to load in custom RecyclerView Adapter
+         */
+        void setRecyclerAdapterContent(List<Task> items);
 
-    void initSwipe();
+        /**
+         * Method that change toolbar colour depending of the user share preferences
+         *
+         * @param colour: color to change
+         */
+        void toolbarChanged(String colour);
 
-    void initDialog();
+        /**
+         * Method that shows a toast after deleting a task
+         */
+        void showToastDelete();
 
-    void showToastBackConfirmation(String toastBackConfirmation);
-  }
+        /**
+         * Method which notice View that button back has been pressed twice in a row
+         *
+         * @see ListToDoModelMaster#startBackPressed()
+         */
+        void confirmBackPressed();
 
-  /**
-   * Methods offered to MODEL to communicate with PRESENTER
-   */
-  interface PresenterToModel extends Model<ModelToPresenter> {
-    String getToastBackConfirmation();
+        /**
+         * Init all actions for swipe on a recyclerView row (it configures listeners, draw, etc)
+         */
+        void initSwipe();
 
-    void deleteItem(Task item);
-    void loadItems();
+        /**
+         * This method notice View to show a Toast in order to notice him
+         * to press back again to close the application
+         *
+         * @param toastBackConfirmation: the text showed on the toast
+         */
+        void showToastBackConfirmation(String toastBackConfirmation);
+    }
 
-    void startBackPressed();
+    /**
+     * Methods offered to MODEL to communicate with PRESENTER
+     */
+    interface PresenterToModel extends Model<ModelToPresenter> {
+        String getToastBackConfirmation();
 
-    void reloadItems();
-    void setDatabaseValidity(boolean valid);
-    String getErrorMessage();
-    void addInitialTasks();
+        void deleteItem(Task item);
 
-    void deleteTestItems();
+        void loadItems();
 
-    void deleteDatabaseItem(Task item);
+        void startBackPressed();
 
-    String calculateCases(String subjectName);
+        void reloadItems();
 
-    List<Task> orderSubjects();
-  }
+        void setDatabaseValidity(boolean valid);
 
-  /**
-   * Required PRESENTER methods available to MODEL
-   */
-  interface ModelToPresenter {
-    Context getManagedContext();
-    void onErrorDeletingItem(Task item);
-    void onLoadItemsTaskFinished(List<Task> items);
-    void onLoadItemsTaskStarted();
+        String getErrorMessage();
 
-    void confirmBackPressed();
+        void addInitialTasks();
 
-    void delayedTaskToBackStarted();
-  }
+        void deleteTestItems();
+
+        void deleteDatabaseItem(Task item);
+
+        String calculateCases(String subjectName);
+
+        List<Task> orderSubjects();
+
+        /**
+         * Method calculate if a specific date is elder than current one
+         * @param date: date which is going to be compare with actual
+         * @return boolean: true if specific date is elder else false
+         */
+        boolean compareDateWithCurrent(String date);
+    }
+
+    /**
+     * Required PRESENTER methods available to MODEL
+     */
+    interface ModelToPresenter {
+        Context getManagedContext();
+
+        void onErrorDeletingItem(Task item);
+
+        void onLoadItemsTaskFinished(List<Task> items);
+
+        void onLoadItemsTaskStarted();
+
+        void confirmBackPressed();
+
+        void delayedTaskToBackStarted();
+    }
 
 
 }

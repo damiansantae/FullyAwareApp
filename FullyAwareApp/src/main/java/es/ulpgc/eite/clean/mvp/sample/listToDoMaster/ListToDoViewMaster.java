@@ -133,8 +133,6 @@ public class ListToDoViewMaster
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //////////////////////////
         loadSharePreferences();
-        initSwipe();
-
     }
 
 
@@ -195,6 +193,7 @@ public class ListToDoViewMaster
     // Presenter To View /////////////////////////////////////////////////////////////
 
 
+
     @Override
     public void finishScreen() {
         finish();
@@ -211,23 +210,34 @@ public class ListToDoViewMaster
     public void hideAddBtn() {
         add.setVisibility(View.INVISIBLE);
 
-
     }
+
+    @Override
+    public void showAddBtn() {
+        add.setVisibility(View.VISIBLE);
+    }
+
+
 
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
     }
 
+
+
     @Override
     public void showDoneBtn() {
         done.setVisibility(View.VISIBLE);
     }
 
+
+
     @Override
     public void hideTextWhenIsEmpty() {
         textWhenIsEmpty.setVisibility(View.INVISIBLE);
     }
+
 
     @Override
     public void showTextWhenIsEmpty() {
@@ -235,19 +245,14 @@ public class ListToDoViewMaster
     }
 
 
-    @Override
-    public void showAddBtn() {
-        add.setVisibility(View.VISIBLE);
 
-
-    }
 
     @Override
     public void hideDeleteBtn() {
         bin.setVisibility(View.INVISIBLE);
-
-
     }
+
+
 
     @Override
     public void showDeleteBtn() {
@@ -275,20 +280,25 @@ public class ListToDoViewMaster
     }
 
     @Override
-    public void setToastDelete() {
+    public void showToastDelete() {
         Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_LONG).show();
 
     }
+
+    /**
+     * This method is called when back button is pressed on List To Do View
+     */
+    @Override
+    public void confirmBackPressed(){
+        super.onBackPressed();
+    }
+
 
     @Override
     public void onBackPressed() {
 getPresenter().onBtnBackPressed();
     }
 
-    @Override
-    public void confirmBackPressed(){
-        super.onBackPressed();
-    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -363,6 +373,7 @@ getPresenter().onBtnBackPressed();
                     Log.d(TAG, "Swipe right");
 
                     removeView();
+                    initDialog();
                     alertDialog.setTitle("Do you want to delete this task permanently?");
                     alertDialog.show();
                     adapter.notifyDataSetChanged();
@@ -404,8 +415,11 @@ getPresenter().onBtnBackPressed();
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    @Override
-    public void initDialog(){
+    /**
+     * Method that create a dialog and inflate it in order to ask user to
+     * a delete task confirmation
+     */
+    private void initDialog(){
         alertDialog = new AlertDialog.Builder(this);
         view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog,null);
         alertDialog.setView(view);
@@ -461,8 +475,6 @@ getPresenter().onBtnBackPressed();
         toast.setGravity(Gravity.BOTTOM, 50, 500);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
-
-
     }
 
     /**

@@ -117,11 +117,11 @@ public class App extends Application implements Mediator, Navigator {
         presenter.onScreenStarted();
     }
 
+
     @Override
     public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter) {
         if (toListToDoState != null) {
             presenter.setToolbarVisibility(toListToDoState.toolbarVisibility);
-            presenter.setTextVisibility(toListToDoState.textVisibility);
             presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
             presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
@@ -338,9 +338,7 @@ public class App extends Application implements Mediator, Navigator {
 
         if (view != null) {
             view.startActivity(new Intent(view, PreferencesView.class));
-
         }
-
     }
 
     @Override
@@ -428,7 +426,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void startActivy(Intent intent) {
+    public void startActivity(Intent intent) {
         startActivity(intent);
     }
 
@@ -439,8 +437,6 @@ public class App extends Application implements Mediator, Navigator {
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTask();
         masterListToDetailToDoState.master = listToDoPresenterMaster;
-
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listToDoPresenterMaster.getManagedContext();
@@ -494,7 +490,6 @@ public class App extends Application implements Mediator, Navigator {
         if (view != null) {
             view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
 
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
 
             presenter.destroyView();
         }
@@ -549,20 +544,9 @@ public class App extends Application implements Mediator, Navigator {
         if (view != null) {
             presenter.destroyView();
             view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
-
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
-
         }
 
-
     }
-
-
-    @Override
-    public void goToPreferencesScreen(Preferences.PreferencesTo presenter) {
-        //TODO: borrar metodo de la interfaz.
-    }
-
 
     @Override
     public void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter) {
@@ -575,7 +559,6 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
         if (view != null) {
 
-            //TODO: activar esta linea para funcionamiento con listView: view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
 
 
@@ -651,7 +634,6 @@ public class App extends Application implements Mediator, Navigator {
     private class ListDoneState {
         boolean toolbarVisibility;
         boolean textVisibility;
-        boolean addBtnVisibility;
         boolean deleteBtnVisibility;
         Task TaskDone;
     }
@@ -663,11 +645,6 @@ public class App extends Application implements Mediator, Navigator {
         boolean deleteBtnVisibility;
     }
 
-    private class ListForgottenState {
-        boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean deleteBtnVisibility;
-    }
 
     private class AddTaskState {
         boolean toolbarVisibility;
@@ -712,10 +689,5 @@ public class App extends Application implements Mediator, Navigator {
     private class ListDoneStateTask {
         Task TaskToDelete;
     }
-
-    private class ListForgottenStateTask {
-        Task taskToDelete;
-    }
-
 
 }

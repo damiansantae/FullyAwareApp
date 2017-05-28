@@ -191,7 +191,7 @@ public class AddTaskPresenter extends GenericPresenter
                 .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
                 .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
         Navigator app = (Navigator)getView().getApplication();
-        app.startActivy(intent);
+        app.startActivity(intent);
 
     }
 

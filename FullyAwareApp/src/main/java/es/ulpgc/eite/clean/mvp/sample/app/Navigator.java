@@ -11,7 +11,6 @@ import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 
@@ -48,12 +47,6 @@ public interface Navigator {
 
 
 
-
-    /****************************************************************************
-     ******** Navegación direccion ListForgotten al resto de pantallas y detalle*/
-    void goToPreferencesScreen(Schedule.ScheduleTo presenter);
-
-
     /***************************************************************
      ******** Navegación direccion Shedule al resto de pantallas */
 
@@ -61,10 +54,11 @@ public interface Navigator {
 
     void goToListDoneScreen(Schedule.ScheduleTo presenter);
 
-    void goToPreferencesScreen(Preferences.PreferencesTo presenter);
 
     void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter);
 
+
+    void goToPreferencesScreen(Schedule.ScheduleTo presenter);
 
     /*******************************************************************
      ******** Navegación direccion Preferences al resto de pantallas*/
@@ -84,5 +78,5 @@ public interface Navigator {
     void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
     void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
 
-    void startActivy(Intent intent);
+    void startActivity(Intent intent);
 }

@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 import android.os.Handler;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -349,6 +350,35 @@ getPresenter().confirmBackPressed();
         }
 return orderedList;
 
+    }
+
+    @Override
+    public boolean compareDateWithCurrent(String date) {
+        boolean isTaskForgotten = false;
+
+        String day = date.substring(0, 2);
+        int intDay = Integer.parseInt(day);
+
+        String month = date.substring(3, 5);
+        int intMonth = Integer.parseInt(month) - 1;
+
+        String year = date.substring(6, 10);
+        int intYear = Integer.parseInt(year) - 1900;
+
+        String hour = date.substring(13, 15);
+        int intHour = Integer.parseInt(hour);
+
+        String minutes = date.substring(16);
+        int intMinutes = Integer.parseInt(minutes);
+
+        Date deadlineDate = new Date(intYear, intMonth, intDay, intHour, intMinutes);
+
+        Date currentDate = new Date();
+
+        if (currentDate.after(deadlineDate)) {
+            isTaskForgotten = true;
+        }
+        return isTaskForgotten;
     }
 
 
