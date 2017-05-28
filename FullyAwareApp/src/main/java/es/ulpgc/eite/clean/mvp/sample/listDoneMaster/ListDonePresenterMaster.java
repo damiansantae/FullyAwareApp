@@ -17,6 +17,8 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
@@ -63,7 +65,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         database =DatabaseFacade.getInstance();
 
         app.startingListDoneScreen(this);
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListDoneViewMaster) getView());
     }
 
     /**
@@ -84,18 +86,9 @@ public class ListDonePresenterMaster extends GenericPresenter
         checkSelection();
         checkDeleteBtnVisibility();
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListDoneViewMaster) getView());
+
         loadItems();
-    }
-
-
-
-//TODO: JORDI COMENTA ESTO
-    private void checkToolbarColourChanges(Mediator app){
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
     }
 
 
@@ -346,5 +339,10 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
 
+    }
+
+    public int getToolbarColour() {
+        PrefManager prefManager = new PrefManager(getActivityContext());
+        return prefManager.getToolbarColour();
     }
 }

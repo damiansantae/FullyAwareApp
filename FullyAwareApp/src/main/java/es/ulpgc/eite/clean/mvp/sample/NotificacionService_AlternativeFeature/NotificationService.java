@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample;
+package es.ulpgc.eite.clean.mvp.sample.NotificacionService_AlternativeFeature;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -14,6 +14,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public class NotificationService extends Service {
@@ -22,7 +23,7 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//iniciamos el servicio y lo destruimos para que no se quede guardado en RAM
+    //iniciamos el servicio y lo destruimos para que no se quede guardado en RAM
         stopSelf();
         return START_NOT_STICKY;
 

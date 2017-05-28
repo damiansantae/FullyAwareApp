@@ -24,10 +24,9 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoPresenterDetail;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
-
-import static android.content.Context.MODE_PRIVATE;
+import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 /**
  * Presenter of a task to do  list.
@@ -38,8 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
  * @version 1.0, 28/05/2017
  */
 public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel,
-                ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
+        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
         implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter,
         ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo,
         ListToDoMaster.MasterListToDetail, Observer {
@@ -81,7 +79,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         database = DatabaseFacade.getInstance();
 
         app.startingListToDoScreen(this);
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListToDoViewMaster) getView());
 
 
     }
@@ -109,7 +107,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         checkTextWhenIsEmptyVisibility();
         checkDoneBtnVisibility();
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListToDoViewMaster) getView());
         loadItems();
     }
 
@@ -120,7 +118,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private void checkTextWhenIsEmptyVisibility() {
         Log.d(TAG, "calling checkTextWhenIsEmptyVisibility()");
         if (isViewRunning()) {
-            if (database.getToDoItemsFromDatabase().size() == 0) {
+            if (database.getToDoTasksFromDatabase().size() == 0) {
                 getView().showTextWhenIsEmpty();
             } else {
                 getView().hideTextWhenIsEmpty();
@@ -128,27 +126,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
     }
 
-
-    //TODO: JORDI COMENTA ESTE METODO
-    private void checkToolbarColourChanges(Mediator app) {
-
-        Context context = getApplicationContext();
-        SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-
-        if (app.checkToolbarChanged() == true) {
-
-            Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-
-
-            SharedPreferences.Editor editor = myprefs.edit();
-            editor.putString(TOOLBAR_COLOR_KEY, colour);
-            Log.d("999AQUIIIIIIIII", "" + app.getToolbarColour());
-            editor.commit();
-            Log.d("999AQUIIIIIIIII", "" + myprefs.getString(TOOLBAR_COLOR_KEY, null));
-        }
-    }
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
@@ -318,8 +295,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onDoneBtnClick(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
-        for (int i = 0; i < selected.size(); i++) {
-            database.setItemStatus(selected.get(i), "Done");
+        for(int i=0;i<selected.size();i++){
+            database.setTaskStatus(selected.get(i), "Done");
+
         }
 
         for (int j = 0; j < adapter.getItemCount(); j++) {
@@ -457,7 +435,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     @Override
     public void swipeRight(Task currentTask) {
-        database.setItemStatus(currentTask, "Done");
+        database.setTaskStatus(currentTask, "Done");
         checkTextWhenIsEmptyVisibility();
     }
 
@@ -551,7 +529,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     private void loadItems() {
-        getView().setRecyclerAdapterContent(database.getToDoItemsFromDatabase());
+        getView().setRecyclerAdapterContent(database.getToDoTasksFromDatabase());
     }
 
 
@@ -568,7 +546,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     }
 
     public void checkForgottenTasks() {
-        List<Task> tasks = database.getToDoItemsFromDatabase();
+        List<Task> tasks = database.getToDoTasksFromDatabase();
         for (int i = 0; i < tasks.size(); i++) {
             String deadline = tasks.get(i).getDate();
 
@@ -597,6 +575,11 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
     }
 
+    public int getToolbarColour() {
+        PrefManager prefManager = new PrefManager(getActivityContext());
+        return prefManager.getToolbarColour();
+    }
+
     /**
      *When detail make a notifyObserver() this method is accessed.
      * It delete the task which showed its detail before or change it
@@ -612,7 +595,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
             database.deleteDatabaseItem(selectedTask);
             getView().showToastDelete();
         } else if (arg.equals("done")) {
-            database.setItemStatus(selectedTask, "Done");
+            database.setTaskStatus(selectedTask, "Done");
         }
 
     }

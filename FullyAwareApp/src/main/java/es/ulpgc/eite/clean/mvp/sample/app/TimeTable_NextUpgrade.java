@@ -23,10 +23,6 @@ private String timeTableId;
 
     }
 
-
-
-
-
     public Subject getSubject() {
         return subject;
     }

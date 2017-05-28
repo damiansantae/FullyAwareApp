@@ -1,7 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,28 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 public class ListSubjectView
@@ -46,19 +40,9 @@ public class ListSubjectView
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
     private SubjectRecyclerViewAdapter adapter;
-    int hourFrames;
     private PrefManager prefManager;
-    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    public static final String MY_PREFS = "MyPrefs";
-    ArrayList<String> indexHours = new ArrayList<String>();
-    ArrayList<String> indexDays = new ArrayList<String>();
-    Map<String,ArrayList<String>> HoursArays = new HashMap<String, ArrayList<String>>();
-    Map<String,ArrayList<String>> DaysArays = new HashMap<String, ArrayList<String>>();
-
     ArrayList<String> subjectList;
     int numberOfSubjects;
-
-    private String hourLabel = "HOUR";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -74,22 +58,20 @@ public class ListSubjectView
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
         adapter = new SubjectRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         bin.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-        getPresenter().onBinBtnClick2(adapter);
-        adapter.notifyDataSetChanged(); }
+            @Override
+            public void onClick(View v) {
+                getPresenter().onBinBtnClick2(adapter);
+                adapter.notifyDataSetChanged();
+            }
 
-                               });
+        });
 
         setSupportActionBar(toolbar);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        loadSharePreferences();
-        Mediator mediator = (Mediator) getApplication();
+        prefManager = new PrefManager(getActivityContext());
     }
 
     /**
@@ -103,27 +85,12 @@ public class ListSubjectView
     }
 
 
-    //Este metodo sirve para inflar el menu en la action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listtodo_master_forgotten, menu);
         return true;
     }
-
-
-    ///
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -133,29 +100,27 @@ public class ListSubjectView
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-       if (id ==R.id.menuToDo){
+        if (id == R.id.menuToDo) {
             Navigator app = (Navigator) getApplication();
             app.goToListToDoScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
 
-        }
-        else if (id ==R.id.menuDone){
+        } else if (id == R.id.menuDone) {
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Done",Toast.LENGTH_SHORT).show();
-        }
-        else if (id ==R.id.menucalendar){
+            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.menucalendar) {
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListSubject.ListSubjectTo) getPresenter());
-            Toast.makeText(getApplicationContext(),"Calendar",Toast.LENGTH_SHORT).show();
-        }
-         else if (id ==R.id.menuPreferences) {
+            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Pasando a pantalla Preferencias");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -168,13 +133,10 @@ public class ListSubjectView
         finish();
     }
 
-
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
-
-
 
     @Override
     public void deselect(int i, boolean b) {
@@ -237,9 +199,6 @@ public class ListSubjectView
     }
 
 
-
-
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -276,12 +235,6 @@ public class ListSubjectView
         client.disconnect();
     }
 
-    public void setCheckedBoxes(AddHourSubjectDialog dialog,int index) {
-
-
-    }
-
-
     ///////////////////////////////////////////////////////////////
 
 
@@ -307,7 +260,7 @@ public class ListSubjectView
         }
 
 
-        public List<Subject> getItems(){
+        public List<Subject> getItems() {
             return this.items;
         }
 
@@ -356,7 +309,7 @@ public class ListSubjectView
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,subject);
+                        getPresenter().onListClick2(itemView, getAdapterPosition(), adapter, subject);
 
                     }
                 });
@@ -365,7 +318,7 @@ public class ListSubjectView
                     @Override
                     public boolean onLongClick(View v) {
 
-                        getPresenter().onLongListClick2(v,getAdapterPosition());
+                        getPresenter().onLongListClick2(v, getAdapterPosition());
 
                         return true;
                     }
@@ -376,9 +329,6 @@ public class ListSubjectView
 
 
     }
-
-
-
 
     @Override
     public void showAddUserNameDialog() {
@@ -397,25 +347,31 @@ public class ListSubjectView
 
     @Override
     public void showAddSubjectsDialog() {
-
         final AddFirstSubjectDialog dialog = new AddFirstSubjectDialog();
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
         numberOfSubjects = 0;
         subjectList = new ArrayList<>();
+        prefManager.setFirstTimeLaunch(false);
+
         dialog.setListener(new AddFirstSubjectDialog.OnAddSubjectClickListener() {
             @Override
             public void onAddSubjectClickListener(String label) {
                 EditText etSubjectName = (EditText) dialog.getView().findViewById(R.id.et_subject_name);
-
-                if (label.equals(getPresenter().getFinishLabel())){
-                    if(numberOfSubjects==0){
+                if (label.equals(getPresenter().getFinishLabel())) {
+                    if (numberOfSubjects == 0) {
                         dialog.dismiss();
-                    } else{
-                        addingHoursToSubject();
+                        Toast.makeText(getApplicationContext(), "No subjects added", Toast.LENGTH_SHORT).show();
+                        launchHomeScreen();
+                        finish();
+                    } else {
+                        getPresenter().addSubjectsToDataBase(subjectList);
                         dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "All subjects added", Toast.LENGTH_SHORT).show();
+                        launchHomeScreen();
+                        finish();
                     }
 
-           } else {
+                } else {
                     switch (numberOfSubjects) {
 
                         case 0:
@@ -512,401 +468,11 @@ public class ListSubjectView
         });
     }
 
-    private void addingHoursToSubject() {
-
-        for (int i=0; i< subjectList.size(); i++){
-            showAddHourSubjectDialog(subjectList.get(i));
-        }
-
-
-
+    private void launchHomeScreen() {
+        startActivity(new Intent(ListSubjectView.this, ListToDoViewMaster.class));
+        finish();
+    }
     }
 
-    @Override
-    public void showAddHourSubjectDialog(final String newSubject) {
-
-           final AddHourSubjectDialog dialog = new AddHourSubjectDialog();
-
-           Bundle args = new Bundle();
-           args.putString("subjectName", newSubject);
-           dialog.setArguments(args);
-
-           dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
-           hourFrames = 0;
-           getPresenter().resetDaysChecked();
-           getPresenter().resetSelectedHours();
-           prefManager = new PrefManager(this);
-           if (!prefManager.isFirstTimeLaunch()) {
-               prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once
-           }
-
-           dialog.setListener(new AddHourSubjectDialog.OnAddHourSubjectClickListener() {
-               @Override
-               public void onAddHourSubjectClickListener(String label) {
-
-                   //Boton Floating Add Pulsado
-                   if (label.equals(getPresenter().getLabelFloatingAdd())){
-                       Log.d("ADD HOUR BUTTON TAG", "BUTTON ADD HOUR CLICKED");
-                       if (hourFrames == 0){
-                           dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
-                           dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.VISIBLE);
-                           prefManager.setHourFrames(hourFrames++);
-
-                       } else if (hourFrames == 1){
-                           dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
-                           prefManager.setHourFrames(hourFrames++);
-
-                       } else if (hourFrames == 2) {
-                           dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
-                           prefManager.setHourFrames(hourFrames++);
-
-                       } else if(hourFrames == 3) {
-                           dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
-                           dialog.getView().findViewById(R.id.fb_add).setVisibility(View.INVISIBLE);
-                           prefManager.setHourFrames(hourFrames++);
-                       }
-                   }
-
-                   //Boton Floating Delete Pulsado
-                   if (label.equals(getPresenter().getLabelFloatingDelete())){
-                       Log.d("DELETE HOUR BUTTON TAG", "BUTTON DELETE HOUR CLICKED");
-                       if (hourFrames == 4){
-                           dialog.getView().findViewById(R.id.time_5).setVisibility(View.GONE);
-                           dialog.getView().findViewById(R.id.fb_add).setVisibility(View.VISIBLE);
-                           prefManager.setHourFrames(hourFrames--);
-
-                           //Por si ha sido modificado por el picker
-                           Button bt5 = (Button)dialog.getView().findViewById(R.id.bt_hour_5);
-                           bt5.setText(hourLabel);
-                           getPresenter().setTimeText(4,"");
-                           getPresenter().uncheckDaysBoxes(dialog,4);
-
-
-                       } else if (hourFrames ==3){
-                           dialog.getView().findViewById(R.id.time_4).setVisibility(View.GONE);
-                           prefManager.setHourFrames(hourFrames--);
-
-
-                           //Por si ha sido modificado por el picker
-                           Button bt4 = (Button)dialog.getView().findViewById(R.id.bt_hour_4);
-                           bt4.setText(hourLabel);
-                           getPresenter().setTimeText(3,"");
-                           getPresenter().uncheckDaysBoxes(dialog,3);
-
-                       } else if (hourFrames ==2) {
-                           dialog.getView().findViewById(R.id.time_3).setVisibility(View.GONE);
-                           prefManager.setHourFrames(hourFrames--);
-
-
-                           //Por si ha sido modificado por el picker
-                           Button bt3 = (Button)dialog.getView().findViewById(R.id.bt_hour_3);
-                           bt3.setText(hourLabel);
-                           getPresenter().setTimeText(2,"");
-                           getPresenter().uncheckDaysBoxes(dialog,2);
-
-                       } else if(hourFrames ==1) {
-                           dialog.getView().findViewById(R.id.time_2).setVisibility(View.GONE);
-                           dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.INVISIBLE);
-                           prefManager.setHourFrames(hourFrames--);
-
-                           //Por si ha sido modificado por el picker
-                           Button bt2 = (Button)dialog.getView().findViewById(R.id.bt_hour_2);
-                           bt2.setText(hourLabel);
-                           getPresenter().setTimeText(1,"");
-                           getPresenter().uncheckDaysBoxes(dialog,1);
-
-
-                       }
-                   }
-               }
-
-               @Override
-               public void onAddHourSubjectClickListener(int i) {
-
-                   if (i==5){
-                       getPresenter().getCheckedBoxes(dialog);
-                       getPresenter().getSelectedHours(dialog);
-                       getPresenter().transformData(newSubject);
-                       getPresenter().resetDaysChecked();
-                       getPresenter().resetSelectedHours();
-                       dialog.dismiss();
-                   } else if(i==6){
-
-
-                   } else {
-                       getPresenter().onSelectTimeBtnClicked(i, dialog);
-                       getPresenter().setTimeLabelOnButton(i,dialog); //este se puede meter dentro del anterior metodo;
-                   }
-               }
-
-
-           });
-    }
-
-
-
-
-    //Bucle que genera los indices del HashMap
-      /*  for (int i=0; i< subjectList.size(); i++){
-         String hours =  "hoursOfSubject"+i;
-         String days = "daysOfSubject"+i;
-         indexHours.add(hours);
-         indexDays.add(days);
-    }
-
-        //Bucle que genera los arrays para cada Asignatura
-        for (int i=0; i<subjectList.size(); i++){
-         HoursArays.put(indexHours.get(i),new ArrayList<String>());
-         DaysArays.put(indexDays.get(i),new ArrayList<String>());
-        }*/
-
-
-
-
-
-
-
-/*
-
-    private void findCheckBoxesChecked(AddHourSubjectDialog dialog) {
-        prefManager = new PrefManager(dialog.getContext());
-        int hourFrames = prefManager.getHourFrames();
-        Log.d("CHECK COUNTER", "" + hourFrames);
-        Log.d("CHECK SELECTION TAG", "ENTRA AL METODO");
-
-        //All the layouts that contains the information, ya tu sabe.
-        LinearLayout l1 = (LinearLayout) dialog.getView().findViewById(R.id.time_1);
-        LinearLayout l2 = (LinearLayout) dialog.getView().findViewById(R.id.time_2);
-        LinearLayout l3 = (LinearLayout) dialog.getView().findViewById(R.id.time_3);
-        LinearLayout l4 = (LinearLayout) dialog.getView().findViewById(R.id.time_4);
-        LinearLayout l5 = (LinearLayout) dialog.getView().findViewById(R.id.time_5);
-
-        //Checkboxes for l1 hour space.
-        CheckBox c1l1 = (CheckBox) l1.findViewById(R.id.cb_monday);
-        CheckBox c2l1 = (CheckBox) l1.findViewById(R.id.cb_tuesday);
-        CheckBox c3l1 = (CheckBox) l1.findViewById(R.id.cb_wednesday);
-        CheckBox c4l1 = (CheckBox) l1.findViewById(R.id.cb_thursday);
-        CheckBox c5l1 = (CheckBox) l1.findViewById(R.id.cb_friday);
-        CheckBox c6l1 = (CheckBox) l1.findViewById(R.id.cb_saturday);
-        CheckBox c7l1 = (CheckBox) l1.findViewById(R.id.cb_sunday);
-
-        //Checkboxes for l2 hour space.
-        CheckBox c1l2 = (CheckBox) l2.findViewById(R.id.cb_monday);
-        CheckBox c2l2 = (CheckBox) l2.findViewById(R.id.cb_tuesday);
-        CheckBox c3l2 = (CheckBox) l2.findViewById(R.id.cb_wednesday);
-        CheckBox c4l2 = (CheckBox) l2.findViewById(R.id.cb_thursday);
-        CheckBox c5l2 = (CheckBox) l2.findViewById(R.id.cb_friday);
-        CheckBox c6l2 = (CheckBox) l2.findViewById(R.id.cb_saturday);
-        CheckBox c7l2 = (CheckBox) l2.findViewById(R.id.cb_sunday);
-
-        //Checkboxes for l3 hour space.
-        CheckBox c1l3 = (CheckBox) l3.findViewById(R.id.cb_monday);
-        CheckBox c2l3 = (CheckBox) l3.findViewById(R.id.cb_tuesday);
-        CheckBox c3l3 = (CheckBox) l3.findViewById(R.id.cb_wednesday);
-        CheckBox c4l3 = (CheckBox) l3.findViewById(R.id.cb_thursday);
-        CheckBox c5l3 = (CheckBox) l3.findViewById(R.id.cb_friday);
-        CheckBox c6l3 = (CheckBox) l3.findViewById(R.id.cb_saturday);
-        CheckBox c7l3 = (CheckBox) l3.findViewById(R.id.cb_sunday);
-
-        //Checkboxes for l4 hour space.
-        CheckBox c1l4 = (CheckBox) l4.findViewById(R.id.cb_monday);
-        CheckBox c2l4 = (CheckBox) l4.findViewById(R.id.cb_tuesday);
-        CheckBox c3l4 = (CheckBox) l4.findViewById(R.id.cb_wednesday);
-        CheckBox c4l4 = (CheckBox) l4.findViewById(R.id.cb_thursday);
-        CheckBox c5l4 = (CheckBox) l4.findViewById(R.id.cb_friday);
-        CheckBox c6l4 = (CheckBox) l4.findViewById(R.id.cb_saturday);
-        CheckBox c7l4 = (CheckBox) l4.findViewById(R.id.cb_sunday);
-
-        //Checkboxes for l5 hour space.
-        CheckBox c1l5 = (CheckBox) l5.findViewById(R.id.cb_monday);
-        CheckBox c2l5 = (CheckBox) l5.findViewById(R.id.cb_tuesday);
-        CheckBox c3l5 = (CheckBox) l5.findViewById(R.id.cb_wednesday);
-        CheckBox c4l5 = (CheckBox) l5.findViewById(R.id.cb_thursday);
-        CheckBox c5l5 = (CheckBox) l5.findViewById(R.id.cb_friday);
-        CheckBox c6l5 = (CheckBox) l5.findViewById(R.id.cb_saturday);
-        CheckBox c7l5 = (CheckBox) l5.findViewById(R.id.cb_sunday);
-
-
-        HashMap<String,String> daysChecked = new HashMap<String,String>();
-
-            if (c1l1.isChecked()) {
-                daysChecked.put("M1","Monday");
-            } else if (c2l1.isChecked()) {
-                daysChecked.put("T1","Tuesday");
-            } else if (c3l1.isChecked()) {
-                daysChecked.put("W1","Wednesday");
-            } else if (c4l1.isChecked()) {
-                daysChecked.put("X1","Thursday");
-            } else if (c5l1.isChecked()) {
-                daysChecked.put("F1","Friday");
-            } else if (c6l1.isChecked()) {
-                daysChecked.put("S1","Saturday");
-            } else if (c7l1.isChecked()) {
-                daysChecked.put("Sn1","Sunday");
-            }
-
-Log.d("PRUEBAAA", String.valueOf(daysChecked.values()));
-
-
-;
-      /*
-        if (hourFrames == 1) {
-            if (c1l2.isChecked()) {
-                daysChecked.add("Monday");
-            } else if (c2l2.isChecked()) {
-                daysChecked.add("Tuesdar");
-            } else if (c3l2.isChecked()) {
-                daysChecked.add("Wednesday");
-            } else if (c4l2.isChecked()) {
-                daysChecked.add("Thursday");
-            } else if (c5l3.isChecked()) {
-                daysChecked.add("Friday");
-            } else if (c6l4.isChecked()) {
-                daysChecked.add("Saturday");
-            } else if (c7l5.isChecked()) {
-                daysChecked.add("Sunday");
-            }
-        }
-        if (hourFrames == 2) {
-            if (c1l3.isChecked()) {
-                daysChecked.add("Monday");
-            } else if (c2l3.isChecked()) {
-                daysChecked.add("Tuesday");
-            } else if (c3l3.isChecked()) {
-                daysChecked.add("Wednesday");
-            } else if (c4l3.isChecked()) {
-                daysChecked.add("Thursday");
-            } else if (c5l3.isChecked()) {
-                daysChecked.add("Friday");
-            } else if (c6l3.isChecked()) {
-                daysChecked.add("Saturday");
-            } else if (c7l3.isChecked()) {
-                daysChecked.add("Sunday");
-            }
-        }
-        if (hourFrames == 3) {
-            if (c1l4.isChecked()) {
-                daysChecked.add("Monday");
-            } else if (c2l4.isChecked()) {
-                daysChecked.add("Tuesdar");
-            } else if (c3l4.isChecked()) {
-                daysChecked.add("Wednesday");
-            } else if (c4l4.isChecked()) {
-                daysChecked.add("Thursday");
-            } else if (c5l4.isChecked()) {
-                daysChecked.add("Friday");
-            } else if (c6l4.isChecked()) {
-                daysChecked.add("Saturday");
-            } else if (c7l4.isChecked()) {
-                daysChecked.add("Sunday");
-            }
-        }
-        if (hourFrames == 4) {
-            if (c1l5.isChecked()) {
-                daysChecked.add("Monday");
-            } else if (c2l5.isChecked()) {
-                daysChecked.add("Tuesdar");
-            } else if (c3l5.isChecked()) {
-                daysChecked.add("Wednesday");
-            } else if (c4l5.isChecked()) {
-                daysChecked.add("Thursday");
-            } else if (c5l5.isChecked()) {
-                daysChecked.add("Friday");
-            } else if (c6l5.isChecked()) {
-                daysChecked.add("Saturday");
-            } else if (c7l5.isChecked()) {
-                daysChecked.add("Sunday");
-            }
-        }*/
-
-        //TODO:RECOGER HORAS DEL PICKER Y AÑADIRLAS A LOS ARRAY
-
-    }
-
-
-
-   /* @Override
-    public void showAddSubjectsDialog() {
-        final AddHourSubjectDialog dialog = new AddHourSubjectDialog();
-        dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
-        hourFrames =0;
-        prefManager = new PrefManager(this);
-        prefManager.setHourFrames(hourFrames);
-        if (!prefManager.isFirstTimeLaunch()) {
-            prefManager.setFirstTimeLaunch(true); //TODO:Change that to make it work just once
-        }
-
-
-        dialog.setListener(new AddHourSubjectDialog.OnAddHourSubjectClickListener() {
-            @Override
-            public void onAddHourSubjectClickListener(String label) {
-                Log.d("COUNTER TAG", ""+label);
-
-        //Boton Floating Add Pulsado
-              if (label.equals(getPresenter().getLabelFloatingAdd())){
-                  Log.d("ADD HOUR BUTTON TAG", "BUTTON ADD HOUR CLICKED");
-                    if (hourFrames == 0){
-                        dialog.getView().findViewById(R.id.time_2).setVisibility(View.VISIBLE);
-                        dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.VISIBLE);
-                        prefManager.setHourFrames(hourFrames++);
-
-                    } else if (hourFrames==1){
-                        dialog.getView().findViewById(R.id.time_3).setVisibility(View.VISIBLE);
-                        prefManager.setHourFrames(hourFrames++);
-
-                    } else if (hourFrames==2) {
-                        dialog.getView().findViewById(R.id.time_4).setVisibility(View.VISIBLE);
-                        prefManager.setHourFrames(hourFrames++);
-
-                    } else if(hourFrames==3) {
-                        dialog.getView().findViewById(R.id.time_5).setVisibility(View.VISIBLE);
-                        dialog.getView().findViewById(R.id.fb_add).setVisibility(View.INVISIBLE);
-                        prefManager.setHourFrames(hourFrames++);
-                    }
-                }
-
-        //Boton Floating Delete Pulsado
-                if (label.equals(getPresenter().getLabelFloatingDelete())){
-                    Log.d("DELETE HOUR BUTTON TAG", "BUTTON DELETE HOUR CLICKED");
-                    if (hourFrames == 4){
-                        dialog.getView().findViewById(R.id.time_5).setVisibility(View.GONE);
-                        dialog.getView().findViewById(R.id.fb_add).setVisibility(View.VISIBLE);
-                        prefManager.setHourFrames(hourFrames--);
-
-                    } else if (hourFrames==3){
-                        dialog.getView().findViewById(R.id.time_4).setVisibility(View.GONE);
-                        prefManager.setHourFrames(hourFrames--);
-
-                    } else if (hourFrames==2) {
-                        dialog.getView().findViewById(R.id.time_3).setVisibility(View.GONE);
-                        prefManager.setHourFrames(hourFrames--);
-
-                    } else if(hourFrames==1) {
-                        dialog.getView().findViewById(R.id.time_2).setVisibility(View.GONE);
-                        dialog.getView().findViewById(R.id.fb_delete).setVisibility(View.INVISIBLE);
-                        prefManager.setHourFrames(hourFrames--);
-                    }
-                }
-
-        //Boton AddSubject Pulsado
-                if (label.equals((getPresenter().getLabelBtnAddSubject()))){
-                    Log.d("ADD SUBJECT BUTTON TAG", "BUTTON ADD SUBJECT CLICKED");
-                    findCheckBoxesChecked(dialog);
-                    //findHours();
-                }
-
-
-
-
-
-                }
-
-            @Override
-            public void onAddHourSubjectClickListener(int i) {
-                    getPresenter().onSelectTimeBtnClicked(i);
-            }
-
-
-        });*/
 
 

@@ -3,7 +3,6 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import android.content.Intent;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
-import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
@@ -15,8 +14,6 @@ import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 
 public interface Navigator {
-
-    void goToNextScreen(Dummy.DummyTo presenter);
 
 
     /*******************************************************************
@@ -77,6 +74,6 @@ public interface Navigator {
     void goToListDoneScreen(ListSubject.ListSubjectTo presenter);
     void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
     void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
-
     void startActivity(Intent intent);
+    void goToEditSubjects(PreferencesPresenter preferencesPresenter);
 }

@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;

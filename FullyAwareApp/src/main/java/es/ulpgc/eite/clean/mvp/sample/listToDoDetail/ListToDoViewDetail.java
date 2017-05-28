@@ -77,15 +77,15 @@ loadSharePreferences();
         Task = getPresenter().getTask();
 
         if (toolbarLayout != null && Task != null) {
-            toolbarLayout.setTitle(Task.getSubject().getName());
+            toolbarLayout.setTitle(Task.getTitle());
             appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
         }
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
-            ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getTitle());
-            ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
-            ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
+            ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getTitle());
+            ((TextView) findViewById(R.id.date_txt)).setText("Deadline: " +  Task.getDate());
+            ((TextView) findViewById(R.id.task_description)).setText("Description: " + Task.getDescription());
         }
     }
 

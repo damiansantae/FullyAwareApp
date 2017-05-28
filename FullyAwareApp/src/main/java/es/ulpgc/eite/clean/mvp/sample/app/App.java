@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 
-import es.ulpgc.eite.clean.mvp.sample.NotificationService;
+import es.ulpgc.eite.clean.mvp.sample.NotificacionService_AlternativeFeature.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
@@ -29,10 +29,11 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTask;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTimeTable;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.ModuleSubjectTask;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.ModuleSubjectTimeTable;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -79,13 +80,9 @@ public class App extends Application implements Mediator, Navigator {
 
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
-        toAddTaskState.addBtnVisibility = true;
-        toAddTaskState.deleteBtnVisibility = false;
 
         toPreferencesState = new PreferencesState();
         toPreferencesState.toolbarVisibility = true;
-        toPreferencesState.addBtnVisibility = true;
-        toPreferencesState.deleteBtnVisibility = false;
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
@@ -109,7 +106,6 @@ public class App extends Application implements Mediator, Navigator {
         }
         presenter.onScreenStarted();
     }
-
 
     @Override
     public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter) {
@@ -156,8 +152,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
         if (toAddTaskState != null) {
             presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
-            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -167,8 +161,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
         if (toPreferencesState != null) {
             presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
-            presenter.setAddBtnVisibility(toPreferencesState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toPreferencesState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -233,6 +225,51 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void loadSharePreferences(PreferencesView view) {
+            PrefManager prefManager = new PrefManager(view.getActivityContext());
+            int colour = prefManager.getToolbarColour();
+            if (colour != 0) {
+                toolbarColourChanged((PreferencesPresenter) view.getPresenter());
+                view.toolbarChanged(getColorHex(colour));
+            }
+    }
+
+    @Override
+    public void loadSharePreferences(ListToDoViewMaster view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    @Override
+    public void loadSharePreferences(ListDoneViewMasterTesting view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListDonePresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    private void toolbarColourChanged(ListDonePresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
+
+    private void toolbarColourChanged(ListToDoPresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
 
     /////////////////TOOLBAR CHANGES METHODS
     @Override
@@ -259,7 +296,6 @@ public class App extends Application implements Mediator, Navigator {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
          newColourString = getColorHex(preferencesToState.toolbarColour);
         }
-
         return newColourString;
     }
 
@@ -307,9 +343,6 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {
-
-        // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
-        //listDoneToState.textVisibility = presenter.isTextVisible();
         addTaskToState = new AddTaskState();
         addTaskToState.toolbarVisibility = true;
 
@@ -375,11 +408,6 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
-
-    }
-
-    @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
 
         if (listSubjectToState == null) {
@@ -394,6 +422,11 @@ public class App extends Application implements Mediator, Navigator {
         }
 
 
+
+    }
+
+    @Override
+    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
 
     }
 
@@ -421,6 +454,18 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void startActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void goToEditSubjects(PreferencesPresenter preferencesPresenter) {
+        if (listSubjectToState == null) {
+            listSubjectToState = new ListSubjectState();
+        }
+
+        Context view = preferencesPresenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListSubjectView.class));
+        }
     }
 
 
@@ -649,8 +694,6 @@ public class App extends Application implements Mediator, Navigator {
 
     private class PreferencesState {
         boolean toolbarVisibility;
-        boolean addBtnVisibility;
-        boolean deleteBtnVisibility;
         int toolbarColour;
         boolean toolbarColourChanged = false;
     }

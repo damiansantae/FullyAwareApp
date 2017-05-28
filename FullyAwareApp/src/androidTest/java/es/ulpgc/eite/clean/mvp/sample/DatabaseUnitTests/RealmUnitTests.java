@@ -16,7 +16,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 
 @RunWith(AndroidJUnit4.class)
 public class RealmUnitTests extends TestCase {
@@ -45,7 +45,7 @@ public class RealmUnitTests extends TestCase {
     @Test
     public void checkIsEmptyAfterAddTask() throws IOException {
         databaseFacade.addTask(null,"title","description","24/03/2017","ToDo");
-        assertFalse(databaseFacade.getItemsFromDatabase().size()==0);
+        assertFalse(databaseFacade.getTasksFromDatabase().size()==0);
     }
 
 
@@ -60,7 +60,7 @@ public class RealmUnitTests extends TestCase {
     @Test
     public void deleteAllTask () throws IOException {
         databaseFacade.deleteAllDatabaseItems();
-        List<Task> tasks = databaseFacade.getItemsFromDatabase();
+        List<Task> tasks = databaseFacade.getTasksFromDatabase();
        assertTrue(tasks.isEmpty());
     }
 
@@ -68,10 +68,10 @@ public class RealmUnitTests extends TestCase {
     public void deleteATask () throws IOException{
 
         databaseFacade.addTask(null, "titulo", "descripcion", "29/08/2017", "ToDo");
-        Task task = databaseFacade.getToDoItemsFromDatabase().get(0);               //Extraemos el objeto Task que acabamos de añadir
+        Task task = databaseFacade.getToDoTasksFromDatabase().get(0);               //Extraemos el objeto Task que acabamos de añadir
                                                                                     //para eliminarlo
         databaseFacade.deleteDatabaseItem(task);
-        List<Task> tasks = databaseFacade.getItemsFromDatabase();
+        List<Task> tasks = databaseFacade.getTasksFromDatabase();
         assertEquals(0,tasks.size());                                                //Como solo había una Task la lista de Task debe estar vacía
     }
 
@@ -87,10 +87,10 @@ public class RealmUnitTests extends TestCase {
         databaseFacade.addTask(null, "titulo2", "descripcion2", "29/08/2017", "Done");          //Añadimos una tarea a tabla Task con status Done
         databaseFacade.addTask(null, "titulo3", "descripcion3", "29/08/2017", "Forgotten");     //Añadimos una tarea a tabla Task con status Forgotten
 
-        List<Task> toDoTasks = databaseFacade.getToDoItemsFromDatabase();
-        List<Task> DoneTasks = databaseFacade.getDoneItemsFromDatabase();
-        List<Task> ForgottenTasks = databaseFacade.getForgottenItemsFromDatabase();
-        List<Task> allTasks = databaseFacade.getItemsFromDatabase();
+        List<Task> toDoTasks = databaseFacade.getToDoTasksFromDatabase();
+        List<Task> DoneTasks = databaseFacade.getDoneTasksFromDatabase();
+        List<Task> ForgottenTasks = databaseFacade.getForgottenTasksFromDatabase();
+        List<Task> allTasks = databaseFacade.getTasksFromDatabase();
 
         assertEquals(1,toDoTasks.size());
         assertEquals(1,DoneTasks.size());
