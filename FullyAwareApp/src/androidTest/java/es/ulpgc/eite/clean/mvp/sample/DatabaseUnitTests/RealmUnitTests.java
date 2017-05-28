@@ -16,7 +16,7 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 @RunWith(AndroidJUnit4.class)
 public class RealmUnitTests extends TestCase {

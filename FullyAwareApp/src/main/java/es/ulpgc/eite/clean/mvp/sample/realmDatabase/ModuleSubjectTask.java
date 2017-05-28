@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.RealmDatabase;
+package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
 
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;

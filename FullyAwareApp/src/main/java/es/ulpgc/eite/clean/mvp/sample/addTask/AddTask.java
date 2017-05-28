@@ -173,6 +173,11 @@ public interface AddTask {
      * Method to destroy the actual Activity
      */
     void onDestroy();
+
+    /**
+     * Method to show the dialog and define its behaviour
+     */
+    //void initDialog();
   }
 
   /**

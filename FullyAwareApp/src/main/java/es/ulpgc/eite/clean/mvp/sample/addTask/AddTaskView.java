@@ -1,5 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.addTask;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +39,7 @@ public class AddTaskView
   private EditText date;
   private EditText time;
   private Spinner subject;
+  private AlertDialog.Builder alertDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -188,4 +191,27 @@ public class AddTaskView
     toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
   }
 
+  /*@Override
+  public void initDialog(){
+    alertDialog = new AlertDialog.Builder(this);
+    View view = getLayoutInflater().inflate(R.layout.insert_into_calendar_confirmation_dialog,null);
+    alertDialog.setView(view);
+    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        getPresenter().goToCalendar();
+        dialog.dismiss();
+      }
+    });
+    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+
+      }
+    });
+
+  }
+*/
 }
