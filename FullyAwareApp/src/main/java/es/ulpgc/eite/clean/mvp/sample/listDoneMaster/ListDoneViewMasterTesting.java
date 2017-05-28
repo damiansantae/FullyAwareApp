@@ -409,7 +409,7 @@ loadSharePreferences();
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        getPresenter().onListClick2(itemView, getAdapterPosition(),task);
                         adapter.notifyDataSetChanged();
 
                     }

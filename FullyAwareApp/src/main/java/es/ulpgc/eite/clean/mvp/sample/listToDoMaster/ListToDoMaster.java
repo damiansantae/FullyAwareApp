@@ -8,6 +8,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
@@ -58,10 +59,10 @@ public interface ListToDoMaster {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
-    void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
+    void onDoneBtnClick(TaskRecyclerViewAdapter adapter);
 
 
-      void onListClick2(View item, int position, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task);
+      void onListClick2(View item, int position, Task task);
 
     void onLongListClick2(View item, int adapterPosition);
 
@@ -69,9 +70,10 @@ public interface ListToDoMaster {
 
       boolean isSelected(int adapterPosition);
 
-    void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
+    void onBinBtnClick2(TaskRecyclerViewAdapter adapter);
 
       String getCases(Task task);
+
     void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
 
     void subjectFilter();
@@ -100,12 +102,6 @@ public interface ListToDoMaster {
       void showDeleteBtn();
 
 
-    boolean isItemListChecked(int pos);
-
-    void setItemChecked(int pos, boolean checked);
-
-    void startSelection();
-
 
       void hideAddBtn();
 
@@ -117,7 +113,6 @@ public interface ListToDoMaster {
 
     void showTextWhenIsEmpty();
 
-    void deselect(int i, boolean b);
 
   void setRecyclerAdapterContent(List<Task> items);
 

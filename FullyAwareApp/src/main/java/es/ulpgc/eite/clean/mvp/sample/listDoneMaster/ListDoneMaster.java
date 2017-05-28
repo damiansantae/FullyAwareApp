@@ -59,7 +59,7 @@ public interface ListDoneMaster {
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
 
-    void onListClick2(View item, int position, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task);
+    void onListClick2(View item, int position, Task task);
 
     void onLongListClick2(View item, int adapterPosition);
 

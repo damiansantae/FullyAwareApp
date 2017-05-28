@@ -5,7 +5,6 @@ import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public interface ListToDoDetail {
 
@@ -19,14 +18,10 @@ public interface ListToDoDetail {
    */
   interface MasterListToDetail{
     void setToolbarVisibility(boolean b);
-    void setItem(Task selectedItem);
-
+    void setTask(Task selectedItem);
     void onScreenStarted();
-
-      void setAdapter(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
-
-
     void setMaster(ListToDoPresenterMaster master);
+
   }
   /**
    * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla

@@ -9,9 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +19,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,17 +33,15 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.EspressoTest.WelcomeActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
-import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 public class ListToDoViewMaster
@@ -96,11 +91,9 @@ public class ListToDoViewMaster
         done = (FloatingActionButton) findViewById(R.id.floatingDoneButton);
         ///////////////////////////////////////////////////////////////////
         recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
-        adapter = new TaskRecyclerViewAdapter();
+        adapter = new TaskRecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
-
         textWhenIsEmpty = (TextView) findViewById(R.id.textWhenIsEmpty);
-
         bin.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
@@ -259,11 +252,7 @@ public class ListToDoViewMaster
         textWhenIsEmpty.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void deselect(int i, boolean b) {
-        //recyclerView.setItemChecked(i,b);
 
-    }
 
     @Override
     public void showAddBtn() {
@@ -287,23 +276,6 @@ public class ListToDoViewMaster
     }
 
 
-    @Override
-    public boolean isItemListChecked(int pos) {
-        //return recyclerView.isItemChecked(pos);
-        return false;
-    }
-
-    @Override
-    public void setItemChecked(int pos, boolean checked) {
-        // recyclerView.setItemChecked(pos, checked);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void startSelection() {
-        // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-    }
 
 
     @Override
@@ -326,7 +298,7 @@ public class ListToDoViewMaster
 
     @Override
     public void setToastDelete() {
-        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_LONG).show();
 
     }
 
@@ -499,25 +471,29 @@ getPresenter().onBtnBackPressed();
         ImageView   img=new ImageView(this);
 
 
-        // give the drawble resource for the ImageView
+        // give the drawable resource for the ImageView
         img.setImageResource(R.drawable.back);
 
         // add both the Views TextView and ImageView in layout
         layout.addView(img);
         layout.addView(tv);
 
-        Toast toast=new Toast(this); //context is object of Context write "this" if you are an Activity
+        Toast toast=new Toast(this);
         // Set The layout as Toast View
         toast.setView(layout);
 
         // Position you toast here toast position is 50 dp from bottom you can give any integral value
-        toast.setGravity(Gravity.BOTTOM, 50, 100);
+        toast.setGravity(Gravity.BOTTOM, 50, 500);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
 
 
     }
 
+    /**
+     * This method delete the Parent View of a view.
+     * For example, when a dialog view is showed
+     */
     private void removeView(){
         if(view.getParent()!=null) {
             ((ViewGroup) view.getParent()).removeView(view);
@@ -527,128 +503,6 @@ getPresenter().onBtnBackPressed();
     ///////////////////////////////////////////////////////////////
 
 
-    public class TaskRecyclerViewAdapter
-            extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
-
-
-        private List<Task> items;
-
-
-        public TaskRecyclerViewAdapter() {
-            items = new ArrayList<>();
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_list, parent, false);
-            return new ViewHolder(view);
-        }
-
-        private void setItemList(List<Task> items) {
-            this.items = items;
-            notifyDataSetChanged();
-        }
-
-
-        public List<Task> getItems() {
-            return this.items;
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            Task task = items.get(position);
-            holder.bindView(task);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-
-
-        public boolean onItemMove(int fromPosition, int toPosition) {
-            if (fromPosition < toPosition) {
-                for (int i = fromPosition; i < toPosition; i++) {
-                    Collections.swap(getItems(), i, i + 1);
-                }
-            } else {
-                for (int i = fromPosition; i > toPosition; i--) {
-                    Collections.swap(getItems(), i, i - 1);
-                }
-            }
-            notifyItemMoved(fromPosition, toPosition);
-            return true;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View itemView;
-            private ImageView tag;
-            private TextView abrv;
-            private Subject subject;
-            private TextView title;
-            private TextView description;
-            private TextView date;
-
-            public Task item;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                itemView = view;
-
-            }
-
-
-            public void bindView(final Task task) {
-                subject = task.getSubject();
-                Integer color = subject.getColor();
-                tag = (ImageView) itemView.findViewById(R.id.color_subject);
-                abrv = (TextView) itemView.findViewById(R.id.tag_subjectc);
-                title = (TextView) itemView.findViewById(R.id.title);
-                description = (TextView) itemView.findViewById(R.id.description);
-                date = (TextView) itemView.findViewById(R.id.date);
-
-                Drawable drawable = getDrawable(R.drawable.circle);
-                drawable.setColorFilter(getColor(color), PorterDuff.Mode.SRC_OVER);
-                String abrev = getPresenter().getCases(task);
-                title.setText(task.getTitle());
-                description.setText(task.getDescription());
-                date.setText(task.getDate());
-                if(getPresenter().isTaskForgotten(task.getDate())){
-                    date.setTextColor(Color.RED);
-                }
-                tag.setImageDrawable(drawable);
-                abrv.setText(abrev);
-
-
-                //Selecciona si estaba seleccionado
-                itemView.setSelected(getPresenter().isSelected(getAdapterPosition()));
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(), adapter, task);
-                        adapter.notifyDataSetChanged();
-
-                    }
-                });
-                itemView.setLongClickable(true);
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-
-                        getPresenter().onLongListClick2(v, getAdapterPosition());
-
-                        return true;
-                    }
-                });
-
-            }
-        }
-
-
-    }
 
 
 

@@ -153,7 +153,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
     @Override
-    public void onListClick2(View v, int adapterPosition, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter, Task task) {
+    public void onListClick2(View v, int adapterPosition, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -167,7 +167,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         }else{
             Navigator app = (Navigator) getView().getApplication();
             selectedTask=task;
-            app.goToDetailScreen(this, adapter);
+            app.goToDetailScreen(this);
         }
         checkSelection();
       checkDeleteBtnVisibility();

@@ -20,6 +20,7 @@ import java.util.Observer;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
@@ -104,18 +105,12 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
            checkToolbarVisibility();
-            //checkTextVisibility();
             checkAddBtnVisibility();
             
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             checkTextWhenIsEmptyVisibility();
             CheckDoneBtnVisibility();
-            if(selectedState) {
-                getView().startSelection();
-
-                onCheckItems();
-            }
 
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
@@ -139,15 +134,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     }
 
 
-    /**
-     * Selecciona los elementos de la lista que estaban seleccionados
-     */
-    private void onCheckItems() {
-        for(int i=0; i<posSelected.size();i++){
-            setItemChecked(Integer.parseInt(posSelected.get(i)), true);
-        }
 
-    }
 
 
     private void checkToolbarColourChanges(Mediator app){
@@ -212,7 +199,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     @Override
-    public void onListClick2(View v, int adapterPosition, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task) {
+    public void onListClick2(View v, int adapterPosition, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -226,7 +213,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }else{
             Navigator app = (Navigator) getView().getApplication();
             selectedTask=task;
-            app.goToDetailScreen(this, adapter);
+            app.goToDetailScreen(this);
         }
 checkSelection2();
         checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
@@ -311,7 +298,7 @@ checkSelection2();
     }
 
     @Override
-    public void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick2(TaskRecyclerViewAdapter adapter) {
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
@@ -338,7 +325,7 @@ checkSelection2();
     }
 
 
-    private ArrayList<Task> getSelectedTasks(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    private ArrayList<Task> getSelectedTasks(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
@@ -358,7 +345,7 @@ checkSelection2();
     }
 
     @Override
-    public void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void onDoneBtnClick(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.setItemStatus(selected.get(i), "Done");
@@ -380,30 +367,6 @@ checkSelection2();
     }
 
 
-
-
-    private void deselectAll() {
-
-        for (int k = 0; k < posSelected.size(); k++) {
-            getView().deselect(Integer.parseInt(posSelected.get(k)), false);
-        }
-
-        posSelected.clear();
-        tasksSelected.clear();
-    }
-
-    private void setItemChecked(int pos, boolean checked) {
-        getView().setItemChecked(pos, checked);
-
-    }
-
-    private boolean isItemListChecked(int pos) {
-        boolean result=false;
-        if(posSelected.size()>0 && posSelected.contains(Integer.toString(pos))) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
-                result = true;                                                      //Entonces si estaba seleccionado
-        }
-        return result;
-        }
 
 
 

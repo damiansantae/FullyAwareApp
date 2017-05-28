@@ -203,8 +203,7 @@ public class App extends Application implements Mediator, Navigator {
     public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter) {
         if (masterListToDetailToDoState != null) {
             presenter.setToolbarVisibility(masterListToDetailToDoState.toolbarVisible);
-            presenter.setItem(masterListToDetailToDoState.selectedItem);
-            presenter.setAdapter(masterListToDetailToDoState.adapter);
+            presenter.setTask(masterListToDetailToDoState.selectedItem);
             presenter.setMaster((ListToDoPresenterMaster) masterListToDetailToDoState.master);
 
         }
@@ -236,7 +235,6 @@ public class App extends Application implements Mediator, Navigator {
         if (masterListToDetailDoneState != null) {
             presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
-            presenter.setAdapter(masterListToDetailDoneState.adapter);
             presenter.setMaster((ListDonePresenterMaster) masterListToDetailDoneState.master);
         }
 
@@ -381,7 +379,6 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = addTaskPresenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
@@ -391,8 +388,7 @@ public class App extends Application implements Mediator, Navigator {
     public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
         Context view = preferencesPresenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
-           // view.startActivity(new Intent(view, ExtrasActivity.class));
+
         }
     }
 
@@ -412,7 +408,6 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
@@ -448,12 +443,10 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster) {
         masterListToDetailToDoState = new DetailToDoState();
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTask();
-
-        masterListToDetailToDoState.adapter = adapter;
         masterListToDetailToDoState.master = listToDoPresenterMaster;
 
         // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
@@ -474,27 +467,12 @@ public class App extends Application implements Mediator, Navigator {
         presenter.destroyView();
     }
 
+
     @Override
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
         masterListToDetailDoneState = new DetailDoneState();
         masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
         masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
-
-        // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
-        Context view = listDonePresenterMaster.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewDetail.class));
-        }
-    }
-
-    @Override
-    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        masterListToDetailDoneState = new DetailDoneState();
-        masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
-        masterListToDetailDoneState.adapter = adapter;
-masterListToDetailDoneState.master=listDonePresenterMaster;
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listDonePresenterMaster.getManagedContext();
@@ -723,18 +701,12 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
     private class DetailToDoState {
         boolean toolbarVisible;
         Task selectedItem;
-        String subject;
-        String date;
-        ListToDoViewMaster.TaskRecyclerViewAdapter adapter;
         public ListToDoMaster.MasterListToDetail master;
     }
 
     private class DetailDoneState {
         boolean toolbarVisible;
         Task selectedItem;
-        String subject;
-        String date;
-        ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
         public ListDoneMaster.MasterListToDetail master;
     }
 
