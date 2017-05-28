@@ -5,78 +5,126 @@ import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 
 public interface ListDoneDetail {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // State /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    // State /////////////////////////////////////////////////////////////////////////
 
-  /**
-   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
-   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
-   */
-  interface MasterListToDetail{
-    void setAdapter(ListDoneViewMaster.TaskRecyclerViewAdapter adapter);
+    /**
+     * Interface that allows to start detail screen and get all the necessary values
+     * to complete initial state which is going to share to detail screen when it starts
+     */
+    interface MasterListToDetail {
 
-    void setToolbarVisibility(boolean b);
-    void setItem(Task selectedItem);
+        /**
+         * This method set toolbar visibility state saved in Mediator into
+         * Presenter toolbar visibility state
+         *
+         * @param b: boolean visibility of toolbar
+         */
+        void setToolbarVisibility(boolean b);
 
-    void onScreenStarted();
+        /**
+         * Method that set into Model the Task storaged in Mediator which has been shared by Master
+         *
+         * @param selectedItem: the task which is going to show detail
+         */
+        void setItem(Task selectedItem);
 
-      void setMaster(ListDonePresenterMaster master);
-  }
-  /**
-   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
-   * del detalle cuando está finaliza
-   */
-  interface DetailToMaster {
-    void destroyView();
-    Task getTaskToDelete();
-  }
+        /**
+         * This method is called when shared stated to Master-Mediator-Detail is completed
+         */
+        void onScreenStarted();
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Screen ////////////////////////////////////////////////////////////////////////
+        /**
+         * This method registers the master as a Observer. Is called by mediator
+         *
+         * @param master: the object master
+         */
+        void setMaster(ListDonePresenterMaster master);
+    }
 
-  /**
-   * Methods offered to VIEW to communicate with PRESENTER
-   */
-  interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onButtonClicked();
+    /**
+     * Interface that allows to fix all tha values included in the passing states form detail
+     * screen when it finish
+     */
+    interface DetailToMaster {
+        void destroyView();
 
-    Task getTask();
+        Task getTaskToDelete();
+    }
 
-    void onDeleteActionClicked();
-  }
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Screen ////////////////////////////////////////////////////////////////////////
 
-  /**
-   * Required VIEW methods available to PRESENTER
-   */
-  interface PresenterToView extends ContextView {
-    void finishScreen();
-    void hideToolbar();
+    /**
+     * Methods offered to VIEW to communicate with PRESENTER
+     */
+    interface ViewToPresenter extends Presenter<PresenterToView> {
+        /**
+         * Build a communication bridge between View-Model
+         * to get the current task which is shared from Master
+         *
+         * @return Task: the current task showed on detail
+         */
+        Task getTask();
+
+        /**
+         * This method is called when delete option in toolbar menu
+         * has been clicked. It notify the observer of that.
+         *
+         * @see ListDonePresenterDetail.ObservableDone#notifyMaster()
+         */
+        void onDeleteActionClicked();
+    }
+
+    /**
+     * Required VIEW methods available to PRESENTER
+     */
+    interface PresenterToView extends ContextView {
+
+        /**
+         * This method finish the View
+         */
+        void finishScreen();
+
+        /**
+         * This method turn visibility toolbar to invisible
+         */
+        void hideToolbar();
 
 
-      void toolbarChanged(String colour);
-  }
+        void toolbarChanged(String colour);
+    }
 
-  /**
-   * Methods offered to MODEL to communicate with PRESENTER
-   */
-  interface PresenterToModel extends Model<ModelToPresenter> {
-    void setTask(Task selectedItem);
-    Task getTask();
-  }
+    /**
+     * Methods offered to MODEL to communicate with PRESENTER
+     */
+    interface PresenterToModel extends Model<ModelToPresenter> {
 
-  /**
-   * Required PRESENTER methods available to MODEL
-   */
-  interface ModelToPresenter {
+        /**
+         * Storage in Model current task
+         *
+         * @param selectedItem: current Task which is showed on detail
+         */
+        void setTask(Task selectedItem);
 
-  }
+        /**
+         * This method provides to the Presenter the storaged task
+         *
+         * @return Task: task which is storage in Model
+         */
+        Task getTask();
+    }
 
-  ///////////////////////////////////////////
+    /**
+     * Required PRESENTER methods available to MODEL
+     */
+    interface ModelToPresenter {
+
+    }
 
 
 }

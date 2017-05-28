@@ -35,8 +35,6 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     private boolean toolbarVisible;
     private boolean deleteBtnVisible;
-    private boolean textVisible;
-    private boolean listClicked;
     private boolean selectedState;
     private Task selectedTask;
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
@@ -81,10 +79,10 @@ public class ListDonePresenterMaster extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {    //if screen rotation
-            checkToolbarVisibility();
-            checkDeleteBtnVisibility();
         }
-
+        checkToolbarVisibility();
+        checkSelection();
+        checkDeleteBtnVisibility();
         Mediator app = (Mediator) getView().getApplication();
         checkToolbarColourChanges(app);
         loadItems();
@@ -185,12 +183,11 @@ public class ListDonePresenterMaster extends GenericPresenter
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
         }
+
+        checkSelection();
         checkDeleteBtnVisibility();
-
-
-
-
     }
+
     @Override
     public boolean isSelected(int adapterPosition) {
         boolean result = false;

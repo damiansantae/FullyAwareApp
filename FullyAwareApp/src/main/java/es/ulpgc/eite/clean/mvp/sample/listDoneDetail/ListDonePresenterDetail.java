@@ -12,7 +12,6 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 
 public class ListDonePresenterDetail extends GenericPresenter
         <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
@@ -22,7 +21,6 @@ public class ListDonePresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
-    private ListDoneViewMaster.TaskRecyclerViewAdapter adapter;
     private ObservableDone observableDone;
 
     /**
@@ -39,9 +37,7 @@ private boolean toolbarVisible;
         observableDone = new ObservableDone();
         setView(view);
 
-        // Debe llamarse al arrancar el detalle para fijar su estado inicial.
-        // En este caso, este estado es fijado por el mediador en función de
-        // los valores pasados desde el maestro
+        //it must call Mediator to establish state which was shared by the master
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
         checkToolbarColourChanges(app);
@@ -58,8 +54,6 @@ private boolean toolbarVisible;
     public void onResume(ListDoneDetail.PresenterToView view) {
         setView(view);
 
-        // Verificamos si mostramos o no la barra de tareas cuando se produce un giro de pantalla
-        // en función de la orientación actual de la pantalla
         if(configurationChangeOccurred()) {
             checkToolbarVisibility();
         }
@@ -97,10 +91,7 @@ private boolean toolbarVisible;
     ///////////////////////////////////////////////////////////////////////////////////
     // View To Presenter /////////////////////////////////////////////////////////////
 
-    @Override
-    public void onButtonClicked() {
 
-    }
 
     @Override
     public Task getTask() {
@@ -118,25 +109,17 @@ private boolean toolbarVisible;
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // To ListForgottenDetail //////////////////////////////////////////////////////////////////////
+    // To ListDoneDetail //////////////////////////////////////////////////////////////////////
 
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
+
+    if(isViewRunning()) {
         checkToolbarVisibility();
-   /* if(isViewRunning()) {
-      getView().setLabel(getModel().getLabel());
-    }
-    //checkToolbarVisibility();
-    //checkTextVisibility();*/
-
     }
 
-    @Override
-    public void setAdapter(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
-        this.adapter=adapter;
     }
-
 
     @Override
     public void setToolbarVisibility(boolean visible) {
@@ -149,11 +132,14 @@ private boolean toolbarVisible;
 
     }
 
+    @Override
+    public void setMaster(ListDonePresenterMaster master) {
+        observableDone.addObserver(master);
+
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // ListForgottenDetail To //////////////////////////////////////////////////////////////////////
-
-
+    // LisDoneDetail To //////////////////////////////////////////////////////////////////////
 
 
     @Override
@@ -168,11 +154,7 @@ private boolean toolbarVisible;
         return getModel().getTask();
     }
 
-    @Override
-    public void setMaster(ListDonePresenterMaster master) {
-        observableDone.addObserver(master);
 
-    }
 
 
 

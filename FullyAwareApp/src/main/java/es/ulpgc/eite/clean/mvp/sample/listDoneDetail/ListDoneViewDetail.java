@@ -36,7 +36,7 @@ public class ListDoneViewDetail
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail_relative);
+        setContentView(R.layout.activity_task_detail);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -78,6 +78,7 @@ loadSharePreferences();
 
         if (toolbarLayout != null && Task != null) {
             toolbarLayout.setTitle(Task.getTitle());
+            appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
         }
 
         // Show the dummy content as text in a TextView.
@@ -89,7 +90,7 @@ loadSharePreferences();
     }
 
 
-  //Este metodo sirve para inflar el menu en la action bar
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.

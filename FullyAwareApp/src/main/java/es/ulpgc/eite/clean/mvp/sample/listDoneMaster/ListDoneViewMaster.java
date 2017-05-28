@@ -164,7 +164,6 @@ public class ListDoneViewMaster
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuToDo) {
-
             Toast.makeText(getApplicationContext(), "ToDo", Toast.LENGTH_SHORT).show();
             Navigator app = (Navigator) getApplication();
             app.goToListToDoScreen((ListDoneMaster.ListDoneTo) getPresenter());
@@ -237,8 +236,6 @@ public class ListDoneViewMaster
             recyclerAdapter.setItemList(items);
         }
     }
-
-
 
 
     private void loadSharePreferences() {

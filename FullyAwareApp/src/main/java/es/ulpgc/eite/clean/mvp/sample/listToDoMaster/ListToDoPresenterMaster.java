@@ -99,15 +99,15 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {        //if screen rotation
-
-            checkToolbarVisibility();
-            checkAddBtnVisibility();
-            checkDeleteBtnVisibility();
-            checkDoneBtnVisibility();
-            checkTextWhenIsEmptyVisibility();
-            checkDoneBtnVisibility();
         }
 
+        checkSelection();
+        checkToolbarVisibility();
+        checkAddBtnVisibility();
+        checkDeleteBtnVisibility();
+        checkDoneBtnVisibility();
+        checkTextWhenIsEmptyVisibility();
+        checkDoneBtnVisibility();
         Mediator app = (Mediator) getView().getApplication();
         checkToolbarColourChanges(app);
         loadItems();
@@ -236,7 +236,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     @Override
     public void onLongListClick(View v, int adapterPosition) {
         if (!selectedState) {                           //If there is no selected state (no task selected), then
-                                                        //start selected stated and selected the task
+            //start selected stated and selected the task
             selectedState = true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition, true);

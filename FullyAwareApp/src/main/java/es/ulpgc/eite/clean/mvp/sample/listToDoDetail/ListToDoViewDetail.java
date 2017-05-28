@@ -79,21 +79,18 @@ loadSharePreferences();
         if (toolbarLayout != null && Task != null) {
             toolbarLayout.setTitle(Task.getSubject().getName());
             appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
-
-
         }
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
             ((TextView) findViewById(R.id.subject_from_detail)).setText(Task.getTitle());
             ((TextView) findViewById(R.id.date_txt)).setText(Task.getDate());
-
             ((TextView) findViewById(R.id.task_description)).setText(Task.getDescription());
         }
     }
 
 
-  //Este metodo sirve para inflar el menu en la action bar
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
@@ -114,9 +111,6 @@ loadSharePreferences();
       return true;
     } else if(id==R.id.action_done){
         getPresenter().onDoneActionClicked();
-
-    }else if(id==R.id.action_change){
-        //TODO: ir acitvity modificar tarea
 
     }
 

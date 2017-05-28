@@ -37,9 +37,7 @@ private boolean toolbarVisible;
         observableToDo = new ObservableToDo();
         setView(view);
 
-        // Debe llamarse al arrancar el detalle para fijar su estado inicial.
-        // En este caso, este estado es fijado por el mediador en función de
-        // los valores pasados desde el maestro
+        //it must call Mediator to establish state which was shared by the master
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
        checkToolbarColourChanges(app);
@@ -56,8 +54,6 @@ private boolean toolbarVisible;
     public void onResume(ListToDoDetail.PresenterToView view) {
         setView(view);
 
-        // Verificamos si mostramos o no la barra de tareas cuando se produce un giro de pantalla
-        // en función de la orientación actual de la pantalla
         if(configurationChangeOccurred()) {
             checkToolbarVisibility();
         }
@@ -94,10 +90,6 @@ private boolean toolbarVisible;
     ///////////////////////////////////////////////////////////////////////////////////
     // View To Presenter /////////////////////////////////////////////////////////////
 
-    @Override
-    public void onButtonClicked() {
-
-    }
 
     @Override
     public Task getTask() {
@@ -120,17 +112,14 @@ private boolean toolbarVisible;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // To ListDoneDetail //////////////////////////////////////////////////////////////////////
+    // To ListToDoDetail //////////////////////////////////////////////////////////////////////
 
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
+    if(isViewRunning()) {
         checkToolbarVisibility();
-   /* if(isViewRunning()) {
-      getView().setLabel(getModel().getLabel());
     }
-    //checkToolbarVisibility();
-    //checkTextVisibility();*/
 
     }
 

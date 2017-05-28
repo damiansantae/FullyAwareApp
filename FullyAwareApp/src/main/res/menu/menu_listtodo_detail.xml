@@ -13,10 +13,5 @@
         android:orderInCategory="100"
         android:title="@string/action_done"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_change"
-        android:orderInCategory="100"
-        android:title="@string/action_change"
-        app:showAsAction="never"/>
 
     </menu>

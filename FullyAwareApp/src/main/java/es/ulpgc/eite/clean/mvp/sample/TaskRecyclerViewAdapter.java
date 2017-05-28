@@ -73,6 +73,7 @@ public class TaskRecyclerViewAdapter
         private TextView title;
         private TextView description;
         private TextView date;
+        private Drawable drawable;
 
         public Task item;
 
@@ -92,16 +93,21 @@ public class TaskRecyclerViewAdapter
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             date = (TextView) itemView.findViewById(R.id.date);
-            Drawable drawable = listToDoViewMaster.getDrawable(R.drawable.circle);
-            drawable.setColorFilter(listToDoViewMaster.getColor(color), PorterDuff.Mode.SRC_OVER);
+
             String abrev = null;
             if(listToDoViewMaster!=null){
+                drawable = listToDoViewMaster.getDrawable(R.drawable.circle);
+                drawable.setColorFilter(listToDoViewMaster.getColor(color), PorterDuff.Mode.SRC_OVER);
                 itemView.setSelected(listToDoViewMaster.getPresenter().isSelected(getAdapterPosition()));
                  abrev = listToDoViewMaster.getPresenter().getCases(task);
+
                 if(listToDoViewMaster.getPresenter().isTaskForgotten(task.getDate())){
                     date.setTextColor(Color.RED);
                 }
+
             }else if(listDoneViewMaster !=null){
+               drawable = listDoneViewMaster.getDrawable(R.drawable.circle);
+                drawable.setColorFilter(listDoneViewMaster.getColor(color), PorterDuff.Mode.SRC_OVER);
                 itemView.setSelected(listDoneViewMaster.getPresenter().isSelected(getAdapterPosition()));
                 abrev = listDoneViewMaster.getPresenter().getCases(task);
             }

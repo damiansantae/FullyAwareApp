@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.TimeTable;
+import es.ulpgc.eite.clean.mvp.sample.app.TimeTable_NextUpgrade;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;
@@ -201,12 +201,12 @@ public class DatabaseFacade {
         aplicaciones.setName("Aplicaciones de Red");
         aplicaciones.setColor(R.color.color_violet);
 
-        TimeTable firstTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+        TimeTable_NextUpgrade firstTimeMon = realmDatabase.createObject(TimeTable_NextUpgrade.class, UUID.randomUUID().toString());
         firstTimeMon.setDay("Monday");
         firstTimeMon.setHour("8:00-10:00");
         firstTimeMon.setSubject(diseño);
 
-        TimeTable secondTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
+        TimeTable_NextUpgrade secondTimeMon = realmDatabase.createObject(TimeTable_NextUpgrade.class, UUID.randomUUID().toString());
         secondTimeMon.setDay("Monday");
         secondTimeMon.setHour("10:00-12:00");
         secondTimeMon.setSubject(aplicaciones);
@@ -498,10 +498,10 @@ public class DatabaseFacade {
      */
     public void addTimeTable(String day, String hour, Subject subject) {
         realmDatabase.beginTransaction();
-        TimeTable timeTable = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
-        timeTable.setDay(day);
-        timeTable.setHour(hour);
-        timeTable.setSubject(subject);
+        TimeTable_NextUpgrade timeTableNextUpgrade = realmDatabase.createObject(TimeTable_NextUpgrade.class, UUID.randomUUID().toString());
+        timeTableNextUpgrade.setDay(day);
+        timeTableNextUpgrade.setHour(hour);
+        timeTableNextUpgrade.setSubject(subject);
         realmDatabase.commitTransaction();
     }
 
@@ -510,10 +510,10 @@ public class DatabaseFacade {
      * Method that deletes an specific schedule from
      * the database
      *
-     * @param timeTable TimeTable class
+     * @param timeTableNextUpgrade TimeTable class
      */
-    public void deleteDatabaseTimeTable(TimeTable timeTable) {
-        final String id = timeTable.getTimeTableId();
+    public void deleteDatabaseTimeTable(TimeTable_NextUpgrade timeTableNextUpgrade) {
+        final String id = timeTableNextUpgrade.getTimeTableId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -531,21 +531,21 @@ public class DatabaseFacade {
      *
      * @return dbItems, a List with TimeTable objects
      */
-    private List<TimeTable> getTimeTablesFromDatabaseWrapper(){
+    private List<TimeTable_NextUpgrade> getTimeTablesFromDatabaseWrapper(){
         Log.d(TAG, "calling getTimeTablesFromDatabaseWrapper() method");
-        List<TimeTable> dbItems = realmDatabase.where(TimeTable.class).findAll();
+        List<TimeTable_NextUpgrade> dbItems = realmDatabase.where(TimeTable_NextUpgrade.class).findAll();
 
         Log.d(TAG, "items=" +  dbItems);
         return dbItems;
     }
 
 
-    public List<TimeTable> getTimeTablesFromDatabase(){
+    public List<TimeTable_NextUpgrade> getTimeTablesFromDatabase(){
         if(usingWrapper) {
             return getTimeTablesFromDatabaseWrapper();
         }
 
-        return realmDatabase.where(TimeTable.class).findAll();
+        return realmDatabase.where(TimeTable_NextUpgrade.class).findAll();
     }
 
 
@@ -558,7 +558,7 @@ public class DatabaseFacade {
      * belong to TimeTable table
      */
     public void deleteAllDatabaseTimeTables(){
-        for(TimeTable item: getTimeTablesFromDatabase()){
+        for(TimeTable_NextUpgrade item: getTimeTablesFromDatabase()){
             deleteDatabaseTimeTable(item);
         }
     }
@@ -568,14 +568,14 @@ public class DatabaseFacade {
      * Inserts a day into the column day of an specific
      * TimeTable item
      */
-    public void setDay(TimeTable timeTable, final String day){
-        final String id = timeTable.getTimeTableId();
+    public void setDay(TimeTable_NextUpgrade timeTableNextUpgrade, final String day){
+        final String id = timeTableNextUpgrade.getTimeTableId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                TimeTable_NextUpgrade realmTimeTableNextUpgrade = realm.where(TimeTable_NextUpgrade.class).equalTo("timeTableId", id)
                         .findFirst();
-                realmTimeTable.setDay(day);
+                realmTimeTableNextUpgrade.setDay(day);
 
             }
         });
@@ -586,14 +586,14 @@ public class DatabaseFacade {
      * Inserts an iterval hours into the column hour of an specific
      * TimeTable item
      */
-    public void setHour(TimeTable timeTable, final String hour){
-        final String id = timeTable.getTimeTableId();
+    public void setHour(TimeTable_NextUpgrade timeTableNextUpgrade, final String hour){
+        final String id = timeTableNextUpgrade.getTimeTableId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                TimeTable_NextUpgrade realmTimeTableNextUpgrade = realm.where(TimeTable_NextUpgrade.class).equalTo("timeTableId", id)
                         .findFirst();
-                realmTimeTable.setHour(hour);
+                realmTimeTableNextUpgrade.setHour(hour);
 
             }
         });
@@ -603,14 +603,14 @@ public class DatabaseFacade {
      * Inserts an specific Subject of the table Subject creating
      * a foreign key into the column subject of a specific TimeTable item
      */
-    public void setSubject(TimeTable timeTable, final Subject subject){
-        final String id = timeTable.getTimeTableId();
+    public void setSubject(TimeTable_NextUpgrade timeTableNextUpgrade, final Subject subject){
+        final String id = timeTableNextUpgrade.getTimeTableId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                TimeTable realmTimeTable = realm.where(TimeTable.class).equalTo("timeTableId", id)
+                TimeTable_NextUpgrade realmTimeTableNextUpgrade = realm.where(TimeTable_NextUpgrade.class).equalTo("timeTableId", id)
                         .findFirst();
-                realmTimeTable.setSubject(subject);
+                realmTimeTableNextUpgrade.setSubject(subject);
 
             }
         });
