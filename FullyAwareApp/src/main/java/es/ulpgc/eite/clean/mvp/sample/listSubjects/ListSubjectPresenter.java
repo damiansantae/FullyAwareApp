@@ -1,31 +1,23 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TimePicker;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
-import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
-
-import static android.view.View.VISIBLE;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 
 public class ListSubjectPresenter extends GenericPresenter
         <ListSubject.PresenterToView, ListSubject.PresenterToModel, ListSubject.ModelToPresenter, ListSubjectModel>
@@ -438,7 +430,7 @@ public class ListSubjectPresenter extends GenericPresenter
         } else {*/
         if (!(database.getRunningTask())) {
             Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-            //  onLoadItemsSubjectFinished(database.getForgottenItemsFromDatabase());
+            //  onLoadItemsSubjectFinished(database.getForgottenTasksFromDatabase());
         } else {
             Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
             onLoadItemsSubjectStarted();
@@ -462,7 +454,7 @@ public class ListSubjectPresenter extends GenericPresenter
                 database.setValidDatabase(true);
                 Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
                 //getPresenter().onLoadItemsSubjectsFinished(items);
-                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
+                onLoadItemsSubjectsFinished(database.getTasksFromDatabase());
             }
         }, 0);
     }*/

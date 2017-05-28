@@ -9,7 +9,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.GenericModel;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 import io.realm.Realm;
 
 
@@ -335,7 +335,7 @@ getPresenter().confirmBackPressed();
 
     @Override
     public List<Task> orderSubjects() {
-       List<Task> taskFromDatabase= database.getToDoItemsFromDatabase();
+       List<Task> taskFromDatabase= database.getToDoTasksFromDatabase();
         List<Subject> subjectsFromDatabase = database.getSubjectsFromDatabase();
         List<Task> orderedList = new LinkedList<>();
 

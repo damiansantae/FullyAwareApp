@@ -17,8 +17,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 public class ListDonePresenterMaster extends GenericPresenter
@@ -328,7 +327,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         } else {*/
         if(!(database.getRunningTask())){
             Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-            onLoadItemsTaskFinished(database.getDoneItemsFromDatabase());
+            onLoadItemsTaskFinished(database.getDoneTasksFromDatabase());
         } else {
             Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
             onLoadItemsTaskStarted();
@@ -351,7 +350,7 @@ public class ListDonePresenterMaster extends GenericPresenter
                 database.setValidDatabase(true);
                 Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
                 //getPresenter().onLoadItemsSubjectsFinished(items);
-                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
+                onLoadItemsSubjectsFinished(database.getTasksFromDatabase());
             }
         }, 0);
     }*/
