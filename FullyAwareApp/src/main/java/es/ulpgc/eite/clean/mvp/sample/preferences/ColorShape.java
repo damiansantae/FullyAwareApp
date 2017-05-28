@@ -3,7 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 import java.io.Serializable;
 
 /**
- * Created by Kizito Nwose on 10/1/2016.
+ * Methods that creates a color shape to select it on preferences.
  */
 public enum ColorShape implements Serializable {
     CIRCLE(1), SQUARE(2);
@@ -17,7 +17,6 @@ public enum ColorShape implements Serializable {
     public int getValue() {
         return value;
     }
-
 
     public static ColorShape getShape(int num) {
         switch (num) {

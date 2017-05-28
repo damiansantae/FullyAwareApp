@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.util.Log;
 import android.widget.SimpleAdapter;
 import es.ulpgc.eite.clean.mvp.ContextView;
@@ -19,9 +20,8 @@ public class PreferencesPresenter extends GenericPresenter
         implements Preferences.ViewToPresenter, Preferences.ModelToPresenter, Preferences.PreferencesTo, Preferences.ToPreferences {
 
 
-    private boolean toolbarVisible;
+    private boolean toolbarVisible, toolbarColorChanged;
     private PrefManager prefManager;
-    private boolean toolbarColorChanged;
     private int toolbarColour;
 
     /**
@@ -47,6 +47,7 @@ public class PreferencesPresenter extends GenericPresenter
             getView().toolbarChanged(colour);
         }
         app.loadSharePreferences((PreferencesView) getView());
+        checkToolbarVisibility();
     }
 
     /**
@@ -73,7 +74,7 @@ public class PreferencesPresenter extends GenericPresenter
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
-
+        checkToolbarVisibility();
     }
 
     /**
@@ -120,11 +121,9 @@ public class PreferencesPresenter extends GenericPresenter
         } else if (position == 3) {
 
             final AlertDialog alertDialog = new AlertDialog.Builder(getManagedContext()).create();
-            alertDialog.setTitle("FullyAware App and xDroidInc");
-            alertDialog.setMessage("We provide services and products through our service models but mainly " +
-                    "Applications for Mobile. " + "\nThis application was created with much love for Application Design (Software Engineering)." +
-                    "\nFor more information please visit us at github.com/xDroidInc");
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "VISIT",
+            alertDialog.setTitle(getModel().getDialogInfoTitle());
+            alertDialog.setMessage(getModel().getDialogInfoDescription());
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getModel().getVisitButtonLabel(),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             openBrowserToVisit();
@@ -133,7 +132,7 @@ public class PreferencesPresenter extends GenericPresenter
 
                     });
 
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getModel().getOkButtonLabel(),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -149,7 +148,7 @@ public class PreferencesPresenter extends GenericPresenter
      * Method that opens the phone browser and redirect to paypal.com.
      */
     private void openBrowserToDonate() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/co/home"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getModel().getPaypalUrl()));
         getManagedContext().startActivity(intent);
     }
 
@@ -157,7 +156,7 @@ public class PreferencesPresenter extends GenericPresenter
      * Method that opens the phone browser and goes to github.com/xDroidInc.
      */
     private void openBrowserToVisit() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.github.com/xDroidInc"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getModel().getGitHubUrl()));
         getManagedContext().startActivity(intent);
     }
 
@@ -194,8 +193,34 @@ public class PreferencesPresenter extends GenericPresenter
     }
 
     /**
+     * Method that calls the model to returns the items of the Preferences List.
+     * @return String[] items of preferences list.
+     */
+    @Override
+    public String[] getPrefItemLabels() {
+        return getModel().getPrefItemLabels();
+    }
+
+    /**
+     * Method that calls the model to returns the description of items of the Preferences List.
+     * @return String[] items description of preferences list.
+     */
+    @Override
+    public String[] getPrefDescriptionItemsLabels() {
+        return getModel().getPrefDescriptionItemsLabels();
+    }
+
+    /**
+     * Method that calls the model to returns a label of not supported system.
+     * @return String label of not supported system.
+     */
+    @Override
+    public String getNotSupportedSystem() {
+        return getModel().getNotSupportedSystem();
+    }
+
+    /**
      * Method that returns the toolbar colour.
-     *
      * @return int: toolbar colour.
      */
     public int getToolbarColour() {
@@ -229,7 +254,6 @@ public class PreferencesPresenter extends GenericPresenter
 
     /**
      * Returns the activity context (of the view related(.
-     *
      * @return Context
      */
     @Override
@@ -249,7 +273,6 @@ public class PreferencesPresenter extends GenericPresenter
 
     /**
      * Method that returns if the toolbar is visible
-     *
      * @return boolean true: if toolbar is visible & false : if not.
      */
     @Override
@@ -257,8 +280,8 @@ public class PreferencesPresenter extends GenericPresenter
         return toolbarVisible;
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////
+    // Checks of visibility and colour changes ////////////////////////////////////////////////
 
     /**
      * Method that checks if the toolbar is visible
@@ -267,15 +290,11 @@ public class PreferencesPresenter extends GenericPresenter
     private void checkToolbarVisibility() {
         Log.d(TAG, "calling checkToolbarVisibility()");
         if (isViewRunning()) {
-            if (isToolbarVisible()) {
-                getView().hideToolbar();
-            }
         }
     }
 
     /**
      * Method that returns if the toolbar colour has been changed
-     *
      * @return toolbarColorChanged boolean.
      */
     public boolean getToolbarColourChanged() {

@@ -34,19 +34,16 @@ import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
 
     private Toolbar toolbar;
-    private String[] prefItems;
-    private String[] descriptionItems;
+    private String[] prefItems, descriptionItems;
     private int[] imageItems;
     private ListView list;
     private SimpleAdapter adapter;
     private GoogleApiClient client;
-    private int toolbarColour;
-    private int fabColor;
+    private int toolbarColour, fabColor;
     SharedPreferences preferences;
     private PrefManager prefManager;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    List<String> colorPrimaryList;
-    List<String> colorPrimaryDarkList;
+    List<String> colorPrimaryList,colorPrimaryDarkList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +96,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setVisibility(View.VISIBLE);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -160,7 +158,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
             setNewToolbarColor(newColor);
         } else {
             Context context = getApplicationContext();
-            CharSequence text = "Sistema Operativo no compatible";
+            CharSequence text = getPresenter().getNotSupportedSystem();
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
@@ -248,7 +246,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("Preferences Page")
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .setUrl(Uri.parse("http://www.github.com/xDroidInc"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
                 .setObject(object)
@@ -280,13 +278,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
     }
 
-    /**
-     * Method that hides the toolbar.
-     */
-    @Override
-    public void hideToolbar() {
-        toolbar.setVisibility(View.GONE);
-    }
 }
 
 
