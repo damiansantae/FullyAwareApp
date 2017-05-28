@@ -62,19 +62,17 @@ public interface ListToDoMaster {
     void onDoneBtnClick(TaskRecyclerViewAdapter adapter);
 
 
-      void onListClick2(View item, int position, Task task);
+      void onListClick(View item, int position, Task task);
 
-    void onLongListClick2(View item, int adapterPosition);
+    void onLongListClick(View item, int adapterPosition);
 
       void onAddBtnClick();
 
       boolean isSelected(int adapterPosition);
 
-    void onBinBtnClick2(TaskRecyclerViewAdapter adapter);
+    void onBinBtnClick(TaskRecyclerViewAdapter adapter);
 
       String getCases(Task task);
-
-    void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
 
     void subjectFilter();
 
@@ -94,14 +92,11 @@ public interface ListToDoMaster {
     void finishScreen();
     void hideToolbar();
 
-
       void showAddBtn();
 
       void hideDeleteBtn();
 
       void showDeleteBtn();
-
-
 
       void hideAddBtn();
 

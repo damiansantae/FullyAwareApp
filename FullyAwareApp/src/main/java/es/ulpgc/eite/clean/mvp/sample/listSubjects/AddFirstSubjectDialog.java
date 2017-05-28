@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 
 public class AddFirstSubjectDialog extends DialogFragment implements View.OnClickListener {

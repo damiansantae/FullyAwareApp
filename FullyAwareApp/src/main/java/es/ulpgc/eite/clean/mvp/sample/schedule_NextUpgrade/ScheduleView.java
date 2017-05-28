@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.schedule;
+package es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -25,9 +25,9 @@ import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.OnStartDragListener;
-import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.RecyclerListAdapter;
-import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler.SimpleItemTouchHelperCallback;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler_NextUpgrade.OnStartDragListener;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler_NextUpgrade.RecyclerListAdapter;
+import es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler_NextUpgrade.SimpleItemTouchHelperCallback;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 
 

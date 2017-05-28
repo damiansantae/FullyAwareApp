@@ -45,13 +45,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
-    private ArrayList<Task> tasksSelected = new ArrayList<>();
-    private ArrayList<String> posSelected = new ArrayList<>();
-
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
-    int counter=0;
-
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
@@ -199,7 +194,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     @Override
-    public void onListClick2(View v, int adapterPosition, Task task) {
+    public void onListClick(View v, int adapterPosition, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -250,28 +245,13 @@ checkSelection2();
     }
 
 
-    private void deselectTask(Task currentTask) {
-       tasksSelected.remove(currentTask);
-    }
-
-    private boolean isTaskSelected(Task currentTask) {
-        boolean result = false;
-        for(int i=0;i<tasksSelected.size();i++){
-            if(currentTask.equals(tasksSelected.get(i)))
-                result= true;
-    }
-        return result;
-
-}
-
 
     @Override
-    public void onLongListClick2(View v, int adapterPosition) {
+    public void onLongListClick(View v, int adapterPosition) {
         if(!selectedState){
             selectedState =true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
-
         }
 
 checkSelection2();
@@ -298,7 +278,7 @@ checkSelection2();
     }
 
     @Override
-    public void onBinBtnClick2(TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick(TaskRecyclerViewAdapter adapter) {
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
@@ -484,11 +464,7 @@ checkSelection2();
 
     }
 
-    @Override
-    public void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility) {
-        this.textWhenIsEmptyVisible = textWhenIsEmptyVisibility;
 
-    }
 
     @Override
     public void subjectFilter() {

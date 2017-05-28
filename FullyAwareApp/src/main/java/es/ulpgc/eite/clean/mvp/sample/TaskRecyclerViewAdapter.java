@@ -116,9 +116,9 @@ public class TaskRecyclerViewAdapter
                 @Override
                 public void onClick(View v) {
                     if(listToDoViewMaster!=null){
-                       listToDoViewMaster.getPresenter().onListClick2(itemView, getAdapterPosition(), task);
+                       listToDoViewMaster.getPresenter().onListClick(itemView, getAdapterPosition(), task);
                     }else if(listDoneViewMasterTesting!=null){
-                        listDoneViewMasterTesting.getPresenter().onListClick2(itemView, getAdapterPosition(), task);
+                        listDoneViewMasterTesting.getPresenter().onListClick(itemView, getAdapterPosition(), task);
                     }
 
 
@@ -131,7 +131,12 @@ public class TaskRecyclerViewAdapter
                 @Override
                 public boolean onLongClick(View v) {
 
-                    listToDoViewMaster.getPresenter().onLongListClick2(v, getAdapterPosition());
+                    if(listToDoViewMaster!=null){
+                        listToDoViewMaster.getPresenter().onLongListClick(v, getAdapterPosition());
+
+                    }else if(listDoneViewMasterTesting!=null){
+                   listDoneViewMasterTesting.getPresenter().onLongListClick(v,getAdapterPosition());
+                    }
 
                     return true;
                 }

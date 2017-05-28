@@ -1,8 +1,7 @@
-package es.ulpgc.eite.clean.mvp.sample;
+package es.ulpgc.eite.clean.mvp.sample.app;
 
 import java.util.UUID;
 
-import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

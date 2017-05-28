@@ -37,8 +37,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
-import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.EspressoTest.WelcomeActivity;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
@@ -57,9 +57,6 @@ public class ListToDoViewMaster
     private TextView textWhenIsEmpty;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
-
-    enum Direction {LEFT, RIGHT}
-
     private SharedPreferences prefs;
     private SparseBooleanArray tasksSelected;
     private PrefManager prefManager;
@@ -98,7 +95,7 @@ public class ListToDoViewMaster
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
-                                       getPresenter().onBinBtnClick2(adapter);
+                                       getPresenter().onBinBtnClick(adapter);
 
                                        adapter.notifyDataSetChanged();
                                    }

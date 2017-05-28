@@ -31,8 +31,8 @@ import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTask;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTimeTable;
-import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
-import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

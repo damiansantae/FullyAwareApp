@@ -13,7 +13,7 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
-import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 
 public interface Navigator {
 

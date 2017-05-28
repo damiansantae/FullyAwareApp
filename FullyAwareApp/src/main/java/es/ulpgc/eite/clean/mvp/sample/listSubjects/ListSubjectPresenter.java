@@ -22,7 +22,7 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.EspressoTest.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.view.View.VISIBLE;
