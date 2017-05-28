@@ -13,6 +13,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 public class PreferencesPresenter extends GenericPresenter
@@ -113,7 +114,8 @@ public class PreferencesPresenter extends GenericPresenter
         if (position == 0) {
             getView().onChangeColourDialog(getView());
         } else if (position == 1) {
-            //app.goToEditSubjects();
+            Navigator app = (Navigator) getApplication();
+            app.goToEditSubjects(this);
         } else if (position == 2) {
             openBrowserToDonate();
         } else if (position == 3) {

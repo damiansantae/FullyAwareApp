@@ -46,7 +46,6 @@ public class ListDoneViewMasterTesting
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
 
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -99,7 +98,6 @@ public class ListDoneViewMasterTesting
                 return false;
             }
         });*/
-
 
 
         bin.setOnClickListener(new View.OnClickListener() {

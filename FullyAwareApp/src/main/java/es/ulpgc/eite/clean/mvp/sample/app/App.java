@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
-import android.util.Log;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificacionService.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -348,9 +347,6 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {
-
-        // listToDoToState.toolbarVisibility = presenter.isToolbarVisible();
-        //listDoneToState.textVisibility = presenter.isTextVisible();
         addTaskToState = new AddTaskState();
         addTaskToState.toolbarVisibility = true;
 
@@ -418,11 +414,6 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
-
-    }
-
-    @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
 
         if (listSubjectToState == null) {
@@ -437,6 +428,11 @@ public class App extends Application implements Mediator, Navigator {
         }
 
 
+
+    }
+
+    @Override
+    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
 
     }
 
@@ -464,6 +460,18 @@ public class App extends Application implements Mediator, Navigator {
     @Override
     public void startActivy(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void goToEditSubjects(PreferencesPresenter preferencesPresenter) {
+        if (listSubjectToState == null) {
+            listSubjectToState = new ListSubjectState();
+        }
+
+        Context view = preferencesPresenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListSubjectView.class));
+        }
     }
 
 
