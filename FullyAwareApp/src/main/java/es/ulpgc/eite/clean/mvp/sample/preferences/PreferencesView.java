@@ -187,7 +187,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         toolbar.setBackgroundColor(newColor);
         toolbarColour = newColor;
         prefManager.setToolbarColour(newColor);
-        //change the status bar color
         updateStatusBarColor(newColor);
     }
 
@@ -218,7 +217,6 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      */
     @Override
     public void toolbarChanged(String colour) {
-
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         int color = (Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour))));

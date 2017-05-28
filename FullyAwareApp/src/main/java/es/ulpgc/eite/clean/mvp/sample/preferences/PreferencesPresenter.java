@@ -61,20 +61,18 @@ public class PreferencesPresenter extends GenericPresenter
     public void onResume(Preferences.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
-
+        Mediator app = (Mediator) getView().getApplication();
         if (configurationChangeOccurred()) {
-
             checkToolbarVisibility();
-            Mediator app = (Mediator) getView().getApplication();
             app.loadSharePreferences((PreferencesView) getView());
         }
 
-        Mediator app = (Mediator) getView().getApplication();
         if (app.checkToolbarChanged()) {
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
         checkToolbarVisibility();
+        app.loadSharePreferences((PreferencesView) getView());
     }
 
     /**

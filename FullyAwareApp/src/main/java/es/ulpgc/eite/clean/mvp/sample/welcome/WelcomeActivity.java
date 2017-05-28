@@ -32,7 +32,11 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
 
-
+    /**
+     * Method that creates the Welcome Activity.
+     * Auto-generated method.
+     * @param savedInstanceState Bundle -> saved state of the app
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -212,7 +216,6 @@ public class WelcomeActivity extends AppCompatActivity {
         public boolean isViewFromObject(View view, Object obj) {
             return view == obj;
         }
-
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {

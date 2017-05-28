@@ -93,24 +93,16 @@ public class ListToDoPresenterMaster extends GenericPresenter
     public void onResume(ListToDoMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
-
+        Mediator app = (Mediator) getView().getApplication();
         if (configurationChangeOccurred()) {
-            Mediator app = (Mediator) getView().getApplication();
             app.loadSharePreferences((ListToDoViewMaster) getView());
-           checkToolbarVisibility();
+            checkToolbarVisibility();
             checkAddBtnVisibility();
-            
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             checkTextWhenIsEmptyVisibility();
             CheckDoneBtnVisibility();
-
-//            if (buttonClicked) {
-//                getView().setText(getModel().getText());
-//            }
         }
-
-        Mediator app = (Mediator) getView().getApplication();
         app.loadSharePreferences((ListToDoViewMaster) getView());
         loadItems();
     }
