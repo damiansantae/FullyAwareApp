@@ -325,13 +325,8 @@ public class ListDonePresenterMaster extends GenericPresenter
         /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
             startDelayedTask();
         } else {*/
-        if(!(database.getRunningTask())){
             Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
             onLoadItemsTaskFinished(database.getDoneTasksFromDatabase());
-        } else {
-            Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-            onLoadItemsTaskStarted();
-        }
         //}
 
     }
@@ -355,12 +350,6 @@ public class ListDonePresenterMaster extends GenericPresenter
         }, 0);
     }*/
 
-    public void reloadItems() {
-        //items = null;
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
 @Override
 public void onErrorDeletingItem(Task item) {
 

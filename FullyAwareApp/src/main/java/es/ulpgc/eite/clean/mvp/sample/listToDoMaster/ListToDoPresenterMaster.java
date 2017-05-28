@@ -587,11 +587,6 @@ checkSelection();
             }
 
 
-    public void reloadItems() {
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
 
     @Override
     public boolean isTaskForgotten(String deadline){

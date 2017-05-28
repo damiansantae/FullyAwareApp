@@ -428,13 +428,9 @@ public class ListSubjectPresenter extends GenericPresenter
         /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
             startDelayedTask();
         } else {*/
-        if (!(database.getRunningTask())) {
-            Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-            //  onLoadItemsSubjectFinished(database.getForgottenTasksFromDatabase());
-        } else {
             Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
             onLoadItemsSubjectStarted();
-        }
+
         //}
 
     }
@@ -458,14 +454,6 @@ public class ListSubjectPresenter extends GenericPresenter
             }
         }, 0);
     }*/
-
-    public void reloadItems() {
-        //items = null;
-
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
 
     /*
         @Override
