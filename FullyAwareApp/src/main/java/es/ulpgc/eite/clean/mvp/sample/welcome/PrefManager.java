@@ -41,30 +41,30 @@ public class PrefManager {
     /**
      * Method that returns isFirstTime boolean
      * isFirstTime boolean specifies if the app is being launched for the first time
-     * It returns the value stored on SharedPreferences -> IS_FIRST_TIME_LAUNCH
+     * @return IS_FIRST_TIME_LAUNCH -> value stored on SharedPreferences.
      */
         public boolean isFirstTimeLaunch() {
             return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
         }
 
-
-
+    /**
+     * Method that sets userName value. String userName is stored on SharedPreferences.
+     * userName is the name of the person who is using the app.
+     *  @param userName String
+     */
         public void setUserName(String userName) {
             editor.putString(USER_NAME,userName);
             editor.commit();
         }
 
+    /**
+     * Method that returns the userName value. String userName is stored on SharedPreferences.
+     * userName is the name of the person who is using the app.
+     *  @return USER_NAME -> value stored on SharedPreferences.
+     */
         public String getUserName(){
             return pref.getString(USER_NAME, "User Name");
         }
 
-        public void setHourFrames(int counterSubject) {
-            editor.putInt(COUNTER_SUBJECT, counterSubject);
-            editor.commit();
-    }
-
-    public int getCounterSubject() {
-            return pref.getInt(COUNTER_SUBJECT, 0);
-    }
 }
 

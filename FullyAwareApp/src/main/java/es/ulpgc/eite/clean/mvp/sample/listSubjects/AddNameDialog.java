@@ -40,6 +40,7 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
     etUserName = (EditText) view.findViewById(R.id.et_subject_name);
     etUserName.requestFocus();
     getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    getDialog().setCanceledOnTouchOutside(false);
     btAddName = (Button) view.findViewById(R.id.bt_add_user);
     btAddName.setOnClickListener(this);
   }

@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
@@ -36,7 +37,9 @@ import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
+import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
+import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
@@ -269,12 +272,6 @@ public class ListSubjectView
         client.disconnect();
     }
 
-    public void setCheckedBoxes(AddHourSubjectDialog dialog, int index) {
-
-
-    }
-
-
     ///////////////////////////////////////////////////////////////
 
 
@@ -370,7 +367,6 @@ public class ListSubjectView
 
     }
 
-
     @Override
     public void showAddUserNameDialog() {
         final AddNameDialog dialog = new AddNameDialog();
@@ -388,11 +384,13 @@ public class ListSubjectView
 
     @Override
     public void showAddSubjectsDialog() {
-
         final AddFirstSubjectDialog dialog = new AddFirstSubjectDialog();
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
         numberOfSubjects = 0;
         subjectList = new ArrayList<>();
+        prefManager = new PrefManager(this);
+        prefManager.setFirstTimeLaunch(false);
+
         dialog.setListener(new AddFirstSubjectDialog.OnAddSubjectClickListener() {
             @Override
             public void onAddSubjectClickListener(String label) {
@@ -401,9 +399,13 @@ public class ListSubjectView
                 if (label.equals(getPresenter().getFinishLabel())) {
                     if (numberOfSubjects == 0) {
                         dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "No subjects added", Toast.LENGTH_SHORT).show();
                     } else {
-                        //
+                        getPresenter().addSubjectsToDataBase(subjectList);
                         dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "All subjects added", Toast.LENGTH_SHORT).show();
+                        launchHomeScreen();
+                        finish();
                     }
 
                 } else {
@@ -503,6 +505,11 @@ public class ListSubjectView
         });
     }
 
-}
+    private void launchHomeScreen() {
+        startActivity(new Intent(ListSubjectView.this, ListToDoViewMaster.class));
+        finish();
+    }
+    }
+
 
 

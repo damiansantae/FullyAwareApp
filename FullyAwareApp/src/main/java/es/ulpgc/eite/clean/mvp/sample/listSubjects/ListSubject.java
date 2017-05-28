@@ -63,29 +63,15 @@ public interface ListSubject {
 
     String getLabelBtnHour();
 
-    void onSelectTimeBtnClicked(int i, AddHourSubjectDialog dialog);
-
-    void setTimeLabelOnButton(int i,AddHourSubjectDialog dialog);
-
     String getDaysChecked(int i);
-
-    void getCheckedBoxes(AddHourSubjectDialog dialog);
 
     void setTimeText(int i, String txt);
 
     String getTimeText(int i);
 
-    void getSelectedHours(AddHourSubjectDialog dialog);
-
-    void resetDaysChecked();
-
-    void resetSelectedHours();
-
-    void uncheckDaysBoxes(AddHourSubjectDialog dialog, int i);
-
     String getFinishLabel();
 
-    void transformData(String subject);
+    void addSubjectsToDataBase(ArrayList<String> subjectList);
   }
 
   /**
@@ -129,13 +115,17 @@ public interface ListSubject {
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
     void deleteItem(Subject item);
+
     void loadItems();
+
     void reloadItems();
+
     void setDatabaseValidity(boolean valid);
+
     String getErrorMessage();
-    void addInitialSubjects();
 
     String getLabelFloatingAdd();
+
     String getLabelFloatingDelete();
 
     String getLabelBtnHour();
@@ -144,13 +134,11 @@ public interface ListSubject {
 
     void setLabelButtons();
 
-
     String getFinishLabel();
 
-    void saveSubject(String subject, ArrayList<String> validDays, ArrayList<String> validHours);
-
-
     ArrayList<String> getDaysOfWeek();
+
+    void addSubjectsToDataBase(ArrayList<String> subjectList);
   }
 
   /**
