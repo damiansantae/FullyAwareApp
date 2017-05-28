@@ -85,15 +85,9 @@ public class App extends Application implements Mediator, Navigator {
 
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
-        toAddTaskState.textVisibility = false;
-        toAddTaskState.addBtnVisibility = true;
-        toAddTaskState.deleteBtnVisibility = false;
 
         toPreferencesState = new PreferencesState();
         toPreferencesState.toolbarVisibility = true;
-        toPreferencesState.textVisibility = false;
-        toPreferencesState.addBtnVisibility = true;
-        toPreferencesState.deleteBtnVisibility = false;
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
@@ -166,9 +160,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
         if (toAddTaskState != null) {
             presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
-            presenter.setTextVisibility(toAddTaskState.textVisibility);
-            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -178,9 +169,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
         if (toPreferencesState != null) {
             presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
-            presenter.setTextVisibility(toPreferencesState.textVisibility);
-            presenter.setAddBtnVisibility(toPreferencesState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toPreferencesState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -313,7 +301,6 @@ public class App extends Application implements Mediator, Navigator {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
          newColourString = getColorHex(preferencesToState.toolbarColour);
         }
-
         return newColourString;
     }
 
@@ -710,24 +697,12 @@ public class App extends Application implements Mediator, Navigator {
         boolean deleteBtnVisibility;
     }
 
-    private class ListForgottenState {
-        boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean deleteBtnVisibility;
-    }
-
     private class AddTaskState {
         boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean addBtnVisibility;
-        boolean deleteBtnVisibility;
     }
 
     private class PreferencesState {
         boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean addBtnVisibility;
-        boolean deleteBtnVisibility;
         int toolbarColour;
         boolean toolbarColourChanged = false;
     }

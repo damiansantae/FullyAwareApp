@@ -22,16 +22,12 @@ public interface Preferences {
   interface ToPreferences {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
-    void setTextVisibility(boolean visible);
-    void setAddBtnVisibility(boolean addBtnVisibility);
-    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
   }
 
   interface PreferencesTo {
     Context getManagedContext();
     void destroyView();
     boolean isToolbarVisible();
-    boolean isTextVisible();
   }
 
   ///////////////////////////////////////////////////////////////////////////////////
@@ -41,10 +37,8 @@ public interface Preferences {
    * Methods offered to VIEW to communicate with PRESENTER
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onSelectDateBtnClicked();
-    void onSelectTimeBtnClicked();
-    void onAddTaskBtnClicked();
-      void onListClick(int position, SimpleAdapter adapter);
+
+    void onListClick(int position, SimpleAdapter adapter);
 
     void setNewToolbarColor(int newColor);
 
@@ -58,21 +52,8 @@ public interface Preferences {
    */
   interface PresenterToView extends ContextView {
     void finishScreen();
+
     void hideToolbar();
-    void setDateText(String txt);
-
-    void setTimeText(String txt);
-
-
-    String getDescription();
-
-    String getDate();
-
-    String getTime();
-
-    String getTaskTitle();
-
-    String getTaskSubject();
 
     void onChangeColourDialog(PresenterToView view);
 

@@ -11,48 +11,39 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.kizitonwose.colorpreference.ColorDialog;
 import com.kizitonwose.colorpreference.ColorShape;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 
 public class PreferencesView extends GenericActivity<Preferences.PresenterToView, Preferences.ViewToPresenter, PreferencesPresenter> implements Preferences.PresenterToView, ColorDialog.OnColorSelectedListener {
 
     private Toolbar toolbar;
-    private String [] prefItems;
-    private String [] descriptionItems;
+    private String[] prefItems;
+    private String[] descriptionItems;
     private int[] imageItems;
     private ListView list;
     private SimpleAdapter adapter;
     private GoogleApiClient client;
     private int toolbarColour;
     private int fabColor;
-    private boolean toolbarColorChanged;
-
     SharedPreferences preferences;
     private PrefManager prefManager;
-
-    public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     List<String> colorPrimaryList;
     List<String> colorPrimaryDarkList;
@@ -65,33 +56,36 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         prefManager = new PrefManager(getActivityContext());
     }
 
-
-    private void preferencesListView(){
+    /**
+     * Private method that initializes the Preferences List.
+     * It sets the name of each item of the list.
+     */
+    private void preferencesListView() {
         // Create list elements
-       prefItems = new String[]{"App Colour","Edit Subjects","Donate","About"};
-       descriptionItems = new String[]{"Change the colour of the App!", "Add subjects or make changes", "To contribute", "All about FullyAware App and xDroidInc"};
-       imageItems = new int[]{
+        prefItems = new String[]{"App Colour", "Edit Subjects", "Donate", "About"};
+        descriptionItems = new String[]{"Change the colour of the App!", "Add subjects or make changes", "To contribute", "All about FullyAware App and xDroidInc"};
+        imageItems = new int[]{
                 android.R.drawable.ic_menu_edit,
                 android.R.drawable.ic_menu_manage,
                 android.R.drawable.ic_menu_share,
                 android.R.drawable.ic_menu_info_details,
         };
 
-        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+        List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
 
-        for(int i=0;i<4;i++){
-            HashMap<String, String> hm = new HashMap<String,String>();
+        for (int i = 0; i < 4; i++) {
+            HashMap<String, String> hm = new HashMap<String, String>();
             hm.put("prefItem", "" + prefItems[i]);
-            hm.put("descriptionItem","" + descriptionItems[i]);
-            hm.put("imageItem", Integer.toString(imageItems[i]) );
+            hm.put("descriptionItem", "" + descriptionItems[i]);
+            hm.put("imageItem", Integer.toString(imageItems[i]));
             aList.add(hm);
         }
 
         // Keys used in Hashmap
-        String[] from = { "imageItem","descriptionItem","prefItem" };
+        String[] from = {"imageItem", "descriptionItem", "prefItem"};
 
         // Ids of views in listview_layout
-        int[] to = { R.id.color_subject,R.id.description,R.id.title};
+        int[] to = {R.id.color_subject, R.id.description, R.id.title};
 
         // Instantiating an adapter to store each items
         // R.layout.listview_layout defines the layout of each item
@@ -103,66 +97,32 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         // Setting the adapter to the listView
         list.setAdapter(adapter);
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-          getPresenter().onListClick(position,adapter);
-        }
+                getPresenter().onListClick(position, adapter);
+            }
         });
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
 
-
-
-
+    /**
+     * Method that finish the activity.
+     */
     @Override
     public void finishScreen() {
+        finish();
     }
 
-    @Override
-    public void hideToolbar() {
-    }
-
-    @Override
-    public void setDateText(String txt) {
-    }
-
-    @Override
-    public void setTimeText(String txt) {
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
-    public String getDate() {
-        return null;
-    }
-
-    @Override
-    public String getTime() {
-        return null;
-    }
-
-    @Override
-    public String getTaskTitle() {
-        return null;
-    }
-
-    @Override
-    public String getTaskSubject() {
-        return null;
-    }
-
-
-    ///////////////// TO CHANGE COLOUR OF TOOLBAR /////////////////////
+    /**
+     * Method that initializes the Colour dialog.
+     *
+     * @param view (View) current view of the app.
+     */
     @Override
     public void onChangeColourDialog(Preferences.PresenterToView view) {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -172,7 +132,12 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         showColorDialog(this);
     }
 
-
+    /**
+     * Method that shows the Colour dialog.
+     * It shows the different colours of the app to choose one of them.
+     *
+     * @param view current view of the app.
+     */
     private void showColorDialog(final Preferences.PresenterToView view) {
         new ColorDialog.Builder(this)
                 .setColorShape(view instanceof Toolbar ? com.kizitonwose.colorpreference.ColorShape.SQUARE : ColorShape.CIRCLE)
@@ -182,6 +147,11 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
                 .show();
     }
 
+    /**
+     * Method that updates the color of the App.
+     *
+     * @param newColor (int) colour of the app.
+     */
     private void updateStatusBarColor(int newColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String newColorString = getColorHex(newColor);
@@ -198,32 +168,56 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         }
     }
 
-
+    /**
+     * Method that tranforms a numeric colour on a String colour.
+     * It changes from int to hex.
+     *
+     * @param color (int) color to transform.
+     */
     @Override
     public String getColorHex(int color) {
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 
+    /**
+     * Method that is called when a colour of the Colour Dialog is pressed.
+     *
+     * @param newColor,tag (int) colour selected and (String) tag to identify it.
+     */
     @Override
     public void onColorSelected(int newColor, String tag) {
-        View view = findViewById(Integer.parseInt(tag));
-            toolbar.setBackgroundColor(newColor);
-            toolbarColour = newColor;
-            prefManager.setToolbarColour(newColor);
-            //change the status bar color
-            updateStatusBarColor(newColor);
-        }
+        toolbar.setBackgroundColor(newColor);
+        toolbarColour = newColor;
+        prefManager.setToolbarColour(newColor);
+        //change the status bar color
+        updateStatusBarColor(newColor);
+    }
 
+    /**
+     * Method that calls to the Presenter to change the toolbar Colour value.
+     *
+     * @param newColor (int) new color of the app.
+     */
     @Override
     public void setNewToolbarColor(int newColor) {
         getPresenter().setNewToolbarColor(newColor);
     }
 
+    /**
+     * Method that updates a boolean that specifies if toolbar colour has been changed.
+     *
+     * @param toolbarColorChanged (boolean)
+     */
     @Override
     public void setToolbarColorChanged(boolean toolbarColorChanged) {
-       getPresenter().setToolbarColorChanged(toolbarColorChanged);
+        getPresenter().setToolbarColorChanged(toolbarColorChanged);
     }
 
+    /**
+     * Method that changes the colour of the actual view.
+     *
+     * @param colour (String) Toolbar colour.
+     */
     @Override
     public void toolbarChanged(String colour) {
 
@@ -234,22 +228,26 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
         toolbar.setBackgroundColor(color);
     }
 
-
-
+    /**
+     * Method auto-generated.
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
+    /**
+     * Method auto-generated.
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("Preferences Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
+                .setName("Preferences Page")
                 .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
@@ -257,12 +255,15 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
+
+    /**
+     * Method auto-generated.
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
@@ -277,6 +278,14 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     protected void onResume() {
         super.onResume(PreferencesPresenter.class, this);
 
+    }
+
+    /**
+     * Method that hides the toolbar.
+     */
+    @Override
+    public void hideToolbar() {
+        toolbar.setVisibility(View.GONE);
     }
 }
 
