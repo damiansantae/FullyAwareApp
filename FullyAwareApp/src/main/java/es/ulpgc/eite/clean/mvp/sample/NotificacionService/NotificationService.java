@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample;
+package es.ulpgc.eite.clean.mvp.sample.NotificacionService;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -14,6 +14,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 public class NotificationService extends Service {

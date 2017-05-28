@@ -69,7 +69,7 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         realmDatabase = Realm.getDefaultInstance();
         database =DatabaseFacade.getInstance();
         //validDatabase = true;
-        saveSubject("Other",null,null);
+        saveSubject("None",null,null);
         errorMsg = "Error deleting item!";
     }
 

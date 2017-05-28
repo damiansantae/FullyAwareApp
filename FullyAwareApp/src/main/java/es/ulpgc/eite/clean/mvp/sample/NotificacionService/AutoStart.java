@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample;
+package es.ulpgc.eite.clean.mvp.sample.NotificacionService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

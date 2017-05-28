@@ -2,9 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.view.View;
-
 import java.util.List;
-
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;

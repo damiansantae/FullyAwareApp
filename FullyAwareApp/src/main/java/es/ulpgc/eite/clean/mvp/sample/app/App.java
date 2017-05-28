@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 
-import es.ulpgc.eite.clean.mvp.sample.NotificationService;
+import es.ulpgc.eite.clean.mvp.sample.NotificacionService.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
@@ -91,8 +91,6 @@ public class App extends Application implements Mediator, Navigator {
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
         toAddTaskState.textVisibility = false;
-        toAddTaskState.addBtnVisibility = true;
-        toAddTaskState.deleteBtnVisibility = false;
 
         toPreferencesState = new PreferencesState();
         toPreferencesState.toolbarVisibility = true;
@@ -174,8 +172,6 @@ public class App extends Application implements Mediator, Navigator {
         if (toAddTaskState != null) {
             presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
             presenter.setTextVisibility(toAddTaskState.textVisibility);
-            presenter.setAddBtnVisibility(toAddTaskState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toAddTaskState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -703,8 +699,6 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
     private class AddTaskState {
         boolean toolbarVisibility;
         boolean textVisibility;
-        boolean addBtnVisibility;
-        boolean deleteBtnVisibility;
     }
 
     private class PreferencesState {
