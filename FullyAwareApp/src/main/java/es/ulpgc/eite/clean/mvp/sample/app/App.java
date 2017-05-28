@@ -7,12 +7,9 @@ import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 
-import es.ulpgc.eite.clean.mvp.sample.notificacionService_AlternativeFeature.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
-import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
-import es.ulpgc.eite.clean.mvp.sample.dummy.DummyView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
@@ -26,6 +23,7 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
+import es.ulpgc.eite.clean.mvp.sample.notificacionService_AlternativeFeature.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
@@ -39,8 +37,6 @@ import io.realm.RealmConfiguration;
 
 
 public class App extends Application implements Mediator, Navigator {
-
-    private DummyState toDummyState, dummyToState;
     private ListToDoState toListToDoState, listToDoToState;
     private ListDoneState toListDoneState, listDoneToState;
     private ListSubjectState toListSubjectState, listSubjectToState;
@@ -98,14 +94,6 @@ public class App extends Application implements Mediator, Navigator {
     ///////////////////////////////////////////////////////////////////////////////////
     // Mediator //////////////////////////////////////////////////////////////////////
 
-    @Override
-    public void startingDummyScreen(Dummy.ToDummy presenter) {
-        if (toDummyState != null) {
-            presenter.setToolbarVisibility(toDummyState.toolbarVisibility);
-            presenter.setTextVisibility(toDummyState.textVisibility);
-        }
-        presenter.onScreenStarted();
-    }
 
     @Override
     public void startingListToDoScreen(ListToDoMaster.ToListToDo presenter) {
@@ -246,7 +234,7 @@ public class App extends Application implements Mediator, Navigator {
     }
 
     @Override
-    public void loadSharePreferences(ListDoneViewMasterTesting view) {
+    public void loadSharePreferences(ListDoneViewMaster view) {
         PrefManager prefManager = new PrefManager(view.getActivityContext());
         int colour = prefManager.getToolbarColour();
         if (colour != 0) {
@@ -328,18 +316,7 @@ public class App extends Application implements Mediator, Navigator {
     // Navigator /////////////////////////////////////////////////////////////////////
 
 
-    @Override
-    public void goToNextScreen(Dummy.DummyTo presenter) {
-        dummyToState = new DummyState();
-        dummyToState.toolbarVisibility = presenter.isToolbarVisible();
-        dummyToState.textVisibility = presenter.isTextVisible();
 
-        Context view = presenter.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, DummyView.class));
-            presenter.destroyView();
-        }
-    }
 
     @Override
     public void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter) {

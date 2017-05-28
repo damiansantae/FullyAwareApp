@@ -1,10 +1,9 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
-import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
@@ -15,7 +14,6 @@ import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 
 public interface Mediator {
-    void startingDummyScreen(Dummy.ToDummy presenter);
 
     /**
      * This method gives variables states saved in the Mediator to the ListToDo
@@ -53,5 +51,5 @@ public interface Mediator {
 
     void loadSharePreferences(ListToDoViewMaster view);
 
-    void loadSharePreferences(ListDoneViewMasterTesting view);
+    void loadSharePreferences(ListDoneViewMaster view);
 }

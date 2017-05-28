@@ -5,7 +5,7 @@ import java.util.UUID;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class TimeTable_NextUpgrade extends RealmObject{
+public class TimeTable extends RealmObject{
 
 @PrimaryKey
 private String timeTableId;
@@ -13,13 +13,13 @@ private String timeTableId;
     private String day;
     private String hour;
 
-    public TimeTable_NextUpgrade(String day, String hour, Subject subject){
+    public TimeTable(String day, String hour, Subject subject){
         this.timeTableId = UUID.randomUUID().toString();
         this.day =day;
         this.subject=subject;
         this.hour =hour;
     }
-    public TimeTable_NextUpgrade(){
+    public TimeTable(){
 
     }
 

@@ -1,11 +1,11 @@
 package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
 
-import es.ulpgc.eite.clean.mvp.sample.app.TimeTable_NextUpgrade;
+import es.ulpgc.eite.clean.mvp.sample.app.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import io.realm.annotations.RealmModule;
 
 
 
-@RealmModule(classes = {Subject.class, TimeTable_NextUpgrade.class})
+@RealmModule(classes = {Subject.class, TimeTable.class})
 public class ModuleSubjectTimeTable {
 }

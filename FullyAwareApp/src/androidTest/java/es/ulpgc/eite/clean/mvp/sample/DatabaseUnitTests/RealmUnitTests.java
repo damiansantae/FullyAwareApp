@@ -89,13 +89,11 @@ public class RealmUnitTests extends TestCase {
 
         List<Task> toDoTasks = databaseFacade.getToDoTasksFromDatabase();
         List<Task> DoneTasks = databaseFacade.getDoneTasksFromDatabase();
-        List<Task> ForgottenTasks = databaseFacade.getForgottenTasksFromDatabase();
         List<Task> allTasks = databaseFacade.getTasksFromDatabase();
 
         assertEquals(1,toDoTasks.size());
         assertEquals(1,DoneTasks.size());
-        assertEquals(1,ForgottenTasks.size());
-        assertEquals(3,allTasks.size());
+        assertEquals(2,allTasks.size());
 
     }
 

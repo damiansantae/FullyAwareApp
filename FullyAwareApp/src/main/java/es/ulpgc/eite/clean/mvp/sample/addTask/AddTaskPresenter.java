@@ -163,7 +163,7 @@ public class AddTaskPresenter extends GenericPresenter
     //  The Intent to start the app Calendar is obtained, and then is used by startActivity()
     Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
     Navigator app = (Navigator) getView().getApplication();
-    app.startActivy(intent);
+    app.startActivity(intent);
 
     Context context = getApplicationContext();
     CharSequence text = "Task added";
@@ -342,7 +342,7 @@ public class AddTaskPresenter extends GenericPresenter
   public void goToCalendar(String title, String description, String deadline, String subjectName){
     Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
     Navigator app = (Navigator) getView().getApplication();
-    app.startActivy(intent);
+    app.startActivity(intent);
   }
 
 }
