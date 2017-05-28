@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -165,11 +166,15 @@ public class AddTaskView
 
         List<Subject> subjects = getPresenter().getSubjects();
         ArrayList<String> subjectNames = new ArrayList<>();
+        ArrayList<String> aux = new ArrayList<>();
 
         // Obtenemos un Iterador y recorremos la lista.
         ListIterator<Subject> iter = subjects.listIterator(subjects.size());
+
         while (iter.hasPrevious())
             subjectNames.add(iter.previous().getName());
+
+        Collections.reverse(subjectNames);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subjectNames);
         subject.setAdapter(adapter);
