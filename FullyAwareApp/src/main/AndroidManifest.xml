@@ -90,7 +90,7 @@
             -->
         </activity>
         <activity
-            android:name=".listDoneMaster.ListDoneViewMasterTesting"
+            android:name=".listDoneMaster.ListDoneViewMaster"
             android:label="FullyAware"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -105,7 +105,7 @@
         <activity
             android:name=".listDoneDetail.ListDoneViewDetail"
             android:label="Detail Done"
-            android:parentActivityName=".listDoneMaster.ListDoneViewMasterTesting"
+            android:parentActivityName=".listDoneMaster.ListDoneViewMaster"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".listForgottenMaster.ListForgottenViewMaster"
@@ -114,7 +114,7 @@
         <activity
             android:name=".listForgottenDetail.ListForgottenViewDetail"
             android:label="Detail Done"
-            android:parentActivityName=".listDoneMaster.ListDoneViewMasterTesting"
+            android:parentActivityName=".listDoneMaster.ListDoneViewMaster"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".dummy.DummyView"

@@ -7,7 +7,6 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +16,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 /**
@@ -145,10 +145,37 @@ public class ListDonePresenterMaster extends GenericPresenter
             selectedTask=task;
             app.goToDetailScreen(this);
         }
+        checkSelection();
       checkDeleteBtnVisibility();
 
     }
+    /**
+     * Method that order view to show or hide view items as buttons
+     * according of the selected state
+     */
+    private void checkSelection() {
+        boolean somethingSelected = false;
+        for (int i = 0; i < itemsSelected.size(); i++) {
+            int key = itemsSelected.keyAt(i);
+            // get the object by the key.
+            Object obj = itemsSelected.get(key);
+            if (obj.equals(true)) {
+                somethingSelected = true;
+                break;
+            }
+        }
 
+        if (somethingSelected) {
+
+            setDeleteBtnVisibility(true);
+        } else {
+
+            setDeleteBtnVisibility(false);
+            selectedState = false;
+        }
+
+
+    }
 
     @Override
     public void onLongListClick(View v, int adapterPosition) {
@@ -156,9 +183,7 @@ public class ListDonePresenterMaster extends GenericPresenter
             selectedState =true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
-
         }
-
         checkDeleteBtnVisibility();
 
 
@@ -178,29 +203,35 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
     @Override
-    public void onBinBtnClick(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
 
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
-            //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
+
         }
         itemsSelected.clear();
-
+        checkSelection();
         checkDeleteBtnVisibility();
-
 
     }
 
     @Override
     public String getCases(Task task) {
         String subjectName= task.getSubject().getName();
-
         return  getModel().calculateCases(subjectName);
 
 
     }
-    private ArrayList<Task> getSelectedTasks(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+
+    /**
+     * This method looks for the tasks in the selected table which has
+     * his field on true (selected)
+     *
+     * @param adapter the recyclerView adapter
+     * @return a list of Tasks which are selected
+     */
+    private ArrayList<Task> getSelectedTasks(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
@@ -215,33 +246,23 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // To ListForgottenDetail //////////////////////////////////////////////////////////////////////
+    // To ListDoneTo //////////////////////////////////////////////////////////////////////
 
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
-   /* if(isViewRunning()) {
-      getView().setLabel(getModel().getLabel());
-    }
-    //checkToolbarVisibility();
-    //checkTextVisibility();*/
+   if(isViewRunning()) {
 
+    }
         checkDeleteBtnVisibility();
         loadItems();
     }
-
 
 
     @Override
     public void setToolbarVisibility(boolean visible) {
         toolbarVisible = visible;
     }
-
-    @Override
-    public void setTextVisibility(boolean visible) {
-        textVisible = visible;
-    }
-
 
 
     @Override
@@ -252,9 +273,8 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
 
-
     ///////////////////////////////////////////////////////////////////////////////////
-    // ListForgottenDetail To //////////////////////////////////////////////////////////////////////
+    // ListDone To //////////////////////////////////////////////////////////////////////
 
 
     @Override
@@ -278,15 +298,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         }
     }
 
-    @Override
-    public boolean isToolbarVisible() {
-        return toolbarVisible;
-    }
 
-    @Override
-    public boolean isTextVisible() {
-        return textVisible;
-    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -314,72 +326,18 @@ public class ListDonePresenterMaster extends GenericPresenter
     }
 
 
-    public void setListClicked(boolean listClicked) {
-        this.listClicked = listClicked;
-    }
-
-    @Override
-    public void onLoadItemsTaskStarted() {
-        checkToolbarVisibility();
-
-    }
-
-    @Override
-    public void onLoadItemsTaskFinished(List<Task> itemsFromDatabase) {
-        getView().setRecyclerAdapterContent(itemsFromDatabase);
-    }
-
-    /*
-        @Override
-        public void onLoadItemsSubjectsFinished(List<Task> items) {
-            getView().setRecyclerAdapterContent(items);
-
-        }*/
     public void loadItems() {
-        /*if(!(database.getValidDatabase()) && !(database.getRunningTask())) {
-            startDelayedTask();
-        } else {*/
-        if(!(database.getRunningTask())){
-            Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-            onLoadItemsTaskFinished(database.getDoneItemsFromDatabase());
-        } else {
-            Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-            onLoadItemsTaskStarted();
+       getView().setRecyclerAdapterContent(database.getDoneItemsFromDatabase());
         }
-        //}
 
-    }
-    /*private void startDelayedTask() {
-        Log.d(TAG, "calling startDelayedTask() method");
-        database.setRunningTask(true);
-        Log.d(TAG, "calling onLoadItemsSubjectStarted() method");
-        onLoadItemsSubjectStarted();
 
-        // Mock Hello: A handler to delay the answer
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //setItems();
-                database.setRunningTask(false);
-                database.setValidDatabase(true);
-                Log.d(TAG, "calling onLoadItemsSubjectsFinished() method");
-                //getPresenter().onLoadItemsSubjectsFinished(items);
-                onLoadItemsSubjectsFinished(database.getItemsFromDatabase());
-            }
-        }, 0);
-    }*/
-
-    public void reloadItems() {
-        //items = null;
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
-@Override
-public void onErrorDeletingItem(Task item) {
-
-}
-
+    /**
+     * When detail make a notifyObserver() this method is accessed.
+     * It delete the task which showed its detail before
+     * @param o: Observable which did notifyObserver()
+     * @param arg: boolean if true then delete task
+     * @see ListDonePresenterDetail.ObservableDone#notifyObservers()
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(arg.equals(true)){

@@ -35,7 +35,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-public class ListDoneViewMasterTesting
+public class ListDoneViewMaster
         extends GenericActivity<ListDoneMaster.PresenterToView, ListDoneMaster.ViewToPresenter, ListDonePresenterMaster>
         implements ListDoneMaster.PresenterToView  {
 

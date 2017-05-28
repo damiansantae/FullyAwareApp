@@ -17,7 +17,7 @@ import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
@@ -487,7 +487,7 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
 
 
             presenter.destroyView();
@@ -542,7 +542,7 @@ public class App extends Application implements Mediator, Navigator {
         Context view = presenter.getManagedContext();
         if (view != null) {
             presenter.destroyView();
-            view.startActivity(new Intent(view, ListDoneViewMasterTesting.class));
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
         }
 
     }

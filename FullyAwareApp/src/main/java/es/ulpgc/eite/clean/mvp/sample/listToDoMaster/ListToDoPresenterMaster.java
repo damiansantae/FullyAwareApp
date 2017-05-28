@@ -24,6 +24,7 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
+import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoPresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -217,9 +218,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
                 somethingSelected = true;
                 break;
             }
-
         }
-
         if (somethingSelected) {
             setAddBtnVisibility(false);
             setDoneBtnVisibility(true);
@@ -231,14 +230,13 @@ public class ListToDoPresenterMaster extends GenericPresenter
             selectedState = false;
         }
 
-
     }
 
 
     @Override
     public void onLongListClick(View v, int adapterPosition) {
         if (!selectedState) {                           //If there is no selected state (no task selected), then
-            //start selected stated and selected the task
+                                                        //start selected stated and selected the task
             selectedState = true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition, true);
@@ -491,21 +489,13 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
     }
 
-    /**
-     * Getter of the toolbar visibility state
-     *
-     * @return boolean: true if toolbar state is visible else false
-     */
-    private boolean isToolbarVisible() {
-        return toolbarVisible;
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////
 
     private void checkToolbarVisibility() {
         Log.d(TAG, "calling checkToolbarVisibility()");
         if (isViewRunning()) {
-            if (!isToolbarVisible()) {
+            if (!toolbarVisible) {
                 getView().hideToolbar();
             }
         }
@@ -558,17 +548,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     }
 
 
-    @Override
-    public void update(Observable o, Object arg) {
 
-        if (arg.equals("delete")) {
-            database.deleteDatabaseItem(selectedTask);
-            getView().showToastDelete();
-        } else if (arg.equals("done")) {
-            database.setItemStatus(selectedTask, "Done");
-        }
-
-    }
 
     private void loadItems() {
         getView().setRecyclerAdapterContent(database.getToDoItemsFromDatabase());
@@ -615,5 +595,25 @@ public class ListToDoPresenterMaster extends GenericPresenter
                 tasks.get(i);
             }
         }
+    }
+
+    /**
+     *When detail make a notifyObserver() this method is accessed.
+     * It delete the task which showed its detail before or change it
+     * status field to done
+     * @param o: Observable which did notifyObserver()
+     * @param arg: String "delete" or "done"
+     *           @see ListToDoPresenterDetail.ObservableToDo#notifyObservers()
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+
+        if (arg.equals("delete")) {
+            database.deleteDatabaseItem(selectedTask);
+            getView().showToastDelete();
+        } else if (arg.equals("done")) {
+            database.setItemStatus(selectedTask, "Done");
+        }
+
     }
 }

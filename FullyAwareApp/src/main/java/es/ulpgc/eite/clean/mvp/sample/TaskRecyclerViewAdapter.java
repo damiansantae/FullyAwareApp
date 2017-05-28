@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
 
@@ -24,15 +24,15 @@ public class TaskRecyclerViewAdapter
 
     private List<Task> items;
     private ListToDoViewMaster listToDoViewMaster;
-    private ListDoneViewMasterTesting listDoneViewMasterTesting;
+    private ListDoneViewMaster listDoneViewMaster;
 
 
     public TaskRecyclerViewAdapter(ListToDoViewMaster listToDoViewMaster) {
       this.listToDoViewMaster =listToDoViewMaster;
         items = new ArrayList<>();
     }
-    public TaskRecyclerViewAdapter(ListDoneViewMasterTesting listDoneViewMasterTesting) {
-        this.listDoneViewMasterTesting=listDoneViewMasterTesting;
+    public TaskRecyclerViewAdapter(ListDoneViewMaster listDoneViewMaster) {
+        this.listDoneViewMaster = listDoneViewMaster;
         items = new ArrayList<>();
     }
     @Override
@@ -101,9 +101,9 @@ public class TaskRecyclerViewAdapter
                 if(listToDoViewMaster.getPresenter().isTaskForgotten(task.getDate())){
                     date.setTextColor(Color.RED);
                 }
-            }else if(listDoneViewMasterTesting!=null){
-                itemView.setSelected(listDoneViewMasterTesting.getPresenter().isSelected(getAdapterPosition()));
-                abrev = listDoneViewMasterTesting.getPresenter().getCases(task);
+            }else if(listDoneViewMaster !=null){
+                itemView.setSelected(listDoneViewMaster.getPresenter().isSelected(getAdapterPosition()));
+                abrev = listDoneViewMaster.getPresenter().getCases(task);
             }
 
             title.setText(task.getTitle());
@@ -117,8 +117,8 @@ public class TaskRecyclerViewAdapter
                 public void onClick(View v) {
                     if(listToDoViewMaster!=null){
                        listToDoViewMaster.getPresenter().onListClick(itemView, getAdapterPosition(), task);
-                    }else if(listDoneViewMasterTesting!=null){
-                        listDoneViewMasterTesting.getPresenter().onListClick(itemView, getAdapterPosition(), task);
+                    }else if(listDoneViewMaster !=null){
+                        listDoneViewMaster.getPresenter().onListClick(itemView, getAdapterPosition(), task);
                     }
 
 
@@ -134,8 +134,8 @@ public class TaskRecyclerViewAdapter
                     if(listToDoViewMaster!=null){
                         listToDoViewMaster.getPresenter().onLongListClick(v, getAdapterPosition());
 
-                    }else if(listDoneViewMasterTesting!=null){
-                   listDoneViewMasterTesting.getPresenter().onLongListClick(v,getAdapterPosition());
+                    }else if(listDoneViewMaster !=null){
+                   listDoneViewMaster.getPresenter().onLongListClick(v,getAdapterPosition());
                     }
 
                     return true;

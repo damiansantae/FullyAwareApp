@@ -12,7 +12,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 
 public class ListDonePresenterDetail extends GenericPresenter
         <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
@@ -22,8 +22,8 @@ public class ListDonePresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
-    private ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
-    private ObservadoDone observado;
+    private ListDoneViewMaster.TaskRecyclerViewAdapter adapter;
+    private ObservableDone observableDone;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -36,7 +36,7 @@ private boolean toolbarVisible;
     @Override
     public void onCreate(ListDoneDetail.PresenterToView view) {
         super.onCreate(ListDoneModelDetail.class, this);
-        observado = new ObservadoDone();
+        observableDone = new ObservableDone();
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -110,7 +110,7 @@ private boolean toolbarVisible;
     @Override
     public void onDeleteActionClicked() {
         Navigator app = (Navigator) getView().getApplication();
-        observado.notifyMaster();
+        observableDone.notifyMaster();
         app.backToMasterScreen(this);
 
     }
@@ -133,7 +133,7 @@ private boolean toolbarVisible;
     }
 
     @Override
-    public void setAdapter(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
+    public void setAdapter(ListDoneViewMaster.TaskRecyclerViewAdapter adapter) {
         this.adapter=adapter;
     }
 
@@ -170,7 +170,7 @@ private boolean toolbarVisible;
 
     @Override
     public void setMaster(ListDonePresenterMaster master) {
-        observado.addObserver(master);
+        observableDone.addObserver(master);
 
     }
 
@@ -194,9 +194,10 @@ private boolean toolbarVisible;
             getView().toolbarChanged(colour);
         }
     }
-    public class ObservadoDone extends Observable {
 
-        public void notifyMaster(){
+    private class ObservableDone extends Observable {
+
+        private void notifyMaster(){
             setChanged();
             notifyObservers(true);
         }

@@ -5,7 +5,7 @@ import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 
 public interface ListDoneDetail {
 
@@ -18,7 +18,7 @@ public interface ListDoneDetail {
    * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
    */
   interface MasterListToDetail{
-    void setAdapter(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void setAdapter(ListDoneViewMaster.TaskRecyclerViewAdapter adapter);
 
     void setToolbarVisibility(boolean b);
     void setItem(Task selectedItem);

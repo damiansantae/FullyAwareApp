@@ -21,7 +21,7 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
-    private Observado observado;
+    private ObservableToDo observableToDo;
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -34,7 +34,7 @@ private boolean toolbarVisible;
     @Override
     public void onCreate(ListToDoDetail.PresenterToView view) {
         super.onCreate(ListToDoModelDetail.class, this);
-        observado = new Observado();
+        observableToDo = new ObservableToDo();
         setView(view);
 
         // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -107,14 +107,14 @@ private boolean toolbarVisible;
     @Override
     public void onDeleteActionClicked() {
         Navigator app = (Navigator) getView().getApplication();
-        observado.notifyDeleteMaster();
+        observableToDo.notifyDeleteMaster();
         app.backToMasterScreen(this);
 
     }
     @Override
     public void onDoneActionClicked() {
         Navigator app = (Navigator) getView().getApplication();
-        observado.notifyDoneMaster();
+        observableToDo.notifyDoneMaster();
         app.backToMasterScreen(this);
 
     }
@@ -137,7 +137,7 @@ private boolean toolbarVisible;
 
     @Override
     public void setMaster(ListToDoPresenterMaster master) {
-observado.addObserver(master);
+observableToDo.addObserver(master);
     }
 
 
@@ -186,18 +186,6 @@ observado.addObserver(master);
     }
 
 
-private class Observado extends Observable{
-
-    private void notifyDeleteMaster(){
-        setChanged();
-        notifyObservers("delete");
-    }
-    private void notifyDoneMaster(){
-        setChanged();
-        notifyObservers("done");
-    }
-
-}
 
 
 private void checkToolbarColourChanges(Mediator app){
@@ -206,5 +194,20 @@ private void checkToolbarColourChanges(Mediator app){
         getView().toolbarChanged(colour);
     }
 }
+
+
+    private class ObservableToDo extends Observable{
+
+        private void notifyDeleteMaster(){
+            setChanged();
+            notifyObservers("delete");
+        }
+        private void notifyDoneMaster(){
+            setChanged();
+            notifyObservers("done");
+        }
+
+    }
+
 
 }

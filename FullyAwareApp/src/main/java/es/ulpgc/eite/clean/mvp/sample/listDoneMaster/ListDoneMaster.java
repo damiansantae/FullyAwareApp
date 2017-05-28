@@ -140,7 +140,7 @@ public interface ListDoneMaster {
          *
          * @param adapter the recyclerView adapter
          */
-        void onBinBtnClick(ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+        void onBinBtnClick(ListDoneViewMaster.TaskRecyclerViewAdapter adapter);
 
         /**
          * This method build a bridge between View and Model in order to obtain
