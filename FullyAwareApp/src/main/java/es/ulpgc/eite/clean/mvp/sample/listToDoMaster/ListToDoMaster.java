@@ -202,6 +202,9 @@ public interface ListToDoMaster {
          */
         boolean isTaskForgotten(String deadline);
 
+        /**
+         * This method notify Model that back button has been pressed
+         */
         void onBtnBackPressed();
     }
 
@@ -305,25 +308,14 @@ public interface ListToDoMaster {
      * Methods offered to MODEL to communicate with PRESENTER
      */
     interface PresenterToModel extends Model<ModelToPresenter> {
+
+        /**
+         * Method that gives the String label of the dialog delete confirmation
+         * @return String: message for user asking to confirm the task deleting
+         */
         String getToastBackConfirmation();
 
-        void deleteItem(Task item);
-
-        void loadItems();
-
         void startBackPressed();
-
-        void reloadItems();
-
-        void setDatabaseValidity(boolean valid);
-
-        String getErrorMessage();
-
-        void addInitialTasks();
-
-        void deleteTestItems();
-
-        void deleteDatabaseItem(Task item);
 
         String calculateCases(String subjectName);
 
