@@ -153,7 +153,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingListDoneScreen(ListDoneMaster.ToListDone presenter) {
         if (toDummyState != null) {
             presenter.setToolbarVisibility(toListDoneState.toolbarVisibility);
-            presenter.setTextVisibility(toListDoneState.textVisibility);
             presenter.setDeleteBtnVisibility(toListDoneState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();

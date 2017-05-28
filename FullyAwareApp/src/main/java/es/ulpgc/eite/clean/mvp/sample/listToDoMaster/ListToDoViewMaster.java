@@ -372,7 +372,6 @@ getPresenter().onBtnBackPressed();
                 } else if (direction == 16){
                     Log.d(TAG, "Swipe right");
 
-                    removeView();
                     initDialog();
                     alertDialog.setTitle("Do you want to delete this task permanently?");
                     alertDialog.show();
@@ -499,8 +498,6 @@ getPresenter().onBtnBackPressed();
             ((ViewGroup) view.getParent()).removeView(view);
         }
     }
-
-
 }
 
 

@@ -228,7 +228,7 @@ loadSharePreferences();
 
 
     @Override
-    public void setToastDelete() {
+    public void showToastDelete() {
         Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_LONG).show();
 
     }

@@ -11,7 +11,14 @@ import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
-
+/**
+ * Interface of a task to do list.
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public interface ListToDoMaster {
 
 
@@ -59,6 +66,7 @@ public interface ListToDoMaster {
          */
         void setDoneBtnVisibility(boolean doneBtnVisibility);
     }
+
 
     interface ListToDoTo {
         /**
@@ -119,8 +127,8 @@ public interface ListToDoMaster {
 
         /**
          * Method that that interprets a click on a specific item of the recyclerView
-         * according to if there is a state of task selection or not, this current item was already
-         * selected or not.
+         * according to if there is a state of task selection or not, this current item
+         * was alreadyselected or not.
          *
          * @param item      the view of the row clicked on the recyclerView
          * @param position: position of the task which has been clicked
@@ -286,7 +294,7 @@ public interface ListToDoMaster {
         /**
          * Method which notice View that button back has been pressed twice in a row
          *
-         * @see ListToDoModelMaster#startBackPressed()
+         * @see ListToDoModelMaster#backPressed()
          */
         void confirmBackPressed();
 
@@ -310,19 +318,39 @@ public interface ListToDoMaster {
     interface PresenterToModel extends Model<ModelToPresenter> {
 
         /**
-         * Method that gives the String label of the dialog delete confirmation
+         * Method that gives the String label of the toast back confirmation
+         *
          * @return String: message for user asking to confirm the task deleting
          */
         String getToastBackConfirmation();
 
-        void startBackPressed();
+        /**
+         * This method start a handler delay if when back button
+         * is pressed for the first time. If back button is pressed
+         * again before finish the delay it will notify presenter of that
+         */
+        void backPressed();
 
+        /**
+         * This method calculate the case(s) of a String. And turns them to a uppercase.
+         * E.g: "Application Design" will return "AD"
+         *
+         * @param subjectName String which is going to be subject to the calculation
+         * @return String with the case(s) of the parameter
+         */
         String calculateCases(String subjectName);
 
+        /**
+         * This method communicates with database to order
+         * tasks to-do according to their subject.
+         *
+         * @return list of Task ordered
+         */
         List<Task> orderSubjects();
 
         /**
          * Method calculate if a specific date is elder than current one
+         *
          * @param date: date which is going to be compare with actual
          * @return boolean: true if specific date is elder else false
          */
@@ -333,16 +361,20 @@ public interface ListToDoMaster {
      * Required PRESENTER methods available to MODEL
      */
     interface ModelToPresenter {
-        Context getManagedContext();
 
-        void onErrorDeletingItem(Task item);
 
-        void onLoadItemsTaskFinished(List<Task> items);
-
-        void onLoadItemsTaskStarted();
-
+        /**
+         * Method used to notify View that
+         * user has confirmed the back action
+         */
         void confirmBackPressed();
 
+        /**
+         * This method notify View to show a toast notifying user
+         * that he must press again back button if he want to close
+         * the application
+         * @see es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster#showToastBackConfirmation(String)
+         */
         void delayedTaskToBackStarted();
     }
 

@@ -11,7 +11,14 @@ import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
-
+/**
+ * Model of a task to do list.
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPresenter>
     implements ListToDoMaster.PresenterToModel {
 
@@ -20,7 +27,6 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
     private DatabaseFacade database;
     private boolean taskRunning;
     private String toastBackConfirmation;
-
 
 
     /**
@@ -58,7 +64,7 @@ public class ListToDoModelMaster extends GenericModel<ListToDoMaster.ModelToPres
 
 
     @Override
-    public void startBackPressed() {
+    public void backPressed() {
         if (taskRunning) {
             getPresenter().confirmBackPressed();
         } else {

@@ -29,8 +29,7 @@ import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Presenter of a task done list. It can click on a specific task to see its details,
- * Also it can multiselect several tasks to delete or done simultaneously
+ * Presenter of a task to do  list.
  *
  * @author Damián Santamaría Eiranova
  * @author Iván González Hernández
@@ -79,7 +78,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         database = DatabaseFacade.getInstance();
-
 
         app.startingListToDoScreen(this);
         checkToolbarColourChanges(app);
@@ -239,8 +237,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     @Override
     public void onLongListClick(View v, int adapterPosition) {
-    if (!selectedState) {                           //If there is no selected state (no task selected), then
-                                                    //start selected stated and selected the task
+        if (!selectedState) {                           //If there is no selected state (no task selected), then
+            //start selected stated and selected the task
             selectedState = true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition, true);
@@ -297,7 +295,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     /**
      * This method looks for the tasks in the selected table which has
      * his field on true (selected)
-     * @param adapter  the recyclerView adapter
+     *
+     * @param adapter the recyclerView adapter
      * @return a list of Tasks which are selected
      */
     private ArrayList<Task> getSelectedTasks(TaskRecyclerViewAdapter adapter) {
@@ -358,7 +357,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         requestUserPermissions();
     }
 
-//TODO: IVAN COMENTA ESTE METODO
+    //TODO: IVAN COMENTA ESTE METODO
     public void requestUserPermissions() {
         if ((ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.READ_CALENDAR)
@@ -378,6 +377,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
 
     }
+
     //TODO: IVAN COMENTA ESTE METODO
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -473,10 +473,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         return getActivityContext();
     }
 
-    @Override
-    public void onErrorDeletingItem(Task item) {
-
-    }
 
     public Task getSelectedTask() {
         return selectedTask;
@@ -497,6 +493,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     /**
      * Getter of the toolbar visibility state
+     *
      * @return boolean: true if toolbar state is visible else false
      */
     private boolean isToolbarVisible() {
@@ -549,17 +546,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
     }
 
 
-    public void setSelectedState(boolean selectedState) {
-        this.selectedState = selectedState;
-    }
-
-
-    @Override
-    public void onLoadItemsTaskStarted() {
-        checkToolbarVisibility();
-
-    }
-
     @Override
     public void confirmBackPressed() {
         getView().confirmBackPressed();
@@ -571,10 +557,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         getView().showToastBackConfirmation(getModel().getToastBackConfirmation());
     }
 
-    @Override
-    public void onLoadItemsTaskFinished(List<Task> items) {
-        getView().setRecyclerAdapterContent(items);
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -588,27 +570,21 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
-    public void loadItems() {
-        onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
+    private void loadItems() {
+        getView().setRecyclerAdapterContent(database.getToDoItemsFromDatabase());
     }
 
-
-    public void reloadItems() {
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
 
     @Override
     public boolean isTaskForgotten(String deadline) {
 
-       return getModel().compareDateWithCurrent(deadline);
+        return getModel().compareDateWithCurrent(deadline);
 
     }
 
     @Override
     public void onBtnBackPressed() {
-        getModel().startBackPressed();
+        getModel().backPressed();
     }
 
     public void checkForgottenTasks() {

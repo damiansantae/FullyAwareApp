@@ -19,6 +19,14 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
+/**
+ * Presenter of a task done  list.
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class ListDonePresenterMaster extends GenericPresenter
         <ListDoneMaster.PresenterToView, ListDoneMaster.PresenterToModel, ListDoneMaster.ModelToPresenter, ListDoneModelMaster>
         implements ListDoneMaster.ViewToPresenter, ListDoneMaster.ModelToPresenter, ListDoneMaster.ListDoneTo, ListDoneMaster.ToListDone, ListDoneMaster.MasterListToDetail, ListDoneMaster.DetailToMaster, Observer {
@@ -54,6 +62,7 @@ public class ListDonePresenterMaster extends GenericPresenter
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         database =DatabaseFacade.getInstance();
+
         app.startingListDoneScreen(this);
         checkToolbarColourChanges(app);
     }
@@ -70,21 +79,9 @@ public class ListDonePresenterMaster extends GenericPresenter
         setView(view);
         Log.d(TAG, "calling onResume()");
 
-        if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
-
-
-           // checkToolbarVisibility();
-            //checkTextVisibility();
-
-
+        if (configurationChangeOccurred()) {    //if screen rotation
+            checkToolbarVisibility();
             checkDeleteBtnVisibility();
-
-
-
-//            if (buttonClicked) {
-//                getView().setText(getModel().getText());
-//            }
         }
 
         Mediator app = (Mediator) getView().getApplication();
@@ -94,7 +91,7 @@ public class ListDonePresenterMaster extends GenericPresenter
 
 
 
-
+//TODO: JORDI COMENTA ESTO
     private void checkToolbarColourChanges(Mediator app){
         if (app.checkToolbarChanged() == true){
             String colour = app.getToolbarColour();
@@ -388,7 +385,7 @@ public void onErrorDeletingItem(Task item) {
         if(arg.equals(true)){
             database.deleteDatabaseItem(selectedTask);
 
-            getView().setToastDelete();
+            getView().showToastDelete();
         }
 
 
