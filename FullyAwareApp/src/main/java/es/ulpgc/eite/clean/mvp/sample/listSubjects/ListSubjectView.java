@@ -2,7 +2,6 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,31 +14,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
-import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
@@ -49,19 +40,9 @@ public class ListSubjectView
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
     private SubjectRecyclerViewAdapter adapter;
-    int hourFrames;
     private PrefManager prefManager;
-    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    public static final String MY_PREFS = "MyPrefs";
-    ArrayList<String> indexHours = new ArrayList<String>();
-    ArrayList<String> indexDays = new ArrayList<String>();
-    Map<String, ArrayList<String>> HoursArays = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> DaysArays = new HashMap<String, ArrayList<String>>();
-
     ArrayList<String> subjectList;
     int numberOfSubjects;
-
-    private String hourLabel = "HOUR";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -77,8 +58,6 @@ public class ListSubjectView
         bin = (FloatingActionButton) findViewById(R.id.floatingDeleteButton);
         recyclerView = (RecyclerView) findViewById(R.id.item_list_recycler);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
         adapter = new SubjectRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
         bin.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +71,7 @@ public class ListSubjectView
 
         setSupportActionBar(toolbar);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        loadSharePreferences();
-        Mediator mediator = (Mediator) getApplication();
+        prefManager = new PrefManager(getActivityContext());
     }
 
     /**
@@ -107,26 +85,12 @@ public class ListSubjectView
     }
 
 
-    //Este metodo sirve para inflar el menu en la action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listtodo_master_forgotten, menu);
         return true;
     }
-
-
-    ///
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,17 +109,18 @@ public class ListSubjectView
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.menucalendar) {
             Navigator app = (Navigator) getApplication();
             app.goToScheduleScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Pasando a pantalla Preferencias");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -168,12 +133,10 @@ public class ListSubjectView
         finish();
     }
 
-
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
-
 
     @Override
     public void deselect(int i, boolean b) {
@@ -388,18 +351,18 @@ public class ListSubjectView
         dialog.show(getSupportFragmentManager(), dialog.getClass().getName());
         numberOfSubjects = 0;
         subjectList = new ArrayList<>();
-        prefManager = new PrefManager(this);
         prefManager.setFirstTimeLaunch(false);
 
         dialog.setListener(new AddFirstSubjectDialog.OnAddSubjectClickListener() {
             @Override
             public void onAddSubjectClickListener(String label) {
                 EditText etSubjectName = (EditText) dialog.getView().findViewById(R.id.et_subject_name);
-
                 if (label.equals(getPresenter().getFinishLabel())) {
                     if (numberOfSubjects == 0) {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "No subjects added", Toast.LENGTH_SHORT).show();
+                        launchHomeScreen();
+                        finish();
                     } else {
                         getPresenter().addSubjectsToDataBase(subjectList);
                         dialog.dismiss();

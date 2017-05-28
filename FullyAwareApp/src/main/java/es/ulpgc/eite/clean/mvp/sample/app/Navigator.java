@@ -83,6 +83,6 @@ public interface Navigator {
     void goToListDoneScreen(ListSubject.ListSubjectTo presenter);
     void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
     void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
-
     void startActivy(Intent intent);
+    void goToEditSubjects(PreferencesPresenter preferencesPresenter);
 }
