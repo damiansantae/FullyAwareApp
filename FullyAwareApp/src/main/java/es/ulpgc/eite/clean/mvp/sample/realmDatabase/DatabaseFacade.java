@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.TimeTable;
+import es.ulpgc.eite.clean.mvp.sample.app.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import io.realm.Realm;

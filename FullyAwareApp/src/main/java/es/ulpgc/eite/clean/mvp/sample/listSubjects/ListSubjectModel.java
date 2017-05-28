@@ -68,9 +68,12 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         super.onCreate(presenter);
         realmDatabase = Realm.getDefaultInstance();
         database =DatabaseFacade.getInstance();
-        //validDatabase = true;
         saveSubject("None",null,null);
         errorMsg = "Error deleting item!";
+    }
+
+    private void saveSubject(String other, Object o, Object o1) {
+        database.addSubject(other,chooseNewColor());
     }
 
     /**
@@ -158,28 +161,6 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public void addInitialSubjects(){
-        //Request realm instance
-        Subject subject1 = new Subject();
-        Subject subject2 = new Subject();
-        Subject subject3 = new Subject();
-        Subject subject4 = new Subject();
-        Subject subject5 = new Subject();
-
-        //Insert element
-        realmDatabase.beginTransaction();
-
-
-        realmDatabase.copyToRealm(subject1);
-        realmDatabase.copyToRealm(subject2);
-        realmDatabase.copyToRealm(subject3);
-        realmDatabase.copyToRealm(subject4);
-        realmDatabase.copyToRealm(subject5);
-
-
-        realmDatabase.commitTransaction();
-    }
-
     @Override
     public String getLabelFloatingAdd() {
         return this.floatingAddLabel;
@@ -198,34 +179,6 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         return this.finishLabel;
     }
 
-    @Override
-    public void saveSubject(String subjectName, ArrayList<String> validDays, ArrayList<String> validHours) {
-       /* realmDatabase.beginTransaction();
-        Subject subject = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
-        subject.setName(subjectName);
-        subject.setColor(chooseNewColor());*/
-        database.addSubject(subjectName,chooseNewColor());
-
-
-     /*   for (int i = 0; i < validDays.size(); i++){
-            for (int x=0; x < daysOfWeek.size(); x++){
-                if (validDays.get(i).contains(daysOfWeek.get(x))){
-                    TimeTable timeTable = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
-                    timeTable.setDay(daysOfWeek.get(x));
-                    timeTable.setHour(validHours.get(i));
-                    timeTable.setSubject(subject);
-                    Log.d("DATABASE",""+timeTable.getDay());
-                    Log.d("DATABASE",""+timeTable.getHour());
-                    Log.d("DATABASE",""+timeTable.getSubject().getName());
-                }
-            }
-
-
-        }
-
-        realmDatabase.commitTransaction();*/
-
-    }
     /**
      * This method choose an specific color for a subject which will be
      * unique
@@ -255,6 +208,14 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     @Override
     public ArrayList<String> getDaysOfWeek() {
         return this.daysOfWeek;
+    }
+
+    @Override
+    public void addSubjectsToDataBase(ArrayList<String> subjectList) {
+        for (int i=0; i < subjectList.size(); i++){
+            database.addSubject(subjectList.get(i),chooseNewColor());
+        }
+
     }
 
     @Override

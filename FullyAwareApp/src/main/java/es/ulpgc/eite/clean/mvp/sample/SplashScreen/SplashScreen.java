@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
-import es.ulpgc.eite.clean.mvp.sample.EspressoTest.WelcomeActivity;
+import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 
 public class SplashScreen extends Activity {
 

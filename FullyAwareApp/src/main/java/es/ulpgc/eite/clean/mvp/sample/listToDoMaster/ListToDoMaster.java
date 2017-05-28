@@ -6,6 +6,7 @@ import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
@@ -15,12 +16,43 @@ public interface ListToDoMaster {
   ///////////////////////////////////////////////////////////////////////////////////
   // State /////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Interface which provides state passing to listToDo MVP
+     */
   interface ToListToDo {
+        /**
+         *This method is called when
+         */
     void onScreenStarted();
+
+        /**
+         *
+         * @param visible
+         */
     void setToolbarVisibility(boolean visible);
+
+        /**
+         *
+         * @param visible
+         */
     void setTextVisibility(boolean visible);
+
+        /**
+         *
+         * @param addBtnVisibility
+         */
     void setAddBtnVisibility(boolean addBtnVisibility);
+
+        /**
+         *
+         * @param deleteBtnVisibility
+         */
     void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+
+        /**
+         *
+         * @param deleteBtnVisibility
+         */
     void setDoneBtnVisibility(boolean deleteBtnVisibility);
   }
 
@@ -31,8 +63,8 @@ public interface ListToDoMaster {
     boolean isTextVisible();
   }
   /**
-   * Interfaz que permite iniciar la pantalla del detalle y recopilar los valores necesarios
-   * para rellenar el estado inicial que se pasará a la pantalla del detalle al iniciarse
+   * Interface which allows to start detail screen and recover all data needed to
+   * start the initial state that it will be passed to the detail screen after started
    */
    interface MasterListToDetail{
     Context getManagedContext();
@@ -40,13 +72,6 @@ public interface ListToDoMaster {
     boolean getToolbarVisibility();
 
   }
-  /**
-   * Interfaz que permite fijar los valores incluidos en el estado pasado desde la pantalla
-   * del detalle cuando está finaliza
-   */
-  interface DetailToMaster {
-  }
-
 
   ///////////////////////////////////////////////////////////////////////////////////
   // Screen ////////////////////////////////////////////////////////////////////////
@@ -56,21 +81,20 @@ public interface ListToDoMaster {
    */
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
-    void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
+    void onDoneBtnClick(TaskRecyclerViewAdapter adapter);
 
 
-      void onListClick2(View item, int position, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task);
+      void onListClick(View item, int position, Task task);
 
-    void onLongListClick2(View item, int adapterPosition);
+    void onLongListClick(View item, int adapterPosition);
 
       void onAddBtnClick();
 
       boolean isSelected(int adapterPosition);
 
-    void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
+    void onBinBtnClick(TaskRecyclerViewAdapter adapter);
 
       String getCases(Task task);
-    void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility);
 
     void subjectFilter();
 
@@ -90,20 +114,11 @@ public interface ListToDoMaster {
     void finishScreen();
     void hideToolbar();
 
-
       void showAddBtn();
 
       void hideDeleteBtn();
 
       void showDeleteBtn();
-
-
-    boolean isItemListChecked(int pos);
-
-    void setItemChecked(int pos, boolean checked);
-
-    void startSelection();
-
 
       void hideAddBtn();
 
@@ -115,7 +130,6 @@ public interface ListToDoMaster {
 
     void showTextWhenIsEmpty();
 
-    void deselect(int i, boolean b);
 
   void setRecyclerAdapterContent(List<Task> items);
 

@@ -1,106 +1,107 @@
 package es.ulpgc.eite.clean.mvp.sample.preferences;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
 import android.widget.SimpleAdapter;
-import android.widget.Toolbar;
-
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 
-/**
- * Created by Luis on 12/11/16.
- */
-
 public interface Preferences {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // State /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    // State /////////////////////////////////////////////////////////////////////////
+    /**
+     * Methods related to the different states of the app.
+     */
 
-  interface ToPreferences {
-    void onScreenStarted();
-    void setToolbarVisibility(boolean visible);
-    void setTextVisibility(boolean visible);
-    void setAddBtnVisibility(boolean addBtnVisibility);
-    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
-  }
+    interface ToPreferences {
 
-  interface PreferencesTo {
-    Context getManagedContext();
-    void destroyView();
-    boolean isToolbarVisible();
-    boolean isTextVisible();
-  }
+        void onScreenStarted();
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Screen ////////////////////////////////////////////////////////////////////////
+        void setToolbarVisibility(boolean visible);
+    }
 
-  /**
-   * Methods offered to VIEW to communicate with PRESENTER
-   */
-  interface ViewToPresenter extends Presenter<PresenterToView> {
-    void onSelectDateBtnClicked();
-    void onSelectTimeBtnClicked();
-    void onAddTaskBtnClicked();
-      void onListClick(int position, SimpleAdapter adapter);
+    interface PreferencesTo {
 
-    void setNewToolbarColor(int newColor);
+        Context getManagedContext();
 
-    void setToolbarColorChanged(boolean toolbarColorChanged);
+        void destroyView();
 
-    void toolbarChanged();
-  }
+        boolean isToolbarVisible();
+    }
 
-  /**
-   * Required VIEW methods available to PRESENTER
-   */
-  interface PresenterToView extends ContextView {
-    void finishScreen();
-    void hideToolbar();
-    void setDateText(String txt);
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Screen ////////////////////////////////////////////////////////////////////////
 
-    void setTimeText(String txt);
+    /**
+     * Methods offered to VIEW to communicate with PRESENTER
+     */
+    interface ViewToPresenter extends Presenter<PresenterToView> {
 
+        void onListClick(int position, SimpleAdapter adapter);
 
-    String getDescription();
+        void setNewToolbarColor(int newColor);
 
-    String getDate();
+        void setToolbarColorChanged(boolean toolbarColorChanged);
 
-    String getTime();
+        void toolbarChanged();
 
-    String getTaskTitle();
+        String[] getPrefItemLabels();
 
-    String getTaskSubject();
+        String[] getPrefDescriptionItemsLabels();
 
-      void onChangeColourDialog(PresenterToView view);
+        CharSequence getNotSupportedSystem();
+    }
 
-    String getColorHex(int color);
+    /**
+     * Required VIEW methods available to PRESENTER
+     */
+    interface PresenterToView extends ContextView {
 
-      void setNewToolbarColor(int newColor);
+        void finishScreen();
 
-    void setToolbarColorChanged(boolean toolbarColorChanged);
+        void onChangeColourDialog(PresenterToView view);
 
-      void toolbarChanged(String colour);
+        String getColorHex(int color);
 
-    //  void launchBrowser(AlertDialog alertDialog);
-  }
+        void setNewToolbarColor(int newColor);
 
-  /**
-   * Methods offered to MODEL to communicate with PRESENTER
-   */
-  interface PresenterToModel extends Model<ModelToPresenter> {
-    void onChangeMsgByBtnClicked();
-    String getText();
-    String getLabel();
-  }
+        void setToolbarColorChanged(boolean toolbarColorChanged);
 
-  /**
-   * Required PRESENTER methods available to MODEL
-   */
-  interface ModelToPresenter {
+        void toolbarChanged(String colour);
+    }
 
-  }
+    /**
+     * Methods offered to MODEL to communicate with PRESENTER
+     */
+    interface PresenterToModel extends Model<ModelToPresenter> {
+
+        String[] getPrefItemLabels();
+
+        String[] getPrefDescriptionItemsLabels();
+
+        String getDialogInfoTitle();
+
+        CharSequence getDialogInfoDescription();
+
+        String getVisitButtonLabel();
+
+        String getOkButtonLabel();
+
+        String getPaypalUrl();
+
+        String getGitHubUrl();
+
+        String getNotSupportedSystem();
+    }
+
+    /**
+     * Required PRESENTER methods available to MODEL
+     */
+    interface ModelToPresenter {
+
+    }
 
 }

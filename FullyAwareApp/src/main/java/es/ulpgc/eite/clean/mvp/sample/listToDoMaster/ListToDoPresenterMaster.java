@@ -20,20 +20,22 @@ import java.util.Observer;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
+import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
+import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ListToDoPresenterMaster extends GenericPresenter
-        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel,
-                ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
+        <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
         implements ListToDoMaster.ViewToPresenter, ListToDoMaster.ModelToPresenter,
         ListToDoMaster.ListToDoTo, ListToDoMaster.ToListToDo,
-        ListToDoMaster.MasterListToDetail, ListToDoMaster.DetailToMaster, Observer{
+        ListToDoMaster.MasterListToDetail, Observer{
 
 
     private boolean toolbarVisible;
@@ -44,13 +46,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
-    private ArrayList<Task> tasksSelected = new ArrayList<>();
-    private ArrayList<String> posSelected = new ArrayList<>();
-
     private SparseBooleanArray itemsSelected =new SparseBooleanArray();
     private DatabaseFacade database;
-    int counter=0;
-
     SharedPreferences myprefs;
     public static final String MY_PREFS = "MyPrefs";
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
@@ -80,10 +77,8 @@ public class ListToDoPresenterMaster extends GenericPresenter
         database =DatabaseFacade.getInstance();
 
 
-
         app.startingListToDoScreen(this);
-        checkToolbarColourChanges(app);
-
+        app.loadSharePreferences((ListToDoViewMaster) getView());
 
     }
 
@@ -100,22 +95,15 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Log.d(TAG, "calling onResume()");
 
         if (configurationChangeOccurred()) {
-            //getView().setLabel(getModel().getLabel());
-
-
+            Mediator app = (Mediator) getView().getApplication();
+            app.loadSharePreferences((ListToDoViewMaster) getView());
            checkToolbarVisibility();
-            //checkTextVisibility();
             checkAddBtnVisibility();
             
             checkDeleteBtnVisibility();
             checkDoneBtnVisibility();
             checkTextWhenIsEmptyVisibility();
             CheckDoneBtnVisibility();
-            if(selectedState) {
-                getView().startSelection();
-
-                onCheckItems();
-            }
 
 //            if (buttonClicked) {
 //                getView().setText(getModel().getText());
@@ -123,7 +111,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
 
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
+        app.loadSharePreferences((ListToDoViewMaster) getView());
         loadItems();
     }
 
@@ -138,37 +126,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }
     }
 
-
-    /**
-     * Selecciona los elementos de la lista que estaban seleccionados
-     */
-    private void onCheckItems() {
-        for(int i=0; i<posSelected.size();i++){
-            setItemChecked(Integer.parseInt(posSelected.get(i)), true);
-        }
-
-    }
-
-
-    private void checkToolbarColourChanges(Mediator app){
-
-        Context context = getApplicationContext();
-        SharedPreferences myprefs = context.getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-
-        if (app.checkToolbarChanged() == true){
-
-            Log.d("999AQUIIIIIIIII", "ENTRA AL IF");
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-
-
-            SharedPreferences.Editor editor = myprefs.edit();
-            editor.putString(TOOLBAR_COLOR_KEY, colour);
-            Log.d("999AQUIIIIIIIII", ""+ app.getToolbarColour());
-            editor.commit();
-            Log.d("999AQUIIIIIIIII", ""+ myprefs.getString(TOOLBAR_COLOR_KEY, null));
-        }
-    }
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
@@ -212,7 +169,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
 
     @Override
-    public void onListClick2(View v, int adapterPosition, ListToDoViewMaster.TaskRecyclerViewAdapter adapter, Task task) {
+    public void onListClick(View v, int adapterPosition, Task task) {
         if(selectedState){
             if(!v.isSelected()){
                 v.setSelected(true);
@@ -226,14 +183,14 @@ public class ListToDoPresenterMaster extends GenericPresenter
         }else{
             Navigator app = (Navigator) getView().getApplication();
             selectedTask=task;
-            app.goToDetailScreen(this, adapter);
+            app.goToDetailScreen(this);
         }
-checkSelection2();
+checkSelection();
         checkAddBtnVisibility();checkDoneBtnVisibility();checkDeleteBtnVisibility();
 
     }
 
-    private void checkSelection2() {
+    private void checkSelection() {
         boolean somethingSelected= false;
         for(int i = 0; i < itemsSelected.size(); i++) {
             int key = itemsSelected.keyAt(i);
@@ -243,7 +200,6 @@ checkSelection2();
                 somethingSelected=true;
                 break;
             }
-
 
         }
 
@@ -263,31 +219,16 @@ checkSelection2();
     }
 
 
-    private void deselectTask(Task currentTask) {
-       tasksSelected.remove(currentTask);
-    }
-
-    private boolean isTaskSelected(Task currentTask) {
-        boolean result = false;
-        for(int i=0;i<tasksSelected.size();i++){
-            if(currentTask.equals(tasksSelected.get(i)))
-                result= true;
-    }
-        return result;
-
-}
-
 
     @Override
-    public void onLongListClick2(View v, int adapterPosition) {
+    public void onLongListClick(View v, int adapterPosition) {
         if(!selectedState){
             selectedState =true;
             v.setSelected(true);
             itemsSelected.put(adapterPosition,true);
-
         }
 
-checkSelection2();
+        checkSelection();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
@@ -311,15 +252,14 @@ checkSelection2();
     }
 
     @Override
-    public void onBinBtnClick2(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void onBinBtnClick(TaskRecyclerViewAdapter adapter) {
 
    ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.deleteDatabaseItem(selected.get(i));
-          //  Log.d(TAG+ "ONBInItem a eliminar", selected.get(i).getTaskId());
         }
 itemsSelected.clear();
-checkSelection2();
+checkSelection();
         checkTextWhenIsEmptyVisibility();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
@@ -338,7 +278,7 @@ checkSelection2();
     }
 
 
-    private ArrayList<Task> getSelectedTasks(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    private ArrayList<Task> getSelectedTasks(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = new ArrayList<>();
         for(int i=0;i<adapter.getItemCount();i++){
             if(itemsSelected.get(i)){
@@ -358,7 +298,7 @@ checkSelection2();
     }
 
     @Override
-    public void onDoneBtnClick(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void onDoneBtnClick(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
             database.setItemStatus(selected.get(i), "Done");
@@ -373,37 +313,13 @@ checkSelection2();
         }
 
         itemsSelected.clear();
-        checkSelection2();
+        checkSelection();
         checkAddBtnVisibility();
         checkDeleteBtnVisibility();
         checkDoneBtnVisibility();
     }
 
 
-
-
-    private void deselectAll() {
-
-        for (int k = 0; k < posSelected.size(); k++) {
-            getView().deselect(Integer.parseInt(posSelected.get(k)), false);
-        }
-
-        posSelected.clear();
-        tasksSelected.clear();
-    }
-
-    private void setItemChecked(int pos, boolean checked) {
-        getView().setItemChecked(pos, checked);
-
-    }
-
-    private boolean isItemListChecked(int pos) {
-        boolean result=false;
-        if(posSelected.size()>0 && posSelected.contains(Integer.toString(pos))) {             //Si el array de posiciones de tareas no esta vacio y ademas contiene la posicion de la tarea a consultar
-                result = true;                                                      //Entonces si estaba seleccionado
-        }
-        return result;
-        }
 
 
 
@@ -521,11 +437,7 @@ checkSelection2();
 
     }
 
-    @Override
-    public void setTextWhenIsEmptyVisibility(boolean textWhenIsEmptyVisibility) {
-        this.textWhenIsEmptyVisible = textWhenIsEmptyVisibility;
 
-    }
 
     @Override
     public void subjectFilter() {
@@ -754,5 +666,10 @@ checkSelection2();
                 tasks.get(i);
             }
         }
+    }
+
+    public int getToolbarColour() {
+        PrefManager prefManager = new PrefManager(getActivityContext());
+        return prefManager.getToolbarColour();
     }
 }

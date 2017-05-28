@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView"
+    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView"
     tools:showIn="@layout/shedule_table">
 
 <android.support.v7.widget.RecyclerView
@@ -21,7 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView"
+    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView"
     android:longClickable="true"
 
     tools:listitem="@layout/item_schedule"/>

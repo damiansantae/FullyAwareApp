@@ -42,10 +42,6 @@ public class ListDoneViewMasterTesting
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton bin;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT}
-
     private TaskRecyclerViewAdapter adapter;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
     public static final String MY_PREFS = "MyPrefs";
@@ -110,7 +106,7 @@ public class ListDoneViewMasterTesting
                                    @Override
                                    public void onClick(View v) {
                                        // getPresenter().onBinBtnClick(adapter);
-                                       getPresenter().onBinBtnClick2(adapter);
+                                       getPresenter().onBinBtnClick(adapter);
                                        adapter.notifyDataSetChanged();
                                    }
 
@@ -214,12 +210,6 @@ loadSharePreferences();
     }
 
 
-    @Override
-    public void deselect(int i, boolean b) {
-       //recyclerView.setItemChecked(i,b);
-
-    }
-
 
     @Override
     public void hideDeleteBtn() {
@@ -236,47 +226,14 @@ loadSharePreferences();
     }
 
 
-    @Override
-    public boolean isItemListChecked(int pos) {
-        //return recyclerView.isItemChecked(pos);
-        return false;
-    }
 
-    @Override
-    public void setItemChecked(int pos, boolean checked) {
-       // recyclerView.setItemChecked(pos, checked);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void startSelection() {
-       // recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-    }
     @Override
     public void setToastDelete() {
-        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Task Deleted", Toast.LENGTH_LONG).show();
 
     }
 
 
-    @Override
-    public void setChoiceMode(int i) {
-       /* if (i == 0) {               //Modo de seleccion nulo
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-            recyclerView.invalidateViews();
-
-        } else if (i == 1) {             //Modo de seleccion unico
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-
-        } else if (i == 2) {             ///Modo de seleccion multiple
-            recyclerView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-
-        } else {
-            Log.d("error msg", "error desconocido de al seleccionar modo de seleccionamiento");
-        }*/
-    }
 
     @Override
     public void setRecyclerAdapterContent(List<Task> items) {
@@ -409,7 +366,7 @@ loadSharePreferences();
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getPresenter().onListClick2(itemView, getAdapterPosition(),adapter,task);
+                        getPresenter().onListClick(itemView, getAdapterPosition(),task);
                         adapter.notifyDataSetChanged();
 
                     }
@@ -419,7 +376,7 @@ loadSharePreferences();
                     @Override
                     public boolean onLongClick(View v) {
 
-                        getPresenter().onLongListClick2(v,getAdapterPosition());
+                        getPresenter().onLongListClick(v,getAdapterPosition());
 
                         return true;
                     }

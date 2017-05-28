@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.schedule;
+package es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade;
 
 
 import android.content.Context;

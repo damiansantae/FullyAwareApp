@@ -11,7 +11,6 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 
 public class ListToDoPresenterDetail extends GenericPresenter
@@ -22,11 +21,6 @@ public class ListToDoPresenterDetail extends GenericPresenter
 
 
 private boolean toolbarVisible;
-    private ListToDoViewMaster.TaskRecyclerViewAdapter adapter;
-
-
-    private boolean isChanged;
-    private final Object MUTEX= new Object();
     private Observado observado;
 
     /**
@@ -140,10 +134,6 @@ private boolean toolbarVisible;
 
     }
 
-    @Override
-    public void setAdapter(ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
-        this.adapter=adapter;
-    }
 
     @Override
     public void setMaster(ListToDoPresenterMaster master) {
@@ -157,7 +147,7 @@ observado.addObserver(master);
     }
 
     @Override
-    public void setItem(Task selectedItem) {
+    public void setTask(Task selectedItem) {
         getModel().setTask(selectedItem);
 
     }

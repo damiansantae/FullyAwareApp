@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.util.Log;
 
 import es.ulpgc.eite.clean.mvp.sample.NotificacionService.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
@@ -31,8 +32,9 @@ import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTask;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTimeTable;
-import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
-import es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView;
+import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -43,7 +45,6 @@ public class App extends Application implements Mediator, Navigator {
     private ListToDoState toListToDoState, listToDoToState;
     private ListDoneState toListDoneState, listDoneToState;
     private ListSubjectState toListSubjectState, listSubjectToState;
-    private ListForgottenState toListForgottenState, listForgottenToState;
     private AddTaskState toAddTaskState, addTaskToState;
     private ScheduleState toScheduleState, scheduleToState;
 
@@ -51,7 +52,6 @@ public class App extends Application implements Mediator, Navigator {
     private DetailDoneState masterListToDetailDoneState;
     private ListToDoStateTask listToDoDetailToMasterState;
     private ListDoneStateTask listDoneDetailToMasterState;
-    private ListForgottenStateTask listForgottenDetailToMasterState;
     private PreferencesState toPreferencesState, preferencesToState;
 
 
@@ -83,20 +83,11 @@ public class App extends Application implements Mediator, Navigator {
         toListDoneState.textVisibility = false;
         toListDoneState.TaskDone = null;
 
-        toListForgottenState = new ListForgottenState();
-        toListForgottenState.toolbarVisibility = false;
-        toListForgottenState.textVisibility = false;
-        toListForgottenState.deleteBtnVisibility = false;
-
         toAddTaskState = new AddTaskState();
         toAddTaskState.toolbarVisibility = true;
-        toAddTaskState.textVisibility = false;
 
         toPreferencesState = new PreferencesState();
         toPreferencesState.toolbarVisibility = true;
-        toPreferencesState.textVisibility = false;
-        toPreferencesState.addBtnVisibility = true;
-        toPreferencesState.deleteBtnVisibility = false;
 
         toScheduleState = new ScheduleState();
         toScheduleState.toolbarVisibility = true;
@@ -130,8 +121,6 @@ public class App extends Application implements Mediator, Navigator {
             presenter.setAddBtnVisibility(toListToDoState.addBtnVisibility);
             presenter.setDeleteBtnVisibility(toListToDoState.deleteBtnVisibility);
             presenter.setDoneBtnVisibility(toListToDoState.doneBtnVisibility);
-
-
         }
         presenter.onScreenStarted();
     }
@@ -171,7 +160,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingAddTaskScreen(AddTask.ToAddTask presenter) {
         if (toAddTaskState != null) {
             presenter.setToolbarVisibility(toAddTaskState.toolbarVisibility);
-            presenter.setTextVisibility(toAddTaskState.textVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -181,9 +169,6 @@ public class App extends Application implements Mediator, Navigator {
     public void startingPreferencesScreen(Preferences.ToPreferences presenter) {
         if (toPreferencesState != null) {
             presenter.setToolbarVisibility(toPreferencesState.toolbarVisibility);
-            presenter.setTextVisibility(toPreferencesState.textVisibility);
-            presenter.setAddBtnVisibility(toPreferencesState.addBtnVisibility);
-            presenter.setDeleteBtnVisibility(toPreferencesState.deleteBtnVisibility);
         }
         presenter.onScreenStarted();
     }
@@ -199,8 +184,7 @@ public class App extends Application implements Mediator, Navigator {
     public void startingDetailScreen(ListToDoDetail.MasterListToDetail presenter) {
         if (masterListToDetailToDoState != null) {
             presenter.setToolbarVisibility(masterListToDetailToDoState.toolbarVisible);
-            presenter.setItem(masterListToDetailToDoState.selectedItem);
-            presenter.setAdapter(masterListToDetailToDoState.adapter);
+            presenter.setTask(masterListToDetailToDoState.selectedItem);
             presenter.setMaster((ListToDoPresenterMaster) masterListToDetailToDoState.master);
 
         }
@@ -232,7 +216,6 @@ public class App extends Application implements Mediator, Navigator {
         if (masterListToDetailDoneState != null) {
             presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
-            presenter.setAdapter(masterListToDetailDoneState.adapter);
             presenter.setMaster((ListDonePresenterMaster) masterListToDetailDoneState.master);
         }
 
@@ -247,6 +230,51 @@ public class App extends Application implements Mediator, Navigator {
 
     }
 
+    @Override
+    public void loadSharePreferences(PreferencesView view) {
+            PrefManager prefManager = new PrefManager(view.getActivityContext());
+            int colour = prefManager.getToolbarColour();
+            if (colour != 0) {
+                toolbarColourChanged((PreferencesPresenter) view.getPresenter());
+                view.toolbarChanged(getColorHex(colour));
+            }
+    }
+
+    @Override
+    public void loadSharePreferences(ListToDoViewMaster view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    @Override
+    public void loadSharePreferences(ListDoneViewMasterTesting view) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        int colour = prefManager.getToolbarColour();
+        if (colour != 0) {
+            toolbarColourChanged((ListDonePresenterMaster) view.getPresenter());
+            view.toolbarChanged(getColorHex(colour));
+        }
+    }
+
+    private void toolbarColourChanged(ListDonePresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
+
+    private void toolbarColourChanged(ListToDoPresenterMaster presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        preferencesToState.toolbarColour = presenter.getToolbarColour();
+    }
 
     /////////////////TOOLBAR CHANGES METHODS
     @Override
@@ -273,7 +301,6 @@ public class App extends Application implements Mediator, Navigator {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
          newColourString = getColorHex(preferencesToState.toolbarColour);
         }
-
         return newColourString;
     }
 
@@ -377,7 +404,6 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = addTaskPresenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
@@ -387,8 +413,7 @@ public class App extends Application implements Mediator, Navigator {
     public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
         Context view = preferencesPresenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
-           // view.startActivity(new Intent(view, ExtrasActivity.class));
+
         }
     }
 
@@ -408,7 +433,6 @@ public class App extends Application implements Mediator, Navigator {
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            //TODO: activar esta linea para funcionamiento con listView view.startActivity(new Intent(view, ListToDoViewMaster.class));
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
@@ -444,12 +468,10 @@ public class App extends Application implements Mediator, Navigator {
 
 
     @Override
-    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMaster.TaskRecyclerViewAdapter adapter) {
+    public void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster) {
         masterListToDetailToDoState = new DetailToDoState();
         masterListToDetailToDoState.toolbarVisible = listToDoPresenterMaster.getToolbarVisibility();
         masterListToDetailToDoState.selectedItem = listToDoPresenterMaster.getSelectedTask();
-
-        masterListToDetailToDoState.adapter = adapter;
         masterListToDetailToDoState.master = listToDoPresenterMaster;
 
         // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
@@ -470,27 +492,12 @@ public class App extends Application implements Mediator, Navigator {
         presenter.destroyView();
     }
 
+
     @Override
     public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster) {
         masterListToDetailDoneState = new DetailDoneState();
         masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
         masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
-
-        // Al igual que en el to do arrancamos la pantalla del detalle sin finalizar la del maestro.
-        Context view = listDonePresenterMaster.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListDoneViewDetail.class));
-        }
-    }
-
-    @Override
-    public void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter) {
-        masterListToDetailDoneState = new DetailDoneState();
-        masterListToDetailDoneState.toolbarVisible = listDonePresenterMaster.getToolbarVisibility();
-        masterListToDetailDoneState.selectedItem = listDonePresenterMaster.getSelectedTask();
-        masterListToDetailDoneState.adapter = adapter;
-masterListToDetailDoneState.master=listDonePresenterMaster;
-        // masterListToDetailToDoState.subject = listToDoPresenterMaster.getSelectedSubject().getTagId();
 
         // Arrancamos la pantalla del detalle sin finalizar la del maestro
         Context view = listDonePresenterMaster.getManagedContext();
@@ -690,22 +697,12 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
         boolean deleteBtnVisibility;
     }
 
-    private class ListForgottenState {
-        boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean deleteBtnVisibility;
-    }
-
     private class AddTaskState {
         boolean toolbarVisibility;
-        boolean textVisibility;
     }
 
     private class PreferencesState {
         boolean toolbarVisibility;
-        boolean textVisibility;
-        boolean addBtnVisibility;
-        boolean deleteBtnVisibility;
         int toolbarColour;
         boolean toolbarColourChanged = false;
     }
@@ -717,18 +714,12 @@ masterListToDetailDoneState.master=listDonePresenterMaster;
     private class DetailToDoState {
         boolean toolbarVisible;
         Task selectedItem;
-        String subject;
-        String date;
-        ListToDoViewMaster.TaskRecyclerViewAdapter adapter;
         public ListToDoMaster.MasterListToDetail master;
     }
 
     private class DetailDoneState {
         boolean toolbarVisible;
         Task selectedItem;
-        String subject;
-        String date;
-        ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter;
         public ListDoneMaster.MasterListToDetail master;
     }
 

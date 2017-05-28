@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler;
+package es.ulpgc.eite.clean.mvp.sample.RecyclerGridViewControler_NextUpgrade;
 
 import android.content.Context;
 import android.graphics.Color;

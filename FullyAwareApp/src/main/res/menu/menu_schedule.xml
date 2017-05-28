@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule.ScheduleView">
+    tools:context="es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView">
     <item
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="spinner"

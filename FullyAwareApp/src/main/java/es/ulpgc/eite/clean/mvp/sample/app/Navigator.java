@@ -6,16 +6,14 @@ import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.dummy.Dummy;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
-import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMasterTesting;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubject;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView;
 import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
-import es.ulpgc.eite.clean.mvp.sample.schedule.Schedule;
+import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
 
 public interface Navigator {
 
@@ -34,8 +32,7 @@ public interface Navigator {
     void goToScheduleScreen(ListSubject.ListSubjectTo presenter);
 
     //Comunicación M/D
-    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster, ListToDoViewMaster.TaskRecyclerViewAdapter adapter);
-
+    void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
     void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
 
 
@@ -45,12 +42,8 @@ public interface Navigator {
     void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
     void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter);
 
-
-    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
-
-
     //Comunicación M/D
-    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster, ListDoneViewMasterTesting.TaskRecyclerViewAdapter adapter);
+    void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
 
