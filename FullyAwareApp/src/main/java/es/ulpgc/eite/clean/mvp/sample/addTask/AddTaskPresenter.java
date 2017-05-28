@@ -177,7 +177,6 @@ public class AddTaskPresenter extends GenericPresenter
 
     //  The activity is destroyed
     destroyView();
-
   }
 
                 //////////////////Methods to get View parameters///////////////////////
