@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
+package es.ulpgc.eite.clean.mvp.sample.RealmDatabase;
 
 import es.ulpgc.eite.clean.mvp.sample.app.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;

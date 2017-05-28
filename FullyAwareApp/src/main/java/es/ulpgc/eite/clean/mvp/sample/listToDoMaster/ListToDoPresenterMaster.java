@@ -25,11 +25,8 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
-import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
+import es.ulpgc.eite.clean.mvp.sample.RealmDatabase.DatabaseFacade;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ListToDoPresenterMaster extends GenericPresenter
         <ListToDoMaster.PresenterToView, ListToDoMaster.PresenterToModel, ListToDoMaster.ModelToPresenter, ListToDoModelMaster>
@@ -110,7 +107,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private void checkTextWhenIsEmptyVisibility() {
         Log.d(TAG, "calling checkTextWhenIsEmptyVisibility()");
         if (isViewRunning()) {
-            if (database.getToDoItemsFromDatabase().size() == 0) {
+            if (database.getToDoTasksFromDatabase().size() == 0) {
                 getView().showTextWhenIsEmpty();
             } else {
                 getView().hideTextWhenIsEmpty();
@@ -293,7 +290,7 @@ checkSelection();
     public void onDoneBtnClick(TaskRecyclerViewAdapter adapter) {
         ArrayList<Task> selected = getSelectedTasks(adapter);
         for(int i=0;i<selected.size();i++){
-            database.setItemStatus(selected.get(i), "Done");
+            database.setTaskStatus(selected.get(i), "Done");
 
         }
 
@@ -327,7 +324,7 @@ checkSelection();
         getView().initDialog();
     }
 
-    //isTaskForgotten(database.getItemsFromDatabase().get(0).getDate());
+    //isTaskForgotten(database.getTasksFromDatabase().get(0).getDate());
 
 
 //TODO:Descomentar cuando se instala la app por primera vez y luego comentar
@@ -446,7 +443,7 @@ checkSelection();
 
     @Override
     public void swipeRight(Task currentTask) {
-        database.setItemStatus(currentTask, "Done");
+        database.setTaskStatus(currentTask, "Done");
         checkTextWhenIsEmptyVisibility();
     }
 
@@ -581,20 +578,15 @@ checkSelection();
             database.deleteDatabaseItem(selectedTask);
             getView().setToastDelete();
         }else if(arg.equals("done")){
-            database.setItemStatus(selectedTask, "Done");
+            database.setTaskStatus(selectedTask, "Done");
         }
 
     }
     public void loadItems() {
-                onLoadItemsTaskFinished(database.getToDoItemsFromDatabase());
+                onLoadItemsTaskFinished(database.getToDoTasksFromDatabase());
             }
 
 
-    public void reloadItems() {
-        database.deleteAllDatabaseItems();
-        database.setValidDatabase(false);
-        loadItems();
-    }
 
     @Override
     public boolean isTaskForgotten(String deadline){
@@ -631,7 +623,7 @@ checkSelection();
     }
 
     public void checkForgottenTasks(){
-        List<Task> tasks = database.getToDoItemsFromDatabase();
+        List<Task> tasks = database.getToDoTasksFromDatabase();
         for(int i = 0; i < tasks.size(); i++){
             String deadline = tasks.get(i).getDate();
 
