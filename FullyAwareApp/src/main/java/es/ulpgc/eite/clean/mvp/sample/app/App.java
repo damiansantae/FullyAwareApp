@@ -70,7 +70,7 @@ public class App extends Application implements Mediator, Navigator {
         toListToDoState.deleteBtnVisibility = false;
 
         toListDoneState = new ListDoneState();
-        toListDoneState.toolbarVisibility = false;
+        toListDoneState.toolbarVisibility = true;
         toListDoneState.deleteBtnVisibility=false;
         toListDoneState.TaskDone = null;
 

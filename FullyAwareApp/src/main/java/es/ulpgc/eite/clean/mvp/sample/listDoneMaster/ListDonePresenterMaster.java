@@ -57,15 +57,15 @@ public class ListDonePresenterMaster extends GenericPresenter
         super.onCreate(ListDoneModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
-
-
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database =DatabaseFacade.getInstance();
-
+        database = DatabaseFacade.getInstance();
         app.startingListDoneScreen(this);
+        checkToolbarVisibility();
         app.loadSharePreferences((ListDoneViewMaster) getView());
+
     }
+
 
     /**
      * Operation called by VIEW after its reconstruction.
@@ -81,12 +81,11 @@ public class ListDonePresenterMaster extends GenericPresenter
 
         if (configurationChangeOccurred()) {    //if screen rotation
         }
-        checkToolbarVisibility();
         checkSelection();
         checkDeleteBtnVisibility();
         Mediator app = (Mediator) getView().getApplication();
         app.loadSharePreferences((ListDoneViewMaster) getView());
-
+        checkToolbarVisibility();
         loadItems();
     }
 
