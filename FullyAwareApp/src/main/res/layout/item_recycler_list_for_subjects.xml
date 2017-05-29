@@ -5,14 +5,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_list_recycler"
+    android:id="@+id/item_list_recycler_for_subject"
     android:name="es.ulpgc.eite.clean.mvp.masterdetail.ItemListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster"
-    android:longClickable="true"
+    tools:context="es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectView"
 
-    tools:listitem="@layout/task_list"/>
+
+    tools:listitem="@layout/subject_row"/>
 
 

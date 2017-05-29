@@ -23,7 +23,7 @@ import es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
-import es.ulpgc.eite.clean.mvp.sample.notificacionService_AlternativeFeature.NotificationService;
+import es.ulpgc.eite.clean.mvp.sample.notificationService_AlternativeFeature.NotificationService;
 import es.ulpgc.eite.clean.mvp.sample.preferences.Preferences;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesPresenter;
 import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
@@ -210,7 +210,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
-
+listSubjectsPresenter.onScreenStarted();
     }
 
     @Override
