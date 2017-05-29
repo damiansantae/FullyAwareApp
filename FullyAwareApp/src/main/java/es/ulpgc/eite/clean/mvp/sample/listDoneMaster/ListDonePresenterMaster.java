@@ -219,6 +219,12 @@ public class ListDonePresenterMaster extends GenericPresenter
 
     }
 
+    @Override
+    public void onBtnBackPressed() {
+        Navigator app = (Navigator) getApplication();
+        app.goToListToDoScreen(this);
+    }
+
     /**
      * This method looks for the tasks in the selected table which has
      * his field on true (selected)

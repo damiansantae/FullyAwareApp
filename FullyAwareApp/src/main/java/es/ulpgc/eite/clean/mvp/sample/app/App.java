@@ -465,7 +465,9 @@ listSubjectsPresenter.onScreenStarted();
         if (view != null) {
             presenter.destroyView();
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
+            presenter.destroyView();
         }
+
 
     }
 
@@ -478,8 +480,9 @@ listSubjectsPresenter.onScreenStarted();
 
         Context view = presenter.getManagedContext();
         if (view != null) {
-            presenter.destroyView();
+
             view.startActivity(new Intent(view, ListDoneViewMaster.class));
+            presenter.destroyView();
         }
 
     }
@@ -496,7 +499,7 @@ listSubjectsPresenter.onScreenStarted();
         if (view != null) {
 
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
-
+presenter.destroyView();
 
         }
 

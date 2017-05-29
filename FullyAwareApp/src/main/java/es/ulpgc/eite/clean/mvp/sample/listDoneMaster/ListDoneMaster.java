@@ -151,6 +151,12 @@ public interface ListDoneMaster {
          * @return to the View a specific case(s) with a specific format
          */
         String getCases(Task task);
+
+        /**
+         * This method is called when btn back is pressed
+         * It calls a Presenter method
+         */
+        void onBtnBackPressed();
     }
 
     /**
