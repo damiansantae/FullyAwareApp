@@ -158,10 +158,6 @@ private boolean toolbarVisible;
         return getModel().getTask();
     }
 
-
-
-
-
     ///////////////////////////////////////////////////////////////////////////////////
 
     private void checkToolbarVisibility() {
