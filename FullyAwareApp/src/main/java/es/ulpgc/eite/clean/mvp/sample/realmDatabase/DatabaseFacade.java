@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.realmDatabase;
 
 import java.util.List;
 import java.util.UUID;
+
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.TimeTable;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
@@ -12,23 +13,26 @@ import io.realm.Realm;
 public class DatabaseFacade {
 
     private Realm realmDatabase;
+    private static DatabaseFacade databaseFacade;
 
-    private static DatabaseFacade databaseFacade = new DatabaseFacade();
-
-    public static DatabaseFacade getInstance() {
+    public static synchronized DatabaseFacade getInstance() {
+        if (databaseFacade == null) {
+            databaseFacade = new DatabaseFacade();
+        }
         return databaseFacade;
     }
 
-    private DatabaseFacade(){
+    private DatabaseFacade() {
         realmDatabase = Realm.getDefaultInstance();
 
     }
-    
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     /*********************************************************************
-     ********Methods to prove the database funcionality */
+     ********Methods to prove the database functionality */
+
 
 
     public void createTestingScenario() {
@@ -90,12 +94,11 @@ public class DatabaseFacade {
         });
     }
 
-    public void deleteAllDatabaseItems(){
-        for(Task item: getTasksFromDatabase()){
+    public void deleteAllDatabaseItems() {
+        for (Task item : getTasksFromDatabase()) {
             deleteDatabaseItem(item);
         }
     }
-
 
 
     /***********************************************************
@@ -124,27 +127,30 @@ public class DatabaseFacade {
     /**
      * Method that look over database items which
      * belong to Task table
+     *
      * @return a list with that elements
      */
-    public List<Task> getTasksFromDatabase(){
+    public List<Task> getTasksFromDatabase() {
         return realmDatabase.where(Task.class).findAll();
     }
 
     /**
      * Method that look over database items which
      * belong to Task table and its field "status" with the value "ToDo"
+     *
      * @return a list with that elements
      */
-    public List<Task> getToDoTasksFromDatabase(){
+    public List<Task> getToDoTasksFromDatabase() {
         return realmDatabase.where(Task.class).equalTo("status", "ToDo").findAll();
     }
 
     /**
      * Method that look over database items which
      * belong to Task table and its field "status" with the value "Done"
+     *
      * @return a list with that elements
      */
-    public List<Task> getDoneTasksFromDatabase(){
+    public List<Task> getDoneTasksFromDatabase() {
         return realmDatabase.where(Task.class).equalTo("status", "Done").findAll();
     }
 
@@ -157,14 +163,15 @@ public class DatabaseFacade {
 
     /**
      * Method to add a Task object to the database
-     * @param subject Subject of the task
-     * @param title title of the task
+     *
+     * @param subject     Subject of the task
+     * @param title       title of the task
      * @param description description of the task
-     * @param date date of the task
-     * @param status status of the task
-     *               It can be:
-     *                  -ToDo
-     *                  -Done
+     * @param date        date of the task
+     * @param status      status of the task
+     *                    It can be:
+     *                    -ToDo
+     *                    -Done
      */
     public void addTask(Subject subject, String title, String description, String date, String status) {
         realmDatabase.beginTransaction();
@@ -184,7 +191,7 @@ public class DatabaseFacade {
             public void execute(Realm realm) {
                 Task realmTask = realm.where(Task.class).equalTo("taskId", id)
                         .findFirst();
-                        realmTask.setStatus(done);
+                realmTask.setStatus(done);
                 ;
             }
         });
@@ -197,7 +204,8 @@ public class DatabaseFacade {
 
     /**
      * Method to add a Subject object to the database
-     * @param name Subject's name
+     *
+     * @param name  Subject's name
      * @param color Color related to the subject, to be used in the element list of the view
      */
     public void addSubject(String name, Integer color) {
@@ -211,6 +219,7 @@ public class DatabaseFacade {
 
     /**
      * Method to get an specific Subject from database
+     *
      * @param subjectName name of the Subject to be deleted
      * @return the corresponding Subject
      */
@@ -221,6 +230,7 @@ public class DatabaseFacade {
 
     /**
      * Method to delete a Subject object from the database
+     *
      * @param item Subject to be deleted
      */
     public void deleteDatabaseItem(Subject item) {
@@ -238,27 +248,29 @@ public class DatabaseFacade {
 
     /**
      * Method to get all the Subject objects from the database
+     *
      * @return
      */
-    public List<Subject> getSubjectsFromDatabase(){
+    public List<Subject> getSubjectsFromDatabase() {
         return realmDatabase.where(Subject.class).findAll();
     }
 
     /**
      * Method to delete all Subject objects from the database
      */
-    public void deleteAllDatabaseSubjects(){
-        for(Subject item: getSubjectsFromDatabase()){
+    public void deleteAllDatabaseSubjects() {
+        for (Subject item : getSubjectsFromDatabase()) {
             deleteDatabaseItem(item);
         }
     }
 
     /**
      * Method to change the name of a concrete Subject in database
+     *
      * @param subject Subject to be edited
-     * @param name New name to be given
+     * @param name    New name to be given
      */
-    public void setSubjectName(Subject subject, final String name){
+    public void setSubjectName(Subject subject, final String name) {
         final String id = subject.getSubjectId();
         realmDatabase.executeTransaction(new Realm.Transaction() {
             @Override
@@ -273,8 +285,9 @@ public class DatabaseFacade {
 
     /**
      * Method to change the color of a concrete Subject in database
+     *
      * @param subject Subject to be edited
-     * @param color New color to be given
+     * @param color   New color to be given
      */
     public void setSubjectColor(Subject subject, final int color) {
         final String id = subject.getSubjectId();
@@ -288,7 +301,6 @@ public class DatabaseFacade {
             }
         });
     }
-
 
 
     /*****************************************************************

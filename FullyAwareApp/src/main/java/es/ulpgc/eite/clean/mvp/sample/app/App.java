@@ -7,13 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
-import android.view.View;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
-import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
-import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
@@ -169,10 +166,6 @@ public class App extends Application implements Mediator, Navigator {
     }
 
 
-    @Override
-    public void Task(Task TaskDone) {
-        // ListDonePresenter.setNewTask(null); // PENDIENTE: Preguntar como llamar directamente al presentador de ListDoneMaster o crear clase Task Común
-    }
 
     /**
      * It is called when detail to do is started
@@ -338,11 +331,6 @@ listSubjectsPresenter.onScreenStarted();
 
 
     @Override
-    public void goToListSubjectScreen(ListSubjectPresenter presenter) {
-
-    }
-
-    @Override
     public void goToListDoneScreen(ListSubject.ListSubjectTo presenter) {
         if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
@@ -360,16 +348,6 @@ listSubjectsPresenter.onScreenStarted();
 
     }
 
-
-    @Override
-    public void goToPreferencesScreen(ListSubject.ListSubjectTo presenter) {
-
-    }
-
-    @Override
-    public void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter) {
-
-    }
 
     @Override
     public void startActivity(Intent intent) {
@@ -459,25 +437,6 @@ listSubjectsPresenter.onScreenStarted();
     }
 
 
-    @Override
-    public void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter) {
-        if (scheduleToState == null) {
-            scheduleToState = new ScheduleState();
-        }
-        scheduleToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ScheduleView.class));
-
-        }
-    }
-
-    @Override
-    public void goToScheduleScreen(ListSubject.ListSubjectTo presenter) {
-
-    }
-
 
     @Override
     public void goToListToDoScreen(Schedule.ScheduleTo presenter) {
@@ -529,20 +488,6 @@ listSubjectsPresenter.onScreenStarted();
 
     }
 
-    @Override
-    public void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter) {
-        if (scheduleToState == null) {
-            scheduleToState = new ScheduleState();
-        }
-        scheduleToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ScheduleView.class));
-
-        }
-
-    }
 
     @Override
     public void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter) {

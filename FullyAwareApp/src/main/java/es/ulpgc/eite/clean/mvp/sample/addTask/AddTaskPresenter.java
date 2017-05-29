@@ -161,10 +161,12 @@ public class AddTaskPresenter extends GenericPresenter
 
     //getModel().addEvent(title, subjectName, deadline, getApplicationContext());
 
+    //A dialog is shown to let the user choose if he/she wants to add a task to the Calendar too or not
     getView().initDialog(title, description, deadline, subjectName);
     getView().setDialogTitle("Do you want to add this task to the Calendar too?");
     getView().showDialog();
 
+    //The task is added to the database anyway
     addTask(subject, title, description, deadline, "ToDo");
 
 

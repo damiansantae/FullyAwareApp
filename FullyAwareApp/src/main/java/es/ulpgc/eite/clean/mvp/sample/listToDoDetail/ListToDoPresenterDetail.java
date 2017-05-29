@@ -13,6 +13,14 @@ import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoPresenterMaster;
 
+/**
+ * Presenter of a task to do detail.
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class ListToDoPresenterDetail extends GenericPresenter
         <ListToDoDetail.PresenterToView, ListToDoDetail.PresenterToModel, ListToDoDetail.ModelToPresenter, ListToDoModelDetail>
         implements ListToDoDetail.ViewToPresenter, ListToDoDetail.ModelToPresenter, ListToDoDetail.MasterListToDetail, ListToDoDetail.DetailToMaster{

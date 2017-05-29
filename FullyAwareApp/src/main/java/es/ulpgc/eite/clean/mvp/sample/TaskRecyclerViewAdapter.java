@@ -17,7 +17,15 @@ import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 
-
+/**
+ * Custom adapter used to provide the handle of recycler view
+ * in Activities Done and To Do Master
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class TaskRecyclerViewAdapter
         extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
@@ -35,6 +43,7 @@ public class TaskRecyclerViewAdapter
         this.listDoneViewMaster = listDoneViewMaster;
         items = new ArrayList<>();
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

@@ -8,7 +8,7 @@ import android.content.Intent;
 public class AutoStart extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Se ejecuta al iniciar la app
+        //Executed when the app is launched
         //context.startService(new Intent(context,NotificationService.class));
 
     }
