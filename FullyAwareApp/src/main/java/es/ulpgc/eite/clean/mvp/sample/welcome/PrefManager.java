@@ -15,6 +15,8 @@ public class PrefManager {
         private static final String USER_NAME = "userName";
         private static final String COUNTER_SUBJECT = "counterSubject";
         private static final String TOOLBAR_COLOUR = "toolbar-coulour";
+        private static final String TOOLBAR_COLOUR_CHANGED = "toolbar-coulour-changed";
+
 
     /**
      * Public constructor of PrefManager Class
@@ -85,5 +87,13 @@ public class PrefManager {
         return pref.getInt(TOOLBAR_COLOUR, 0);
     }
 
+    public void setToolbarColourChanged(boolean toolbarColourChanged) {
+        editor.putBoolean(TOOLBAR_COLOUR_CHANGED, toolbarColourChanged);
+        editor.commit();
+    }
+
+    public boolean getToolbarColourChanged(){
+        return pref.getBoolean(TOOLBAR_COLOUR_CHANGED, false);
+    }
 }
 

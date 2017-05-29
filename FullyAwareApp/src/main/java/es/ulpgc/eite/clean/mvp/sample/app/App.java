@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.view.View;
 
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskPresenter;
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTaskView;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDonePresenterDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
@@ -63,6 +65,7 @@ public class App extends Application implements Mediator, Navigator {
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         startService(new Intent(this, NotificationService.class));
+
 
         toListToDoState = new ListToDoState();
         toListToDoState.toolbarVisibility = true;
@@ -213,74 +216,33 @@ public class App extends Application implements Mediator, Navigator {
 listSubjectsPresenter.onScreenStarted();
     }
 
-    @Override
-    public void loadSharePreferences(PreferencesView view) {
-            PrefManager prefManager = new PrefManager(view.getActivityContext());
-            int colour = prefManager.getToolbarColour();
-            if (colour != 0) {
-                toolbarColourChanged((PreferencesPresenter) view.getPresenter());
-                view.toolbarChanged(getColorHex(colour));
-            }
-    }
-
-    @Override
-    public void loadSharePreferences(ListToDoViewMaster view) {
+    @Override //TODO: METODO VALIDO
+    public void setToolbarColorChanged(PreferencesView view, boolean toolbarColorChanged) {
         PrefManager prefManager = new PrefManager(view.getActivityContext());
-        int colour = prefManager.getToolbarColour();
-        if (colour != 0) {
-            toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
-            view.toolbarChanged(getColorHex(colour));
-            view.changeButtonsColours(colour);
-        }
-    }
-
-    @Override
-    public void loadSharePreferences(ListDoneViewMaster view) {
-        PrefManager prefManager = new PrefManager(view.getActivityContext());
-        int colour = prefManager.getToolbarColour();
-        if (colour != 0) {
-            toolbarColourChanged((ListDonePresenterMaster) view.getPresenter());
-            view.toolbarChanged(getColorHex(colour));
-        }
-    }
-
-    private void toolbarColourChanged(ListDonePresenterMaster presenter) {
+        prefManager.setToolbarColourChanged(toolbarColorChanged);
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
         }
         preferencesToState.toolbarVisibility = true;
-        preferencesToState.toolbarColour = presenter.getToolbarColour();
+        preferencesToState.toolbarColourChanged = toolbarColorChanged;
     }
 
-    private void toolbarColourChanged(ListToDoPresenterMaster presenter) {
+    @Override //TODO: METODO VALIDO
+    public void setToolbarColour(PreferencesView view, int newColor) {
+        PrefManager prefManager = new PrefManager(view.getActivityContext());
+        prefManager.setToolbarColour(newColor);
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
         }
         preferencesToState.toolbarVisibility = true;
-        preferencesToState.toolbarColour = presenter.getToolbarColour();
+        preferencesToState.toolbarColour = newColor;
     }
+
 
     /////////////////TOOLBAR CHANGES METHODS
-    @Override
-    public void toolbarColourChanged(PreferencesPresenter presenter) {
-        if (preferencesToState == null) {
-            preferencesToState = new PreferencesState();
-        }
-        preferencesToState.toolbarVisibility = true;
-        preferencesToState.toolbarColour = presenter.getToolbarColour();
-        preferencesToState.toolbarColourChanged = presenter.getToolbarColourChanged();
-
-    /*    if (preferencesToState.toolbarColourChanged == true){
-            changeToolbarColour(presenter, preferencesToState.toolbarColour);
-        }
-        Context view = presenter.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, PreferencesView.class));
-*/
-        }
 
     @Override
-    public String getToolbarColour() {
+    public String getToolbarColour() { //TODO:METODO VALIDO
         String newColourString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
          newColourString = getColorHex(preferencesToState.toolbarColour);
@@ -288,28 +250,16 @@ listSubjectsPresenter.onScreenStarted();
         return newColourString;
     }
 
-    @Override
-    public int getToolbarColourInt() {
-        return preferencesToState.toolbarColour;
-    }
-
-
-    @Override
+    @Override //TODO:METODO VALIDO
     public boolean checkToolbarChanged() {
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
-            preferencesToState.toolbarVisibility = true;
-            preferencesToState.toolbarColour = 111;
         }
-
-
-        return this.preferencesToState.toolbarColourChanged;
+         return preferencesToState.toolbarColourChanged;
     }
 
 
-
-
-    private String getColorHex(int color) {
+    private String getColorHex(int color) { //TODO:METODO VALIDO
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 
@@ -362,36 +312,12 @@ listSubjectsPresenter.onScreenStarted();
     }
 
 
-    @Override
-    public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
-        if (listToDoToState == null) {
-            listToDoToState = new ListToDoState();
-
-        }
-        listToDoToState.toolbarVisibility = true;
-
-        Context view = addTaskPresenter.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListToDoViewMaster.class));
-        }
-
-    }
-
-    @Override
-    public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
-        Context view = preferencesPresenter.getManagedContext();
-        if (view != null) {
-
-        }
-    }
 
     @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
-
         if (listSubjectToState == null) {
             listSubjectToState = new ListSubjectState();
         }
-
         listSubjectToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
@@ -403,10 +329,6 @@ listSubjectsPresenter.onScreenStarted();
 
     }
 
-    @Override
-    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
-
-    }
 
     @Override
     public void goToListSubjectScreen(ListSubjectPresenter presenter) {

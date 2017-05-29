@@ -48,23 +48,25 @@ public class ListSubjectPresenter extends GenericPresenter
 
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
-        database =DatabaseFacade.getInstance();
+        database = DatabaseFacade.getInstance();
+        checkChangesOnToolbar(app);
 
-        if (app.checkToolbarChanged() == true) {
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
-
-        prefManager = new PrefManager(getView().getActivityContext());
         Log.d(TAG, "" + prefManager.isFirstTimeLaunch());
 
+        prefManager = new PrefManager(getView().getActivityContext());
         if (prefManager.isFirstTimeLaunch()) {
             getView().showAddUserNameDialog();
         }
-
         setLabelButtons(getView().getActivityContext());
         app.startingListSubjectScreen(this);
 
+    }
+
+    private void checkChangesOnToolbar(Mediator app) {
+        if (app.checkToolbarChanged()) {
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     private void setLabelButtons(Context activityContext) {
@@ -82,16 +84,11 @@ public class ListSubjectPresenter extends GenericPresenter
     public void onResume(ListSubject.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
-
-        if (configurationChangeOccurred()) {
-
-        }
         Mediator app = (Mediator) getView().getApplication();
-        if (app.checkToolbarChanged() == true) {
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
+        if (configurationChangeOccurred()) {
+            checkChangesOnToolbar(app);
         }
-
+        checkChangesOnToolbar(app);
         loadItems();
     }
 

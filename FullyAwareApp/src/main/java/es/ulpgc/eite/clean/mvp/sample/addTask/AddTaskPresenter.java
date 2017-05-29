@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -50,8 +51,11 @@ public class AddTaskPresenter extends GenericPresenter
 
     Mediator app = (Mediator) getView().getApplication();
     app.startingAddTaskScreen(this);
+    checkChangesOnToolbar(app);
+  }
 
-    if (app.checkToolbarChanged() == true){
+  private void checkChangesOnToolbar(Mediator app) {
+    if (app.checkToolbarChanged()) {
       String colour = app.getToolbarColour();
       getView().toolbarChanged(colour);
     }
@@ -68,19 +72,14 @@ public class AddTaskPresenter extends GenericPresenter
   public void onResume(AddTask.PresenterToView view) {
     setView(view);
     Log.d(TAG, "calling onResume()");
-
-    if(configurationChangeOccurred()) {
-
-      checkToolbarVisibility();
-      getView().setSubjectsSpinner();
-    }
-
     Mediator app = (Mediator) getView().getApplication();
 
-    if (app.checkToolbarChanged() == true){
-      String colour = app.getToolbarColour();
-      getView().toolbarChanged(colour);
+    if(configurationChangeOccurred()) {
+      checkToolbarVisibility();
+      getView().setSubjectsSpinner();
+      checkChangesOnToolbar(app);
     }
+    checkChangesOnToolbar(app);
   }
 
   /**

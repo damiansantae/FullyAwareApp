@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.opengl.Visibility;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.SimpleAdapter;
 import es.ulpgc.eite.clean.mvp.ContextView;
@@ -38,17 +39,17 @@ public class PreferencesPresenter extends GenericPresenter
         super.onCreate(PreferencesModel.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
-
-        Log.d(TAG, "calling startingDummyScreen()");
         Mediator app = (Mediator) getView().getApplication();
         app.startingPreferencesScreen(this);
-        prefManager = new PrefManager(getManagedContext());
+        checkChangesOnToolbar(app);
+        checkToolbarVisibility();
+    }
+
+    private void checkChangesOnToolbar(Mediator app) {
         if (app.checkToolbarChanged()) {
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
-        app.loadSharePreferences((PreferencesView) getView());
-        checkToolbarVisibility();
     }
 
     /**
@@ -65,15 +66,10 @@ public class PreferencesPresenter extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
         if (configurationChangeOccurred()) {
             checkToolbarVisibility();
-            app.loadSharePreferences((PreferencesView) getView());
+            checkChangesOnToolbar(app);
         }
-
-        if (app.checkToolbarChanged()) {
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
+        checkChangesOnToolbar(app);
         checkToolbarVisibility();
-        app.loadSharePreferences((PreferencesView) getView());
     }
 
     /**
@@ -165,10 +161,11 @@ public class PreferencesPresenter extends GenericPresenter
      *
      * @param newColor int: color of the app.
      */
-    @Override
+    @Override //TODO: METODO VALIDO
     public void setNewToolbarColor(int newColor) {
         this.toolbarColour = newColor;
-        prefManager.setToolbarColour(newColor);
+        Mediator app = (Mediator) getApplication();
+        app.setToolbarColour((PreferencesView) getView(),newColor);
     }
 
 
@@ -178,37 +175,17 @@ public class PreferencesPresenter extends GenericPresenter
      * @param toolbarColorChanged boolean: indicates if toolbar colour has been changed.
      */
     @Override
-    public void setToolbarColorChanged(boolean toolbarColorChanged) {
+    public void setToolbarColorChanged(boolean toolbarColorChanged) { //TODO: METODO VALIDO
         this.toolbarColorChanged = toolbarColorChanged;
-
-    }
-
-    /**
-     * Method that notifies the app that the toolbar colour has been changed.
-     */
-    @Override
-    public void toolbarChanged() {
-        Mediator mediator = (Mediator) getView().getApplication();
-        mediator.toolbarColourChanged(this);
+        Mediator app = (Mediator) getApplication();
+        app.setToolbarColorChanged((PreferencesView) getView(),toolbarColorChanged);
     }
 
     /**
      * Method that calls the model to returns the items of the Preferences List.
      * @return String[] items of preferences list.
      */
-    @Override
-    public String[] getPrefItemLabels() {
-        return getModel().getPrefItemLabels();
-    }
 
-    /**
-     * Method that calls the model to returns the description of items of the Preferences List.
-     * @return String[] items description of preferences list.
-     */
-    @Override
-    public String[] getPrefDescriptionItemsLabels() {
-        return getModel().getPrefDescriptionItemsLabels();
-    }
 
     /**
      * Method that calls the model to returns a label of not supported system.

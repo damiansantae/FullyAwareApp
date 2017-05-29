@@ -59,11 +59,6 @@ public interface Navigator {
 
     /*******************************************************************
      ******** Navegación direccion Preferences al resto de pantallas*/
-    void goToListToDoScreen(AddTaskPresenter addTaskPresenter);
-
-    void goToChangeColourDialog(PreferencesPresenter preferencesPresenter);
-
-    void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter);
 
 
     /*******************************************************************

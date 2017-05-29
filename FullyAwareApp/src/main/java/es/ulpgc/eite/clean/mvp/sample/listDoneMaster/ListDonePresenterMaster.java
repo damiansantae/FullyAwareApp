@@ -62,10 +62,15 @@ public class ListDonePresenterMaster extends GenericPresenter
         database = DatabaseFacade.getInstance();
         app.startingListDoneScreen(this);
         checkToolbarVisibility();
-        app.loadSharePreferences((ListDoneViewMaster) getView());
-
+        checkChangesOnToolbar(app);
     }
 
+    private void checkChangesOnToolbar(Mediator app) {
+        if (app.checkToolbarChanged()) {
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
+    }
 
     /**
      * Operation called by VIEW after its reconstruction.
@@ -78,15 +83,16 @@ public class ListDonePresenterMaster extends GenericPresenter
     public void onResume(ListDoneMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
+        Mediator app = (Mediator) getView().getApplication();
 
-        if (configurationChangeOccurred()) {    //if screen rotation
+        if (configurationChangeOccurred()) {
+            checkChangesOnToolbar(app);
         }
         checkSelection();
         checkDeleteBtnVisibility();
-        Mediator app = (Mediator) getView().getApplication();
-        app.loadSharePreferences((ListDoneViewMaster) getView());
         checkToolbarVisibility();
         loadItems();
+        checkChangesOnToolbar(app);
     }
 
 

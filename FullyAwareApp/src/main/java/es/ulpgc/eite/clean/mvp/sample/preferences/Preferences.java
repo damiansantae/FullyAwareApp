@@ -46,12 +46,6 @@ public interface Preferences {
 
         void setToolbarColorChanged(boolean toolbarColorChanged);
 
-        void toolbarChanged();
-
-        String[] getPrefItemLabels();
-
-        String[] getPrefDescriptionItemsLabels();
-
         CharSequence getNotSupportedSystem();
     }
 

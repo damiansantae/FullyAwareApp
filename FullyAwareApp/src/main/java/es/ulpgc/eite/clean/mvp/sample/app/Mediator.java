@@ -1,7 +1,10 @@
 package es.ulpgc.eite.clean.mvp.sample.app;
 
+import android.view.View;
+
 import es.ulpgc.eite.clean.mvp.sample.addTask.AddTask;
 import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneDetail;
+import es.ulpgc.eite.clean.mvp.sample.listDoneDetail.ListDoneViewDetail;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneMaster;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectPresenter;
@@ -36,20 +39,13 @@ public interface Mediator {
 
     void startingDetailScreen(ListDoneDetail.MasterListToDetail listDonePresenterDetail);
 
-    void toolbarColourChanged(PreferencesPresenter preferencesPresenter);
-
     String getToolbarColour();
-
-    int getToolbarColourInt();
 
     boolean checkToolbarChanged();
 
-
     void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter);
 
-    void loadSharePreferences(PreferencesView view);
+    void setToolbarColorChanged(PreferencesView view, boolean toolbarColorChanged);
 
-    void loadSharePreferences(ListToDoViewMaster view);
-
-    void loadSharePreferences(ListDoneViewMaster view);
+    void setToolbarColour(PreferencesView view, int newColor);
 }

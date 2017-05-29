@@ -49,21 +49,8 @@ public class ListDoneViewDetail
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
-
-
-
-loadSharePreferences();
-
     }
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
+
 
     /**
      * Method that initialized MVP objects

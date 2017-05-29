@@ -72,15 +72,19 @@ public class ListToDoPresenterMaster extends GenericPresenter
         super.onCreate(ListToDoModelMaster.class, this);
         setView(view);
         Log.d(TAG, "calling onCreate()");
-
         Log.d(TAG, "calling startingLisToDoScreen()");
         Mediator app = (Mediator) getView().getApplication();
         database = DatabaseFacade.getInstance();
-
         app.startingListToDoScreen(this);
-        app.loadSharePreferences((ListToDoViewMaster) getView());
+        checkChangesOnToolbar(app);
 
+    }
 
+    private void checkChangesOnToolbar(Mediator app) {
+        if (app.checkToolbarChanged()) {
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
     }
 
     /**
@@ -94,8 +98,10 @@ public class ListToDoPresenterMaster extends GenericPresenter
     public void onResume(ListToDoMaster.PresenterToView view) {
         setView(view);
         Log.d(TAG, "calling onResume()");
-
-        if (configurationChangeOccurred()) {        //if screen rotation
+        Mediator app = (Mediator) getView().getApplication();
+        if (configurationChangeOccurred()) {
+            checkChangesOnToolbar(app);
+            checkToolbarVisibility();
         }
 
         checkSelection();
@@ -105,8 +111,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
         checkDoneBtnVisibility();
         checkTextWhenIsEmptyVisibility();
         checkDoneBtnVisibility();
-        Mediator app = (Mediator) getView().getApplication();
-        app.loadSharePreferences((ListToDoViewMaster) getView());
+        checkChangesOnToolbar(app);
         loadItems();
     }
 

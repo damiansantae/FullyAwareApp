@@ -150,10 +150,11 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      *
      * @param newColor (int) colour of the app.
      */
-    private void updateStatusBarColor(int newColor) {
+    private void updateStatusBarColor(int newColor) { //TODO:METODO VALIDO
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String newColorString = getColorHex(newColor);
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
+            toolbar.setBackgroundColor(newColor);
             setToolbarColorChanged(true);
             setNewToolbarColor(newColor);
         } else {
@@ -184,9 +185,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      */
     @Override
     public void onColorSelected(int newColor, String tag) {
-        toolbar.setBackgroundColor(newColor);
         toolbarColour = newColor;
-        prefManager.setToolbarColour(newColor);
         updateStatusBarColor(newColor);
     }
 
@@ -196,7 +195,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param newColor (int) new color of the app.
      */
     @Override
-    public void setNewToolbarColor(int newColor) {
+    public void setNewToolbarColor(int newColor) { //TODO:METODO VALIDO
         getPresenter().setNewToolbarColor(newColor);
     }
 
@@ -206,7 +205,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param toolbarColorChanged (boolean)
      */
     @Override
-    public void setToolbarColorChanged(boolean toolbarColorChanged) {
+    public void setToolbarColorChanged(boolean toolbarColorChanged) { //TODO:METODO VALIDO
         getPresenter().setToolbarColorChanged(toolbarColorChanged);
     }
 
@@ -216,7 +215,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param colour (String) Toolbar colour.
      */
     @Override
-    public void toolbarChanged(String colour) {
+    public void toolbarChanged(String colour) { //TODO METODO VALIDO
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         int color = (Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour))));

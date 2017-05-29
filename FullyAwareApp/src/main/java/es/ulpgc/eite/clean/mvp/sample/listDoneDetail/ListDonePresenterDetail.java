@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listDoneDetail;
 
 
 import android.util.Log;
+import android.view.View;
 
 import java.util.Observable;
 
@@ -12,6 +13,7 @@ import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDonePresenterMaster;
+import es.ulpgc.eite.clean.mvp.sample.listDoneMaster.ListDoneViewMaster;
 
 public class ListDonePresenterDetail extends GenericPresenter
         <ListDoneDetail.PresenterToView, ListDoneDetail.PresenterToModel, ListDoneDetail.ModelToPresenter, ListDoneModelDetail>
@@ -40,9 +42,15 @@ private boolean toolbarVisible;
         //it must call Mediator to establish state which was shared by the master
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
-        checkToolbarColourChanges(app);
+        checkChangesOnToolbar(app);
     }
 
+    private void checkChangesOnToolbar(Mediator app) {
+        if (app.checkToolbarChanged()) {
+            String colour = app.getToolbarColour();
+            getView().toolbarChanged(colour);
+        }
+    }
     /**
      * Operation called by VIEW after its reconstruction.
      * Always call {@link GenericPresenter#setView(ContextView)}
@@ -53,16 +61,13 @@ private boolean toolbarVisible;
     @Override
     public void onResume(ListDoneDetail.PresenterToView view) {
         setView(view);
-
-        if(configurationChangeOccurred()) {
-            checkToolbarVisibility();
-        }
         Mediator app = (Mediator) getView().getApplication();
-        checkToolbarColourChanges(app);
-
+        if (configurationChangeOccurred()) {
+            checkToolbarVisibility();
+            checkChangesOnToolbar(app);
+        }
+        checkChangesOnToolbar(app);
     }
-
-
 
     /**
      * Helper method to inform Presenter that a onBackPressed event occurred
@@ -169,13 +174,6 @@ private boolean toolbarVisible;
         }
     }
 
-
-    private void checkToolbarColourChanges(Mediator app){
-        if (app.checkToolbarChanged() == true){
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
-    }
 
     private class ObservableDone extends Observable {
 
