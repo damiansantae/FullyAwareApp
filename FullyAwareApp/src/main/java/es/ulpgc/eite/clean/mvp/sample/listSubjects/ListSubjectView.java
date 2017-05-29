@@ -122,11 +122,6 @@ public class ListSubjectView
             app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.menucalendar) {
-            Navigator app = (Navigator) getApplication();
-            app.goToScheduleScreen((ListSubject.ListSubjectTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());

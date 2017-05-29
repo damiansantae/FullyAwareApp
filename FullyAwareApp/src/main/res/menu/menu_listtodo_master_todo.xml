@@ -21,10 +21,6 @@
                 android:icon="@android:drawable/checkbox_on_background"
                 android:title="Done" />
             <item
-                android:id="@+id/menucalendar"
-                android:icon="@android:drawable/ic_menu_today"
-                android:title="Calendar" />
-            <item
                 android:id="@+id/menuPreferences"
                 android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Preferences" />

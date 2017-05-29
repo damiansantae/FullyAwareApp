@@ -204,10 +204,6 @@ public class ListToDoViewMaster
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListToDoMaster.ListToDoTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.menucalendar) {
-            Navigator app = (Navigator) getApplication();
-            app.goToScheduleScreen((ListToDoMaster.ListToDoTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListToDoMaster.ListToDoTo) getPresenter());

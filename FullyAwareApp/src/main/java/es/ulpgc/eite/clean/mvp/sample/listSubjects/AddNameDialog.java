@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 
 public class AddNameDialog extends DialogFragment implements View.OnClickListener {
@@ -31,6 +32,8 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
   public View onCreateView(
           LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+    DatabaseFacade database = DatabaseFacade.getInstance();
+    database.addSubject("None", null);
     View view = inflater.inflate(R.layout.dialog_add_name, container);
     initComponents(view);
     return view;
