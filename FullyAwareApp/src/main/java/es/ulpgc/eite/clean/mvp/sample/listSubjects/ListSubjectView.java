@@ -128,11 +128,6 @@ public class ListSubjectView
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.menuPreferences) {
-            Navigator app = (Navigator) getApplication();
-            app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
