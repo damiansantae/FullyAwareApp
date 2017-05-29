@@ -113,7 +113,7 @@ public class App extends Application implements Mediator, Navigator {
         String selection = "(" + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?)";
         String[] selectionArgs = new String[]{"com.google"};
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -209,7 +209,7 @@ public class App extends Application implements Mediator, Navigator {
 listSubjectsPresenter.onScreenStarted();
     }
 
-    @Override //TODO: METODO VALIDO
+    @Override
     public void setToolbarColorChanged(PreferencesView view, boolean toolbarColorChanged) {
         PrefManager prefManager = new PrefManager(view.getActivityContext());
         prefManager.setToolbarColourChanged(toolbarColorChanged);
@@ -220,7 +220,7 @@ listSubjectsPresenter.onScreenStarted();
         preferencesToState.toolbarColourChanged = toolbarColorChanged;
     }
 
-    @Override //TODO: METODO VALIDO
+    @Override
     public void setToolbarColour(PreferencesView view, int newColor) {
         PrefManager prefManager = new PrefManager(view.getActivityContext());
         prefManager.setToolbarColour(newColor);
@@ -233,7 +233,7 @@ listSubjectsPresenter.onScreenStarted();
 
     /////////////////TOOLBAR CHANGES METHODS
     @Override
-    public String getToolbarColour() { //TODO:METODO VALIDO
+    public String getToolbarColour() {
         String newColourString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -242,7 +242,7 @@ listSubjectsPresenter.onScreenStarted();
         return newColourString;
     }
 
-    @Override //TODO:METODO VALIDO
+    @Override
     public boolean checkToolbarChanged() {
         String APP_PREF = "androidhive-welcome";
         String TOOLBAR_COLOUR_CHANGED = "toolbar-coulour-changed";
@@ -260,7 +260,7 @@ listSubjectsPresenter.onScreenStarted();
     }
 
 
-    private String getColorHex(int color) { //TODO:METODO VALIDO
+    private String getColorHex(int color) {
         return String.format("#%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
     }
 

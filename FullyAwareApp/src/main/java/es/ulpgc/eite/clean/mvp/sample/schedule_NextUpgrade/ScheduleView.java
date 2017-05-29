@@ -209,8 +209,7 @@ public class ScheduleView
      */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("ListForgottenView Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
+                .setName("ListForgottenView Page")
                 .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)

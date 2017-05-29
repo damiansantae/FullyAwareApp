@@ -94,7 +94,6 @@ public class AddTaskModel extends GenericModel<AddTask.ModelToPresenter>
      */
   public Cursor getUserCalendar(Context context) {
     if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-      // TODO: Consider calling
       //    ActivityCompat#requestPermissions
       // here to request the missing permissions, and then overriding
       //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -174,7 +173,6 @@ public class AddTaskModel extends GenericModel<AddTask.ModelToPresenter>
     values.put(CalendarContract.Events.CALENDAR_ID, id);
     values.put(CalendarContract.Events.EVENT_TIMEZONE, stringTimeZone.toString());
     if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-      // TODO: Consider calling
       //    ActivityCompat#requestPermissions
       // here to request the missing permissions, and then overriding
       //   public void onRequestPermissionsResult(int requestCode, String[] permissions,

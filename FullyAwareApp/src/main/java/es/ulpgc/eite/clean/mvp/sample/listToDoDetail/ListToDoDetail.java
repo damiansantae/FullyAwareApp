@@ -119,7 +119,6 @@ public interface ListToDoDetail {
          */
         void hideToolbar();
 
-        //TODO: JORDI ESTE METODO PARA QUE SIRVE????????????
         void toolbarChanged(String colour);
     }
 

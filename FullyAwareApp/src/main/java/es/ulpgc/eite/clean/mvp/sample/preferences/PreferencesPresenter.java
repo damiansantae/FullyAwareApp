@@ -162,7 +162,7 @@ public class PreferencesPresenter extends GenericPresenter
      *
      * @param newColor int: color of the app.
      */
-    @Override //TODO: METODO VALIDO
+    @Override
     public void setNewToolbarColor(int newColor) {
         this.toolbarColour = newColor;
         Mediator app = (Mediator) getApplication();
@@ -176,7 +176,7 @@ public class PreferencesPresenter extends GenericPresenter
      * @param toolbarColorChanged boolean: indicates if toolbar colour has been changed.
      */
     @Override
-    public void setToolbarColorChanged(boolean toolbarColorChanged) { //TODO: METODO VALIDO
+    public void setToolbarColorChanged(boolean toolbarColorChanged) {
         this.toolbarColorChanged = toolbarColorChanged;
         Mediator app = (Mediator) getApplication();
         app.setToolbarColorChanged((PreferencesView) getView(), toolbarColorChanged);
