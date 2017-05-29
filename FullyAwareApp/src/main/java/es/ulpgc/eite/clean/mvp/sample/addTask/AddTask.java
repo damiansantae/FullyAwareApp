@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.addTask;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
@@ -99,6 +100,26 @@ public interface AddTask {
     * @return a List with all the Subjects
     */
     List<Subject> getSubjects();
+
+    /**
+     * Method that calls the method with the same name in  the Model. It is used to create an Intent to write a task into the Calendar
+     * @param title title of the task
+     * @param description description of the task
+     * @param deadline date and time of the task
+     * @param subjectName name of the subject related to the task
+     * @return an Intent to open the Calendar app and fill it with that information
+     */
+    Intent writeTaskIntoCalendar(String title, String description, String deadline, String subjectName);
+
+    /**
+     * Method that calls the DatabaseFacade with the same name, to add a task to the database
+     * @param subject Subject related to the task
+     * @param title title of the task
+     * @param description description of the task
+     * @param deadline date and time when the task happens
+     * @param status status of the task ("ToDo" or "Done")
+     */
+    void addTask(Subject subject, String title, String description, String deadline, String status);
   }
 
   /**
@@ -175,9 +196,25 @@ public interface AddTask {
     void onDestroy();
 
     /**
-     * Method to show the dialog and define its behaviour
+     * Method to create a Dialog, select its configuration and define the listeners of its two options
+     * @param title title of the task
+     * @param description description of the task
+     * @param deadline date and time when the task takes place
+     * @param subjectName name of the subject related to the task
      */
-    //void initDialog();
+    void initDialog(String title, String description, String deadline, String subjectName);
+
+    /**
+     * Method to set the title of the Dialog
+     * @param title String of the title
+     */
+    void setDialogTitle(String title);
+
+    /**
+     * Method to make the Dialog appear
+     */
+    void showDialog();
+
   }
 
   /**

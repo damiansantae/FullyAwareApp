@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import es.ulpgc.eite.clean.mvp.ContextView;
@@ -121,7 +123,8 @@ public class AddTaskPresenter extends GenericPresenter
     DatePickerDialog datePicker = new DatePickerDialog(getManagedContext(), new DatePickerDialog.OnDateSetListener() {
       @Override
       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        getView().setDateText(dayOfMonth+"/"+monthOfYear+"/"+year);
+        int finalMonthOfYear = monthOfYear+1;
+        getView().setDateText(dayOfMonth+"/"+finalMonthOfYear+"/"+year);
       }
     }, year, month, day);
     datePicker.show();
@@ -155,28 +158,19 @@ public class AddTaskPresenter extends GenericPresenter
     String date = getDate();
     String deadline = getDeadLine(time,date);
 
-    //  Task added to the database
-    database.addTask(subject, title, description, deadline, "ToDo");
 
     //getModel().addEvent(title, subjectName, deadline, getApplicationContext());
 
-    //  The Intent to start the app Calendar is obtained, and then is used by startActivity()
-    Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
-    Navigator app = (Navigator) getView().getApplication();
-    app.startActivity(intent);
+    getView().initDialog(title, description, deadline, subjectName);
+    getView().setDialogTitle("Do you want to add this task to the Calendar too?");
+    getView().showDialog();
 
-    Context context = getApplicationContext();
-    CharSequence text = "Task added";
-    int duration = Toast.LENGTH_SHORT;
+    addTask(subject, title, description, deadline, "ToDo");
 
-    Toast toast = Toast.makeText(context, text, duration);
-    toast.show();
 
     //NotificationService.notification(title, deadline, getManagedContext());
     //NotificationService.setNotificationAlarm(getTitle(), getDate(), getTime(), getManagedContext());
 
-    //  The activity is destroyed
-    destroyView();
   }
 
                 //////////////////Methods to get View parameters///////////////////////
@@ -223,7 +217,7 @@ public class AddTaskPresenter extends GenericPresenter
     }
         String month = result.substring(3,5);
         int monthInt = Integer.parseInt(month);
-        int monthIntFinal = monthInt + 1;
+        int monthIntFinal = monthInt;
         if(monthIntFinal < 10){
             monthFinal = "0" + String.valueOf(monthIntFinal);
         }else{
@@ -339,10 +333,14 @@ public class AddTaskPresenter extends GenericPresenter
     return list;
 }
 
-  public void goToCalendar(String title, String description, String deadline, String subjectName){
-    Intent intent = getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
-    Navigator app = (Navigator) getView().getApplication();
-    app.startActivity(intent);
+  @Override
+  public Intent writeTaskIntoCalendar(String title, String description, String deadline, String subjectName){
+    return getModel().writeTaskIntoCalendar(title, description, deadline, subjectName);
+  }
+
+  @Override
+  public void addTask(Subject subject, String title, String description, String deadline, String status){
+    database.addTask(subject, title, description, deadline, "ToDo");
   }
 
 }

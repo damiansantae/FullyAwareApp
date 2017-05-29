@@ -431,7 +431,7 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override
     public void startActivity(Intent intent) {
-        startActivity(intent);
+        super.startActivity(intent);
     }
 
     @Override

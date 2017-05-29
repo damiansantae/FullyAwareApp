@@ -72,7 +72,7 @@ public class ListToDoViewDetail
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
-            ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getTitle());
+            ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getSubject().getName());
             ((TextView) findViewById(R.id.date_txt)).setText("Deadline: " +  Task.getDate());
             ((TextView) findViewById(R.id.task_description)).setText("Description: " + Task.getDescription());
         }
