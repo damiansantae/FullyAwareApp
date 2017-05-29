@@ -16,18 +16,10 @@ import io.realm.Realm;
 public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         implements ListSubject.PresenterToModel {
 
-    private static final int ITEM_COUNT = 9;
 
-    private boolean runningTask;
     private Realm realmDatabase;
     private DatabaseFacade database;
-    private boolean validDatabase;
-    private String errorMsg;
     private boolean usingWrapper;
-    private String floatingAddLabel;
-    private String floatingDeleteLabel;
-    private String btAddSubjectLabel;
-    private String btHourLabel;
     private String finishLabel = "Finish";
 
     private static final ArrayList<Integer> listOfColors = new ArrayList<Integer>() {{
@@ -55,8 +47,6 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
 
     }};
 
-
-
     /**
      * Method that recovers a reference to the PRESENTER
      * You must ALWAYS call {@link super#onCreate(Object)} here
@@ -67,12 +57,11 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     public void onCreate(ListSubject.ModelToPresenter presenter) {
         super.onCreate(presenter);
         realmDatabase = Realm.getDefaultInstance();
-        database =DatabaseFacade.getInstance();
-        errorMsg = "Error deleting item!";
+        database = DatabaseFacade.getInstance();
     }
 
     private void saveSubject(String other, Object o, Object o1) {
-        database.addSubject(other,chooseNewColor());
+        database.addSubject(other, chooseNewColor());
     }
 
     /**
@@ -89,66 +78,11 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     /////////////////////////////////////////////////////////////////////////////////////
     // Presenter To Model //////////////////////////////////////////////////////////////
 
-
-    @Override
-    public void deleteItem(Subject item) {
-        if (getItemsFromDatabase().contains(item)){
-            //items.remove(item);
-            deleteDatabaseItem(item);
-        } else {
-            getPresenter().onErrorDeletingItem(item);
-        }
-    }
-
     /**
-     * Llamado para recuperar los elementos iniciales de la lista.
-     * En este caso siempre se llamará a la tarea asíncrona
+     * Method to get label of the finish button.
+     *
+     * @return String label.
      */
-
-    @Override
-    public void setDatabaseValidity(boolean valid) {
-        validDatabase = valid;
-    }
-
-    @Override
-    public String getErrorMessage() {
-        return errorMsg;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////
-
-    private String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position).append("\n");
-        for (int count = 0; count < position; count++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Llamado para recuperar los elementos a mostrar en la lista.
-     * Consiste en una tarea asíncrona que retrasa un tiempo la obtención del contenido.
-     * El modelo notificará al presentador cuando se inicia y cuando finaliza esta tarea.
-     */
-
-
-
-    /////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public String getLabelFloatingAdd() {
-        return this.floatingAddLabel;
-    }
-
-    @Override
-    public void setLabelButtons() {
-        this.floatingAddLabel = "floatingAdd";
-        this.floatingDeleteLabel = "floatingDelete";
-        this.btAddSubjectLabel = "buttonAddSubject";
-        this.btHourLabel = "buttonHour";
-    }
-
     @Override
     public String getFinishLabel() {
         return this.finishLabel;
@@ -160,92 +94,42 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
      *
      * @return an unique color for a subject
      */
-    public int chooseNewColor(){
+    public int chooseNewColor() {
         List<Subject> subjectsFromDB = database.getSubjectsFromDatabase();
         Integer currentColor = 0x0;
-        boolean colorFound=false;
+        boolean colorFound = false;
 
-        for (Integer color: listOfColors) {
-            if (colorFound)break;                                              //Si se ha encontrado un color no utilizado paramos la busqueda de colores
-            currentColor =color;
+        for (Integer color : listOfColors) {
+            if (colorFound)
+                break;                                              //Si se ha encontrado un color no utilizado paramos la busqueda de colores
+            currentColor = color;
 
-            for(int i =0; i<subjectsFromDB.size();i++){                         //Recorremos las asignaturas para ver sus colores
-                if(subjectsFromDB.get(i).getColor().equals(color))break;        //Si el color de una asignatura corresponde con el posible color elegido dejamos de comparar
-                                                                                // con el resto de las asignaturas y pasamos al siguiente color de la lista
+            for (int i = 0; i < subjectsFromDB.size(); i++) {                         //Recorremos las asignaturas para ver sus colores
+                if (subjectsFromDB.get(i).getColor().equals(color))
+                    break;        //Si el color de una asignatura corresponde con el posible color elegido dejamos de comparar
+                // con el resto de las asignaturas y pasamos al siguiente color de la lista
 
-                if(i==subjectsFromDB.size()-1)colorFound =true;                    //Si al terminar de recorrer todas las asignaturas no se ha encontrado ningn color igual al actual
-                                                                                //entonces es que hemos encontrado un color
+                if (i == subjectsFromDB.size() - 1)
+                    colorFound = true;                    //Si al terminar de recorrer todas las asignaturas no se ha encontrado ningn color igual al actual
+                //entonces es que hemos encontrado un color
             }
         }
         return currentColor;
     }
 
-    @Override
-    public ArrayList<String> getDaysOfWeek() {
-        return this.daysOfWeek;
-    }
-
+    /**
+     * Method to add subjects to the database with a colour.
+     *
+     * @param subjectList ArryaList of subjects.
+     */
     @Override
     public void addSubjectsToDataBase(ArrayList<String> subjectList) {
         database.addSubject("None", chooseNewColor());
-        for (int i=0; i < subjectList.size(); i++){
-            database.addSubject(subjectList.get(i),chooseNewColor());
+        for (int i = 0; i < subjectList.size(); i++) {
+            database.addSubject(subjectList.get(i), chooseNewColor());
         }
 
     }
-
-    @Override
-    public String getLabelFloatingDelete() {
-        return floatingDeleteLabel;
-    }
-
-    @Override
-    public String getLabelBtnHour() {
-        return btHourLabel;
-    }
-
-    @Override
-    public String getLabelBtnAddSubject() {
-        return btAddSubjectLabel;
-    }
-
-
-    private void deleteAllDatabaseItems(){
-        for(Subject item: getItemsFromDatabase()){
-            deleteDatabaseItem(item);
-        }
-    }
-
-    private void deleteDatabaseItem(Subject item) {
-        final String id = item.getSubjectId();
-        realmDatabase.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.where(Task.class).equalTo("id", id)
-                        .findAll()
-                        .deleteAllFromRealm();
-
-            }
-        });
-    }
-
-    private List<Subject> getItemsFromDatabase(){
-        if(usingWrapper) {
-            return getItemsFromDatabaseWrapper();
-        }
-
-        return realmDatabase.where(Subject.class).findAll();
-    }
-
-    private List<Subject> getItemsFromDatabaseWrapper(){
-        Log.d(TAG, "calling getItemsFromDatabaseWrapper() method");
-        List<Subject> dbItems = realmDatabase.where(Subject.class).findAll();
-
-        Log.d(TAG, "items=" +  dbItems);
-        return dbItems;
-    }
-
-
 
 
 }

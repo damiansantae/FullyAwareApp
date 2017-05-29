@@ -156,15 +156,7 @@ public class ListSubjectView
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
-
-    /**
-     * Method to set a Delete Toast.
-     */
-    @Override
-    public void setToastDelete() {
-        Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
-    }
-
+    
     /**
      * It sets the recylcer Adapter Content.
      */

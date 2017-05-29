@@ -14,111 +14,85 @@ import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 public interface ListSubject {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // State /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    // State /////////////////////////////////////////////////////////////////////////
 
-  interface ToListSubject {
-    void onScreenStarted();
-    void setToolbarVisibility(boolean visible);
+    interface ToListSubject {
 
+        void onScreenStarted();
 
-  }
-
-  interface ListSubjectTo {
-    Context getManagedContext();
-    void destroyView();
-    boolean isToolbarVisible();
-  }
+        void setToolbarVisibility(boolean visible);
 
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Screen ////////////////////////////////////////////////////////////////////////
+    }
 
-  /**
-   * Methods offered to VIEW to communicate with PRESENTER
-   */
-  interface ViewToPresenter extends Presenter<PresenterToView> {
+    interface ListSubjectTo {
 
+        Context getManagedContext();
 
-    boolean getToolbarVisibility();
+        void destroyView();
 
-    void onAddUserBtnClicked(String userName);
-
-    String getLabelBtnAddSubject();
-
-    String getLabelBtnHour();
+        boolean isToolbarVisible();
+    }
 
 
-    void setTimeText(int i, String txt);
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Screen ////////////////////////////////////////////////////////////////////////
 
-    String getTimeText(int i);
+    /**
+     * Methods offered to VIEW to communicate with PRESENTER
+     */
+    interface ViewToPresenter extends Presenter<PresenterToView> {
 
-    String getFinishLabel();
+        boolean getToolbarVisibility();
 
-    void addSubjectsToDataBase(ArrayList<String> subjectList);
+        void onAddUserBtnClicked(String userName);
 
-    void saveEditSubject(String text, Subject currentSubject);
+        String getFinishLabel();
 
-    void swipeLeft(Subject currentSubject);
+        void addSubjectsToDataBase(ArrayList<String> subjectList);
 
-    void launchHomeScreen();
-  }
+        void saveEditSubject(String text, Subject currentSubject);
 
-  /**
-   * Required VIEW methods available to PRESENTER
-   */
-  interface PresenterToView extends ContextView {
+        void swipeLeft(Subject currentSubject);
 
-    void finishScreen();
+        void launchHomeScreen();
+    }
 
-    void hideToolbar();
+    /**
+     * Required VIEW methods available to PRESENTER
+     */
+    interface PresenterToView extends ContextView {
 
-    void toolbarChanged(String colour);
+        void finishScreen();
 
-    void setRecyclerAdapterContent(List<Subject> items);
+        void hideToolbar();
 
-      void setToastDelete();
+        void toolbarChanged(String colour);
 
-    void showAddUserNameDialog();
+        void setRecyclerAdapterContent(List<Subject> items);
 
+        void showAddUserNameDialog();
 
-    void showAddSubjectsDialog();
+        void showAddSubjectsDialog();
 
-      void initSwipe();
-  }
+        void initSwipe();
+    }
 
-  /**
-   * Methods offered to MODEL to communicate with PRESENTER
-   */
-  interface PresenterToModel extends Model<ModelToPresenter> {
-    void deleteItem(Subject item);
+    /**
+     * Methods offered to MODEL to communicate with PRESENTER
+     */
+    interface PresenterToModel extends Model<ModelToPresenter> {
 
-    void setDatabaseValidity(boolean valid);
+        String getFinishLabel();
 
-    String getErrorMessage();
+        void addSubjectsToDataBase(ArrayList<String> subjectList);
+    }
 
-    String getLabelFloatingAdd();
+    /**
+     * Required PRESENTER methods available to MODEL
+     */
+    interface ModelToPresenter {
 
-    String getLabelFloatingDelete();
-
-    String getLabelBtnHour();
-
-    String getLabelBtnAddSubject();
-
-    void setLabelButtons();
-
-    String getFinishLabel();
-
-    ArrayList<String> getDaysOfWeek();
-
-    void addSubjectsToDataBase(ArrayList<String> subjectList);
-  }
-
-  /**
-   * Required PRESENTER methods available to MODEL
-   */
-  interface ModelToPresenter {
-
-    void onErrorDeletingItem(Subject item);
-  }
+    }
 }

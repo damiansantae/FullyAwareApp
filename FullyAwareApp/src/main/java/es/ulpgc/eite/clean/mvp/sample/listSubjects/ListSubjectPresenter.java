@@ -49,7 +49,6 @@ public class ListSubjectPresenter extends GenericPresenter
         if (prefManager.isFirstTimeLaunch()) {
             getView().showAddUserNameDialog();
         }
-        setLabelButtons(getView().getActivityContext());
         app.startingListSubjectScreen(this);
 
     }
@@ -64,15 +63,6 @@ public class ListSubjectPresenter extends GenericPresenter
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);
         }
-    }
-
-    /**
-     * Method that sets the button labels.
-     *
-     * @param activityContext Contex: the current context.
-     */
-    private void setLabelButtons(Context activityContext) {
-        getModel().setLabelButtons();
     }
 
     /**
@@ -187,26 +177,6 @@ public class ListSubjectPresenter extends GenericPresenter
     }
 
     /**
-     * Method that returns the label of button Add.
-     *
-     * @return String label
-     */
-    @Override
-    public String getLabelBtnAddSubject() {
-        return getModel().getLabelBtnAddSubject();
-    }
-
-    /**
-     * Method that returns the label of button Hour.
-     *
-     * @return String label
-     */
-    @Override
-    public String getLabelBtnHour() {
-        return getModel().getLabelBtnHour();
-    }
-
-    /**
      * Method that destroys the current view.
      */
     @Override
@@ -232,30 +202,6 @@ public class ListSubjectPresenter extends GenericPresenter
      */
     public void loadItems() {
         getView().setRecyclerAdapterContent(database.getSubjectsFromDatabase());
-    }
-
-    /**
-     * Method called when an error happens deleting an item.
-     */
-    @Override
-    public void onErrorDeletingItem(Subject item) {
-
-    }
-
-    /**
-     * Method that sets the time text.
-     */
-    @Override
-    public void setTimeText(int i, String txt) {
-        time[i] = txt;
-    }
-
-    /**
-     * Method that gets the time text.
-     */
-    @Override
-    public String getTimeText(int i) {
-        return time[i];
     }
 
     /**
