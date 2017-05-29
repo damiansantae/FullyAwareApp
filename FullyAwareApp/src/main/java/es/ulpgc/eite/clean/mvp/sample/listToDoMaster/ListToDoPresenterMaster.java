@@ -263,7 +263,11 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     @Override
     public String getCases(Task task) {
-        String subjectName = task.getSubject().getName();
+        String subjectName = "SubjectName";
+        if(task.getSubject()!=null){
+          subjectName = task.getSubject().getName();
+        }
+
         return getModel().calculateCases(subjectName);
 
 

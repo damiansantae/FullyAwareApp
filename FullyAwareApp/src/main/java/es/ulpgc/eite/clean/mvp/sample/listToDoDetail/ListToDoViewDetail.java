@@ -67,17 +67,21 @@ public class ListToDoViewDetail
 
         if (toolbarLayout != null && Task != null) {
             toolbarLayout.setTitle(Task.getTitle());
-            appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
+            if (getPresenter().getTask().getSubject() != null) {
+                appbarLayout.setBackgroundColor(getColor(getPresenter().getTask().getSubject().getColor()));
+            }
         }
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
-            if(Task.getSubject().getName().compareTo("None") != 0) {
-                ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getSubject().getName());
-            }
-            ((TextView) findViewById(R.id.date_txt)).setText("Deadline: " +  Task.getDate());
-            if(!Task.getDescription().isEmpty()) {
-                ((TextView) findViewById(R.id.task_description)).setText("Description: " + Task.getDescription());
+            if (Task.getSubject() != null) {
+                if (Task.getSubject().getName().compareTo("None") != 0) {
+                    ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getSubject().getName());
+                }
+                ((TextView) findViewById(R.id.date_txt)).setText("Deadline: " + Task.getDate());
+                if (!Task.getDescription().isEmpty()) {
+                    ((TextView) findViewById(R.id.task_description)).setText("Description: " + Task.getDescription());
+                }
             }
         }
     }

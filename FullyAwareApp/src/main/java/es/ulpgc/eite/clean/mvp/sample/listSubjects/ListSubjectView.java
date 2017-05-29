@@ -156,7 +156,7 @@ public class ListSubjectView
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
-    
+
     /**
      * It sets the recylcer Adapter Content.
      */

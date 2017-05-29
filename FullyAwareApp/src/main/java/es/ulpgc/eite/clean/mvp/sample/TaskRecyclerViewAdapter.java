@@ -87,7 +87,10 @@ public class TaskRecyclerViewAdapter
 
         public void bindView(final Task task) {
             subject = task.getSubject();
-            Integer color = subject.getColor();
+            Integer color = new Integer(0);
+            if(subject!=null) {
+                color = subject.getColor();
+            }
             tag = (ImageView) itemView.findViewById(R.id.color_subject);
             abrv = (TextView) itemView.findViewById(R.id.tag_subjectc);
             title = (TextView) itemView.findViewById(R.id.title);
@@ -97,7 +100,10 @@ public class TaskRecyclerViewAdapter
             String abrev = null;
             if(listToDoViewMaster!=null){
                 drawable = listToDoViewMaster.getDrawable(R.drawable.circle);
-                drawable.setColorFilter(listToDoViewMaster.getColor(color), PorterDuff.Mode.SRC_OVER);
+                if(subject!=null) {
+                    color = subject.getColor();
+                    drawable.setColorFilter(listToDoViewMaster.getColor(color), PorterDuff.Mode.SRC_OVER);
+                }
                 itemView.setSelected(listToDoViewMaster.getPresenter().isSelected(getAdapterPosition()));
                  abrev = listToDoViewMaster.getPresenter().getCases(task);
 
