@@ -1,15 +1,14 @@
 package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.content.Context;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 
 public interface ListSubject {
@@ -21,8 +20,7 @@ public interface ListSubject {
   interface ToListSubject {
     void onScreenStarted();
     void setToolbarVisibility(boolean visible);
-    void setTextVisibility(boolean visible);
-    void setDeleteBtnVisibility(boolean deleteBtnVisibility);
+
 
   }
 
@@ -30,7 +28,6 @@ public interface ListSubject {
     Context getManagedContext();
     void destroyView();
     boolean isToolbarVisible();
-    boolean isTextVisible();
   }
 
 
@@ -43,27 +40,14 @@ public interface ListSubject {
   interface ViewToPresenter extends Presenter<PresenterToView> {
 
 
-    void onListClick2(View item, int position, ListSubjectView.SubjectRecyclerViewAdapter adapter, Subject subject);
-
-    void onLongListClick2(View item, int adapterPosition);
-
-    boolean isSelected(int adapterPosition);
-
-    void onBinBtnClick2(ListSubjectView.SubjectRecyclerViewAdapter adapter);
-
     boolean getToolbarVisibility();
 
     void onAddUserBtnClicked(String userName);
-
-    String getLabelFloatingAdd();
-
-    String getLabelFloatingDelete();
 
     String getLabelBtnAddSubject();
 
     String getLabelBtnHour();
 
-    String getDaysChecked(int i);
 
     void setTimeText(int i, String txt);
 
@@ -72,6 +56,10 @@ public interface ListSubject {
     String getFinishLabel();
 
     void addSubjectsToDataBase(ArrayList<String> subjectList);
+
+    void saveEditSubject(String text, Subject currentSubject);
+
+    void swipeLeft(Subject currentSubject);
   }
 
   /**
@@ -82,20 +70,6 @@ public interface ListSubject {
     void finishScreen();
 
     void hideToolbar();
-
-    void hideDeleteBtn();
-
-    void showDeleteBtn();
-
-    boolean isItemListChecked(int pos);
-
-    void setItemChecked(int pos, boolean checked);
-
-    void startSelection();
-
-    void setChoiceMode(int i);
-
-    void deselect(int i, boolean b);
 
     void toolbarChanged(String colour);
 
@@ -108,6 +82,7 @@ public interface ListSubject {
 
     void showAddSubjectsDialog();
 
+      void initSwipe();
   }
 
   /**
@@ -115,10 +90,6 @@ public interface ListSubject {
    */
   interface PresenterToModel extends Model<ModelToPresenter> {
     void deleteItem(Subject item);
-
-    void loadItems();
-
-    void reloadItems();
 
     void setDatabaseValidity(boolean valid);
 
@@ -145,10 +116,6 @@ public interface ListSubject {
    * Required PRESENTER methods available to MODEL
    */
   interface ModelToPresenter {
-
-    void onLoadItemsSubjectStarted();
-
-    void onLoadItemsSubjectFinished(List<Subject> itemsFromDatabase);
 
     void onErrorDeletingItem(Subject item);
   }

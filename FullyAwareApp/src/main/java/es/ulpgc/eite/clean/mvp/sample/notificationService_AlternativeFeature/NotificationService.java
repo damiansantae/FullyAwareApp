@@ -1,4 +1,4 @@
-package es.ulpgc.eite.clean.mvp.sample.notificacionService_AlternativeFeature;
+package es.ulpgc.eite.clean.mvp.sample.notificationService_AlternativeFeature;
 
 import android.app.AlarmManager;
 import android.app.Notification;

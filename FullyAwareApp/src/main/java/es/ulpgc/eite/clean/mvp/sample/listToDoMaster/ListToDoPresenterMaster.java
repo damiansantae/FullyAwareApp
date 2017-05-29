@@ -24,7 +24,6 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
-import es.ulpgc.eite.clean.mvp.sample.listSubjects.ListSubjectModel;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
@@ -430,7 +429,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
     public void swipeLeft(Task currentTask) {
         database.deleteDatabaseItem(currentTask);
         checkTextWhenIsEmptyVisibility();
-
     }
 
     @Override
@@ -524,9 +522,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
         getView().showToastBackConfirmation(getModel().getToastBackConfirmation());
     }
-
-
-
 
     private void loadItems() {
         getView().setRecyclerAdapterContent(database.getToDoTasksFromDatabase());
