@@ -93,7 +93,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_1" />
 
                 <ImageView
                     android:id="@+id/subject_2"
@@ -101,7 +101,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_2" />
 
                 <ImageView
                     android:id="@+id/subject_3"
@@ -109,14 +109,14 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_3" />
 
                 <ImageView
                     android:id="@+id/subject_4"
                     android:layout_width="65dp"
                     android:layout_height="55dp"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_4" />
 
             </LinearLayout>
 
@@ -135,7 +135,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_5" />
 
                 <ImageView
                     android:id="@+id/subject_6"
@@ -143,7 +143,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_6" />
 
                 <ImageView
                     android:id="@+id/subject_7"
@@ -151,14 +151,14 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_7" />
 
                 <ImageView
                     android:id="@+id/subject_8"
                     android:layout_width="65dp"
                     android:layout_height="55dp"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_8" />
 
             </LinearLayout>
 
@@ -177,7 +177,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_9" />
 
                 <ImageView
                     android:id="@+id/subject_10"
@@ -185,7 +185,7 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_10" />
 
                 <ImageView
                     android:id="@+id/subject_11"
@@ -193,14 +193,14 @@
                     android:layout_height="55dp"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_11" />
 
                 <ImageView
                     android:id="@+id/subject_12"
                     android:layout_width="65dp"
                     android:layout_height="55dp"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/bg_controll_plane" />
+                    app:srcCompat="@drawable/bg_12" />
 
             </LinearLayout>
 
