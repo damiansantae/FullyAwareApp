@@ -123,7 +123,8 @@ public class AddTaskPresenter extends GenericPresenter
     DatePickerDialog datePicker = new DatePickerDialog(getManagedContext(), new DatePickerDialog.OnDateSetListener() {
       @Override
       public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        getView().setDateText(dayOfMonth+"/"+monthOfYear+"/"+year);
+        int finalMonthOfYear = monthOfYear+1;
+        getView().setDateText(dayOfMonth+"/"+finalMonthOfYear+"/"+year);
       }
     }, year, month, day);
     datePicker.show();
@@ -216,7 +217,7 @@ public class AddTaskPresenter extends GenericPresenter
     }
         String month = result.substring(3,5);
         int monthInt = Integer.parseInt(month);
-        int monthIntFinal = monthInt + 1;
+        int monthIntFinal = monthInt;
         if(monthIntFinal < 10){
             monthFinal = "0" + String.valueOf(monthIntFinal);
         }else{

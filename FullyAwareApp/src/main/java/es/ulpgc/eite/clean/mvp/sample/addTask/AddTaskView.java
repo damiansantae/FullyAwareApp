@@ -98,7 +98,7 @@ public class AddTaskView
 
     Calendar c = Calendar.getInstance();
     String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
-    String month = String.valueOf(c.get(Calendar.MONTH));
+    String month = String.valueOf(c.get(Calendar.MONTH)+1);
     String year = String.valueOf(c.get(Calendar.YEAR));
     date.setText(day+"/"+month+"/"+year);
 
