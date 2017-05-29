@@ -198,7 +198,7 @@ public class App extends Application implements Mediator, Navigator {
     public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
         if (masterListToDetailDoneState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
+            presenter.setToolbarVisibility(masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
             presenter.setMaster((ListDonePresenterMaster) masterListToDetailDoneState.master);
         }

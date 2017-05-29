@@ -40,7 +40,7 @@ private boolean toolbarVisible;
         //it must call Mediator to establish state which was shared by the master
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
-       checkToolbarColourChanges(app);
+        checkToolbarColourChanges(app);
     }
 
     /**
