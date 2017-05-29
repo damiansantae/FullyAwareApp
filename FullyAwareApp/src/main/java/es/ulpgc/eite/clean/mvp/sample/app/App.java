@@ -331,11 +331,6 @@ listSubjectsPresenter.onScreenStarted();
 
 
     @Override
-    public void goToListSubjectScreen(ListSubjectPresenter presenter) {
-
-    }
-
-    @Override
     public void goToListDoneScreen(ListSubject.ListSubjectTo presenter) {
         if (listDoneToState == null) {
             listDoneToState = new ListDoneState();
@@ -353,16 +348,6 @@ listSubjectsPresenter.onScreenStarted();
 
     }
 
-
-    @Override
-    public void goToPreferencesScreen(ListSubject.ListSubjectTo presenter) {
-
-    }
-
-    @Override
-    public void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter) {
-
-    }
 
     @Override
     public void startActivity(Intent intent) {
@@ -452,25 +437,6 @@ listSubjectsPresenter.onScreenStarted();
     }
 
 
-    @Override
-    public void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter) {
-        if (scheduleToState == null) {
-            scheduleToState = new ScheduleState();
-        }
-        scheduleToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ScheduleView.class));
-
-        }
-    }
-
-    @Override
-    public void goToScheduleScreen(ListSubject.ListSubjectTo presenter) {
-
-    }
-
 
     @Override
     public void goToListToDoScreen(Schedule.ScheduleTo presenter) {
@@ -522,20 +488,6 @@ listSubjectsPresenter.onScreenStarted();
 
     }
 
-    @Override
-    public void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter) {
-        if (scheduleToState == null) {
-            scheduleToState = new ScheduleState();
-        }
-        scheduleToState.toolbarVisibility = true;
-        Context view = presenter.getManagedContext();
-
-        if (view != null) {
-            view.startActivity(new Intent(view, ScheduleView.class));
-
-        }
-
-    }
 
     @Override
     public void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter) {

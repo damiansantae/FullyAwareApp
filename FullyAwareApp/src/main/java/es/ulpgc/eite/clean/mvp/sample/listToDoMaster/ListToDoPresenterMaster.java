@@ -332,15 +332,20 @@ public class ListToDoPresenterMaster extends GenericPresenter
         requestUserPermissions();
     }
 
-    //TODO: IVAN COMENTA ESTE METODO
+    /**
+     * Method use to ask for the corresponding permissions to the user (READ_CALENDAR and WRITE_CALENDAR)
+     * showing a dialog in running time
+     */
     public void requestUserPermissions() {
+
+        //if permissions aren't given yet
         if ((ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.READ_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED)) {
 
-
+            //Permission requests are send
             ActivityCompat.requestPermissions((Activity) getView(),
                     new String[]{android.Manifest.permission.READ_CALENDAR},
                     READ_CALENDAR_PERMISSIONS_REQUEST);
@@ -353,7 +358,12 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
-    //TODO: IVAN COMENTA ESTE METODO
+    /**
+     * Method to check the user's answer in the dialog of requestUserPermissions() method
+     * @param requestCode an Integer as id of the request
+     * @param permissions an Array of String with the permissions involved
+     * @param grantResults an Array of int with the user's answers to each permission request
+     */
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {

@@ -17,58 +17,119 @@ public interface Navigator {
 
 
     /*******************************************************************
-     ******** Navegación direccion ListoDo al resto de pantallas y detalle*/
+     ******** Navigation to all of the screens and its detail from LisToDo*/
 
+    /**
+     * Method to save the state of ListToDo and go to AddTask
+     * @param presenter Presenter of ListToDo
+     */
     void goToAddTaskScreen(ListToDoMaster.ListToDoTo presenter);
 
+    /**
+     * Method to save the state of ListToDo and go to ListDone
+     * @param presenter Presenter of ListToDo
+     */
     void goToListDoneScreen(ListToDoMaster.ListToDoTo presenter);
 
-    void goToScheduleScreen(ListToDoMaster.ListToDoTo presenter);
+    /**
+     * Method to save the state of ListToDo and go to Preferences
+     * @param presenter Presenter of ListToDo
+     */
+    void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter);
 
-    void goToScheduleScreen(ListSubject.ListSubjectTo presenter);
 
     //Comunicación M/D
+
+    /**
+     * Method to save the state of ListToDo and go to its detail
+     * @param listToDoPresenterMaster Presenter of ListToDoMaster
+     */
     void goToDetailScreen(ListToDoMaster.MasterListToDetail listToDoPresenterMaster);
+
+    /**
+     * Method to save the LisToDoDetail state, and go to Master screen
+     * @param presenter LisToDoDetail presenter
+     */
     void backToMasterScreen(ListToDoDetail.DetailToMaster presenter);
 
 
     /***********************************************************************
-     ******** Navegación direccion ListDone al resto de pantallas y detalle*/
+     ******** Navigation to all of the screens and its detail from ListDone*/
+
+    /**
+     * Method to save the state of ListDone and go to ListToDo
+     * @param presenter Presenter of ListDone
+     */
     void goToListToDoScreen(ListDoneMaster.ListDoneTo presenter);
-    void goToScheduleScreen(ListDoneMaster.ListDoneTo presenter);
+
+    /**
+     * Method to save the state of ListDone and go to Preferences
+     * @param presenter Presenter of ListDone
+     */
     void goToPreferencesScreen(ListDoneMaster.ListDoneTo presenter);
 
     //Comunicación M/D
+
+    /**
+     * Method to save the state of ListDone and go to its detail
+     * @param listDonePresenterMaster Presenter of listDoneMaster
+     */
     void goToDetailScreen(ListDoneMaster.MasterListToDetail listDonePresenterMaster);
+
+    /**
+     * Method to save the LisDoneDetail state, and go to Master screen
+     * @param presenter LisDoneDetail presenter
+     */
     void backToMasterScreen(ListDoneDetail.DetailToMaster presenter);
 
 
 
     /***************************************************************
-     ******** Navegación direccion Shedule al resto de pantallas */
+     ******** Navigation to all of the screens from Schedule */
+
+    ////////////////////////Next Upgrade/////////////////////////////////////////////
 
     void goToListToDoScreen(Schedule.ScheduleTo presenter);
 
     void goToListDoneScreen(Schedule.ScheduleTo presenter);
 
-
-    void goToPreferencesScreen(ListToDoMaster.ListToDoTo presenter);
-
-
     void goToPreferencesScreen(Schedule.ScheduleTo presenter);
 
-    /*******************************************************************
-     ******** Navegación direccion Preferences al resto de pantallas*/
-
 
     /*******************************************************************
-     ******** Navegación direccion Subjects al resto de pantallas*/
+     ******** Navigation to all of the screens from ListSubjects */
 
+    /**
+     * Method to save the state of ListSubjects and go to ListToDo
+     * @param presenter Presenter of ListSubjects
+     */
     void goToListToDoScreen(ListSubject.ListSubjectTo presenter);
-    void goToListSubjectScreen(ListSubjectPresenter presenter);
+
+    /**
+     * Method to save the state of ListSubjects and go to ListDone
+     * @param presenter Presenter of ListSubjects
+     */
     void goToListDoneScreen(ListSubject.ListSubjectTo presenter);
-    void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
-    void goToDetailScreen(ListSubjectPresenter listSubjectPresenter, ListSubjectView.SubjectRecyclerViewAdapter adapter);
-    void startActivity(Intent intent);
+
+
+
+/*******************************************************************
+ ******** Navigation to all of the screens from ListSubjects */
+
+
+    /**
+     * Method to save the state of Preferences and go to ListSubjects
+     * @param preferencesPresenter Presenter of Preferences
+     */
     void goToEditSubjects(PreferencesPresenter preferencesPresenter);
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Method who calls its super class equivalent method to start an activity
+     * @param intent Intent to launch an activity and carry extra information if necessary
+     */
+    void startActivity(Intent intent);
 }
