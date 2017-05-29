@@ -12,7 +12,7 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
 /**
- * Interface of a task to do list.
+ * Interface facade of a task to do list.
  *
  * @author Damián Santamaría Eiranova
  * @author Iván González Hernández

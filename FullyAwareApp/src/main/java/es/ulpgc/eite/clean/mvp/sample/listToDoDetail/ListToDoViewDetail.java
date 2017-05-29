@@ -1,14 +1,12 @@
 package es.ulpgc.eite.clean.mvp.sample.listToDoDetail;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +19,14 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 
+/**
+ * View of a task to do detail.
+ *
+ * @author Damián Santamaría Eiranova
+ * @author Iván González Hernández
+ * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
+ */
 public class ListToDoViewDetail
         extends GenericActivity<ListToDoDetail.PresenterToView, ListToDoDetail.ViewToPresenter, ListToDoPresenterDetail>
         implements ListToDoDetail.PresenterToView {

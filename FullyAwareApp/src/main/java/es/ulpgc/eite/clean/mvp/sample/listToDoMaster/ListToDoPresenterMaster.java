@@ -46,13 +46,10 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private boolean deleteBtnVisible;
     private boolean addBtnVisible;
     private boolean doneBtnVisible;
-    private boolean textWhenIsEmptyVisible;
     private boolean selectedState;
     private Task selectedTask;
     private SparseBooleanArray itemsSelected = new SparseBooleanArray();
     private DatabaseFacade database;
-
-
     private static final int READ_CALENDAR_PERMISSIONS_REQUEST = 1;
     private static final int WRITE_CALENDAR_PERMISSIONS_REQUEST = 2;
 
@@ -74,9 +71,9 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getApplication();
         database = DatabaseFacade.getInstance();
         app.startingListToDoScreen(this);
+
         checkChangesOnToolbar(app);
     }
-
     public void checkChangesOnToolbar(Mediator app) {
         Log.d(TAG, "PRUEBA"+app.checkToolbarChanged());
         if (app.checkToolbarChanged()) {
@@ -356,6 +353,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
+    //TODO: IVAN COMENTA ESTE METODO
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {

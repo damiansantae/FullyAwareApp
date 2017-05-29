@@ -25,24 +25,60 @@ public interface Mediator {
      */
     void startingListToDoScreen(ListToDoMaster.ToListToDo presenter);
 
+    /**
+     * This method gives variables states saved in the Mediator to the ListDone
+     * Presenter it is called when Presenter is need to be created
+     * @param presenter the Presenter which needs to be created
+     */
     void startingListDoneScreen(ListDoneMaster.ToListDone presenter);
-    
+    /**
+     * This method gives variables states saved in the Mediator to the AddTask
+     * Presenter it is called when Presenter is need to be created
+     * @param presenter the Presenter which needs to be created
+     */
     void startingAddTaskScreen(AddTask.ToAddTask presenter);
 
+    /**
+     * This method gives variables states saved in the Mediator to the Preferences
+     * Presenter it is called when Presenter is need to be created
+     * @param presenter the Presenter which needs to be created
+     */
     void startingPreferencesScreen(Preferences.ToPreferences presenter);
-    
+
+    /**
+     * This method gives variables states saved in the Mediator which has been shared by
+     * the Master to the To Do Detail Presenter it is called when Presenter is need to be created
+     * @param listToDoPresenterDetail the Presenter which needs to be created
+     */
     void startingDetailScreen(ListToDoDetail.MasterListToDetail listToDoPresenterDetail);
 
+    /**
+     * This method gives variables states saved in the Mediator to the Schedule
+     * Presenter it is called when Presenter is need to be created
+     * @param presenter the Presenter which needs to be created
+     *                  (NEXT UPGRADE)
+     */
     void startingScheduleScreen(Schedule.ToSchedule presenter);
 
-    void Task(Task TaskDone);
 
+
+    /**
+     * This method gives variables states saved in the Mediator which has been shared
+     * by the Master to the Done Detail Presenter it is called when Presenter is need
+     * to be created
+     * @param listDonePresenterDetail the Presenter which needs to be created
+     */
     void startingDetailScreen(ListDoneDetail.MasterListToDetail listDonePresenterDetail);
 
     String getToolbarColour();
 
     boolean checkToolbarChanged();
 
+    /**
+     * This method gives variables states saved in the Mediator to the listSubject
+     * Presenter it is called when Presenter is need to be created
+     * @param listSubjectsPresenter the Presenter which needs to be created
+     */
     void startingListSubjectScreen(ListSubjectPresenter listSubjectsPresenter);
 
     void setToolbarColorChanged(PreferencesView view, boolean toolbarColorChanged);
