@@ -125,10 +125,12 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
     @Override
     public void addSubjectsToDataBase(ArrayList<String> subjectList) {
         database.addSubject("None", chooseNewColor());
-        for (int i = 0; i < subjectList.size(); i++) {
-            database.addSubject(subjectList.get(i), chooseNewColor());
-        }
+        if (subjectList.size() > 0) {
+            for (int i = 0; i < subjectList.size(); i++) {
+                database.addSubject(subjectList.get(i), chooseNewColor());
+            }
 
+        }
     }
 
 

@@ -265,6 +265,7 @@ public class ListSubjectView
                 EditText etSubjectName = (EditText) dialog.getView().findViewById(R.id.et_subject_name);
                 if (label.equals(getPresenter().getFinishLabel())) {
                     if (numberOfSubjects == 0) {
+                        getPresenter().addSubjectsToDataBase(subjectList);
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "No subjects added", Toast.LENGTH_SHORT).show();
                         launchHomeScreen();
