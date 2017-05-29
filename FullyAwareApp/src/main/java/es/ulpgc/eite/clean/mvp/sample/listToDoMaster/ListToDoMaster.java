@@ -2,7 +2,9 @@ package es.ulpgc.eite.clean.mvp.sample.listToDoMaster;
 
 import android.content.Context;
 import android.view.View;
+
 import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
@@ -371,6 +373,7 @@ public interface ListToDoMaster {
          * This method notify View to show a toast notifying user
          * that he must press again back button if he want to close
          * the application
+         *
          * @see es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster#showToastBackConfirmation(String)
          */
         void delayedTaskToBackStarted();

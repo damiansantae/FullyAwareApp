@@ -41,14 +41,16 @@ import es.ulpgc.eite.clean.mvp.sample.TaskRecyclerViewAdapter;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
+
 /**
  * View of a task to do list. It can click on a specific task to see its details,
  * make a swipe on it in order to delete or passing it to Done list.
  * Also it can multiselect several tasks to delete or done simultaneously
- * @version 1.0, 28/05/2017
+ *
  * @author Damián Santamaría Eiranova
  * @author Iván González Hernández
  * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
  */
 public class ListToDoViewMaster
         extends GenericActivity<ListToDoMaster.PresenterToView, ListToDoMaster.ViewToPresenter, ListToDoPresenterMaster>
@@ -148,7 +150,6 @@ public class ListToDoViewMaster
     }
 
 
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -188,6 +189,7 @@ public class ListToDoViewMaster
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Toolbar actions  //////////////////////////////////////////////////////////////
+
     /**
      * Method that inflates toolbar with items
      */
@@ -233,7 +235,6 @@ public class ListToDoViewMaster
     // Presenter To View /////////////////////////////////////////////////////////////
 
 
-
     @Override
     public void finishScreen() {
         finish();
@@ -258,19 +259,16 @@ public class ListToDoViewMaster
     }
 
 
-
     @Override
     public void hideDoneBtn() {
         done.setVisibility(View.INVISIBLE);
     }
 
 
-
     @Override
     public void showDoneBtn() {
         done.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override
@@ -285,20 +283,16 @@ public class ListToDoViewMaster
     }
 
 
-
-
     @Override
     public void hideDeleteBtn() {
         bin.setVisibility(View.INVISIBLE);
     }
 
 
-
     @Override
     public void showDeleteBtn() {
         bin.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override
@@ -329,14 +323,14 @@ public class ListToDoViewMaster
      * This method is called when back button is pressed on List To Do View
      */
     @Override
-    public void confirmBackPressed(){
+    public void confirmBackPressed() {
         super.onBackPressed();
     }
 
 
     @Override
     public void onBackPressed() {
-getPresenter().onBtnBackPressed();
+        getPresenter().onBtnBackPressed();
     }
 
 
@@ -372,8 +366,7 @@ getPresenter().onBtnBackPressed();
                     adapter.notifyDataSetChanged();
 
 
-
-                } else if (direction == 16){
+                } else if (direction == 16) {
                     Log.d(TAG, "Swipe left");
 
                     initDialog();
@@ -386,8 +379,8 @@ getPresenter().onBtnBackPressed();
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                if(paint==null){
-                    paint=new Paint();
+                if (paint == null) {
+                    paint = new Paint();
                 }
 
                 Bitmap icon;
@@ -425,16 +418,16 @@ getPresenter().onBtnBackPressed();
      * Method that create a dialog and inflate it in order to ask user to
      * a delete task confirmation
      */
-    private void initDialog(){
+    private void initDialog() {
         alertDialog = new AlertDialog.Builder(this);
-        view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog,null);
+        view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog, null);
         alertDialog.setView(view);
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 getPresenter().swipeLeft(currentTask);
                 adapter.notifyDataSetChanged();
-                    dialog.dismiss();
+                dialog.dismiss();
             }
         });
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -451,10 +444,10 @@ getPresenter().onBtnBackPressed();
     @Override
     public void showToastBackConfirmation(String toastBackConfirmation) {
 
-        LinearLayout layout=new LinearLayout(this);
+        LinearLayout layout = new LinearLayout(this);
         layout.setBackgroundResource(R.color.color_hardblue);
 
-        TextView  tv=new TextView(this);
+        TextView tv = new TextView(this);
         // set the TextView properties like color, size etc
         tv.setTextColor(Color.WHITE);
         tv.setTextSize(15);
@@ -464,7 +457,7 @@ getPresenter().onBtnBackPressed();
         // set the text you want to show in  Toast
         tv.setText(toastBackConfirmation);
 
-        ImageView   img=new ImageView(this);
+        ImageView img = new ImageView(this);
 
         // give the drawable resource for the ImageView
         img.setImageResource(R.drawable.back);
@@ -473,7 +466,7 @@ getPresenter().onBtnBackPressed();
         layout.addView(img);
         layout.addView(tv);
 
-        Toast toast=new Toast(this);
+        Toast toast = new Toast(this);
         // Set The layout as Toast View
         toast.setView(layout);
 
@@ -500,8 +493,8 @@ getPresenter().onBtnBackPressed();
      * This method delete the Parent View of a view.
      * For example, when a dialog view is showed
      */
-    private void removeView(){
-        if(view.getParent()!=null) {
+    private void removeView() {
+        if (view.getParent() != null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }
     }
