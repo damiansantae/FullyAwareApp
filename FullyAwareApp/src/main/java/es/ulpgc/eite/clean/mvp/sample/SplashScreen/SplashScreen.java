@@ -11,7 +11,7 @@ import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
 public class SplashScreen extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 3500;
+    private static int SPLASH_TIME_OUT = 1000;
 
     /**
      * Method that creates the splash screen.
