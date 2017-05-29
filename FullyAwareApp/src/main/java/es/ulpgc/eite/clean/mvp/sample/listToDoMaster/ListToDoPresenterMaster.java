@@ -586,7 +586,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
      * status field to done
      * @param o: Observable which did notifyObserver()
      * @param arg: String "delete" or "done"
-     *           @see ListToDoPresenterDetail.ObservableToDo#notifyObservers()
+     *
      */
     @Override
     public void update(Observable o, Object arg) {

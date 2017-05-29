@@ -430,7 +430,7 @@ public class App extends Application implements Mediator, Navigator {
 
     @Override
     public void startActivity(Intent intent) {
-        startActivity(intent);
+        super.startActivity(intent);
     }
 
     @Override
