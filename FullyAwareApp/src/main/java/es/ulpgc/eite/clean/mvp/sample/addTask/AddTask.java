@@ -215,6 +215,7 @@ public interface AddTask {
      */
     void showDialog();
 
+    void buttonsChanged(String colour);
   }
 
   /**

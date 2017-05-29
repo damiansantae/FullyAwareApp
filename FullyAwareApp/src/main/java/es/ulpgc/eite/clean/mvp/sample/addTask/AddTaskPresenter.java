@@ -58,6 +58,7 @@ public class AddTaskPresenter extends GenericPresenter
     if (app.checkToolbarChanged()) {
       String colour = app.getToolbarColour();
       getView().toolbarChanged(colour);
+      getView().buttonsChanged(colour);
     }
   }
 

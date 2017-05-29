@@ -569,11 +569,6 @@ listSubjectsPresenter.onScreenStarted();
     ///////////////////////////////////////////////////////////////////////////////////
     // State /////////////////////////////////////////////////////////////////////////
 
-    private class DummyState {
-        boolean toolbarVisibility;
-        boolean textVisibility;
-    }
-
     private class ListToDoState {
         boolean toolbarVisibility;
         boolean addBtnVisibility;
