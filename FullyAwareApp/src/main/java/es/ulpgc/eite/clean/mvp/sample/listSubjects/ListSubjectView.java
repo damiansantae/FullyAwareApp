@@ -222,6 +222,10 @@ public class ListSubjectView
         client.disconnect();
     }
 
+    @Override
+    public void onBackPressed() {
+        getPresenter().onBtnBackPressed();
+    }
     ///////////////////////////////////////////////////////////////
 
 
@@ -471,6 +475,7 @@ public class ListSubjectView
         });
         et_subject = (EditText) view.findViewById(R.id.et_subject_name);
     }
+
 
     /**
      * Method that initiates the process to delete the dialog.

@@ -30,7 +30,6 @@ import es.ulpgc.eite.clean.mvp.sample.preferences.PreferencesView;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTask;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.ModuleSubjectTimeTable;
 import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.Schedule;
-import es.ulpgc.eite.clean.mvp.sample.schedule_NextUpgrade.ScheduleView;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -346,6 +345,22 @@ listSubjectsPresenter.onScreenStarted();
             presenter.destroyView();
         }
 
+    }
+
+
+    @Override
+    public void goToPreferencesScreen(ListSubject.ListSubjectTo presenter) {
+        if (preferencesToState == null) {
+            preferencesToState = new PreferencesState();
+        }
+        preferencesToState.toolbarVisibility = true;
+        Context view = presenter.getManagedContext();
+
+        if (view != null) {
+            view.startActivity(new Intent(view, PreferencesView.class));
+
+        }
+        presenter.destroyView();
     }
 
 

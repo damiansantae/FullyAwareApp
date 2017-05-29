@@ -127,6 +127,8 @@ public interface Navigator {
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
 
+    void goToPreferencesScreen(ListSubject.ListSubjectTo presenter);
+
     /**
      * Method who calls its super class equivalent method to start an activity
      * @param intent Intent to launch an activity and carry extra information if necessary
