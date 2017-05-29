@@ -464,7 +464,6 @@ public class ListSubjectView
 
             }
         });
-
     }
 
     private void launchHomeScreen() {
