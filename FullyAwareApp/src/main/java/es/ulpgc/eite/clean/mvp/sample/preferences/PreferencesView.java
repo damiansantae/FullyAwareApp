@@ -198,7 +198,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param newColor (int) new color of the app.
      */
     @Override
-    public void setNewToolbarColor(int newColor) { //TODO:METODO VALIDO
+    public void setNewToolbarColor(int newColor) {
         getPresenter().setNewToolbarColor(newColor);
     }
 
@@ -208,7 +208,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param toolbarColorChanged (boolean)
      */
     @Override
-    public void setToolbarColorChanged(boolean toolbarColorChanged) { //TODO:METODO VALIDO
+    public void setToolbarColorChanged(boolean toolbarColorChanged) {
         getPresenter().setToolbarColorChanged(toolbarColorChanged);
     }
 
@@ -218,7 +218,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      * @param colour (String) Toolbar colour.
      */
     @Override
-    public void toolbarChanged(String colour) { //TODO METODO VALIDO
+    public void toolbarChanged(String colour) {
 
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));

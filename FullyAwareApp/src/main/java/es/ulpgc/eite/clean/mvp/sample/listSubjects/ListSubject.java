@@ -57,6 +57,8 @@ public interface ListSubject {
         void swipeLeft(Subject currentSubject);
 
         void launchHomeScreen();
+
+        void onBtnBackPressed();
     }
 
     /**

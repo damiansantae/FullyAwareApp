@@ -2,9 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.widget.CheckBox;
 
 import java.util.ArrayList;
 
@@ -250,6 +248,12 @@ public class ListSubjectPresenter extends GenericPresenter
         Navigator app = (Navigator) getApplication();
         app.goToListToDoScreen(this);
         destroyView();
+    }
+
+    @Override
+    public void onBtnBackPressed() {
+        Navigator app = (Navigator) getApplication();
+        app.goToPreferencesScreen(this);
     }
 
 }
