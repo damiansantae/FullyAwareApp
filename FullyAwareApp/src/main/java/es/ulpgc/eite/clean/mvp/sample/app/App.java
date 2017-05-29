@@ -312,29 +312,6 @@ listSubjectsPresenter.onScreenStarted();
 
 
     @Override
-    public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
-        if (listToDoToState == null) {
-            listToDoToState = new ListToDoState();
-
-        }
-        listToDoToState.toolbarVisibility = true;
-
-        Context view = addTaskPresenter.getManagedContext();
-        if (view != null) {
-            view.startActivity(new Intent(view, ListToDoViewMaster.class));
-        }
-
-    }
-
-    @Override
-    public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
-        Context view = preferencesPresenter.getManagedContext();
-        if (view != null) {
-
-        }
-    }
-
-    @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
         if (listToDoToState == null) {
             listToDoToState = new ListToDoState();
@@ -350,13 +327,6 @@ listSubjectsPresenter.onScreenStarted();
             presenter.destroyView();
         }
 
-
-    }
-
-    @Override
-    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
-
-    }
 
     @Override
     public void goToListSubjectScreen(ListSubjectPresenter presenter) {

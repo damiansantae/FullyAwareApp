@@ -42,15 +42,9 @@ private boolean toolbarVisible;
         //it must call Mediator to establish state which was shared by the master
         Mediator app = (Mediator) getView().getApplication();
         app.startingDetailScreen(this);
-        checkChangesOnToolbar(app);
     }
 
-    private void checkChangesOnToolbar(Mediator app) {
-        if (app.checkToolbarChanged()) {
-            String colour = app.getToolbarColour();
-            getView().toolbarChanged(colour);
-        }
-    }
+
     /**
      * Operation called by VIEW after its reconstruction.
      * Always call {@link GenericPresenter#setView(ContextView)}
@@ -64,9 +58,7 @@ private boolean toolbarVisible;
         Mediator app = (Mediator) getView().getApplication();
         if (configurationChangeOccurred()) {
             checkToolbarVisibility();
-            checkChangesOnToolbar(app);
         }
-        checkChangesOnToolbar(app);
     }
 
     /**
