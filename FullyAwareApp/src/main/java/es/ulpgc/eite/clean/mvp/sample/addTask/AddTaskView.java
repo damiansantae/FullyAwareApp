@@ -1,7 +1,10 @@
 package es.ulpgc.eite.clean.mvp.sample.addTask;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +25,7 @@ import java.util.ListIterator;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 
 public class AddTaskView
@@ -93,7 +98,7 @@ public class AddTaskView
 
     Calendar c = Calendar.getInstance();
     String day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
-    String month = String.valueOf(c.get(Calendar.MONTH));
+    String month = String.valueOf(c.get(Calendar.MONTH)+1);
     String year = String.valueOf(c.get(Calendar.YEAR));
     date.setText(day+"/"+month+"/"+year);
 
@@ -191,27 +196,56 @@ public class AddTaskView
     toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
   }
 
-  /*@Override
-  public void initDialog(){
+  @Override
+  public void initDialog(final String title, final String description, final String deadline, final String subjectName){
     alertDialog = new AlertDialog.Builder(this);
+    alertDialog.setCancelable(false);
     View view = getLayoutInflater().inflate(R.layout.insert_into_calendar_confirmation_dialog,null);
     alertDialog.setView(view);
-    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        getPresenter().goToCalendar();
+        CharSequence text = "Task added";
+        int duration = Toast.LENGTH_SHORT;
+
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Intent intent = getPresenter().writeTaskIntoCalendar(title, description, deadline, subjectName);
+        Navigator app = (Navigator) getApplication();
+        app.startActivity(intent);
+
         dialog.dismiss();
+        finishScreen();
+
       }
     });
-    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
       @Override
       public void onClick(DialogInterface dialog, int which) {
+        CharSequence text = "Task added";
+        int duration = Toast.LENGTH_SHORT;
+
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
         dialog.dismiss();
+        finishScreen();
 
       }
     });
 
   }
-*/
+
+  @Override
+  public void setDialogTitle(String title){
+    alertDialog.setTitle(title);
+  }
+
+  @Override
+  public void showDialog(){
+    alertDialog.show();
+  }
 }

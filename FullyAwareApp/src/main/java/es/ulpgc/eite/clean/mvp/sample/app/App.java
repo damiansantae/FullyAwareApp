@@ -198,7 +198,7 @@ public class App extends Application implements Mediator, Navigator {
     public void startingDetailScreen(ListDoneDetail.MasterListToDetail presenter) {
 
         if (masterListToDetailDoneState != null) {
-            presenter.setToolbarVisibility(!masterListToDetailDoneState.toolbarVisible);
+            presenter.setToolbarVisibility(masterListToDetailDoneState.toolbarVisible);
             presenter.setItem(masterListToDetailDoneState.selectedItem);
             presenter.setMaster((ListDonePresenterMaster) masterListToDetailDoneState.master);
         }
@@ -230,6 +230,7 @@ listSubjectsPresenter.onScreenStarted();
         if (colour != 0) {
             toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
             view.toolbarChanged(getColorHex(colour));
+            view.changeButtonsColours(colour);
         }
     }
 
@@ -443,7 +444,7 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override
     public void startActivity(Intent intent) {
-        startActivity(intent);
+        super.startActivity(intent);
     }
 
     @Override

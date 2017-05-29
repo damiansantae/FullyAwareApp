@@ -51,19 +51,8 @@ public class ListToDoViewDetail
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         appbarLayout.setExpanded(true);
 
-
-loadSharePreferences();
-
     }
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
+
 
     /**
      * Method that initialized MVP objects
@@ -83,7 +72,7 @@ loadSharePreferences();
 
         // Show the dummy content as text in a TextView.
         if (Task != null) {
-            ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getTitle());
+            ((TextView) findViewById(R.id.subject_from_detail)).setText("Subject: " + Task.getSubject().getName());
             ((TextView) findViewById(R.id.date_txt)).setText("Deadline: " +  Task.getDate());
             ((TextView) findViewById(R.id.task_description)).setText("Description: " + Task.getDescription());
         }

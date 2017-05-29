@@ -81,10 +81,7 @@ public class AddTaskModel extends GenericModel<AddTask.ModelToPresenter>
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
             .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
             .putExtra(CalendarContract.Events.TITLE, title)
-            .putExtra(CalendarContract.Events.DESCRIPTION, subject + " - " + description)
-            .putExtra(CalendarContract.Events.CALENDAR_TIME_ZONE, stringTimeZone)
-            .putExtra(CalendarContract.Events.HAS_ALARM, 0)
-            .putExtra(CalendarContract.Events.CALENDAR_COLOR, Color.MAGENTA);
+            .putExtra(CalendarContract.Events.DESCRIPTION, subject + " - " + description);
 
     return intent;
 

@@ -11,6 +11,7 @@ import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.sample.app.Mediator;
+import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
@@ -238,6 +239,13 @@ public class ListSubjectPresenter extends GenericPresenter
     @Override
     public void swipeLeft(Subject currentSubject) {
         database.deleteDatabaseItem(currentSubject);
+    }
+
+    @Override
+    public void launchHomeScreen() {
+        Navigator app = (Navigator) getApplication();
+        app.goToListToDoScreen(this);
+        destroyView();
     }
 
 }

@@ -60,6 +60,8 @@ public interface ListSubject {
     void saveEditSubject(String text, Subject currentSubject);
 
     void swipeLeft(Subject currentSubject);
+
+    void launchHomeScreen();
   }
 
   /**
