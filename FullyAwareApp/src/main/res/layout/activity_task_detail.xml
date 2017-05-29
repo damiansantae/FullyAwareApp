@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/coordinator_layout"
     android:fitsSystemWindows="true"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail"
     tools:ignore="MergeRootFrame">
 
     <android.support.design.widget.AppBarLayout
@@ -55,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/subject_from_detail"
                 android:padding="16dp"
-                android:text="Subject"
                 android:textSize="16dp"
                 style="?android:attr/textAppearanceLarge"
                 android:layout_alignParentTop="true"
@@ -66,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/date_txt"
                 android:padding="16dp"
-                android:text="xx-xx-xxxx"
                 android:textSize="16dp"
                 style="?android:attr/textAppearanceLarge"
                 android:layout_below="@+id/subject_from_detail"
@@ -74,7 +71,6 @@
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/task_description"
-                android:text="Description"
                 style="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

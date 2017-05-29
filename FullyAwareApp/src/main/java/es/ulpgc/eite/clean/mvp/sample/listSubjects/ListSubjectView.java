@@ -2,7 +2,6 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -38,7 +37,6 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 /**
@@ -121,11 +119,6 @@ public class ListSubjectView
             Navigator app = (Navigator) getApplication();
             app.goToListDoneScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.menucalendar) {
-            Navigator app = (Navigator) getApplication();
-            app.goToScheduleScreen((ListSubject.ListSubjectTo) getPresenter());
-            Toast.makeText(getApplicationContext(), "Calendar", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.menuPreferences) {
             Navigator app = (Navigator) getApplication();
@@ -244,13 +237,13 @@ public class ListSubjectView
                     if (numberOfSubjects == 0) {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "No subjects added", Toast.LENGTH_SHORT).show();
-                        getPresenter().launchHomeScreen();
+                        launchHomeScreen();
                         finish();
                     } else {
                         getPresenter().addSubjectsToDataBase(subjectList);
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "All subjects added", Toast.LENGTH_SHORT).show();
-                        getPresenter().launchHomeScreen();
+                        launchHomeScreen();
                         finish();
                     }
 
@@ -463,14 +456,21 @@ public class ListSubjectView
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+
             }
         });
     }
 
+    private void launchHomeScreen() {
+        Navigator app = (Navigator) getApplication();
+        app.goToListToDoScreen((ListSubject.ListSubjectTo) getPresenter());
+
+    }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public class SubjectRecyclerViewAdapter extends RecyclerView.Adapter<SubjectRecyclerViewAdapter.ViewHolder> {
+
 
         private List<Subject> subjects;
 
@@ -478,7 +478,6 @@ public class ListSubjectView
         public SubjectRecyclerViewAdapter() {
             subjects = new ArrayList<>();
         }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -500,6 +499,7 @@ public class ListSubjectView
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Subject task = subjects.get(position);
             holder.bindView(task);
+
         }
 
         @Override
@@ -508,9 +508,9 @@ public class ListSubjectView
         }
 
 
-            class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
-            final View itemView;
+         final View itemView;
             private TextView subjectName;
             public Subject subject;
 
@@ -521,7 +521,7 @@ public class ListSubjectView
 
             public void bindView(final Subject subject) {
                subjectName = (TextView) itemView.findViewById(R.id.subject_name);
-               subjectName.setText(subject.getName());
+                subjectName.setText(subject.getName());
             }
         }
 

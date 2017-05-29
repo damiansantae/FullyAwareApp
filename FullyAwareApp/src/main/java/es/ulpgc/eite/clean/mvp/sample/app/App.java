@@ -66,7 +66,6 @@ public class App extends Application implements Mediator, Navigator {
         Realm.setDefaultConfiguration(realmConfiguration);
         startService(new Intent(this, NotificationService.class));
 
-
         toListToDoState = new ListToDoState();
         toListToDoState.toolbarVisibility = true;
         toListToDoState.addBtnVisibility = true;
@@ -238,9 +237,7 @@ listSubjectsPresenter.onScreenStarted();
         preferencesToState.toolbarColour = newColor;
     }
 
-
     /////////////////TOOLBAR CHANGES METHODS
-
     @Override
     public String getToolbarColour() { //TODO:METODO VALIDO
         String newColourString = null;
@@ -254,6 +251,8 @@ listSubjectsPresenter.onScreenStarted();
     public boolean checkToolbarChanged() {
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
+            preferencesToState.toolbarVisibility = true;
+            preferencesToState.toolbarColour = 111;
         }
          return preferencesToState.toolbarColourChanged;
     }
@@ -312,23 +311,52 @@ listSubjectsPresenter.onScreenStarted();
     }
 
 
+    @Override
+    public void goToListToDoScreen(AddTaskPresenter addTaskPresenter) {
+        if (listToDoToState == null) {
+            listToDoToState = new ListToDoState();
+
+        }
+        listToDoToState.toolbarVisibility = true;
+
+        Context view = addTaskPresenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListToDoViewMaster.class));
+        }
+
+    }
+
+    @Override
+    public void goToChangeColourDialog(PreferencesPresenter preferencesPresenter) {
+        Context view = preferencesPresenter.getManagedContext();
+        if (view != null) {
+
+        }
+    }
 
     @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
-        if (listSubjectToState == null) {
-            listSubjectToState = new ListSubjectState();
+        if (listToDoToState == null) {
+            listToDoToState = new ListToDoState();
+
         }
-        listSubjectToState.toolbarVisibility = true;
+        listToDoToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
         }
 
+            presenter.destroyView();
+        }
 
 
     }
 
+    @Override
+    public void goToAddSubjectScreen(ListSubjectPresenter listSubjectsPresenter) {
+
+    }
 
     @Override
     public void goToListSubjectScreen(ListSubjectPresenter presenter) {
@@ -337,6 +365,19 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override
     public void goToListDoneScreen(ListSubject.ListSubjectTo presenter) {
+        if (listDoneToState == null) {
+            listDoneToState = new ListDoneState();
+        }
+        listDoneToState.toolbarVisibility = true;
+        listDoneToState.deleteBtnVisibility=true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+
+
+            presenter.destroyView();
+        }
 
     }
 
