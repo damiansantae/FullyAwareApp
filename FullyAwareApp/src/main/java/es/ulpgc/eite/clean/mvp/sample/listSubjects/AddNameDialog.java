@@ -32,8 +32,7 @@ public class AddNameDialog extends DialogFragment implements View.OnClickListene
   public View onCreateView(
           LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    DatabaseFacade database = DatabaseFacade.getInstance();
-    database.addSubject("None", null);
+
     View view = inflater.inflate(R.layout.dialog_add_name, container);
     initComponents(view);
     return view;
