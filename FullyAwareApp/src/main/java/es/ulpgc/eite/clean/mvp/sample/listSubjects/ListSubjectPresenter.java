@@ -2,6 +2,7 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.CheckBox;
 

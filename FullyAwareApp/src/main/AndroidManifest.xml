@@ -79,7 +79,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".listToDoDetail.ListToDoViewDetail"
-            android:label="Detail To Do"
+            android:label="Title"
             android:parentActivityName=".listToDoMaster.ListToDoViewMaster"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -104,7 +104,7 @@
         </activity>
         <activity
             android:name=".listDoneDetail.ListDoneViewDetail"
-            android:label="Detail Done"
+            android:label="Title"
             android:parentActivityName=".listDoneMaster.ListDoneViewMaster"
             android:theme="@style/AppTheme.NoActionBar" />
 
