@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -242,6 +243,7 @@ listSubjectsPresenter.onScreenStarted();
     public String getToolbarColour() { //TODO:METODO VALIDO
         String newColourString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
          newColourString = getColorHex(preferencesToState.toolbarColour);
         }
         return newColourString;
@@ -249,10 +251,17 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override //TODO:METODO VALIDO
     public boolean checkToolbarChanged() {
+        String APP_PREF = "androidhive-welcome";
+        String TOOLBAR_COLOUR_CHANGED = "toolbar-coulour-changed";
+        String TOOLBAR_COLOUR = "toolbar-coulour";
+        SharedPreferences prefs = this.getSharedPreferences(
+                APP_PREF, Context.MODE_PRIVATE);
+
         if (preferencesToState == null) {
             preferencesToState = new PreferencesState();
             preferencesToState.toolbarVisibility = true;
-            preferencesToState.toolbarColour = 111;
+            preferencesToState.toolbarColourChanged = prefs.getBoolean(TOOLBAR_COLOUR_CHANGED,false);
+            preferencesToState.toolbarColour = prefs.getInt(TOOLBAR_COLOUR, 0);
         }
          return preferencesToState.toolbarColourChanged;
     }

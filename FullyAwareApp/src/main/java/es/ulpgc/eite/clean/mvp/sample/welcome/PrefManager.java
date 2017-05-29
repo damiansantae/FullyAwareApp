@@ -30,6 +30,7 @@ public class PrefManager {
             editor = pref.edit();
         }
 
+
     /**
      * Method that sets value of isFirstTime boolean
      * isFirstTime boolean specifies if the app is being launched

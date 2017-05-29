@@ -51,9 +51,7 @@ public class ListToDoPresenterMaster extends GenericPresenter
     private Task selectedTask;
     private SparseBooleanArray itemsSelected = new SparseBooleanArray();
     private DatabaseFacade database;
-    SharedPreferences myprefs;
-    public static final String MY_PREFS = "MyPrefs";
-    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
+
 
     private static final int READ_CALENDAR_PERMISSIONS_REQUEST = 1;
     private static final int WRITE_CALENDAR_PERMISSIONS_REQUEST = 2;
@@ -73,14 +71,14 @@ public class ListToDoPresenterMaster extends GenericPresenter
         setView(view);
         Log.d(TAG, "calling onCreate()");
         Log.d(TAG, "calling startingLisToDoScreen()");
-        Mediator app = (Mediator) getView().getApplication();
+        Mediator app = (Mediator) getApplication();
         database = DatabaseFacade.getInstance();
         app.startingListToDoScreen(this);
         checkChangesOnToolbar(app);
-
     }
 
-    private void checkChangesOnToolbar(Mediator app) {
+    public void checkChangesOnToolbar(Mediator app) {
+        Log.d(TAG, "PRUEBA"+app.checkToolbarChanged());
         if (app.checkToolbarChanged()) {
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);

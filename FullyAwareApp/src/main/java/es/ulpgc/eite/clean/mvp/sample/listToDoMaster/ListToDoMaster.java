@@ -310,6 +310,7 @@ public interface ListToDoMaster {
          * @param toastBackConfirmation: the text showed on the toast
          */
         void showToastBackConfirmation(String toastBackConfirmation);
+
     }
 
     /**

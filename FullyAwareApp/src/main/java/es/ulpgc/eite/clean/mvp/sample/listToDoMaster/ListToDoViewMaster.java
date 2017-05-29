@@ -295,10 +295,14 @@ public class ListToDoViewMaster
 
     @Override
     public void toolbarChanged(String colour) {
+
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
-        getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
-        toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        if (colorPrimaryList.indexOf(colour)!=(-1)){
+            getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+            toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
+        }
+
     }
 
     @Override
@@ -463,6 +467,7 @@ public class ListToDoViewMaster
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
+
 
     /**
      * This method delete the Parent View of a view.
