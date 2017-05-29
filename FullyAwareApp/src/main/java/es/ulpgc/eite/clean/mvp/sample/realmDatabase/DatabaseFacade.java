@@ -41,9 +41,9 @@ public class DatabaseFacade {
         realmDatabase.beginTransaction();
 
         //  The objects are created
-        Subject diseño = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
-        diseño.setName("Diseño de Aplicaciones");
-        diseño.setColor(R.color.color_lightblue);
+        Subject desing = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
+        desing.setName("Diseño de Aplicaciones");
+        desing.setColor(R.color.color_lightblue);
 
         Subject aplicaciones = realmDatabase.createObject(Subject.class, UUID.randomUUID().toString());
         aplicaciones.setName("Aplicaciones de Red");
@@ -52,7 +52,7 @@ public class DatabaseFacade {
         TimeTable firstTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
         firstTimeMon.setDay("Monday");
         firstTimeMon.setHour("8:00-10:00");
-        firstTimeMon.setSubject(diseño);
+        firstTimeMon.setSubject(desing);
 
         TimeTable secondTimeMon = realmDatabase.createObject(TimeTable.class, UUID.randomUUID().toString());
         secondTimeMon.setDay("Monday");
@@ -64,7 +64,7 @@ public class DatabaseFacade {
         task1.setDescription("Terminar apartado 1");
         task1.setDate("25/03/2017");
         task1.setStatus("ToDo");
-        task1.setSubject(diseño);
+        task1.setSubject(desing);
 
         Task task2 = realmDatabase.createObject(Task.class, UUID.randomUUID().toString());
         task2.setTitle("Practica 2");
