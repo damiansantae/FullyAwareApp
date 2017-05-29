@@ -14,9 +14,11 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
+
 import com.kizitonwose.colorpreference.ColorShape;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
+
 import com.kizitonwose.colorpreference.*;
 
 public class ColorDialog extends DialogFragment {
@@ -47,6 +49,7 @@ public class ColorDialog extends DialogFragment {
 
     /**
      * Methods that initializes the Color Dialog.
+     *
      * @param savedInstanceState saved states of the app.
      */
     @Override
@@ -61,6 +64,7 @@ public class ColorDialog extends DialogFragment {
 
     /**
      * Method that sets the color selected.
+     *
      * @param colorSelectedListener listener of the color selection.
      */
     public void setOnColorSelectedListener(OnColorSelectedListener colorSelectedListener) {
@@ -70,6 +74,7 @@ public class ColorDialog extends DialogFragment {
 
     /**
      * Fragment auto-generated method.
+     *
      * @param activity actual activity.
      */
     @Override
@@ -86,8 +91,8 @@ public class ColorDialog extends DialogFragment {
     /**
      * Method that creates the dialog itself.
      * Auto-generated method.
-     * @param savedInstanceState saved states of the app.
      *
+     * @param savedInstanceState saved states of the app.
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -197,19 +202,10 @@ public class ColorDialog extends DialogFragment {
         }
 
         /**
-         * Sets the number of colums of the color shapes.
-         * @param numColumns int: columns of color shapes.
-         */
-        public Builder setNumColumns(int numColumns) {
-            this.numColumns = numColumns;
-            return this;
-        }
-
-        /**
          * Sets the colors to the different colour shapes.
+         *
          * @param colorChoicesRes int: colours of the dialog.
          */
-
         private Builder setColorChoices(@ArrayRes int colorChoicesRes) {
             String[] choices = context.getResources().getStringArray(colorChoicesRes);
 

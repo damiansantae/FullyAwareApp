@@ -42,10 +42,11 @@ import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 /**
  * View of a subject list.
  * make a swipe on it in order to delete or edit them
- * @version 1.0, 28/05/2017
+ *
  * @author Damián Santamaría Eiranova
  * @author Iván González Hernández
  * @author Jordi Vílchez Lozano
+ * @version 1.0, 28/05/2017
  */
 public class ListSubjectView
         extends GenericActivity<ListSubject.PresenterToView, ListSubject.ViewToPresenter, ListSubjectPresenter>
@@ -94,7 +95,10 @@ public class ListSubjectView
         super.onResume(ListSubjectPresenter.class, this);
     }
 
-
+    /**
+     * Method that create the option Menu.
+     * {@link super#onResume(Class, Object)} should always be called
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,6 +106,11 @@ public class ListSubjectView
         return true;
     }
 
+    /**
+     * Method called when an element of the option menu is pressed.
+     *
+     * @param item item selected.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -124,7 +133,6 @@ public class ListSubjectView
             Navigator app = (Navigator) getApplication();
             app.goToPreferencesScreen((ListSubject.ListSubjectTo) getPresenter());
             Toast.makeText(getApplicationContext(), "Preferences", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "Pasando a pantalla Preferencias");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -133,21 +141,33 @@ public class ListSubjectView
     ///////////////////////////////////////////////////////////////////////////////////
     // Presenter To View /////////////////////////////////////////////////////////////
 
+    /**
+     * Method to finish the current screen.
+     */
     @Override
     public void finishScreen() {
         finish();
     }
 
+    /**
+     * Method to hide the toolbar.
+     */
     @Override
     public void hideToolbar() {
         toolbar.setVisibility(View.GONE);
     }
 
+    /**
+     * Method to set a Delete Toast.
+     */
     @Override
     public void setToastDelete() {
         Toast.makeText(getApplicationContext(), "Tarea Eliminada", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * It sets the recylcer Adapter Content.
+     */
     @Override
     public void setRecyclerAdapterContent(List<Subject> items) {
         if (recyclerView != null) {
@@ -157,11 +177,16 @@ public class ListSubjectView
         }
     }
 
+    /**
+     * Method that changes the toolbar colour
+     *
+     * @param colour String: the new toolbar colour.
+     */
     @Override
     public void toolbarChanged(String colour) {
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
-        if (colorPrimaryList.indexOf(colour)!=(-1)){
+        if (colorPrimaryList.indexOf(colour) != (-1)) {
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
             toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
         }
@@ -184,6 +209,9 @@ public class ListSubjectView
                 .build();
     }
 
+    /**
+     * Auto-generated method.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -194,6 +222,9 @@ public class ListSubjectView
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
+    /**
+     * Auto-generated method.
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -207,7 +238,9 @@ public class ListSubjectView
     ///////////////////////////////////////////////////////////////
 
 
-
+    /**
+     * Method that shows a dialog to enter the user name.
+     */
     @Override
     public void showAddUserNameDialog() {
         final AddNameDialog dialog = new AddNameDialog();
@@ -223,6 +256,9 @@ public class ListSubjectView
         });
     }
 
+    /**
+     * Method that shows a dialog to enter the different subjects.
+     */
     @Override
     public void showAddSubjectsDialog() {
         final AddFirstSubjectDialog dialog = new AddFirstSubjectDialog();
@@ -234,6 +270,7 @@ public class ListSubjectView
         dialog.setListener(new AddFirstSubjectDialog.OnAddSubjectClickListener() {
             @Override
             public void onAddSubjectClickListener(String label) {
+                //The label is passed from the dialog, and it indicates what to do in each case
                 EditText etSubjectName = (EditText) dialog.getView().findViewById(R.id.et_subject_name);
                 if (label.equals(getPresenter().getFinishLabel())) {
                     if (numberOfSubjects == 0) {
@@ -346,6 +383,9 @@ public class ListSubjectView
         });
     }
 
+    /**
+     * Method that initiates the swipe option.
+     */
     @Override
     public void initSwipe() {
         ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
@@ -380,7 +420,7 @@ public class ListSubjectView
                     adapter.notifyDataSetChanged();
 
 
-                } else if (direction == 16){
+                } else if (direction == 16) {
                     Log.d(TAG, "Swipe right");
                     initDialogDelete();
                     alertDialogDelete.setTitle("Are you sure to delete this Subject PERMANENTLY?");
@@ -391,8 +431,8 @@ public class ListSubjectView
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                if(paint==null){
-                    paint=new Paint();
+                if (paint == null) {
+                    paint = new Paint();
                 }
 
                 Bitmap icon;
@@ -426,24 +466,31 @@ public class ListSubjectView
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
-    private void initDialogEdit(){
+
+    /**
+     * Method that initiates the edit dialog.
+     */
+    private void initDialogEdit() {
         alertDialogEdit = new AlertDialog.Builder(this);
-        view = getLayoutInflater().inflate(R.layout.edit_subject_dialog,null);
+        view = getLayoutInflater().inflate(R.layout.edit_subject_dialog, null);
         alertDialogEdit.setView(view);
         alertDialogEdit.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               getPresenter().saveEditSubject(et_subject.getText().toString(), currentSubject);
-                    adapter.notifyDataSetChanged();
-                    dialog.dismiss();
+                getPresenter().saveEditSubject(et_subject.getText().toString(), currentSubject);
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
         });
-        et_subject = (EditText)view.findViewById(R.id.et_subject_name);
+        et_subject = (EditText) view.findViewById(R.id.et_subject_name);
     }
 
-    private void initDialogDelete(){
+    /**
+     * Method that initiates the process to delete the dialog.
+     */
+    private void initDialogDelete() {
         alertDialogDelete = new AlertDialog.Builder(this);
-        view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog,null);
+        view = getLayoutInflater().inflate(R.layout.delete_confirmation_dialog, null);
         alertDialogDelete.setView(view);
         alertDialogDelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -463,6 +510,9 @@ public class ListSubjectView
         });
     }
 
+    /**
+     * Method that launches the home screen (ListTodo).
+     */
     private void launchHomeScreen() {
         Navigator app = (Navigator) getApplication();
         app.goToListToDoScreen((ListSubject.ListSubjectTo) getPresenter());
@@ -471,6 +521,9 @@ public class ListSubjectView
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * The subject recyclerView adapter class.
+     */
     public class SubjectRecyclerViewAdapter extends RecyclerView.Adapter<SubjectRecyclerViewAdapter.ViewHolder> {
 
 
@@ -480,6 +533,10 @@ public class ListSubjectView
         public SubjectRecyclerViewAdapter() {
             subjects = new ArrayList<>();
         }
+
+        /**
+         * Creates the view holder of the adapter.
+         */
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -487,16 +544,28 @@ public class ListSubjectView
             return new ViewHolder(view);
         }
 
+        /**
+         * Method that sets the different items of the subject list.
+         *
+         * @param items Subject: items of the list.
+         */
         public void setItemList(List<Subject> items) {
             this.subjects = items;
             notifyDataSetChanged();
         }
 
-
+        /**
+         * Method that returns the items of the subject list.
+         *
+         * @return subjects : array list of subjects.
+         */
         public List<Subject> getItems() {
             return this.subjects;
         }
 
+        /**
+         * BindView holder method of the list subject adapter.
+         */
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Subject task = subjects.get(position);
@@ -504,6 +573,11 @@ public class ListSubjectView
 
         }
 
+        /**
+         * Method that counts the items of the list subject.
+         *
+         * @return subjects int: number of items.
+         */
         @Override
         public int getItemCount() {
             return subjects.size();
@@ -512,7 +586,7 @@ public class ListSubjectView
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-         final View itemView;
+            final View itemView;
             private TextView subjectName;
             public Subject subject;
 
@@ -522,7 +596,7 @@ public class ListSubjectView
             }
 
             public void bindView(final Subject subject) {
-               subjectName = (TextView) itemView.findViewById(R.id.subject_name);
+                subjectName = (TextView) itemView.findViewById(R.id.subject_name);
                 subjectName.setText(subject.getName());
             }
         }

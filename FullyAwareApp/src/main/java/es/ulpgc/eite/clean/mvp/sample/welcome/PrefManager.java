@@ -88,13 +88,16 @@ public class PrefManager {
         return pref.getInt(TOOLBAR_COLOUR, 0);
     }
 
+    /**
+     * Method that set the boolean toolbarColourChanged.
+     * After it, it is stored on SharedPreferences.
+     * Once the toolbar colour is changed, it always is true.
+     *  @param toolbarColourChanged boolean: indicates if the colour of the toolbar has been changed.
+     */
     public void setToolbarColourChanged(boolean toolbarColourChanged) {
         editor.putBoolean(TOOLBAR_COLOUR_CHANGED, toolbarColourChanged);
         editor.commit();
     }
 
-    public boolean getToolbarColourChanged(){
-        return pref.getBoolean(TOOLBAR_COLOUR_CHANGED, false);
-    }
 }
 

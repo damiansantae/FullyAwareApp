@@ -3,6 +3,7 @@ package es.ulpgc.eite.clean.mvp.sample.preferences;
 
 import android.content.Context;
 import android.widget.SimpleAdapter;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
@@ -12,6 +13,7 @@ public interface Preferences {
 
     ///////////////////////////////////////////////////////////////////////////////////
     // State /////////////////////////////////////////////////////////////////////////
+
     /**
      * Methods related to the different states of the app.
      */
@@ -71,10 +73,6 @@ public interface Preferences {
      * Methods offered to MODEL to communicate with PRESENTER
      */
     interface PresenterToModel extends Model<ModelToPresenter> {
-
-        String[] getPrefItemLabels();
-
-        String[] getPrefDescriptionItemsLabels();
 
         String getDialogInfoTitle();
 

@@ -121,7 +121,6 @@ public class DatabaseFacade {
 
     }
 
-
     /**
      * Method that look over database items which
      * belong to Task table

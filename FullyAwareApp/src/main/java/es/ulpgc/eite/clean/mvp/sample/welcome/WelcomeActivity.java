@@ -35,6 +35,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /**
      * Method that creates the Welcome Activity.
      * Auto-generated method.
+     *
      * @param savedInstanceState Bundle -> saved state of the app
      */
     @Override

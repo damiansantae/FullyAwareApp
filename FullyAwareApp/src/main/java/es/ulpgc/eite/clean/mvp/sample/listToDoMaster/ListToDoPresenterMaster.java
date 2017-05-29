@@ -356,7 +356,6 @@ public class ListToDoPresenterMaster extends GenericPresenter
 
     }
 
-    //TODO: IVAN COMENTA ESTE METODO
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {

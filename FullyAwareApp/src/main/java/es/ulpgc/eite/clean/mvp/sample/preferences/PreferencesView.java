@@ -16,16 +16,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.kizitonwose.colorpreference.ColorDialog;
 import com.kizitonwose.colorpreference.ColorShape;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
@@ -43,7 +46,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
     SharedPreferences preferences;
     private PrefManager prefManager;
     private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    List<String> colorPrimaryList,colorPrimaryDarkList;
+    List<String> colorPrimaryList, colorPrimaryDarkList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +222,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
 
         List<String> colorPrimaryList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
         List<String> colorPrimaryDarkList = Arrays.asList(getResources().getStringArray(R.array.default_color_choice_values));
-        if (colorPrimaryList.indexOf(colour)!=(-1)){
+        if (colorPrimaryList.indexOf(colour) != (-1)) {
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
             toolbar.setBackgroundColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(colour)))));
         }

@@ -26,12 +26,6 @@ public class ListSubjectPresenter extends GenericPresenter
     private DatabaseFacade database;
     private PrefManager prefManager;
     private String[] time = new String[5];
-    private String[] daysChecked = new String[5];
-    ArrayList<CheckBox> checkboxesL1 = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> checkboxesL2 = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> checkboxesL3 = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> checkboxesL4 = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> checkboxesL5 = new ArrayList<CheckBox>();
 
     /**
      * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -51,9 +45,6 @@ public class ListSubjectPresenter extends GenericPresenter
         Mediator app = (Mediator) getView().getApplication();
         database = DatabaseFacade.getInstance();
         checkChangesOnToolbar(app);
-
-        Log.d(TAG, "" + prefManager.isFirstTimeLaunch());
-
         prefManager = new PrefManager(getView().getActivityContext());
         if (prefManager.isFirstTimeLaunch()) {
             getView().showAddUserNameDialog();
@@ -63,6 +54,11 @@ public class ListSubjectPresenter extends GenericPresenter
 
     }
 
+    /**
+     * Method that checks if the toolbar colour has been changed
+     *
+     * @param app Mediator: the current app.
+     */
     private void checkChangesOnToolbar(Mediator app) {
         if (app.checkToolbarChanged()) {
             String colour = app.getToolbarColour();
@@ -70,6 +66,11 @@ public class ListSubjectPresenter extends GenericPresenter
         }
     }
 
+    /**
+     * Method that sets the button labels.
+     *
+     * @param activityContext Contex: the current context.
+     */
     private void setLabelButtons(Context activityContext) {
         getModel().setLabelButtons();
     }
@@ -122,10 +123,12 @@ public class ListSubjectPresenter extends GenericPresenter
     // View To Presenter /////////////////////////////////////////////////////////////
 
 
-
     ///////////////////////////////////////////////////////////////////////////////////
     // To ListForgottenDetail //////////////////////////////////////////////////////////////////////
 
+    /**
+     * Auto-generated method that initializes the screen
+     */
     @Override
     public void onScreenStarted() {
         Log.d(TAG, "calling onScreenStarted()");
@@ -137,7 +140,11 @@ public class ListSubjectPresenter extends GenericPresenter
         loadItems();
     }
 
-
+    /**
+     * Sets the toolbar visbility
+     *
+     * @param visible boolean true: if it is visible & false if not.
+     */
     @Override
     public void setToolbarVisibility(boolean visible) {
         toolbarVisible = visible;
@@ -147,18 +154,31 @@ public class ListSubjectPresenter extends GenericPresenter
     ///////////////////////////////////////////////////////////////////////////////////
     // ListForgottenDetail To //////////////////////////////////////////////////////////////////////
 
-
+    /**
+     * Method that returns the actual activity context.
+     *
+     * @return context -> the actual activity context.
+     */
     @Override
     public Context getManagedContext() {
         return getActivityContext();
     }
 
-
+    /**
+     * Method that returns a boolean to indicate if the toolbar is visible.
+     *
+     * @return toolbarVisible boolean: true if visible.
+     */
     @Override
     public boolean getToolbarVisibility() {
         return toolbarVisible;
     }
 
+    /**
+     * Method called when add user button is clicked.
+     *
+     * @param userName String: the user name.
+     */
     @Override
     public void onAddUserBtnClicked(String userName) {
         prefManager.setUserName(userName);
@@ -166,17 +186,29 @@ public class ListSubjectPresenter extends GenericPresenter
         Log.d("TAG", prefManager.getUserName());
     }
 
-
+    /**
+     * Method that returns the label of button Add.
+     *
+     * @return String label
+     */
     @Override
     public String getLabelBtnAddSubject() {
         return getModel().getLabelBtnAddSubject();
     }
 
+    /**
+     * Method that returns the label of button Hour.
+     *
+     * @return String label
+     */
     @Override
     public String getLabelBtnHour() {
         return getModel().getLabelBtnHour();
     }
 
+    /**
+     * Method that destroys the current view.
+     */
     @Override
     public void destroyView() {
         if (isViewRunning()) {
@@ -184,61 +216,89 @@ public class ListSubjectPresenter extends GenericPresenter
         }
     }
 
+    /**
+     * Method that checks if the toolbar is visible.
+     *
+     * @return toolbarVisible boolean
+     */
     @Override
     public boolean isToolbarVisible() {
         return toolbarVisible;
     }
     ///////////////////////////////////////////////////////////////////////////////////
-    private void checkToolbarVisibility() {
-        Log.d(TAG, "calling checkToolbarVisibility()");
-        if (isViewRunning()) {
-            if (!toolbarVisible) {
-                getView().hideToolbar();
-            }
-        }
-    }
 
+    /**
+     * Method that load the items on the subject list.
+     */
     public void loadItems() {
         getView().setRecyclerAdapterContent(database.getSubjectsFromDatabase());
     }
 
-
+    /**
+     * Method called when an error happens deleting an item.
+     */
     @Override
     public void onErrorDeletingItem(Subject item) {
 
     }
 
+    /**
+     * Method that sets the time text.
+     */
     @Override
     public void setTimeText(int i, String txt) {
         time[i] = txt;
     }
 
+    /**
+     * Method that gets the time text.
+     */
     @Override
     public String getTimeText(int i) {
         return time[i];
     }
 
-
+    /**
+     * Get the finish label from the model.
+     */
     @Override
     public String getFinishLabel() {
         return getModel().getFinishLabel();
     }
 
+    /**
+     * Method that adds the item of an arry to the data base.
+     *
+     * @param subjectList ArrayList: list of subjects (string, not classes).
+     */
     @Override
     public void addSubjectsToDataBase(ArrayList<String> subjectList) {
         getModel().addSubjectsToDataBase(subjectList);
     }
 
+    /**
+     * Method that save the edited subjects
+     *
+     * @param text,currenSubject -> String: new subject name, Subject: new subject added.
+     */
     @Override
     public void saveEditSubject(String text, Subject currentSubject) {
-        database.setSubjectName(currentSubject,text);
+        database.setSubjectName(currentSubject, text);
     }
 
+    /**
+     * Method called when we swipes left an item of the list subject.
+     *
+     * @param currentSubject Subject: item of the list.
+     */
     @Override
     public void swipeLeft(Subject currentSubject) {
         database.deleteDatabaseItem(currentSubject);
     }
 
+    /**
+     * Method that launches the home screen (list to do).
+     */
     @Override
     public void launchHomeScreen() {
         Navigator app = (Navigator) getApplication();

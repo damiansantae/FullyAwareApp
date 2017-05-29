@@ -10,6 +10,7 @@ import android.opengl.Visibility;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.SimpleAdapter;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
@@ -165,7 +166,7 @@ public class PreferencesPresenter extends GenericPresenter
     public void setNewToolbarColor(int newColor) {
         this.toolbarColour = newColor;
         Mediator app = (Mediator) getApplication();
-        app.setToolbarColour((PreferencesView) getView(),newColor);
+        app.setToolbarColour((PreferencesView) getView(), newColor);
     }
 
 
@@ -178,7 +179,7 @@ public class PreferencesPresenter extends GenericPresenter
     public void setToolbarColorChanged(boolean toolbarColorChanged) { //TODO: METODO VALIDO
         this.toolbarColorChanged = toolbarColorChanged;
         Mediator app = (Mediator) getApplication();
-        app.setToolbarColorChanged((PreferencesView) getView(),toolbarColorChanged);
+        app.setToolbarColorChanged((PreferencesView) getView(), toolbarColorChanged);
     }
 
     /**
@@ -189,19 +190,12 @@ public class PreferencesPresenter extends GenericPresenter
 
     /**
      * Method that calls the model to returns a label of not supported system.
+     *
      * @return String label of not supported system.
      */
     @Override
     public String getNotSupportedSystem() {
         return getModel().getNotSupportedSystem();
-    }
-
-    /**
-     * Method that returns the toolbar colour.
-     * @return int: toolbar colour.
-     */
-    public int getToolbarColour() {
-        return this.toolbarColour;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -231,6 +225,7 @@ public class PreferencesPresenter extends GenericPresenter
 
     /**
      * Returns the activity context (of the view related(.
+     *
      * @return Context
      */
     @Override
@@ -250,6 +245,7 @@ public class PreferencesPresenter extends GenericPresenter
 
     /**
      * Method that returns if the toolbar is visible
+     *
      * @return boolean true: if toolbar is visible & false : if not.
      */
     @Override
@@ -270,11 +266,4 @@ public class PreferencesPresenter extends GenericPresenter
         }
     }
 
-    /**
-     * Method that returns if the toolbar colour has been changed
-     * @return toolbarColorChanged boolean.
-     */
-    public boolean getToolbarColourChanged() {
-        return this.toolbarColorChanged;
-    }
 }

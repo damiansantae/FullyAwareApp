@@ -6,8 +6,6 @@ import es.ulpgc.eite.clean.mvp.GenericModel;
 public class PreferencesModel extends GenericModel<Preferences.ModelToPresenter>
         implements Preferences.PresenterToModel {
 
-    private String[] prefItems;
-    private String[] descriptionItems;
     private String dialogInfoTitle;
     private CharSequence dialogInfoDescription;
     private String visitButtonLabel, okButtonLabel, paypalURL, gitHubURL, noCompatibleSystemLabel;
@@ -45,26 +43,6 @@ public class PreferencesModel extends GenericModel<Preferences.ModelToPresenter>
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Presenter To Model ////////////////////////////////////////////////////////////
-
-    /**
-     * Returns an array with preferences list items.
-     *
-     * @return String[] items of preferences List.
-     */
-    @Override
-    public String[] getPrefItemLabels() {
-        return prefItems;
-    }
-
-    /**
-     * Returns an array with preferences list items description.
-     *
-     * @return String[] items description of preferences List.
-     */
-    @Override
-    public String[] getPrefDescriptionItemsLabels() {
-        return descriptionItems;
-    }
 
     /**
      * Returns dialogInfo title label.
