@@ -387,18 +387,18 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override
     public void goToListToDoScreen(ListSubject.ListSubjectTo presenter) {
+        if (listToDoToState == null) {
+            listToDoToState = new ListToDoState();
 
-        if (listSubjectToState == null) {
-            listSubjectToState = new ListSubjectState();
         }
-
-        listSubjectToState.toolbarVisibility = true;
+        listToDoToState.toolbarVisibility = true;
 
         Context view = presenter.getManagedContext();
         if (view != null) {
             view.startActivity(new Intent(view, ListToDoViewMaster.class));
-        }
 
+            presenter.destroyView();
+        }
 
 
     }
@@ -415,6 +415,19 @@ listSubjectsPresenter.onScreenStarted();
 
     @Override
     public void goToListDoneScreen(ListSubject.ListSubjectTo presenter) {
+        if (listDoneToState == null) {
+            listDoneToState = new ListDoneState();
+        }
+        listDoneToState.toolbarVisibility = true;
+        listDoneToState.deleteBtnVisibility=true;
+
+        Context view = presenter.getManagedContext();
+        if (view != null) {
+            view.startActivity(new Intent(view, ListDoneViewMaster.class));
+
+
+            presenter.destroyView();
+        }
 
     }
 

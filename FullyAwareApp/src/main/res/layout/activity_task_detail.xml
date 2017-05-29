@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/coordinator_layout"
     android:fitsSystemWindows="true"
-    tools:context="es.ulpgc.eite.clean.mvp.sample.listToDoDetail.ListToDoViewDetail"
     tools:ignore="MergeRootFrame">
 
     <android.support.design.widget.AppBarLayout
