@@ -65,13 +65,6 @@ public class ListToDoViewMaster
     private View view;
     private TaskRecyclerViewAdapter adapter;
 
-    //TODO: JORDI ESTOS ATRIBUTOS PARA QUE SON????????
-    private SharedPreferences prefs;
-    private PrefManager prefManager;
-    private final String TOOLBAR_COLOR_KEY = "toolbar-key";
-    public static final String MY_PREFS = "MyPrefs";
-    //TODO: JORDI ESTOS ATRIBUTOS PARA QUE SON????????
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -133,7 +126,6 @@ public class ListToDoViewMaster
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         //////////////////////////
-        loadSharePreferences();
     }
 
 
@@ -146,7 +138,6 @@ public class ListToDoViewMaster
     protected void onResume() {
         super.onResume(ListToDoPresenterMaster.class, this);
     }
-
 
 
     /**
@@ -481,19 +472,6 @@ getPresenter().onBtnBackPressed();
     }
 
     /**
-     * This method load on this Activity saved preferences such as toolbarColor
-     */
-    private void loadSharePreferences() {
-        Log.d(TAG, "calling loadSharePreferences");
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
-        String colour = prefs.getString(TOOLBAR_COLOR_KEY, null);
-        Log.d(TAG, "" + colour);
-        if (colour != null) {
-            toolbarChanged(colour);
-        }
-    }
-
-    /**
      * This method delete the Parent View of a view.
      * For example, when a dialog view is showed
      */
@@ -501,6 +479,13 @@ getPresenter().onBtnBackPressed();
         if(view.getParent()!=null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }
+    }
+
+    public void changeButtonsColours(int colour) {
+        add.setBackgroundColor(colour);
+        add.setDrawingCacheBackgroundColor(colour);
+        bin.setBackgroundColor(colour);
+        done.setBackgroundColor(colour);
     }
 }
 

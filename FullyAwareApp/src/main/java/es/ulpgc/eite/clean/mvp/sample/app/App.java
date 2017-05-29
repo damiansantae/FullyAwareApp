@@ -230,6 +230,7 @@ public class App extends Application implements Mediator, Navigator {
         if (colour != 0) {
             toolbarColourChanged((ListToDoPresenterMaster) view.getPresenter());
             view.toolbarChanged(getColorHex(colour));
+            view.changeButtonsColours(colour);
         }
     }
 
