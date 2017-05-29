@@ -2,7 +2,6 @@ package es.ulpgc.eite.clean.mvp.sample.listSubjects;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -38,7 +37,6 @@ import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.app.Navigator;
 import es.ulpgc.eite.clean.mvp.sample.app.Subject;
-import es.ulpgc.eite.clean.mvp.sample.listToDoMaster.ListToDoViewMaster;
 import es.ulpgc.eite.clean.mvp.sample.welcome.PrefManager;
 
 /**
@@ -470,8 +468,9 @@ public class ListSubjectView
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(ListSubjectView.this, ListToDoViewMaster.class));
-        finish();
+        Navigator app = (Navigator) getApplication();
+        app.goToListToDoScreen((ListSubject.ListSubjectTo) getPresenter());
+
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
