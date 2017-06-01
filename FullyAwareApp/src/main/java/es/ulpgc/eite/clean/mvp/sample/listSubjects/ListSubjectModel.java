@@ -133,5 +133,4 @@ public class ListSubjectModel extends GenericModel<ListSubject.ModelToPresenter>
         }
     }
 
-
 }

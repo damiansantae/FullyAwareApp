@@ -27,6 +27,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+////////////////////////////////IMPORTANT: TO PASS THE TESTS, THEY'LL HAVE TO BE RUN////////////////////////////////////
+////////////////////////////////WHEN THE APP IS LAUNCHED FOR THE FIRST TIME/////////////////////////////////////////////
+////////////////////////////////AND ANSWER MANUALLY TO THE DIALOG ASKING FOR PERMISSIONS////////////////////////////////
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class NavigationFromToDoTests {
@@ -38,14 +42,10 @@ public class NavigationFromToDoTests {
     @Rule
     public ActivityTestRule<WelcomeActivity> mActivityTestRule = new ActivityTestRule<>(WelcomeActivity.class);
 
-boolean isAlreadyInstalled;
     @Test
     public void goToDetail() {
-        //TODO: Aqui tambien
-        if(!isAlreadyInstalled){
-            goToToDo();
-        }
 
+        goToToDo();
 
         addATask();             //add a new task
 
@@ -56,11 +56,9 @@ boolean isAlreadyInstalled;
                         isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.subject_from_detail))
-                .check(matches(withText(taskTitle)));           //See if it is the correct title
 
         onView(withId(R.id.task_description))
-                .check(matches(withText(taskDescription))); //See if it is the correct description
+                .check(matches(withText("Description: " + taskDescription))); //See if it is the correct description
 
     }
 

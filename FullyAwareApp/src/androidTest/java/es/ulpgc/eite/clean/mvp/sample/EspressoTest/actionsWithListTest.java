@@ -42,6 +42,11 @@ import static org.hamcrest.Matchers.not;
 /**
  *Testing app behaviour. Navigation, visibility, actions, ect.
  */
+
+////////////////////////////////IMPORTANT: TO PASS THE TESTS, THEY'LL HAVE TO BE RUN////////////////////////////////////
+////////////////////////////////WHEN THE APP IS LAUNCHED FOR THE FIRST TIME/////////////////////////////////////////////
+////////////////////////////////AND ANSWER MANUALLY TO THE DIALOG ASKING FOR PERMISSIONS////////////////////////////////
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class actionsWithListTest {
@@ -53,13 +58,12 @@ public class actionsWithListTest {
     @Rule
     public ActivityTestRule<WelcomeActivity> mActivityTestRule = new ActivityTestRule<>(WelcomeActivity.class);
 
-boolean isAlreadyInstalled;
     @Test
     public void checkFloatingBtnVisibilityAfterSelection() {
-//TODO: este es el boolano
-        if(!isAlreadyInstalled) {                         //Si es la primera vez que se instala la app
-            goToToDo();                         //hay que añadir unos parametros iniciales
-        }
+
+
+        goToToDo();                         //hay que añadir unos parametros iniciales
+
         addATask();
 
         //Seleccionamos el elemento de la lista
