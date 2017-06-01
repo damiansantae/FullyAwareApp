@@ -53,11 +53,11 @@ public class actionsWithListTest {
     @Rule
     public ActivityTestRule<WelcomeActivity> mActivityTestRule = new ActivityTestRule<>(WelcomeActivity.class);
 
-
+boolean isAlreadyInstalled;
     @Test
     public void checkFloatingBtnVisibilityAfterSelection() {
 //TODO: este es el boolano
-        if(isAlreadyInstalled) {                         //Si es la primera vez que se instala la app
+        if(!isAlreadyInstalled) {                         //Si es la primera vez que se instala la app
             goToToDo();                         //hay que añadir unos parametros iniciales
         }
         addATask();
