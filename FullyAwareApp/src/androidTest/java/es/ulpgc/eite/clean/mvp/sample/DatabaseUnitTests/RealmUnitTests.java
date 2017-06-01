@@ -18,6 +18,9 @@ import es.ulpgc.eite.clean.mvp.sample.app.Subject;
 import es.ulpgc.eite.clean.mvp.sample.app.Task;
 import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
+/**
+ * Unit Tests to test DatabaseFacade methods
+ */
 @RunWith(AndroidJUnit4.class)
 public class RealmUnitTests extends TestCase {
 
@@ -28,6 +31,7 @@ public class RealmUnitTests extends TestCase {
     public void setUp() throws Exception {
 
         databaseFacade =DatabaseFacade.getInstance();
+        databaseFacade.deleteAllDatabaseItems();
 
     }
 
@@ -51,12 +55,21 @@ public class RealmUnitTests extends TestCase {
 
     /*******************************************************************
      ******** Action Delete Tests *************************************/
+
+    /**
+     * Test full subject deletion
+     * @throws IOException
+     */
     @Test
     public void deleteAllSubjects () throws IOException {
         databaseFacade.deleteAllDatabaseSubjects();
         assertTrue(databaseFacade.getSubjectsFromDatabase().isEmpty());
     }
 
+    /**
+     * Test full task deletion
+     * @throws IOException
+     */
     @Test
     public void deleteAllTask () throws IOException {
         databaseFacade.deleteAllDatabaseItems();
@@ -64,6 +77,10 @@ public class RealmUnitTests extends TestCase {
        assertTrue(tasks.isEmpty());
     }
 
+    /**
+     * Test task deletion
+     * @throws IOException
+     */
     @Test
     public void deleteATask () throws IOException{
 
@@ -79,13 +96,15 @@ public class RealmUnitTests extends TestCase {
     /*******************************************************************
      ******** Action Check Tests *************************************/
 
-
+    /**
+     * Test if field status is assigned in the right way
+     * @throws IOException
+     */
     @Test
     public void checkTaskStatus () throws IOException{
 
         databaseFacade.addTask(null, "titulo", "descripcion", "29/08/2017", "ToDo");            //Añadimos una tarea a tabla Task con status To-Do
         databaseFacade.addTask(null, "titulo2", "descripcion2", "29/08/2017", "Done");          //Añadimos una tarea a tabla Task con status Done
-        databaseFacade.addTask(null, "titulo3", "descripcion3", "29/08/2017", "Forgotten");     //Añadimos una tarea a tabla Task con status Forgotten
 
         List<Task> toDoTasks = databaseFacade.getToDoTasksFromDatabase();
         List<Task> DoneTasks = databaseFacade.getDoneTasksFromDatabase();

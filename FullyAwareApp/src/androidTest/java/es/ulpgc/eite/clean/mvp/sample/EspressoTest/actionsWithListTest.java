@@ -13,18 +13,14 @@ import android.view.View;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.ulpgc.eite.clean.mvp.sample.R;
 import es.ulpgc.eite.clean.mvp.sample.welcome.WelcomeActivity;
-import es.ulpgc.eite.clean.mvp.sample.realmDatabase.DatabaseFacade;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.longClick;
@@ -43,6 +39,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
+/**
+ *Testing app behaviour. Navigation, visibility, actions, ect.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class actionsWithListTest {
@@ -55,20 +54,14 @@ public class actionsWithListTest {
     public ActivityTestRule<WelcomeActivity> mActivityTestRule = new ActivityTestRule<>(WelcomeActivity.class);
 
 
-    DatabaseFacade databaseFacade;
-
-    @Before
-    public void setUp() throws Exception {
-
-        databaseFacade =DatabaseFacade.getInstance();
-    }
-
     @Test
     public void checkFloatingBtnVisibilityAfterSelection() {
-
-        deleteTasks();
-        goToToDo();
+//TODO: este es el boolano
+        if(isAlreadyInstalled) {                         //Si es la primera vez que se instala la app
+            goToToDo();                         //hay que añadir unos parametros iniciales
+        }
         addATask();
+
         //Seleccionamos el elemento de la lista
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.item_list_recycler),
@@ -108,9 +101,6 @@ public class actionsWithListTest {
 
     @Test
     public void checkBtnStateAfterRotate(){
-        goToToDo();
-
-
         //Seleccionamos el elemento de la lista
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.item_list_recycler),
@@ -135,7 +125,6 @@ public class actionsWithListTest {
 
     @Test
     public void swipeLeftEqualToDelete(){
-        goToToDo();
 
         onView(
                 allOf(withId(R.id.item_list_recycler),
@@ -155,7 +144,6 @@ public class actionsWithListTest {
 
     @Test
     public void swipeRightEqualToDone(){
-        goToToDo();
 
 
         onView(
@@ -199,6 +187,10 @@ goToToDoFromDone();
                 allOf(withId(R.id.addTaskBtn), withText("Add Task")));
         appCompatButton2.perform(scrollTo(), click());                                                    //click on add task btn
 
+        ViewInteraction appCompatButton7 = onView(
+                allOf(withId(android.R.id.button2), withText("NO")));                                   //clck NO (add into calendar)
+        appCompatButton7.perform(scrollTo(), click());
+
     }
 
 
@@ -234,20 +226,31 @@ goToToDoFromDone();
     }
 
 private void goToToDo(){
+    // Added a sleep statement to match the app's execution delay.
+    // The recommended way to handle such scenarios is to use Espresso idling resources:
+    // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+    try {
+        Thread.sleep(1000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
     ViewInteraction appCompatButton = onView(
             allOf(withId(R.id.btn_skip), withText("SKIP"), isDisplayed()));
     appCompatButton.perform(click());
 
-    pressBack();
-    pressBack();
+    ViewInteraction appCompatEditText = onView(
+            allOf(withId(R.id.et_subject_name), isDisplayed()));
+    appCompatEditText.perform(replaceText("Damian"), closeSoftKeyboard());
 
-    ViewInteraction actionMenuItemView = onView(
-            allOf(withContentDescription("spinner"), isDisplayed()));
-    actionMenuItemView.perform(click());
+    ViewInteraction appCompatButton2 = onView(
+            allOf(withId(R.id.bt_add_user), withText("Add"), isDisplayed()));
+    appCompatButton2.perform(click());
 
-    ViewInteraction appCompatTextView = onView(
-            allOf(withId(R.id.title), withText("To Do"), isDisplayed()));
-    appCompatTextView.perform(click());
+    ViewInteraction appCompatButton3 = onView(
+            allOf(withId(R.id.bt_finish), withText("Finish")));
+    appCompatButton3.perform(scrollTo(), click());
+
 }
 private void goToToDoFromDone(){
     ViewInteraction actionMenuItemView = onView(
@@ -258,9 +261,10 @@ private void goToToDoFromDone(){
             allOf(withId(R.id.title), withText("To Do"), isDisplayed()));    //Select Done Option
     appCompatTextView.perform(click());
 }
-@After
+/*@After
 public void deleteTasks(){
     databaseFacade.deleteAllDatabaseItems();
 }
+*/
 }
 
