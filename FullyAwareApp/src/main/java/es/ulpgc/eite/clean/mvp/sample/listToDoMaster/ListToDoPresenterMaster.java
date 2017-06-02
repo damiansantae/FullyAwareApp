@@ -71,11 +71,10 @@ public class ListToDoPresenterMaster extends GenericPresenter
         Mediator app = (Mediator) getApplication();
         database = DatabaseFacade.getInstance();
         app.startingListToDoScreen(this);
-
         checkChangesOnToolbar(app);
     }
+
     public void checkChangesOnToolbar(Mediator app) {
-        Log.d(TAG, "PRUEBA"+app.checkToolbarChanged());
         if (app.checkToolbarChanged()) {
             String colour = app.getToolbarColour();
             getView().toolbarChanged(colour);

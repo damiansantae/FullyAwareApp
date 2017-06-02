@@ -153,7 +153,7 @@ public class PreferencesView extends GenericActivity<Preferences.PresenterToView
      *
      * @param newColor (int) colour of the app.
      */
-    private void updateStatusBarColor(int newColor) { //TODO:METODO VALIDO
+    private void updateStatusBarColor(int newColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String newColorString = getColorHex(newColor);
             getWindow().setStatusBarColor((Color.parseColor(colorPrimaryDarkList.get(colorPrimaryList.indexOf(newColorString)))));
